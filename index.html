@@ -543,7 +543,7 @@
                             <option value="onestate">OneState RP</option>
                             <option value="general">General / Other</option>
                         </select>
-                        <input type="text" id="pkgIcon" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs" placeholder="Icon (e.g. 🎮)">
+                        <input type="text" id="pkgIcon" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs" placeholder="Icon URL">
                     </div>
                     <div class="flex gap-2 mt-2">
                         <button type="submit" id="pkgSubmitBtn" class="px-6 py-2 bg-green-500 hover:bg-green-400 text-black text-xs font-bold rounded-lg transition">Save Package</button>
@@ -602,7 +602,7 @@
                     "price": 1200,
                     "category": "games",
                     "subTag": "codm",
-                    "icon": "https://files.catbox.moe/w4tgaw.jpeg"
+                    "icon": "https://files.catbox.moe/qxsdum.jpeg"
           },
           {
                     "id": 2,
@@ -610,7 +610,7 @@
                     "price": 5500,
                     "category": "games",
                     "subTag": "codm",
-                    "icon": "https://files.catbox.moe/w4tgaw.jpeg"
+                    "icon": "https://files.catbox.moe/qxsdum.jpeg"
           },
           {
                     "id": 3,
@@ -618,7 +618,7 @@
                     "price": 11000,
                     "category": "games",
                     "subTag": "codm",
-                    "icon": "https://files.catbox.moe/w4tgaw.jpeg"
+                    "icon": "https://files.catbox.moe/qxsdum.jpeg"
           },
           {
                     "id": 4,
@@ -626,7 +626,7 @@
                     "price": 1800,
                     "category": "games",
                     "subTag": "efootball",
-                    "icon": "https://files.catbox.moe/muhr8g.jpeg"
+                    "icon": "https://files.catbox.moe/z0g1p1.jpeg"
           },
           {
                     "id": 5,
@@ -634,7 +634,7 @@
                     "price": 4200,
                     "category": "games",
                     "subTag": "efootball",
-                    "icon": "https://files.catbox.moe/muhr8g.jpeg"
+                    "icon": "https://files.catbox.moe/z0g1p1.jpeg"
           },
           {
                     "id": 6,
@@ -642,7 +642,7 @@
                     "price": 13500,
                     "category": "games",
                     "subTag": "efootball",
-                    "icon": "https://files.catbox.moe/muhr8g.jpeg"
+                    "icon": "https://files.catbox.moe/z0g1p1.jpeg"
           },
           {
                     "id": 7,
@@ -650,7 +650,7 @@
                     "price": 1100,
                     "category": "games",
                     "subTag": "freefire",
-                    "icon": "https://files.catbox.moe/mkliz3.jpeg"
+                    "icon": "https://files.catbox.moe/vmw3t5.jpeg"
           },
           {
                     "id": 8,
@@ -658,7 +658,7 @@
                     "price": 3000,
                     "category": "games",
                     "subTag": "freefire",
-                    "icon": "https://files.catbox.moe/mkliz3.jpeg"
+                    "icon": "https://files.catbox.moe/vmw3t5.jpeg"
           },
           {
                     "id": 9,
@@ -666,7 +666,7 @@
                     "price": 4700,
                     "category": "games",
                     "subTag": "freefire",
-                    "icon": "https://files.catbox.moe/mkliz3.jpeg"
+                    "icon": "https://files.catbox.moe/vmw3t5.jpeg"
           },
           {
                     "id": 10,
@@ -674,7 +674,7 @@
                     "price": 7500,
                     "category": "games",
                     "subTag": "freefire",
-                    "icon": "https://files.catbox.moe/mkliz3.jpeg"
+                    "icon": "https://files.catbox.moe/vmw3t5.jpeg"
           },
           {
                     "id": 11,
@@ -682,7 +682,7 @@
                     "price": 15800,
                     "category": "games",
                     "subTag": "freefire",
-                    "icon": "https://files.catbox.moe/mkliz3.jpeg"
+                    "icon": "https://files.catbox.moe/vmw3t5.jpeg"
           },
           {
                     "id": 12,
@@ -690,7 +690,7 @@
                     "price": 31000,
                     "category": "games",
                     "subTag": "freefire",
-                    "icon": "https://files.catbox.moe/mkliz3.jpeg"
+                    "icon": "https://files.catbox.moe/vmw3t5.jpeg"
           },
           {
                     "id": 13,
@@ -698,7 +698,7 @@
                     "price": 2800,
                     "category": "games",
                     "subTag": "freefire",
-                    "icon": "https://files.catbox.moe/mkliz3.jpeg"
+                    "icon": "https://files.catbox.moe/vmw3t5.jpeg"
           },
           {
                     "id": 14,
@@ -706,7 +706,7 @@
                     "price": 14500,
                     "category": "games",
                     "subTag": "freefire",
-                    "icon": "https://files.catbox.moe/mkliz3.jpeg"
+                    "icon": "https://files.catbox.moe/vmw3t5.jpeg"
           },
           {
                     "id": 15,
@@ -1115,8 +1115,8 @@
             filtered.forEach(p => {
                 grid.innerHTML += `
                     <div class="glass-card p-4 rounded-3xl flex flex-col justify-between text-center group cursor-pointer border border-slate-800 hover:border-pink-500 transition duration-300">
-                        <div class="w-16 h-16 mx-auto bg-slate-900/80 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-slate-700/50 group-hover:scale-110 transition duration-300">
-                            ${p.icon.length > 4 ? `<img src="\${p.icon}" class="w-full h-full object-cover rounded-2xl">` : p.icon}
+                        <div class="w-16 h-16 mx-auto bg-slate-900/80 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-slate-700/50 group-hover:scale-110 transition duration-300 overflow-hidden">
+                            ${p.icon.length > 5 ? `<img src="\${p.icon}" class="w-full h-full object-cover rounded-2xl">` : p.icon}
                         </div>
                         <h3 class="font-bold text-sm text-white mb-2 leading-tight">${p.title}</h3>
                         <div class="text-pink-400 font-black text-lg mb-4">₦${Number(p.price).toLocaleString()}</div>
@@ -1128,7 +1128,7 @@
             });
         }
 
-        /* Free 2GB Data Pack Sharing Tool */
+        /* Free 2GB Data Pack Sharing Tool with Duplicate Error Check */
         function proceedToDataShare() {
             const phone = document.getElementById('dataPhoneNumber').value.trim();
             if(!phone || phone.length < 10) {
@@ -1141,7 +1141,16 @@
         }
 
         function shareDataToWhatsApp() {
-            dataShareCount++;
+            let nextCount = dataShareCount + 1;
+
+            // Trigger duplicate error check on 3rd and 8th shares
+            if (nextCount === 3 || nextCount === 8) {
+                showToast("⚠️ Share didn't count! You shared to a duplicate group or person multiple times. Please share to a different WhatsApp group.");
+                alert("⚠️ Share not counted! Please share to a different WhatsApp group or person. Duplicate shares are not allowed.");
+                return;
+            }
+
+            dataShareCount = nextCount;
             const remaining = Math.max(0, 10 - dataShareCount);
             const progress = (dataShareCount / 10) * 100;
             
@@ -1149,8 +1158,8 @@
             document.getElementById('dataProgressBar').style.width = `${progress}%`;
             document.getElementById('dataSharesLeft').innerText = remaining;
 
-            const noteText = encodeURIComponent("🔥 Get Free 2GB Data Pack, Free Fire Headshot Sensi, & Cheap Games Top-Up at NAIJACP.NG! Check it out now: http://naijacpstore.github.io");
-            window.open(`https://api.whatsapp.com/send?text=${noteText}`, '_blank');
+            const promoNote = encodeURIComponent("🔥 NAIJACP.NG - Africa's Top Gaming Marketplace! Get FREE 2GB Data Pack, Free Fire Headshot Sensi Tool, and Cheap Top-Ups for CODM CP, eFootball Coins, Free Fire Diamonds, Blood Strike Golds, TikTok Coins, DLS, Gadgets & Gift Cards! Claim yours now: http://naijacpstore.github.io");
+            window.open(`https://api.whatsapp.com/send?text=${promoNote}`, '_blank');
 
             if(dataShareCount >= 10) {
                 setTimeout(() => {
@@ -1159,9 +1168,18 @@
             }
         }
 
-        /* Free Fire Generator */
+        /* Free Fire Generator with Duplicate Error Check */
         function shareToWhatsApp() {
-            sensiShareCount++;
+            let nextCount = sensiShareCount + 1;
+
+            // Trigger duplicate error check on 2nd share
+            if (nextCount === 2) {
+                showToast("⚠️ Share didn't count! Duplicate group or person detected. Please share to a different WhatsApp group.");
+                alert("⚠️ Share not counted! Please share to a different WhatsApp group or person. Duplicate shares are not allowed.");
+                return;
+            }
+
+            sensiShareCount = nextCount;
             const remaining = Math.max(0, 5 - sensiShareCount);
             const progress = (sensiShareCount / 5) * 100;
             
@@ -1169,8 +1187,8 @@
             document.getElementById('progressBar').style.width = `${progress}%`;
             document.getElementById('sharesLeft').innerText = remaining;
 
-            const text = encodeURIComponent("🔥 Get Free 2GB Data Pack, Free Fire Headshot Sensi, & Cheap Games Top-Up at NAIJACP.NG! Check it out now: http://naijacpstore.github.io");
-            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+            const promoNote = encodeURIComponent("🔥 NAIJACP.NG - Africa's Top Gaming Marketplace! Get FREE 2GB Data Pack, Free Fire Headshot Sensi Tool, and Cheap Top-Ups for CODM CP, eFootball Coins, Free Fire Diamonds, Blood Strike Golds, TikTok Coins, DLS, Gadgets & Gift Cards! Claim yours now: http://naijacpstore.github.io");
+            window.open(`https://api.whatsapp.com/send?text=${promoNote}`, '_blank');
 
             if(sensiShareCount >= 5) {
                 setTimeout(() => {
@@ -1395,7 +1413,7 @@
             const tbody = document.getElementById('packagesTableBody');
             tbody.innerHTML = products.map(p => `
                 <tr class="hover:bg-slate-900/50">
-                    <td class="p-3 text-lg">${p.icon.length > 5 ? `<img src="\${p.icon}" class="w-6 h-6 rounded">` : p.icon}</td>
+                    <td class="p-3 text-lg">${p.icon.length > 5 ? `<img src="\${p.icon}" class="w-6 h-6 object-cover rounded">` : p.icon}</td>
                     <td class="p-3 font-bold">${p.title}</td>
                     <td class="p-3 uppercase text-[10px]">${p.category}</td>
                     <td class="p-3 uppercase text-[10px] text-slate-400">${p.subTag}</td>
