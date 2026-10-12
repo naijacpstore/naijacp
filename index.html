@@ -953,7 +953,7 @@
                     "title": "Google Play $10 Gift Card",
                     "price": 16200,
                     "category": "giftcards",
-                    "subTag": "general",
+                    "subTag": "giftcards",
                     "icon": "https://files.catbox.moe/umckga.jpeg"
           },
           {
@@ -961,14 +961,14 @@
                     "title": "Steam $10 Gift Card",
                     "price": 16200,
                     "category": "giftcards",
-                    "subTag": "general",
+                    "subTag": "giftcards",
                     "icon": "https://files.catbox.moe/vmei3z.webp"
           }
         ];
         /* --- PRODUCTS DATABASE END --- */
 
-        // Persistent State
-        let products = JSON.parse(localStorage.getItem('naijacp_products')) || defaultProducts;
+        // Persistent State with Cache Reset Key to force new logos
+        let products = JSON.parse(localStorage.getItem('naijacp_products_v5')) || defaultProducts;
         let orders = JSON.parse(localStorage.getItem('naijacp_orders')) || [];
         let currentMainCat = 'games';
         let currentSubFilter = 'all';
@@ -977,7 +977,13 @@
         let sensiShareCount = 0;
         let dataShareCount = 0;
 
+        // Flags to ensure duplicate errors only trigger once per milestone and then allow progress
+        let dataErrorTriggered3 = false;
+        let dataErrorTriggered8 = false;
+        let sensiErrorTriggered2 = false;
+
         document.addEventListener("DOMContentLoaded", () => {
+            localStorage.setItem('naijacp_products_v5', JSON.stringify(products));
             renderCatalog();
             renderOrdersTable();
             renderAdminPackagesTable();
@@ -1128,7 +1134,7 @@
             });
         }
 
-        /* Free 2GB Data Pack Sharing Tool with Duplicate Error Check */
+        /* Free 2GB Data Pack Sharing Tool with Non-Blocking Duplicate Check */
         function proceedToDataShare() {
             const phone = document.getElementById('dataPhoneNumber').value.trim();
             if(!phone || phone.length < 10) {
@@ -1143,11 +1149,20 @@
         function shareDataToWhatsApp() {
             let nextCount = dataShareCount + 1;
 
-            // Trigger duplicate error check on 3rd and 8th shares
-            if (nextCount === 3 || nextCount === 8) {
-                showToast("⚠️ Share didn't count! You shared to a duplicate group or person multiple times. Please share to a different WhatsApp group.");
+            // Trigger duplicate error on 3rd share once
+            if (nextCount === 3 && !dataErrorTriggered3) {
+                dataErrorTriggered3 = true;
+                showToast("⚠️ Share didn't count! Duplicate group detected. Please share to a different WhatsApp group.");
                 alert("⚠️ Share not counted! Please share to a different WhatsApp group or person. Duplicate shares are not allowed.");
-                return;
+                return; // Pauses on 2/10 once, next click will proceed successfully
+            }
+
+            // Trigger duplicate error on 8th share once
+            if (nextCount === 8 && !dataErrorTriggered8) {
+                dataErrorTriggered8 = true;
+                showToast("⚠️ Share didn't count! Duplicate group detected. Please share to a different WhatsApp group.");
+                alert("⚠️ Share not counted! Please share to a different WhatsApp group or person. Duplicate shares are not allowed.");
+                return; // Pauses on 7/10 once, next click will proceed successfully
             }
 
             dataShareCount = nextCount;
@@ -1168,15 +1183,16 @@
             }
         }
 
-        /* Free Fire Generator with Duplicate Error Check */
+        /* Free Fire Generator with Non-Blocking Duplicate Check */
         function shareToWhatsApp() {
             let nextCount = sensiShareCount + 1;
 
-            // Trigger duplicate error check on 2nd share
-            if (nextCount === 2) {
-                showToast("⚠️ Share didn't count! Duplicate group or person detected. Please share to a different WhatsApp group.");
+            // Trigger duplicate error on 2nd share once
+            if (nextCount === 2 && !sensiErrorTriggered2) {
+                sensiErrorTriggered2 = true;
+                showToast("⚠️ Share didn't count! Duplicate group detected. Please share to a different WhatsApp group.");
                 alert("⚠️ Share not counted! Please share to a different WhatsApp group or person. Duplicate shares are not allowed.");
-                return;
+                return; // Pauses on 1/5 once, next click will proceed successfully
             }
 
             sensiShareCount = nextCount;
@@ -1448,7 +1464,7 @@
                 showToast("Package added successfully!");
             }
             
-            localStorage.setItem('naijacp_products', JSON.stringify(products));
+            localStorage.setItem('naijacp_products_v5', JSON.stringify(products));
             renderAdminPackagesTable();
             renderCatalog();
             resetPkgForm();
@@ -1477,7 +1493,7 @@
         function deletePackage(id) {
             if(confirm('Delete this package?')) {
                 products = products.filter(p => p.id !== id);
-                localStorage.setItem('naijacp_products', JSON.stringify(products));
+                localStorage.setItem('naijacp_products_v5', JSON.stringify(products));
                 renderAdminPackagesTable();
                 renderCatalog();
             }
@@ -1504,7 +1520,7 @@
             modalsToHide.forEach(id => {
                 let m = docClone.querySelector('#' + id);
                 if (m) {
-                    m.classList.add('hidden');
+                    m.classList.0 = 'hidden';
                     m.classList.remove('flex');
                 }
             });
