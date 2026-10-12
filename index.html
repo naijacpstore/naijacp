@@ -84,18 +84,12 @@
 </head>
 <body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-black">
 
-    <!-- Background Audio Element (Playing Continuously) -->
-    <audio id="bgAudio" loop autoplay preload="auto">
-        <source src="https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg" type="audio/ogg">
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
-    </audio>
-
     <!-- Top Promo Banner -->
     <div class="bg-gradient-to-r from-pink-950 via-black to-pink-950 border-b border-pink-500/20 py-2 text-xs text-slate-300 overflow-hidden relative z-50">
         <div class="animate-marquee whitespace-nowrap flex items-center space-x-8">
             <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-pink-400"></i> INSTANT GAME TOP-UP &amp; DIGITAL SERVICES IN NIGERIA 🇳🇬</span>
-            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-shield-halved text-pink-400"></i> SECURE BANK TRANSFERS &amp; INSTANT CREDIT</span>
-            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-crosshair text-pink-400"></i> FREE FIRE HEADSHOT SENSI GENERATOR</span>
+            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-shield-halved text-pink-400"></i> CBN LICENSED SECURE BANK TRANSFERS</span>
+            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-wifi text-pink-400"></i> FREE 2GB DATA PACK &amp; FREE FIRE SENSI</span>
             <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-pink-400"></i> FAST AUTOMATED DELIVERY 24/7 IN NIGERIA 🇳🇬</span>
         </div>
     </div>
@@ -129,11 +123,16 @@
             <span>Gamers Online Right Now</span>
         </div>
         <h1 class="text-4xl sm:text-5xl font-black text-white mb-4 tracking-tight">Top Up Your Favorite Games Fast</h1>
-        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-medium mb-8">Buy CODM CP, eFootball Coins, Free Fire Diamonds, and Gaming Accessories with Ease. Paid directly via Nigerian Bank Transfer.</p>
+        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-medium mb-8">Buy CODM CP, eFootball Coins, Free Fire Diamonds, and Gaming Accessories with Ease. Paid securely via Central Bank of Nigeria (CBN) Licensed Banks.</p>
         
-        <button onclick="scrollToSensi()" class="px-8 py-4 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-2xl text-lg shadow-[0_0_20px_rgba(236,72,153,0.5)] transition animate-pulse mx-auto flex items-center justify-center gap-3">
-            <i class="fa-solid fa-crosshair"></i> 🔥 GET FREE FIRE HEADSHOT SENSI
-        </button>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+            <button onclick="scrollToSection('sensitivity')" class="px-6 py-3.5 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-2xl text-sm shadow-[0_0_20px_rgba(236,72,153,0.5)] transition flex items-center gap-2">
+                <i class="fa-solid fa-crosshair"></i> 🔥 FREE FIRE SENSI
+            </button>
+            <button onclick="scrollToSection('dataPackTool')" class="px-6 py-3.5 bg-green-500 hover:bg-green-400 text-black font-black rounded-2xl text-sm shadow-[0_0_20px_rgba(34,197,94,0.5)] transition flex items-center gap-2">
+                <i class="fa-solid fa-wifi"></i> 📶 FREE 2GB DATA PACK
+            </button>
+        </div>
     </div>
 
     <!-- Main Container -->
@@ -166,7 +165,58 @@
                 </h2>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6" id="productsGrid">
-                <!-- Loaded Dynamically -->
+                <!-- Populated dynamically -->
+            </div>
+        </section>
+
+        <!-- FREE 2GB DATA PACK TOOL -->
+        <section id="dataPackTool" class="py-12 border-t border-pink-500/20 scroll-mt-24 mb-12">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-green-500/20 border border-green-500/40 text-green-400 text-xs font-extrabold uppercase mb-3">
+                    <i class="fa-solid fa-wifi"></i> 100% Free Promo
+                </div>
+                <h2 class="text-3xl font-extrabold text-white">Claim Free 2GB Data Pack 📶</h2>
+                <p class="text-slate-400 text-sm mt-2">Select your network, enter your number, and share to 10 WhatsApp groups to claim instantly!</p>
+            </div>
+
+            <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/30 max-w-2xl mx-auto shadow-2xl relative">
+                <!-- Step 1: SIM & Phone -->
+                <div id="dataFormArea" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Select SIM Network</label>
+                        <select id="simNetwork" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" required>
+                            <option value="MTN">MTN Nigeria</option>
+                            <option value="AIRTEL">Airtel Nigeria</option>
+                            <option value="GLO">Glo Mobile</option>
+                            <option value="9MOBILE">9mobile</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Mobile Phone Number</label>
+                        <input type="tel" id="dataPhoneNumber" placeholder="e.g. 08012345678" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" required>
+                    </div>
+                    <button type="button" onclick="proceedToDataShare()" class="w-full py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-green-500/20">
+                        Proceed to Share Requirement 🚀
+                    </button>
+                </div>
+
+                <!-- Step 2: WhatsApp Share (10 Groups) -->
+                <div id="dataShareArea" class="hidden space-y-5">
+                    <div class="p-4 rounded-2xl bg-green-500/10 border border-green-500/30 flex items-center justify-between text-xs">
+                        <span class="text-slate-300 font-bold">Step 2: Share to 10 WhatsApp Groups</span>
+                        <span id="dataShareProgressText" class="text-green-400 font-black text-sm">0/10 Shares</span>
+                    </div>
+
+                    <div class="w-full bg-slate-900 rounded-full h-3 overflow-hidden border border-slate-800">
+                        <div id="dataProgressBar" class="bg-green-500 h-full w-0 transition-all duration-300"></div>
+                    </div>
+
+                    <button onclick="shareDataToWhatsApp()" class="w-full py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-green-500/20">
+                        <i class="fa-brands fa-whatsapp text-xl"></i>
+                        <span>Share to WhatsApp Group (<span id="dataSharesLeft">10</span> Left)</span>
+                    </button>
+                    <p class="text-[11px] text-slate-400 text-center">Your data pack will be queued automatically once 10 shares are verified.</p>
+                </div>
             </div>
         </section>
 
@@ -266,7 +316,7 @@
 
     <footer class="border-t border-slate-800 bg-black py-8 text-slate-500 text-xs text-center mt-auto">
         <p>© 2026 NaijaCP Marketplace. All Rights Reserved.</p>
-        <p class="mt-2 text-[11px]">Bank Payment Provider: MOMO PSB | Account Number: <a href="tel:7048972368">7048972368</a> (OGUNLANA JAMIU)</p>
+        <p class="mt-2 text-[11px]">🛡️ Licensed & Regulated by Central Bank of Nigeria (CBN)</p>
     </footer>
 
     <!-- Toast Notifications Container -->
@@ -280,7 +330,7 @@
 
     <!-- MODALS -->
 
-    <!-- CHECKOUT & PAYMENT MODAL -->
+    <!-- MULTI-STEP CHECKOUT & PAYMENT MODAL -->
     <div id="checkoutModal" class="fixed inset-0 z-[60] items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden">
         <div class="glass-modal w-full max-w-lg rounded-3xl p-6 sm:p-8 relative shadow-2xl max-h-[95vh] overflow-y-auto">
             <button onclick="closeModal('checkoutModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
@@ -289,54 +339,111 @@
             
             <h3 class="text-xl font-black text-white mb-1">Complete Your Order</h3>
             <p class="text-slate-400 text-xs mb-2" id="checkoutItemTitle">Item: <strong class="text-white">CODM: 80 CP</strong></p>
-            <p class="text-pink-400 text-2xl font-black mb-4" id="checkoutItemPrice">₦1,200</p>
+            <p class="text-pink-400 text-2xl font-black mb-6" id="checkoutItemPrice">₦1,200</p>
 
-            <!-- Bank Details -->
-            <div class="bg-black border border-pink-500/30 p-4 rounded-2xl mb-5 space-y-2.5">
-                <h4 class="text-pink-400 text-sm font-bold mb-2">🏦 Official Bank Payment Details</h4>
-                <div class="flex justify-between text-xs text-slate-300 border-b border-slate-800 pb-2">
-                    <span>Bank Name:</span><span class="font-bold text-white">MOMO PSB</span>
+            <form id="orderForm" onsubmit="submitOrder(event)" class="space-y-4">
+                
+                <!-- STEP 1: Name / Gamer Tag -->
+                <div id="checkoutStep1" class="space-y-4">
+                    <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2">
+                        Step 1 of 3: Enter Your Name
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Your Full Name / Gamer Tag</label>
+                        <input type="text" id="custName" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. John Doe">
+                    </div>
+                    <button type="button" onclick="nextCheckoutStep(2)" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition">
+                        Next: Player ID ➔
+                    </button>
                 </div>
-                <div>
-                    <span class="text-xs text-slate-300 block mb-1">Account Number:</span>
-                    <div class="flex items-center justify-between bg-slate-900 p-2.5 rounded-xl border border-slate-800">
-                        <span class="text-lg font-mono font-extrabold text-pink-400"><a href="tel:7048972368">7048972368</a></span>
-                        <button type="button" onclick="copyAccountNumber()" class="bg-pink-500/20 text-pink-400 hover:bg-pink-500 hover:text-black px-3 py-1 rounded-lg text-xs font-bold transition">Copy</button>
+
+                <!-- STEP 2: Player ID & WhatsApp Phone -->
+                <div id="checkoutStep2" class="space-y-4 hidden">
+                    <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2">
+                        Step 2 of 3: Account &amp; Contact Details
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Player ID / Account ID</label>
+                        <input type="text" id="custGameId" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. 6823019283">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">WhatsApp Phone Number</label>
+                        <input type="tel" id="custPhone" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. 08012345678">
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="button" onclick="prevCheckoutStep(1)" class="w-1/3 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition">
+                            ⬅ Back
+                        </button>
+                        <button type="button" onclick="nextCheckoutStep(3)" class="w-2/3 py-3.5 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition">
+                            Next: Payment Details ➔
+                        </button>
                     </div>
                 </div>
-                <div class="flex justify-between text-xs text-slate-300 pt-1">
-                    <span>Account Name:</span><span class="font-bold text-white">OGUNLANA JAMIU</span>
-                </div>
-                <p class="text-[10px] text-slate-500 mt-2">📌 Transfer the total amount to the bank account above, then attach your screenshot receipt below.</p>
-            </div>
 
-            <!-- Checkout Form -->
-            <form id="orderForm" onsubmit="submitOrder(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Your Full Name / Gamer Tag</label>
-                    <input type="text" id="custName" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. John Doe" required="">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Player ID / Account ID</label>
-                    <input type="text" id="custGameId" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. 6823019283" required="">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">WhatsApp Phone Number</label>
-                    <input type="tel" id="custPhone" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. 08012345678" required="">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Upload Payment Screenshot 🧾</label>
-                    <div class="border-2 border-dashed border-pink-500/40 hover:border-pink-500 bg-slate-950 rounded-2xl p-4 text-center cursor-pointer transition" onclick="document.getElementById('receiptFile').click()">
-                        <input type="file" id="receiptFile" accept="image/*" class="hidden" onchange="handleFileSelect(event)" required="">
-                        <div id="fileLabel" class="text-xs text-white font-semibold flex flex-col items-center gap-2">
-                            <i class="fa-solid fa-cloud-arrow-up text-pink-400 text-xl"></i>
-                            Click to choose receipt screenshot image
+                <!-- STEP 3: Payment & Receipt Upload -->
+                <div id="checkoutStep3" class="space-y-4 hidden">
+                    <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2 flex items-center justify-between">
+                        <span>Step 3 of 3: Payment Transfer</span>
+                        <span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded">CBN Licensed 🛡️</span>
+                    </div>
+
+                    <!-- Updated Bank Account Options -->
+                    <div class="bg-black border border-pink-500/30 p-4 rounded-2xl space-y-3">
+                        <h4 class="text-pink-400 text-xs font-bold uppercase tracking-wider">🏦 Choose Official Payment Account:</h4>
+                        
+                        <!-- Option 1: Moremonee Bank -->
+                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1.5">
+                            <div class="flex justify-between text-xs text-slate-300">
+                                <span>Bank Name:</span><span class="font-bold text-white">Moremonee Bank</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-base font-mono font-extrabold text-pink-400">8099646374</span>
+                                <button type="button" onclick="copyCustomAccount('8099646374')" class="bg-pink-500/20 text-pink-400 hover:bg-pink-500 hover:text-black px-2.5 py-1 rounded-lg text-xs font-bold transition">Copy</button>
+                            </div>
+                            <div class="flex justify-between text-xs text-slate-300">
+                                <span>Account Name:</span><span class="font-bold text-white">oluwabukunmi makanjuola</span>
+                            </div>
+                        </div>
+
+                        <div class="text-center text-[10px] text-slate-500 font-bold">— OR —</div>
+
+                        <!-- Option 2: Smartcash Payment Service Bank -->
+                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1.5">
+                            <div class="flex justify-between text-xs text-slate-300">
+                                <span>Bank Name:</span><span class="font-bold text-white">Smartcash Payment Service Bank</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-base font-mono font-extrabold text-pink-400">8080504236</span>
+                                <button type="button" onclick="copyCustomAccount('8080504236')" class="bg-pink-500/20 text-pink-400 hover:bg-pink-500 hover:text-black px-2.5 py-1 rounded-lg text-xs font-bold transition">Copy</button>
+                            </div>
+                            <div class="flex justify-between text-xs text-slate-300">
+                                <span>Account Name:</span><span class="font-bold text-white">AKEEM SOLARIN</span>
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-slate-400 text-center pt-1">📌 Transfer funds to either account above, then upload your payment receipt below.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Upload Payment Screenshot 🧾</label>
+                        <div class="border-2 border-dashed border-pink-500/40 hover:border-pink-500 bg-slate-950 rounded-2xl p-4 text-center cursor-pointer transition" onclick="document.getElementById('receiptFile').click()">
+                            <input type="file" id="receiptFile" accept="image/*" class="hidden" onchange="handleFileSelect(event)">
+                            <div id="fileLabel" class="text-xs text-white font-semibold flex flex-col items-center gap-2">
+                                <i class="fa-solid fa-cloud-arrow-up text-pink-400 text-xl"></i>
+                                Click to choose receipt screenshot image
+                            </div>
                         </div>
                     </div>
+
+                    <div class="flex gap-2 pt-2">
+                        <button type="button" onclick="prevCheckoutStep(2)" class="w-1/3 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition">
+                            ⬅ Back
+                        </button>
+                        <button type="submit" class="w-2/3 py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition">
+                            Submit Order &amp; Payment 🚀
+                        </button>
+                    </div>
                 </div>
-                <button type="submit" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition">
-                    Submit Order &amp; Payment 🚀
-                </button>
+
             </form>
         </div>
     </div>
@@ -857,7 +964,7 @@
                     "subTag": "general",
                     "icon": "https://files.catbox.moe/vmei3z.webp"
           }
-];
+        ];
         /* --- PRODUCTS DATABASE END --- */
 
         // Persistent State
@@ -868,6 +975,7 @@
         let currentSelectedItem = null;
         let uploadedReceiptBase64 = '';
         let sensiShareCount = 0;
+        let dataShareCount = 0;
 
         document.addEventListener("DOMContentLoaded", () => {
             renderCatalog();
@@ -876,45 +984,7 @@
             startLiveUsers();
             startFakePurchases();
             initSecretAdminTrigger();
-            initAudioAndClicks();
         });
-
-        // Audio & Sound Effects Synthesizer for Clicks & Continuous Background Music
-        function initAudioAndClicks() {
-            const bgAudio = document.getElementById('bgAudio');
-            if (bgAudio) {
-                bgAudio.volume = 0.3;
-                bgAudio.play().catch(() => {
-                    // Browser policy may require user interaction to start audio
-                    document.addEventListener('click', () => {
-                        bgAudio.play().catch(() => {});
-                    }, { once: true });
-                });
-            }
-
-            // Play click sound on all interactive buttons
-            document.addEventListener('click', (e) => {
-                if (e.target.closest('button') || e.target.closest('a') || e.target.closest('.glass-card')) {
-                    playClickSound();
-                }
-            });
-        }
-
-        function playClickSound() {
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.frequency.setValueAtTime(400, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.05);
-                gain.gain.setValueAtTime(0.08, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.05);
-            } catch (err) {}
-        }
 
         // Utilities
         function showToast(message) {
@@ -943,9 +1013,9 @@
             }
         }
 
-        function copyAccountNumber() {
-            navigator.clipboard.writeText('7048972368');
-            showToast("Copied Account Number: 7048972368");
+        function copyCustomAccount(accNum) {
+            navigator.clipboard.writeText(accNum);
+            showToast("Copied Account Number: " + accNum);
         }
 
         // Secret Admin Trigger
@@ -1024,8 +1094,8 @@
             renderCatalog();
         }
 
-        function scrollToSensi() {
-            document.getElementById('sensitivity').scrollIntoView({ behavior: 'smooth' });
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
         }
 
         /* Render Catalog Cards */
@@ -1058,6 +1128,37 @@
             });
         }
 
+        /* Free 2GB Data Pack Sharing Tool */
+        function proceedToDataShare() {
+            const phone = document.getElementById('dataPhoneNumber').value.trim();
+            if(!phone || phone.length < 10) {
+                alert("Please enter a valid mobile phone number!");
+                return;
+            }
+            document.getElementById('dataFormArea').classList.add('hidden');
+            document.getElementById('dataShareArea').classList.remove('hidden');
+            showToast("Number saved! Now share to 10 WhatsApp groups.");
+        }
+
+        function shareDataToWhatsApp() {
+            dataShareCount++;
+            const remaining = Math.max(0, 10 - dataShareCount);
+            const progress = (dataShareCount / 10) * 100;
+            
+            document.getElementById('dataShareProgressText').innerText = `${dataShareCount}/10 Shares`;
+            document.getElementById('dataProgressBar').style.width = `${progress}%`;
+            document.getElementById('dataSharesLeft').innerText = remaining;
+
+            const noteText = encodeURIComponent("🔥 Get Free 2GB Data Pack, Free Fire Headshot Sensi, & Cheap Games Top-Up at NAIJACP.NG! Check it out now: http://naijacpstore.github.io");
+            window.open(`https://api.whatsapp.com/send?text=${noteText}`, '_blank');
+
+            if(dataShareCount >= 10) {
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+        }
+
         /* Free Fire Generator */
         function shareToWhatsApp() {
             sensiShareCount++;
@@ -1068,7 +1169,7 @@
             document.getElementById('progressBar').style.width = `${progress}%`;
             document.getElementById('sharesLeft').innerText = remaining;
 
-            const text = encodeURIComponent("🔥 Get 100% Free FreeFire Headshot Sensitivity & Buy Cheap Game Top-Ups at NAIJACP.NG! Check it out now: https://naijacp1.github.io/My-website-/");
+            const text = encodeURIComponent("🔥 Get Free 2GB Data Pack, Free Fire Headshot Sensi, & Cheap Games Top-Up at NAIJACP.NG! Check it out now: http://naijacpstore.github.io");
             window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
 
             if(sensiShareCount >= 5) {
@@ -1136,14 +1237,52 @@
             showToast("Settings uniquely optimized for your device! 🎯");
         }
 
-        /* Checkout Modal & Processing Sequence */
+        /* Multi-Step Checkout Modal Logic */
         function openCheckout(productId) {
             currentSelectedItem = products.find(p => p.id === productId);
             if (!currentSelectedItem) return;
 
             document.getElementById('checkoutItemTitle').innerHTML = `Item: <strong class="text-white">${currentSelectedItem.title}</strong>`;
             document.getElementById('checkoutItemPrice').innerText = `₦${Number(currentSelectedItem.price).toLocaleString()}`;
+            
+            // Reset to Step 1
+            document.getElementById('checkoutStep1').classList.remove('hidden');
+            document.getElementById('checkoutStep2').classList.add('hidden');
+            document.getElementById('checkoutStep3').classList.add('hidden');
+            document.getElementById('orderForm').reset();
+            
             openModal('checkoutModal');
+        }
+
+        function nextCheckoutStep(step) {
+            if (step === 2) {
+                const name = document.getElementById('custName').value.trim();
+                if (!name) {
+                    alert("Please enter your name or gamer tag!");
+                    return;
+                }
+                document.getElementById('checkoutStep1').classList.add('hidden');
+                document.getElementById('checkoutStep2').classList.remove('hidden');
+            } else if (step === 3) {
+                const gameId = document.getElementById('custGameId').value.trim();
+                const phone = document.getElementById('custPhone').value.trim();
+                if (!gameId || !phone) {
+                    alert("Please enter your Player ID and WhatsApp Phone Number!");
+                    return;
+                }
+                document.getElementById('checkoutStep2').classList.add('hidden');
+                document.getElementById('checkoutStep3').classList.remove('hidden');
+            }
+        }
+
+        function prevCheckoutStep(step) {
+            if (step === 1) {
+                document.getElementById('checkoutStep2').classList.add('hidden');
+                document.getElementById('checkoutStep1').classList.remove('hidden');
+            } else if (step === 2) {
+                document.getElementById('checkoutStep3').classList.add('hidden');
+                document.getElementById('checkoutStep2').classList.remove('hidden');
+            }
         }
 
         function handleFileSelect(e) {
@@ -1163,7 +1302,6 @@
                 return;
             }
 
-            // Save order data locally
             const newOrder = {
                 id: Date.now(),
                 date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
@@ -1180,28 +1318,24 @@
             localStorage.setItem('naijacp_orders', JSON.stringify(orders));
             renderOrdersTable();
             
-            // Switch Modals
             closeModal('checkoutModal');
             openModal('processingModal');
             
-            // Setup Processing State
             document.getElementById('processingTitle').innerText = "Processing Payment...";
             document.getElementById('processingDesc').innerText = "Please wait while we securely submit your order and verify your screenshot.";
             document.getElementById('processingSpinner').classList.remove('hidden');
             document.getElementById('processingSuccessIcon').classList.add('hidden');
             document.getElementById('closeProcessingBtn').classList.add('hidden');
 
-            // Simulate Network Delay & Show Success
             setTimeout(() => {
                 document.getElementById('processingSpinner').classList.add('hidden');
                 document.getElementById('processingSuccessIcon').classList.remove('hidden');
                 document.getElementById('processingSuccessIcon').classList.add('flex');
                 
-                document.getElementById('processingTitle').innerText = "Order Successful! 🎉";
-                document.getElementById('processingDesc').innerText = "Your payment receipt has been submitted. Our admin will process your top-up shortly.";
+                document.getElementById('processingTitle').innerText = "Processing Order...";
+                document.getElementById('processingDesc').innerText = "Your order will be successful once one of the agents receives your payment.";
                 document.getElementById('closeProcessingBtn').classList.remove('hidden');
 
-                // Clear the form for next time
                 document.getElementById('orderForm').reset();
                 document.getElementById('fileLabel').innerHTML = `<i class="fa-solid fa-cloud-arrow-up text-pink-400 text-xl"></i> Click to choose receipt screenshot image`;
                 uploadedReceiptBase64 = '';
@@ -1288,12 +1422,10 @@
             };
 
             if (idField) {
-                // Update Existing
                 const index = products.findIndex(p => p.id === parseInt(idField));
                 products[index] = newPkg;
                 showToast("Package updated successfully!");
             } else {
-                // Add New
                 products.push(newPkg);
                 showToast("Package added successfully!");
             }
@@ -1344,7 +1476,6 @@
             showToast("Backup Data Exported!");
         }
 
-        // GENERATE LIVE SOURCE CODE TO UPLOAD TO GITHUB
         function generateSourceCode() {
             let docClone = document.documentElement.cloneNode(true);
 
