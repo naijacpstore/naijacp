@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="siteTitleTag">Lagos Life | Naija Life Simulator & Multiplayer Browser Game</title>
+    <title>NAIJACP.NG | Africa's Top Gaming Marketplace & Digital Top-Up Services</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,44 +13,44 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #050508;
+            background-color: #060508;
             color: #f3f4f6;
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050508; }
+        ::-webkit-scrollbar { width: 7px; }
+        ::-webkit-scrollbar-track { background: #060508; }
         ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #22c55e; }
+        ::-webkit-scrollbar-thumb:hover { background: #ec4899; }
 
         .glass-card {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(34, 197, 94, 0.15);
+            background: rgba(18, 12, 21, 0.75);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(236, 72, 153, 0.15);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .glass-card:hover {
             transform: translateY(-4px);
-            border-color: rgba(34, 197, 94, 0.5);
-            box-shadow: 0 12px 35px -10px rgba(34, 197, 94, 0.25);
+            border-color: rgba(236, 72, 153, 0.5);
+            box-shadow: 0 10px 30px -10px rgba(236, 72, 153, 0.35);
         }
 
         .glass-modal {
-            background: rgba(10, 15, 28, 0.97);
+            background: rgba(12, 10, 16, 0.96);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(34, 197, 94, 0.3);
+            border: 1px solid rgba(236, 72, 153, 0.3);
         }
 
         .pulse-dot {
-            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7);
             animation: pulse 1.8s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(236, 72, 153, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
         }
 
         @keyframes marquee {
@@ -60,239 +60,395 @@
         .animate-marquee {
             display: flex;
             width: 200%;
-            animation: marquee 25s linear infinite;
+            animation: marquee 22s linear infinite;
         }
+
+        @keyframes slideInUp {
+            from { transform: translateY(120%) scale(0.9); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        @keyframes fadeOutDown {
+            from { transform: translateY(0) scale(1); opacity: 1; }
+            to { transform: translateY(120%) scale(0.9); opacity: 0; }
+        }
+        .toast-enter { animation: slideInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .toast-exit { animation: fadeOutDown 0.4s cubic-bezier(0.7, 0, 0.84, 0) forwards; }
         
-        .active-tab {
-            background-color: #22c55e !important;
+        .active-btn {
+            background-color: #ec4899 !important;
             color: #000 !important;
-            font-weight: 800 !important;
+            border-color: #ec4899 !important;
+            box-shadow: 0 10px 15px -3px rgba(236, 72, 153, 0.3) !important;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-green-500 selection:text-black">
+<body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-black">
 
-    <!-- Web Audio Sound Synthesizer helper -->
-    <script>
-        function playSound(type = 'click') {
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-
-                if (type === 'click') {
-                    osc.frequency.setValueAtTime(450, ctx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.05);
-                    gain.gain.setValueAtTime(0.08, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
-                    osc.start();
-                    osc.stop(ctx.currentTime + 0.05);
-                } else if (type === 'success') {
-                    osc.frequency.setValueAtTime(587.33, ctx.currentTime);
-                    osc.frequency.setValueAtTime(880, ctx.currentTime + 0.08);
-                    gain.gain.setValueAtTime(0.1, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
-                    osc.start();
-                    osc.stop(ctx.currentTime + 0.25);
-                }
-            } catch (e) {
-                // AudioContext not allowed before user gesture or unsupported
-            }
-        }
-    </script>
-
-    <!-- Top Ticker / Announcements -->
-    <div class="bg-gradient-to-r from-emerald-950 via-black to-emerald-950 border-b border-green-500/20 py-2.5 text-xs text-slate-300 overflow-hidden relative z-50">
-        <div class="animate-marquee whitespace-nowrap flex items-center space-x-10">
-            <span class="inline-flex items-center gap-2 font-bold text-green-400"><i class="fa-solid fa-bolt"></i> NEPA update: Steady light is law this week for everybody! 💡</span>
-            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bus text-yellow-400"></i> Danfo drivers on strike for Mushin route — enter bike! 🏍️</span>
-            <span class="inline-flex items-center gap-2 font-bold text-green-400"><i class="fa-solid fa-fire"></i> Amala Shitta extra kpomo available now! 🍲</span>
-            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-green-400"></i> NO DOWNLOAD REQUIRED — PLAY INSTANTLY IN BROWSER 🇳🇬</span>
+    <!-- Top Promo Banner -->
+    <div class="bg-gradient-to-r from-pink-950 via-black to-pink-950 border-b border-pink-500/20 py-2 text-xs text-slate-300 overflow-hidden relative z-50">
+        <div class="animate-marquee whitespace-nowrap flex items-center space-x-8">
+            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-pink-400"></i> INSTANT GAME TOP-UP & 2GB FREE DATA IN NIGERIA 🇳🇬</span>
+            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-shield-halved text-pink-400"></i> SECURE BANK TRANSFERS & VERIFIED PAYMENTS</span>
+            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-crosshair text-pink-400"></i> FREE FIRE HEADSHOT SENSI GENERATOR</span>
+            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-pink-400"></i> FAST AUTOMATED DELIVERY 24/7 IN NIGERIA 🇳🇬</span>
         </div>
     </div>
 
     <!-- Header Navigation -->
-    <header class="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-b border-green-900/30 px-4 sm:px-8 py-4">
+    <header class="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-b border-pink-900/30 px-4 sm:px-8 py-3.5">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="playSound('click'); window.scrollTo({top:0, behavior:'smooth'})">
-                <div class="w-11 h-11 rounded-2xl bg-green-500 flex items-center justify-center font-black text-black text-2xl shadow-lg shadow-green-500/30">
-                    <i class="fa-solid fa-city"></i>
+            <!-- LOGO -->
+            <div class="flex items-center gap-2.5 cursor-pointer">
+                <div class="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-pink-500/40 bg-slate-900">
+                    <img src="https://cdn.phototourl.com/member/2026-10-01-240f3835-df17-4722-9f3c-0500455e8f80.jpg" alt="Logo" class="w-full h-full object-cover">
                 </div>
-                <div>
-                    <span id="brandTitleText" class="text-xl sm:text-2xl font-black tracking-tight text-white">LAGOS<span id="secretAdminTrigger" class="text-green-500 cursor-pointer select-none" title="Secret Admin Trigger"> LIFE</span></span>
-                    <span class="block text-[10px] text-slate-400 font-semibold tracking-wider uppercase">Naija Life Simulator 🇳🇬</span>
-                </div>
+                <span class="text-xl sm:text-2xl font-black tracking-tight text-white">
+                    NAIJACP<span id="secretAdminTrigger" class="text-pink-500 cursor-pointer select-none">.NG</span>
+                </span>
             </div>
 
             <nav class="hidden md:flex items-center gap-6">
-                <a href="#mapSection" onclick="playSound('click')" class="text-sm font-bold text-slate-300 hover:text-green-400 transition">City Map</a>
-                <a href="#featuresSection" onclick="playSound('click')" class="text-sm font-bold text-slate-300 hover:text-green-400 transition">Features</a>
-                <a href="#governmentSection" onclick="playSound('click')" class="text-sm font-bold text-slate-300 hover:text-green-400 transition">Elections & Gov</a>
+                <a onclick="switchMainCategory('games')" id="nav-games" class="text-sm font-bold text-pink-400 cursor-pointer transition hover:text-pink-300">Games</a>
+                <a onclick="switchMainCategory('gadgets')" id="nav-gadgets" class="text-sm font-bold text-slate-300 cursor-pointer transition hover:text-pink-400">Gadgets</a>
+                <a onclick="switchMainCategory('giftcards')" id="nav-giftcards" class="text-sm font-bold text-slate-300 cursor-pointer transition hover:text-pink-400">Gift Cards</a>
+                <a href="#freeDataSection" class="text-sm font-bold text-yellow-400 cursor-pointer transition hover:text-yellow-300">🎁 Free 2GB Data</a>
             </nav>
-
-            <div class="flex items-center gap-3">
-                <button onclick="playSound('success'); openModal('authModal')" class="px-5 py-2.5 rounded-xl bg-green-500 hover:bg-green-400 text-black font-black text-xs shadow-lg shadow-green-500/20 transition flex items-center gap-2">
-                    <i class="fa-solid fa-gamepad"></i> Play Free Now
-                </button>
-            </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <div class="relative pt-16 pb-20 overflow-hidden px-4 sm:px-6 text-center border-b border-green-500/20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-950/20 via-black to-black">
-        <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/30 text-xs font-bold text-slate-300 mb-6">
-            <span class="w-3 h-3 rounded-full bg-green-500 pulse-dot"></span>
-            <span id="heroOnlineCount" class="text-green-400 font-extrabold text-sm">109,420</span>
-            <span id="heroOnlineLabel">Lagosians Online Right Now</span>
+    <div class="relative pt-12 pb-16 overflow-hidden px-4 sm:px-6 text-center border-b border-pink-500/20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-pink-950/20 via-black to-black">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-slate-300 mb-6">
+            <span class="w-2.5 h-2.5 rounded-full bg-pink-500 pulse-dot"></span>
+            <span id="liveUserCounter" class="text-pink-400 font-extrabold text-sm">6,842</span>
+            <span>Gamers Online Right Now</span>
         </div>
-        <h1 id="heroHeading" class="text-4xl sm:text-6xl font-black text-white mb-5 tracking-tight max-w-4xl mx-auto">
-            Ride Danfo, Chop Amala at Shitta, Survive NEPA.
-        </h1>
-        <p id="heroSubtext" class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto font-medium mb-8">
-            The viral multiplayer life simulator set in Lagos, Abuja & Port Harcourt. Build your career, buy property, run for governor, and vibe with real players instantly in your browser. No download required.
-        </p>
-
+        <h1 class="text-4xl sm:text-5xl font-black text-white mb-4 tracking-tight">Top Up Your Favorite Games Fast</h1>
+        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-medium mb-8">Buy CODM CP, eFootball Coins, Free Fire Diamonds, and Gaming Accessories with Ease. Paid directly via Secure Bank Transfer.</p>
+        
         <div class="flex flex-wrap justify-center gap-4">
-            <button onclick="playSound('success'); openModal('authModal')" class="px-8 py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-black text-base shadow-xl shadow-green-500/30 transition flex items-center gap-3">
-                <i class="fa-solid fa-play"></i> Launch Game Session
+            <button onclick="scrollToSection('sensitivity')" class="px-6 py-3.5 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-2xl text-base shadow-[0_0_20px_rgba(236,72,153,0.5)] transition flex items-center gap-2">
+                <i class="fa-solid fa-crosshair"></i> 🔥 FREE FIRE SENSI
             </button>
-            <a href="#mapSection" onclick="playSound('click')" class="px-8 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-green-400 border border-green-500/30 font-extrabold text-base transition flex items-center gap-3">
-                <i class="fa-solid fa-map-location-dot"></i> Explore City Map
-            </a>
+            <button onclick="scrollToSection('freeDataSection')" class="px-6 py-3.5 bg-yellow-500 hover:bg-yellow-400 text-black font-black rounded-2xl text-base shadow-[0_0_20px_rgba(234,179,8,0.5)] transition flex items-center gap-2">
+                <i class="fa-solid fa-gift"></i> 🎁 2GB FREE DATA
+            </button>
         </div>
     </div>
 
     <!-- Main Container -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full space-y-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full space-y-12">
 
-        <!-- STATS BANNER -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="glass-card p-6 rounded-3xl text-center">
-                <span class="block text-xs uppercase font-extrabold text-slate-400 mb-1">Active Players</span>
-                <span id="statPlayers" class="text-2xl sm:text-3xl font-black text-green-400">2,109,420</span>
-            </div>
-            <div class="glass-card p-6 rounded-3xl text-center">
-                <span class="block text-xs uppercase font-extrabold text-slate-400 mb-1">Named Locations</span>
-                <span id="statLocations" class="text-2xl sm:text-3xl font-black text-white">30+</span>
-            </div>
-            <div class="glass-card p-6 rounded-3xl text-center">
-                <span class="block text-xs uppercase font-extrabold text-slate-400 mb-1">Careers & Gigs</span>
-                <span id="statCareers" class="text-2xl sm:text-3xl font-black text-green-400">25 Tracks</span>
-            </div>
-            <div class="glass-card p-6 rounded-3xl text-center">
-                <span class="block text-xs uppercase font-extrabold text-slate-400 mb-1">Server Status</span>
-                <span id="statStatus" class="text-2xl sm:text-3xl font-black text-yellow-400">Stable 🟢</span>
-            </div>
+        <!-- MAIN CATEGORY NAVIGATION BUTTONS -->
+        <div class="flex flex-wrap items-center gap-3 mb-2 justify-center sm:justify-start">
+            <button class="btn-cat active-btn px-6 py-3 rounded-2xl text-sm font-bold transition bg-slate-900 text-slate-300 border border-slate-800" id="catBtn-games" onclick="switchMainCategory('games')">🎮 All Game Packages</button>
+            <button class="btn-cat px-6 py-3 rounded-2xl text-sm font-bold transition bg-slate-900 text-slate-300 border border-slate-800" id="catBtn-gadgets" onclick="switchMainCategory('gadgets')">🎧 Gaming Gear & Gadgets</button>
+            <button class="btn-cat px-6 py-3 rounded-2xl text-sm font-bold transition bg-slate-900 text-slate-300 border border-slate-800" id="catBtn-giftcards" onclick="switchMainCategory('giftcards')">💳 Gift Cards & Subs</button>
         </div>
 
-        <!-- LANDMARKS & MAP SECTION -->
-        <section id="mapSection" class="scroll-mt-24">
-            <div class="flex items-center justify-between mb-8">
-                <div>
-                    <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight border-l-4 border-green-500 pl-4">
-                        📍 Iconic City Locations & Hangouts
-                    </h2>
-                    <p class="text-slate-400 text-sm mt-1 pl-4">Walk around real spots across Lagos, Abuja, and Port Harcourt.</p>
-                </div>
-            </div>
+        <!-- GAME SUB-FILTER BUTTONS -->
+        <div id="gameSubFilters" class="flex flex-wrap gap-2 mb-8 bg-slate-900/60 p-3 rounded-2xl border border-slate-800">
+            <button class="btn-subfilter active-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('all', this)">All Games</button>
+            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('codm', this)">Call of Duty (CODM)</button>
+            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('efootball', this)">eFootball PES</button>
+            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('freefire', this)">Free Fire</button>
+            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('bloodstrike', this)">Blood Strike</button>
+            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('tiktok', this)">TikTok Coins</button>
+            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('dls', this)">Dream League (DLS)</button>
+            <button class="btn-subfilter px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800" onclick="filterByGame('onestate', this)">OneState RP</button>
+        </div>
 
-            <div id="landmarksGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Dynamically rendered landmarks -->
+        <!-- PRODUCTS GRID -->
+        <section id="catalogSection" class="mb-12">
+            <div class="flex items-center gap-3 mb-6">
+                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight border-l-4 border-pink-500 pl-4" id="sectionHeading">
+                    🎮 Game Top-Up Packages
+                </h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6" id="productsGrid">
+                <!-- Loaded Dynamically -->
             </div>
         </section>
 
-        <!-- GAME FEATURES SECTION -->
-        <section id="featuresSection" class="scroll-mt-24 py-6 border-t border-green-500/20">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-black text-white mb-2">How You Play Lagos Life</h2>
-                <p class="text-slate-400 text-sm max-w-xl mx-auto">Manage your character's needs, climb the career ladder, and survive the city vibes.</p>
+        <!-- FREE DATA PACK 2GB SECTION -->
+        <section id="freeDataSection" class="py-12 border-t border-yellow-500/20 scroll-mt-24">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-yellow-500/20 border border-yellow-500/40 text-yellow-400 text-xs font-extrabold uppercase mb-3">
+                    <i class="fa-solid fa-gift"></i> Limited Promo
+                </div>
+                <h2 class="text-3xl font-extrabold text-white">Claim 2GB Free Data Pack 🎁</h2>
+                <p class="text-slate-400 text-sm mt-2">Select your network provider, input your mobile number, and share to 10 WhatsApp groups.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-card p-6 rounded-3xl border border-green-500/20">
-                    <div class="w-12 h-12 rounded-2xl bg-green-500/20 text-green-400 flex items-center justify-center text-xl mb-4 font-bold">🍔</div>
-                    <h3 class="text-lg font-bold text-white mb-2">6 Vital Sim Meters</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed">Keep your hunger, energy, fun, social, hygiene, and bladder bars green while hustling through daily struggles.</p>
-                </div>
-                <div class="glass-card p-6 rounded-3xl border border-green-500/20">
-                    <div class="w-12 h-12 rounded-2xl bg-green-500/20 text-green-400 flex items-center justify-center text-xl mb-4 font-bold">🗳️</div>
-                    <h3 class="text-lg font-bold text-white mb-2">Elected Government</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed">Vote for real players as Governor. Winning policies apply city-wide to taxes, curfews, and city development.</p>
-                </div>
-                <div class="glass-card p-6 rounded-3xl border border-green-500/20">
-                    <div class="w-12 h-12 rounded-2xl bg-green-500/20 text-green-400 flex items-center justify-center text-xl mb-4 font-bold">💬</div>
-                    <h3 class="text-lg font-bold text-white mb-2">Real-Time Multiplayer Chat</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed">Meet and chat with thousands of active players in venues, clubs, and streets across Nigeria.</p>
-                </div>
+            <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-yellow-500/30 max-w-xl mx-auto shadow-2xl">
+                <form id="freeDataForm" onsubmit="handleFreeDataSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Select SIM Network</label>
+                        <select id="simNetwork" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-yellow-500" required>
+                            <option value="">-- Choose SIM Network --</option>
+                            <option value="MTN">MTN Nigeria</option>
+                            <option value="AIRTEL">Airtel Nigeria</option>
+                            <option value="GLO">Glo Nigeria</option>
+                            <option value="9MOBILE">9mobile</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Phone Number</label>
+                        <input type="tel" id="simPhoneNumber" placeholder="e.g. 08012345678" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-yellow-500" required>
+                    </div>
+
+                    <div id="dataShareStep" class="hidden space-y-4 pt-3 border-t border-slate-800">
+                        <div class="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-between text-xs">
+                            <span class="text-slate-300 font-bold">WhatsApp Shares Required:</span>
+                            <span id="dataShareCountText" class="text-yellow-400 font-black text-sm">0/10 Shares</span>
+                        </div>
+                        <div class="w-full bg-slate-900 rounded-full h-3 overflow-hidden border border-slate-800">
+                            <div id="dataProgressBar" class="bg-yellow-500 h-full w-0 transition-all duration-300"></div>
+                        </div>
+                        <button type="button" onclick="shareDataToWhatsApp()" class="w-full py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-green-500/20">
+                            <i class="fa-brands fa-whatsapp text-xl"></i>
+                            <span>Share to WhatsApp Group (<span id="dataSharesLeft">10</span> Left)</span>
+                        </button>
+                    </div>
+
+                    <div id="dataInitBtnContainer">
+                        <button type="submit" class="w-full py-4 rounded-2xl bg-yellow-500 hover:bg-yellow-400 text-black font-extrabold text-sm transition shadow-lg shadow-yellow-500/20">
+                            Proceed to Claim 2GB 🚀
+                        </button>
+                    </div>
+                </form>
             </div>
         </section>
 
-        <!-- GOVERNMENT / GOVERNOR SECTION -->
-        <section id="governmentSection" class="scroll-mt-24 p-8 rounded-3xl bg-gradient-to-r from-green-950/40 via-slate-900 to-slate-950 border border-green-500/30 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-                <span class="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-xs font-bold uppercase">Active Administration</span>
-                <h3 class="text-2xl font-black text-white mt-2">Current Lagos State Governor: <span class="text-green-400">Gov @Franka</span></h3>
-                <p class="text-slate-400 text-xs mt-1">Next election cycle starts this weekend. Campaign across Yaba, Surulere, and Lekki to win votes!</p>
+        <!-- FREE FIRE SENSITIVITY GENERATOR TOOL -->
+        <section id="sensitivity" class="py-12 border-t border-pink-500/20 scroll-mt-24">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-400 text-xs font-extrabold uppercase mb-3">
+                    <i class="fa-solid fa-crosshair"></i> 100% Free Tool
+                </div>
+                <h2 class="text-3xl font-extrabold text-white">Free Fire Auto-Headshot Sensi</h2>
+                <p class="text-slate-400 text-sm mt-2">Share to 5 WhatsApp groups to unlock your custom optimal sensitivity settings.</p>
             </div>
-            <button onclick="playSound('success'); openModal('authModal')" class="px-6 py-3 rounded-xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-xs transition whitespace-nowrap">
-                Register to Run for Office 🏛️
-            </button>
+
+            <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/30 max-w-2xl mx-auto shadow-2xl relative">
+                
+                <!-- Share Lock Container -->
+                <div id="sensiUnlockArea" class="space-y-5">
+                    <div class="p-4 rounded-2xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-between text-xs">
+                        <span class="text-slate-300 font-bold">Step 1: Complete Share Requirement</span>
+                        <span id="taskProgressText" class="text-pink-400 font-black text-sm">0/5 Shares</span>
+                    </div>
+
+                    <div class="w-full bg-slate-900 rounded-full h-3 overflow-hidden border border-slate-800">
+                        <div id="progressBar" class="bg-pink-500 h-full w-0 transition-all duration-300"></div>
+                    </div>
+
+                    <button onclick="shareToWhatsApp()" class="w-full py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-green-500/20">
+                        <i class="fa-brands fa-whatsapp text-xl"></i>
+                        <span>Share to WhatsApp Group (<span id="sharesLeft">5</span> Left)</span>
+                    </button>
+                </div>
+
+                <!-- Actual Form Container -->
+                <div id="sensiFormArea" class="hidden">
+                    <div class="p-3.5 mb-6 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs text-center font-bold">
+                        <i class="fa-solid fa-circle-check text-green-400 mr-1"></i> Shared successfully! Generate your settings below.
+                    </div>
+                    
+                    <form id="sensiForm" onsubmit="generateSensi(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Exact Phone Brand & Model</label>
+                            <input type="text" id="phoneModel" placeholder="e.g. Tecno Spark 10, iPhone 11" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">RAM Size</label>
+                            <select id="ramSize" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" required>
+                                <option value="2">2 GB RAM</option>
+                                <option value="3">3 GB RAM</option>
+                                <option value="4" selected>4 GB RAM</option>
+                                <option value="6">6 GB RAM</option>
+                                <option value="8">8 GB RAM or Higher</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2 mt-2">
+                            <button type="submit" class="w-full py-4 rounded-2xl bg-pink-500 hover:bg-pink-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-pink-500/20">
+                                Generate Unique Settings ⚡
+                            </button>
+                        </div>
+                    </form>
+
+                    <div id="sensiResults" class="hidden mt-6 pt-6 border-t border-slate-800 grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
+                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">General</span>
+                            <span class="text-xl font-black text-green-400" id="valGen">195</span>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
+                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">Red Dot</span>
+                            <span class="text-xl font-black text-green-400" id="valRed">185</span>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
+                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">2X Scope</span>
+                            <span class="text-xl font-black text-green-400" id="val2x">175</span>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
+                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">4X Scope</span>
+                            <span class="text-xl font-black text-green-400" id="val4x">160</span>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
+                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">AWM Scope</span>
+                            <span class="text-xl font-black text-green-400" id="valAwm">120</span>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
+                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">Fire Button</span>
+                            <span class="text-xl font-black text-green-400" id="valBtn">48%</span>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center col-span-2">
+                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">Recommended DPI</span>
+                            <span class="text-xl font-black text-green-400" id="valDpi">Default</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </section>
 
     </div>
 
-    <!-- Footer -->
-    <footer class="border-t border-slate-800 bg-black py-10 text-slate-500 text-xs text-center mt-auto">
-        <div class="max-w-7xl mx-auto px-4 space-y-3">
-            <p>&copy; 2026 Lagos Life. All Rights Reserved. A browser-based multiplayer life simulator set in Nigeria.</p>
-            <p class="text-[11px] text-slate-400">Rated 18+ for adult themes, chat, and simulated city life. Not a real-world financial investment platform.</p>
-        </div>
+    <footer class="border-t border-slate-800 bg-black py-8 text-slate-500 text-xs text-center mt-auto">
+        <p>&copy; 2026 NaijaCP Marketplace. All Rights Reserved.</p>
+        <p class="mt-2 text-[11px]">Secure Merchant & Game Top-Up Services 🇳🇬</p>
     </footer>
+
+    <!-- Toast Notifications Container -->
+    <div id="liveToastContainer" class="fixed bottom-5 right-5 z-[999] flex flex-col gap-2 pointer-events-none w-full max-w-xs"></div>
+
+    <!-- Telegram Customer Support Floating Button -->
+    <a href="https://t.me/naijacp0" target="_blank" class="fixed bottom-5 left-5 z-[990] bg-[#229ED9] hover:bg-[#1CA1C1] text-white px-4 py-3 rounded-full flex items-center gap-2 shadow-[0_0_15px_rgba(34,158,217,0.4)] transition hover:scale-105 cursor-pointer">
+        <i class="fa-brands fa-telegram text-2xl"></i>
+        <span class="text-xs font-bold hidden sm:inline">Customer Support</span>
+    </a>
 
     <!-- MODALS -->
 
-    <!-- AUTH / GAME LAUNCH MODAL -->
-    <div id="authModal" class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
-        <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-2xl">
-            <button onclick="playSound('click'); closeModal('authModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
+    <!-- MULTI-STEP CHECKOUT & PAYMENT MODAL -->
+    <div id="checkoutModal" class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+        <div class="glass-modal w-full max-w-lg rounded-3xl p-6 sm:p-8 relative shadow-2xl max-h-[95vh] overflow-y-auto">
+            <button onclick="closeModal('checkoutModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
                 <i class="fa-solid fa-xmark"></i>
             </button>
             
-            <div class="text-center mb-6">
-                <div class="w-14 h-14 rounded-2xl bg-green-500/20 text-green-400 flex items-center justify-center text-2xl mx-auto mb-3 font-bold">🇳🇬</div>
-                <h3 class="text-xl font-black text-white">Enter Lagos Life</h3>
-                <p class="text-slate-400 text-xs mt-1">Choose how you want to start your simulation session.</p>
+            <h3 class="text-xl font-black text-white mb-1">Complete Your Order</h3>
+            <p class="text-slate-400 text-xs mb-2" id="checkoutItemTitle">Item: Loading...</p>
+            <p class="text-pink-400 text-2xl font-black mb-4" id="checkoutItemPrice">₦0</p>
+
+            <!-- STEP INDICATOR -->
+            <div class="flex items-center justify-between mb-6 bg-slate-900 p-3 rounded-2xl border border-slate-800 text-xs font-bold">
+                <span id="stepIndicatorText" class="text-pink-400">Step 1 of 3: Gamer Name</span>
+                <div class="flex gap-1.5">
+                    <span id="dot1" class="w-3 h-3 rounded-full bg-pink-500"></span>
+                    <span id="dot2" class="w-3 h-3 rounded-full bg-slate-700"></span>
+                    <span id="dot3" class="w-3 h-3 rounded-full bg-slate-700"></span>
+                </div>
             </div>
 
-            <div class="space-y-3">
-                <button onclick="playSound('success'); alert('Connected to Lagos Live Server! Enjoy your session.'); closeModal('authModal');" class="w-full py-3.5 rounded-xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-xs transition">
-                    🎮 Quick Play as Guest
-                </button>
-                <button onclick="playSound('click'); alert('Opening account registration portal...'); closeModal('authModal');" class="w-full py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-green-400 border border-green-500/30 font-extrabold text-xs transition">
-                    🔑 Sign Up / Log In with Email
-                </button>
-            </div>
+            <!-- Multi-step Form -->
+            <form id="orderForm" onsubmit="submitOrder(event)" class="space-y-4">
+                
+                <!-- STEP 1: NAME -->
+                <div id="checkoutStep1" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Your Full Name / Gamer Tag</label>
+                        <input type="text" id="custName" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. John Doe">
+                    </div>
+                    <button type="button" onclick="nextCheckoutStep(2)" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition">
+                        Next: Game Account Info ➡️
+                    </button>
+                </div>
+
+                <!-- STEP 2: GAME ID & PHONE -->
+                <div id="checkoutStep2" class="space-y-4 hidden">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Player ID / Account ID</label>
+                        <input type="text" id="custGameId" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. 6823019283">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">WhatsApp Phone Number</label>
+                        <input type="tel" id="custPhone" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. 08012345678">
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="button" onclick="nextCheckoutStep(1)" class="w-1/3 py-3 rounded-xl bg-slate-800 text-slate-300 font-bold text-xs">⬅️ Back</button>
+                        <button type="button" onclick="nextCheckoutStep(3)" class="w-2/3 py-3.5 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm transition">Next: Payment ➡️</button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: PAYMENT & RECEIPT -->
+                <div id="checkoutStep3" class="space-y-4 hidden">
+                    <!-- Bank Details -->
+                    <div class="bg-black border border-pink-500/30 p-4 rounded-2xl space-y-3">
+                        <h4 class="text-pink-400 text-xs font-bold">🏦 Official Bank Payment Options</h4>
+                        
+                        <!-- Option 1 -->
+                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1.5 text-xs">
+                            <div class="flex justify-between font-bold text-slate-300">
+                                <span>Moremonee Bank</span>
+                                <button type="button" onclick="copyAcc('8099646374')" class="text-pink-400 underline">Copy</button>
+                            </div>
+                            <div class="text-pink-400 font-mono font-extrabold text-sm">8099646374</div>
+                            <div class="text-slate-400 text-[11px]">Name: OLUWABUKUNMI MAKANJUOLA</div>
+                        </div>
+
+                        <!-- Option 2 -->
+                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1.5 text-xs">
+                            <div class="flex justify-between font-bold text-slate-300">
+                                <span>Smartcash Payment Service Bank</span>
+                                <button type="button" onclick="copyAcc('8080504236')" class="text-pink-400 underline">Copy</button>
+                            </div>
+                            <div class="text-pink-400 font-mono font-extrabold text-sm">8080504236</div>
+                            <div class="text-slate-400 text-[11px]">Name: AKEEM SOLARIN</div>
+                        </div>
+
+                        <p class="text-[10px] text-slate-400 pt-1">🔒 Safe & Secure Merchant Transactions. Transfer to any account above and upload receipt.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Upload Payment Receipt 🧾</label>
+                        <div class="border-2 border-dashed border-pink-500/40 hover:border-pink-500 bg-slate-950 rounded-2xl p-3 text-center cursor-pointer transition" onclick="document.getElementById('receiptFile').click()">
+                            <input type="file" id="receiptFile" accept="image/*" class="hidden" onchange="handleFileSelect(event)">
+                            <div id="fileLabel" class="text-xs text-white font-semibold flex flex-col items-center gap-1">
+                                <i class="fa-solid fa-cloud-arrow-up text-pink-400 text-lg"></i>
+                                Click to choose receipt image
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-2 pt-2">
+                        <button type="button" onclick="nextCheckoutStep(2)" class="w-1/3 py-3 rounded-xl bg-slate-800 text-slate-300 font-bold text-xs">⬅️ Back</button>
+                        <button type="submit" class="w-2/3 py-3.5 rounded-xl bg-green-500 hover:bg-green-400 text-black font-black text-sm transition shadow-lg shadow-green-500/20">
+                            Submit Order & Payment 🚀
+                        </button>
+                    </div>
+                </div>
+
+            </form>
         </div>
     </div>
 
-    <!-- ADMIN LOGIN MODAL -->
-    <div id="adminAuthModal" class="fixed inset-0 z-[70] hidden flex items-center justify-center p-4 bg-black/95 backdrop-blur-md">
-        <div class="glass-modal w-full max-w-sm rounded-3xl p-6 text-center border border-green-500/40 relative">
-            <button onclick="playSound('click'); closeModal('adminAuthModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+    <!-- ADMIN AUTHENTICATION MODAL -->
+    <div id="adminAuthModal" class="fixed inset-0 z-[70] hidden flex items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+        <div class="glass-modal w-full max-w-sm rounded-3xl p-6 text-center border border-pink-500/40 relative">
+            <button onclick="closeModal('adminAuthModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <div class="w-12 h-12 rounded-2xl bg-green-500/20 border border-green-500/40 text-green-400 flex items-center justify-center mx-auto mb-3 text-xl">
+            <div class="w-12 h-12 rounded-2xl bg-pink-500/20 border border-pink-500/40 text-pink-400 flex items-center justify-center mx-auto mb-3 text-xl">
                 <i class="fa-solid fa-user-shield"></i>
             </div>
-            <h3 class="text-lg font-extrabold text-white mb-4">Admin Authentication</h3>
+            <h3 class="text-lg font-extrabold text-white mb-4">Admin Verification</h3>
             
             <form onsubmit="handleAdminLogin(event)" class="space-y-3">
-                <input type="text" id="adminUser" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm text-center focus:outline-none focus:border-green-500" placeholder="Username" required>
-                <input type="password" id="adminPass" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm text-center focus:outline-none focus:border-green-500" placeholder="Password" required>
-                <button type="submit" class="w-full py-3 rounded-xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition">
-                    Access Dashboard ⚡
+                <input type="text" id="adminUser" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm text-center focus:outline-none focus:border-pink-500" placeholder="Username" required>
+                <input type="password" id="adminPass" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm text-center focus:outline-none focus:border-pink-500" placeholder="Password" required>
+                <button type="submit" class="w-full py-3 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-extrabold text-sm transition">
+                    Login to Dashboard
                 </button>
             </form>
         </div>
@@ -300,189 +456,593 @@
 
     <!-- ADMIN DASHBOARD MODAL -->
     <div id="adminModal" class="fixed inset-0 z-[80] hidden flex items-center justify-center p-2 sm:p-4 bg-black/95 backdrop-blur-md">
-        <div class="glass-modal w-full max-w-5xl h-[92vh] rounded-3xl p-4 sm:p-6 relative shadow-2xl border border-green-500/40 flex flex-col">
+        <div class="glass-modal w-full max-w-5xl h-[92vh] rounded-3xl p-4 sm:p-6 relative shadow-2xl border border-pink-500/40 flex flex-col">
             <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
                 <h3 class="text-xl font-black text-white flex items-center gap-2">
-                    <i class="fa-solid fa-gears text-green-400"></i> Admin Control Panel & Source Generator
+                    <i class="fa-solid fa-gears text-pink-400"></i> Admin Control Panel
                 </h3>
-                <button onclick="playSound('click'); closeModal('adminModal')" class="text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
+                <button onclick="closeModal('adminModal')" class="text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             
-            <div class="flex gap-2 overflow-x-auto pb-2 mb-4 border-b border-slate-800 flex-shrink-0">
-                <button class="admin-tab-btn active-tab px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 transition" onclick="switchAdminTab('content')">Edit Site Content</button>
-                <button class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 transition" onclick="switchAdminTab('generator')">📥 Generate & Download Source Code</button>
+            <div class="flex gap-2 overflow-x-auto pb-2 mb-4 border-b border-slate-800 flex-shrink-0 hide-scroll">
+                <button class="admin-tab-btn active-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 whitespace-nowrap transition" onclick="switchAdminTab('orders', this)">Receipts & Orders</button>
+                <button class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 whitespace-nowrap transition" onclick="switchAdminTab('packages', this)">Manage Packages</button>
+                <button class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-green-400 border border-slate-800 whitespace-nowrap hover:bg-green-500/20 transition" onclick="exportUpdatedCode()">📥 Export Source Data</button>
             </div>
 
-            <!-- TAB 1: EDIT CONTENT -->
-            <div id="adminTabContent" class="flex-1 overflow-y-auto pr-2 space-y-4">
-                <h4 class="text-sm font-bold text-green-400 mb-2">Live Page Settings</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1">Hero Heading</label>
-                        <input type="text" id="editHeroHeading" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white text-xs">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1">Online Players Counter</label>
-                        <input type="text" id="editOnlineCount" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white text-xs">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-xs font-bold text-slate-300 mb-1">Hero Subtext Description</label>
-                        <textarea id="editHeroSubtext" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white text-xs"></textarea>
-                    </div>
+            <!-- TAB 1: ORDERS -->
+            <div id="adminTabOrders" class="flex-1 overflow-y-auto pr-2">
+                <h4 class="text-sm font-bold text-white mb-3">Submitted Customer Receipts (Processing / Verified)</h4>
+                <div class="overflow-x-auto bg-slate-950 rounded-xl border border-slate-800">
+                    <table class="w-full text-left text-xs whitespace-nowrap">
+                        <thead class="bg-slate-900 text-slate-400 border-b border-slate-800">
+                            <tr>
+                                <th class="p-3">Date</th>
+                                <th class="p-3">Customer</th>
+                                <th class="p-3">Game ID / Phone</th>
+                                <th class="p-3">Product</th>
+                                <th class="p-3">Amount</th>
+                                <th class="p-3">Screenshot</th>
+                                <th class="p-3">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody" class="text-slate-300 divide-y divide-slate-800">
+                            <tr><td colspan="7" class="p-4 text-center">No orders submitted yet.</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <button onclick="applyAdminEdits()" class="px-5 py-2.5 bg-green-500 hover:bg-green-400 text-black font-extrabold text-xs rounded-xl transition">
-                    Apply Changes to Live Site 🚀
-                </button>
             </div>
 
-            <!-- TAB 2: GENERATOR -->
-            <div id="adminTabGenerator" class="hidden flex-1 overflow-y-auto pr-2 space-y-4 text-center py-10">
-                <div class="max-w-md mx-auto space-y-4">
-                    <div class="w-16 h-16 rounded-3xl bg-green-500/20 text-green-400 flex items-center justify-center text-3xl mx-auto">
-                        <i class="fa-solid fa-code"></i>
+            <!-- TAB 2: PACKAGES -->
+            <div id="adminTabPackages" class="hidden flex-1 overflow-y-auto pr-2">
+                <h4 class="text-sm font-bold text-white mb-3">Add / Edit Product Tiers</h4>
+                <form id="pkgForm" onsubmit="savePackage(event)" class="bg-slate-900 p-4 rounded-xl border border-slate-800 mb-6 space-y-3">
+                    <input type="hidden" id="pkgId">
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                        <input type="text" id="pkgTitle" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs col-span-2 md:col-span-1" placeholder="Title (e.g. 880 CODM CP)" required>
+                        <input type="number" id="pkgPrice" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs" placeholder="Price (₦)" required>
+                        <select id="pkgCategory" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs">
+                            <option value="games">Game Top-Up</option>
+                            <option value="gadgets">Gadgets</option>
+                            <option value="giftcards">Gift Cards</option>
+                        </select>
+                        <select id="pkgSubTag" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs">
+                            <option value="codm">CODM</option>
+                            <option value="efootball">eFootball</option>
+                            <option value="freefire">Free Fire</option>
+                            <option value="bloodstrike">Blood Strike</option>
+                            <option value="tiktok">TikTok</option>
+                            <option value="dls">DLS</option>
+                            <option value="onestate">OneState RP</option>
+                            <option value="general">General / Other</option>
+                        </select>
+                        <input type="text" id="pkgIcon" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs" placeholder="Icon (e.g. 🎮)">
                     </div>
-                    <h4 class="text-lg font-bold text-white">Export Updated Source Code</h4>
-                    <p class="text-slate-400 text-xs">Click the button below to generate and download a fresh, complete self-contained HTML file containing all your live edits and custom configurations.</p>
-                    <button onclick="generateAndDownloadSourceCode()" class="w-full py-4 bg-green-500 hover:bg-green-400 text-black font-black text-sm rounded-2xl shadow-lg shadow-green-500/30 transition">
-                        📥 Download Updated HTML Source Code
-                    </button>
+                    <button type="submit" class="px-4 py-2 bg-green-500 hover:bg-green-400 text-black text-xs font-bold rounded-lg transition">Save Package</button>
+                </form>
+
+                <div class="overflow-x-auto bg-slate-950 rounded-xl border border-slate-800">
+                    <table class="w-full text-left text-xs whitespace-nowrap">
+                        <thead class="bg-slate-900 text-slate-400 border-b border-slate-800">
+                            <tr>
+                                <th class="p-3">Icon</th>
+                                <th class="p-3">Title</th>
+                                <th class="p-3">Category</th>
+                                <th class="p-3">Sub-Tag</th>
+                                <th class="p-3">Price (₦)</th>
+                                <th class="p-3">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="packagesTableBody" class="text-slate-300 divide-y divide-slate-800">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Application Script -->
+    <!-- FULL RECEIPT PREVIEW LIGHTBOX -->
+    <div id="receiptPreviewModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/95" onclick="this.classList.add('hidden')">
+        <img id="fullReceiptImg" src="" class="max-w-full max-h-[90vh] rounded-xl border border-pink-500/30 object-contain">
+    </div>
+
+    <!-- MAIN JAVASCRIPT -->
     <script>
-        // Default Landmarks Database
-        let landmarks = [
-            { name: "Afrika Shrine", category: "Nightlife & Music", desc: "Legendary afrobeat venue for late-night vibes and drinks.", icon: "🎷" },
-            { name: "Amala Shitta", category: "Food & Dining", desc: "Hot amala, gbegiri, ewedu, and giant kpomo in Surulere.", icon: "🍲" },
-            { name: "Quilox Club", category: "Nightlife", desc: "High-end Victoria Island club where big boys spray money.", icon: "🍾" },
-            { name: "CcHub Yaba", category: "Tech & Business", desc: "The startup and freelance hub where techies grind for cash.", icon: "💻" },
-            { name: "Elegushi Beach", category: "Hangout", desc: "Weekend concerts, horse riding, and ocean breeze.", icon: "🌊" },
-            { name: "Balogun Market", category: "Commerce", desc: "Busy Island market for wholesale shopping and hustling.", icon: "🛍️" }
+        /* Initial Product Database */
+        let defaultProducts = [
+            { id: 1, title: 'CODM: 80 CP', price: 1200, category: 'games', subTag: 'codm', icon: 'https://files.catbox.moe/w4tgaw.jpeg' },
+            { id: 2, title: 'CODM: 420 CP', price: 5500, category: 'games', subTag: 'codm', icon: 'https://files.catbox.moe/w4tgaw.jpeg' },
+            { id: 3, title: 'CODM: 880 CP', price: 11000, category: 'games', subTag: 'codm', icon: 'https://files.catbox.moe/w4tgaw.jpeg' },
+            { id: 4, title: 'eFootball: 130 Coins', price: 1800, category: 'games', subTag: 'efootball', icon: 'https://files.catbox.moe/muhr8g.jpeg' },
+            { id: 5, title: 'eFootball: 320 Coins', price: 4200, category: 'games', subTag: 'efootball', icon: 'https://files.catbox.moe/muhr8g.jpeg' },
+            { id: 6, title: 'eFootball: 1040 Coins', price: 13500, category: 'games', subTag: 'efootball', icon: 'https://files.catbox.moe/muhr8g.jpeg' },
+            { id: 7, title: 'Free Fire: 100 Diamonds', price: 1100, category: 'games', subTag: 'freefire', icon: 'https://files.catbox.moe/mkliz3.jpeg'  },
+            { id: 8, title: 'Free Fire: 210 Diamonds', price: 3000, category: 'games', subTag: 'freefire', icon: 'https://files.catbox.moe/mkliz3.jpeg' },
+            { id: 9, title: 'Free Fire: 310 Diamonds', price: 4700, category: 'games', subTag: 'freefire', icon: 'https://files.catbox.moe/mkliz3.jpeg' },
+            { id: 10, title: 'Free Fire: 530+53 Diamonds', price: 7500, category: 'games', subTag: 'freefire', icon: 'https://files.catbox.moe/mkliz3.jpeg' },
+            { id: 11, title: 'Free Fire: 1080+108 Diamonds', price: 15800, category: 'games', subTag: 'freefire', icon: 'https://files.catbox.moe/mkliz3.jpeg' },
+            { id: 12, title: 'Free Fire: 2200+220 Diamonds', price: 31000, category: 'games', subTag: 'freefire', icon: 'https://files.catbox.moe/mkliz3.jpeg' },
+            { id: 13, title: 'Free Fire weekly subscription : 450 Diamonds', price: 2800, category: 'games', subTag: 'freefire', icon: 'https://files.catbox.moe/mkliz3.jpeg' },
+            { id: 14, title: 'Free Fire monthly subscription : 2600 Diamonds', price: 14500, category: 'games', subTag: 'freefire', icon: 'https://files.catbox.moe/mkliz3.jpeg' },
+            { id: 15, title: 'Blood Strike: 50+ 6 Golds', price: 900, category: 'games', subTag: 'bloodstrike', icon: 'https://files.catbox.moe/5i1beg.jpeg' },
+            { id: 16, title: 'Blood Strike: 100+16 Golds', price: 1300, category: 'games', subTag: 'bloodstrike', icon: 'https://files.catbox.moe/5i1beg.jpeg' },
+            { id: 17, title: 'Blood Strike: 300+52 Golds', price: 4000, category: 'games', subTag: 'bloodstrike', icon: 'https://files.catbox.moe/5i1beg.jpeg' },
+            { id: 18, title: 'Blood Strike: 500+94 Golds', price: 6700, category: 'games', subTag: 'bloodstrike', icon: 'https://files.catbox.moe/5i1beg.jpeg' },
+            { id: 19, title: 'Blood Strike: 1000+210 Golds', price: 13500, category: 'games', subTag: 'bloodstrike', icon: 'https://files.catbox.moe/5i1beg.jpeg' },
+            { id: 20, title: 'Blood Strike: 2000+486 Golds', price: 27200, category: 'games', subTag: 'bloodstrike', icon: 'https://files.catbox.moe/5i1beg.jpeg' },
+            { id: 21, title: 'Blood Strike: STRIKE PASS ELITE PASSES', price: 4900, category: 'games', subTag: 'bloodstrike', icon: 'https://files.catbox.moe/5i1beg.jpeg' },
+            { id: 22, title: 'Blood Strike: STRIKE PASS PREMIUM PASSES', price: 11250, category: 'games', subTag: 'bloodstrike', icon: 'https://files.catbox.moe/5i1beg.jpeg' },
+            { id: 23, title: 'TikTok: 350 Coins', price: 5800, category: 'games', subTag: 'tiktok', icon: 'https://files.catbox.moe/nupea0.jpeg' },
+            { id: 24, title: 'TikTok: 700 Coins', price: 11500, category: 'games', subTag: 'tiktok', icon: 'https://files.catbox.moe/nupea0.jpeg' },
+            { id: 25, title: 'TikTok: 1500 Coins', price: 25000, category: 'games', subTag: 'tiktok', icon: 'https://files.catbox.moe/nupea0.jpeg' },
+            { id: 26, title: 'DLS: 900 Coins', price: 4000, category: 'games', subTag: 'dls', icon: 'https://files.catbox.moe/m8zy1q.jpeg' },
+            { id: 27, title: 'DLS:  SEASON PASS', price: 9000, category: 'games', subTag: 'dls', icon: 'https://files.catbox.moe/m8zy1q.jpeg' },
+            { id: 28, title: 'DLS: 1750 Coins', price: 9500, category: 'games', subTag: 'dls', icon: 'https://files.catbox.moe/m8zy1q.jpeg' },
+            { id: 29, title: 'DLS: 400 Diamonds', price: 15000, category: 'games', subTag: 'dls', icon: 'https://files.catbox.moe/m8zy1q.jpeg' },
+            { id: 30, title: 'DLS: 3000 Coins', price: 16500, category: 'games', subTag: 'dls', icon: 'https://files.catbox.moe/m8zy1q.jpeg' },
+            { id: 31, title: 'DLS: Premium Season Pass', price: 20000, category: 'games', subTag: 'dls', icon: 'https://files.catbox.moe/m8zy1q.jpeg' },
+            { id: 32, title: 'DLS: 5000 Coins', price: 20000, category: 'games', subTag: 'dls', icon: 'https://files.catbox.moe/m8zy1q.jpeg' },
+            { id: 33, title: 'DLS: 910 Diamonds ', price: 30000, category: 'games', subTag: 'dls', icon: 'https://files.catbox.moe/m8zy1q.jpeg' },
+            { id: 34, title: 'OneState RP: 100 Rp Coins', price: 4000, category: 'games', subTag: 'onestate', icon: 'https://files.catbox.moe/kppjhb.jpeg' },
+            { id: 35, title: 'OneState RP: 263+45 Rp Coins', price: 7000, category: 'games', subTag: 'onestate', icon: 'https://files.catbox.moe/kppjhb.jpeg' },
+            { id: 36, title: 'OneState RP: 525 Rp Coins', price: 15000, category: 'games', subTag: 'onestate', icon: 'https://files.catbox.moe/kppjhb.jpeg' },
+            { id: 37, title: 'OneState RP: 1350 Rp Coins', price: 40000, category: 'games', subTag: 'onestate', icon: 'https://files.catbox.moe/kppjhb.jpeg' },
+            { id: 38, title: 'Magnetic Phone Cooler', price: 19999, category: 'gadgets', subTag: 'general', icon: 'https://files.catbox.moe/jlq4ex.jpeg' },
+            { id: 39, title: 'V8 Gamepad Controller', price: 20000, category: 'gadgets', subTag: 'general', icon: 'https://files.catbox.moe/sfclwt.jpeg' },
+            { id: 40, title: 'Fuxi-H3 Gaming Headset', price: 75000, category: 'gadgets', subTag: 'general', icon: 'https://files.catbox.moe/kn7edw.jpeg' },
+            { id: 41, title: 'Thumb Gaming Sleeves', price: 15000, category: 'gadgets', subTag: 'general', icon: 'https://files.catbox.moe/wqcpt5.jpeg' },
+            { id: 42, title: '6-Pcs Anti-Sweat Sleeves', price: 7920, category: 'gadgets', subTag: 'general', icon: 'https://files.catbox.moe/5qz5gn.jpeg' },
+            { id: 43, title: 'PlayStation $10 Gift Card', price: 16500, category: 'giftcards', subTag: 'general', icon: 'https://files.catbox.moe/puxn97.jpeg' },
+            { id: 44, title: 'Apple iTunes $10 Gift Card', price: 16000, category: 'giftcards', subTag: 'general', icon: 'https://files.catbox.moe/3u7rml.jpeg' },
+            { id: 45, title: 'Google Play $10 Gift Card', price: 16200, category: 'giftcards', subTag: 'general', icon: 'https://files.catbox.moe/umckga.jpeg' },
+            { id: 46, title: 'Steam $10 Gift Card', price: 16200, category: 'giftcards', subTag: 'general', icon: 'https://files.catbox.moe/vmei3z.webp' }
         ];
 
+        // Persistent State
+        let products = JSON.parse(localStorage.getItem('naijacp_products')) || defaultProducts;
+        let orders = JSON.parse(localStorage.getItem('naijacp_orders')) || [];
+        let currentMainCat = 'games';
+        let currentSubFilter = 'all';
+        let currentSelectedItem = null;
+        let uploadedReceiptBase64 = '';
+        let sensiShareCount = 0;
+        let dataShareCount = 0;
+
         document.addEventListener("DOMContentLoaded", () => {
-            renderLandmarks();
+            renderCatalog();
+            renderOrdersTable();
+            renderAdminPackagesTable();
+            startLiveUsers();
+            startFakePurchases();
             initSecretAdminTrigger();
-            startLiveCounter();
         });
 
-        function renderLandmarks() {
-            const grid = document.getElementById('landmarksGrid');
-            grid.innerHTML = landmarks.map(l => `
-                <div class="glass-card p-6 rounded-3xl flex flex-col justify-between border border-slate-800">
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-3xl">${l.icon}</span>
-                            <span class="px-3 py-1 rounded-full bg-green-500/10 text-green-400 text-[10px] font-bold uppercase border border-green-500/20">${l.category}</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-2">${l.name}</h3>
-                        <p class="text-slate-400 text-xs leading-relaxed">${l.desc}</p>
-                    </div>
-                </div>
-            `).join('');
+        // Utilities
+        function showToast(message) {
+            const container = document.getElementById('liveToastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast-enter p-3.5 rounded-2xl bg-slate-900 border border-pink-500/40 text-white text-xs shadow-2xl flex items-center gap-3';
+            toast.innerHTML = `<i class="fa-solid fa-bell text-pink-400 text-lg"></i> <span class="font-medium">${message}</span>`;
+            
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.replace('toast-enter', 'toast-exit');
+                setTimeout(() => toast.remove(), 400);
+            }, 3500);
         }
 
-        // Secret Admin Trigger: Click '.NG' or ' LIFE' 5 times quickly
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+        function scrollToSection(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+
+        function copyAcc(num) {
+            navigator.clipboard.writeText(num);
+            showToast("Copied Account Number: " + num);
+        }
+
+        // Secret Admin Trigger
         function initSecretAdminTrigger() {
             let clicks = 0;
             const trigger = document.getElementById('secretAdminTrigger');
             trigger.addEventListener('click', () => {
                 clicks++;
-                playSound('click');
                 if (clicks >= 5) {
                     openModal('adminAuthModal');
                     clicks = 0;
                 }
-                setTimeout(() => { clicks = 0; }, 3000);
+                setTimeout(() => { clicks = 0; }, 2500);
             });
         }
 
-        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-
-        function startLiveCounter() {
+        // Live Fake Purchases & Users
+        function startLiveUsers() {
             setInterval(() => {
-                const el = document.getElementById('heroOnlineCount');
-                let curr = parseInt(el.innerText.replace(/,/g, ''));
-                let diff = Math.floor(Math.random() * 25) - 10;
-                curr += diff;
-                if (curr > 120000) curr = 108500;
-                if (curr < 100000) curr = 101200;
+                const el = document.getElementById('liveUserCounter');
+                let curr = parseInt(el.innerText.replace(',', ''));
+                let diff = Math.floor(Math.random() * 15) - 5;
+                curr = curr + diff;
+                
+                if (curr > 8000) curr = 7990 - Math.floor(Math.random() * 10);
+                if (curr < 6000) curr = 6010 + Math.floor(Math.random() * 10);
+                
                 el.innerText = curr.toLocaleString();
-            }, 4000);
+            }, 3500);
         }
 
-        // Admin Auth & Dashboard
+        function startFakePurchases() {
+            const names = ['Chinedu', 'Oluwaseun', 'Amina', 'Ngozi', 'Emeka', 'Fatima', 'Bolaji', 'Ibrahim', 'Kehinde', 'Uche', 'Adebayo', 'Chioma', 'Yusuf', 'Ezekiel'];
+            const prefixes = ['0803', '0810', '0902', '0706', '0814', '0913', '0703'];
+            
+            setInterval(() => {
+                if(Math.random() > 0.4) {
+                    const randomName = names[Math.floor(Math.random() * names.length)];
+                    const randomPhone = prefixes[Math.floor(Math.random() * prefixes.length)] + "***" + Math.floor(1000 + Math.random() * 9000);
+                    const randomProduct = products[Math.floor(Math.random() * products.length)];
+                    
+                    showToast(`<span class="text-pink-400 font-bold">${randomName} (${randomPhone})</span> just purchased <br><span class="font-bold">${randomProduct.title}</span>`);
+                }
+            }, 8000);
+        }
+
+        /* Navigation & Filtering */
+        function switchMainCategory(cat) {
+            currentMainCat = cat;
+            currentSubFilter = 'all';
+
+            document.querySelectorAll('.btn-cat').forEach(b => b.classList.remove('active-btn'));
+            document.getElementById(`catBtn-${cat}`).classList.add('active-btn');
+            
+            document.querySelectorAll('header nav a').forEach(a => a.classList.replace('text-pink-400', 'text-slate-300'));
+            document.getElementById(`nav-${cat}`)?.classList.replace('text-slate-300', 'text-pink-400');
+
+            const subFilterBox = document.getElementById('gameSubFilters');
+            if (cat === 'games') {
+                subFilterBox.classList.remove('hidden');
+                document.getElementById('sectionHeading').innerHTML = "🎮 Game Top-Up Packages";
+            } else if (cat === 'gadgets') {
+                subFilterBox.classList.add('hidden');
+                document.getElementById('sectionHeading').innerHTML = "🎧 Gaming Gear & Accessories";
+            } else {
+                subFilterBox.classList.add('hidden');
+                document.getElementById('sectionHeading').innerHTML = "💳 Gift Cards & Subscriptions";
+            }
+            renderCatalog();
+        }
+
+        function filterByGame(subTag, btn) {
+            currentSubFilter = subTag;
+            document.querySelectorAll('.btn-subfilter').forEach(b => b.classList.remove('active-btn'));
+            btn.classList.add('active-btn');
+            renderCatalog();
+        }
+
+        /* Render Catalog Cards */
+        function renderCatalog() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+            let filtered = products.filter(p => p.category === currentMainCat);
+            if (currentMainCat === 'games' && currentSubFilter !== 'all') {
+                filtered = filtered.filter(p => p.subTag === currentSubFilter);
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<p class="text-slate-400 text-sm col-span-full text-center py-10">No packages found in this category.</p>';
+                return;
+            }
+
+            filtered.forEach(p => {
+                grid.innerHTML += `
+                    <div class="glass-card p-4 rounded-3xl flex flex-col justify-between text-center group cursor-pointer border border-slate-800 hover:border-pink-500 transition duration-300">
+                        <div class="w-16 h-16 mx-auto bg-slate-900/80 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-slate-700/50 group-hover:scale-110 transition duration-300">
+                            ${p.icon.length > 4 ? `<img src="\${p.icon}" class="w-full h-full object-cover rounded-2xl">` : p.icon}
+                        </div>
+                        <h3 class="font-bold text-sm text-white mb-2 leading-tight">${p.title}</h3>
+                        <div class="text-pink-400 font-black text-lg mb-4">₦${Number(p.price).toLocaleString()}</div>
+                        <button class="w-full py-2.5 rounded-xl bg-pink-500/10 text-pink-400 font-extrabold text-xs border border-pink-500/30 group-hover:bg-pink-500 group-hover:text-black transition" onclick="openCheckout(${p.id})">
+                            Buy Now
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        /* Free Data Pack 2GB Logic */
+        function handleFreeDataSubmit(e) {
+            e.preventDefault();
+            const network = document.getElementById('simNetwork').value;
+            const phone = document.getElementById('simPhoneNumber').value.trim();
+            if(!network || !phone) {
+                alert("Please select your network and enter your phone number.");
+                return;
+            }
+            document.getElementById('simNetwork').disabled = true;
+            document.getElementById('simPhoneNumber').disabled = true;
+            document.getElementById('dataInitBtnContainer').classList.add('hidden');
+            document.getElementById('dataShareStep').classList.remove('hidden');
+            showToast("SIM registered! Complete WhatsApp shares to unlock 2GB.");
+        }
+
+        function shareDataToWhatsApp() {
+            dataShareCount++;
+            const remaining = Math.max(0, 10 - dataShareCount);
+            const progress = (dataShareCount / 10) * 100;
+
+            document.getElementById('dataShareCountText').innerText = `${dataShareCount}/10 Shares`;
+            document.getElementById('dataProgressBar').style.width = `${progress}%`;
+            document.getElementById('dataSharesLeft').innerText = remaining;
+
+            const text = encodeURIComponent("🔥 Get 2GB Free Data, Free Fire Headshot Sensitivity & Buy Cheap Game Top-Ups at NAIJACP.NG! Check it out now: http://naijacpstore.github.io");
+            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+
+            if (dataShareCount >= 10) {
+                setTimeout(() => {
+                    // Refresh / Reset site state as requested
+                    window.location.reload();
+                }, 1200);
+            }
+        }
+
+        /* Free Fire Generator */
+        function shareToWhatsApp() {
+            sensiShareCount++;
+            const remaining = Math.max(0, 5 - sensiShareCount);
+            const progress = (sensiShareCount / 5) * 100;
+            
+            document.getElementById('taskProgressText').innerText = `${sensiShareCount}/5 Shares`;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            document.getElementById('sharesLeft').innerText = remaining;
+
+            const text = encodeURIComponent("🔥 Get 2GB Free Data, Free Fire Headshot Sensitivity & Buy Cheap Game Top-Ups at NAIJACP.NG! Check it out now: http://naijacpstore.github.io");
+            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+
+            if(sensiShareCount >= 5) {
+                setTimeout(() => {
+                    document.getElementById('sensiUnlockArea').classList.add('hidden');
+                    document.getElementById('sensiFormArea').classList.remove('hidden');
+                }, 1000);
+            }
+        }
+
+        function generateSensi(e) {
+            e.preventDefault();
+            const ram = parseInt(document.getElementById('ramSize').value);
+            const phoneInputRaw = document.getElementById('phoneModel').value.trim();
+            const phoneInput = phoneInputRaw.toLowerCase();
+            
+            let hash = 0;
+            for (let i = 0; i < phoneInput.length; i++) {
+                hash = phoneInput.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            hash = Math.abs(hash);
+
+            let baseMax;
+            if (ram <= 3) baseMax = 200;
+            else if (ram === 4) baseMax = 192;
+            else if (ram === 6) baseMax = 180;
+            else baseMax = 165;
+
+            let gen = (baseMax - (hash % 15)); 
+            let red = (baseMax - 5 - (hash % 18));
+            let scope2 = (baseMax - 8 - (hash % 20));
+            let scope4 = (baseMax - 15 - (hash % 25));
+            let awm = (120 - (hash % 30));
+            let btn = (40 + (hash % 22)) + '%';
+            
+            let dpi = (380 + (hash % 220)) + ' DPI';
+            if (ram <= 3) dpi = (450 + (hash % 100)) + ' DPI';
+
+            let shortName = phoneInputRaw.replace(/[^A-Z0-9a-z]/g, '').substring(0, 5).toUpperCase() || "DEV";
+            let codeRandomness = Math.floor(10000 + (hash % 89999));
+            const sensiCode = `FF-${shortName}-${ram}G-${codeRandomness}`;
+
+            document.getElementById('valGen').innerText = gen;
+            document.getElementById('valRed').innerText = red;
+            document.getElementById('val2x').innerText = scope2;
+            document.getElementById('val4x').innerText = scope4;
+            document.getElementById('valAwm').innerText = awm;
+            document.getElementById('valBtn').innerText = btn;
+            document.getElementById('valDpi').innerText = dpi;
+
+            const resultsDiv = document.getElementById('sensiResults');
+
+            let codeBox = document.getElementById('generatedSensiCode');
+            if(!codeBox) {
+                codeBox = document.createElement('div');
+                codeBox.id = 'generatedSensiCode';
+                codeBox.className = 'col-span-2 md:col-span-4 mt-3 bg-slate-900 p-3 rounded-xl border border-pink-500/30 text-center shadow-lg';
+                resultsDiv.appendChild(codeBox);
+            }
+            codeBox.innerHTML = `<span class="block text-[11px] text-pink-400 uppercase font-bold mb-1">Your Custom Optimized Device Code</span>
+                                 <span class="text-xl font-black text-white font-mono select-all">${sensiCode}</span>
+                                 <p class="text-[10px] text-slate-500 mt-1">Unique setup generated exclusively for ${phoneInputRaw}</p>`;
+
+            resultsDiv.classList.remove('hidden');
+            showToast("Settings uniquely optimized for your device! 🎯");
+        }
+
+        /* Multi-Step Checkout Modal */
+        function openCheckout(productId) {
+            currentSelectedItem = products.find(p => p.id === productId);
+            if (!currentSelectedItem) return;
+
+            document.getElementById('checkoutItemTitle').innerHTML = `Item: <strong class="text-white">${currentSelectedItem.title}</strong>`;
+            document.getElementById('checkoutItemPrice').innerText = `₦${Number(currentSelectedItem.price).toLocaleString()}`;
+            
+            // Reset to step 1
+            nextCheckoutStep(1);
+            openModal('checkoutModal');
+        }
+
+        function nextCheckoutStep(step) {
+            document.getElementById('checkoutStep1').classList.add('hidden');
+            document.getElementById('checkoutStep2').classList.add('hidden');
+            document.getElementById('checkoutStep3').classList.add('hidden');
+
+            document.getElementById(`checkoutStep${step}`).classList.remove('hidden');
+
+            const dots = ['dot1', 'dot2', 'dot3'];
+            dots.forEach((d, i) => {
+                const el = document.getElementById(d);
+                if(i + 1 === step) {
+                    el.className = "w-3 h-3 rounded-full bg-pink-500";
+                } else if(i + 1 < step) {
+                    el.className = "w-3 h-3 rounded-full bg-green-500";
+                } else {
+                    el.className = "w-3 h-3 rounded-full bg-slate-700";
+                }
+            });
+
+            const texts = ["Step 1 of 3: Gamer Name", "Step 2 of 3: Player ID & Phone", "Step 3 of 3: Bank Payment & Receipt"];
+            document.getElementById('stepIndicatorText').innerText = texts[step - 1];
+        }
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                document.getElementById('fileLabel').innerHTML = `<i class="fa-solid fa-circle-check text-green-400 text-lg"></i> <span class="text-green-400 font-bold">${file.name} Attached</span>`;
+                const reader = new FileReader();
+                reader.onload = function(evt) { uploadedReceiptBase64 = evt.target.result; };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function submitOrder(e) {
+            e.preventDefault();
+            if (!uploadedReceiptBase64) {
+                alert("Please attach your payment screenshot receipt!");
+                return;
+            }
+
+            const newOrder = {
+                id: Date.now(),
+                date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                customer: document.getElementById('custName').value,
+                gameId: document.getElementById('custGameId').value,
+                phone: document.getElementById('custPhone').value,
+                product: currentSelectedItem.title,
+                amount: currentSelectedItem.price,
+                receipt: uploadedReceiptBase64,
+                status: 'Processing'
+            };
+
+            orders.unshift(newOrder);
+            localStorage.setItem('naijacp_orders', JSON.stringify(orders));
+            renderOrdersTable();
+            
+            closeModal('checkoutModal');
+            document.getElementById('orderForm').reset();
+            document.getElementById('fileLabel').innerHTML = `<i class="fa-solid fa-cloud-arrow-up text-pink-400 text-lg"></i> Click to choose receipt image`;
+            uploadedReceiptBase64 = '';
+            
+            showToast("Order submitted! Processing: Your order will be successful once an agent receives your payment.");
+        }
+
+        /* Admin Controls */
         function handleAdminLogin(e) {
             e.preventDefault();
-            const u = document.getElementById('adminUser').value.trim();
-            const p = document.getElementById('adminPass').value.trim();
-
+            const u = document.getElementById('adminUser').value;
+            const p = document.getElementById('adminPass').value;
             if (u === 'Merlin' && p === 'merlin1') {
-                playSound('success');
                 closeModal('adminAuthModal');
                 openModal('adminModal');
-                
-                // Load current values into inputs
-                document.getElementById('editHeroHeading').value = document.getElementById('heroHeading').innerText;
-                document.getElementById('editHeroSubtext').value = document.getElementById('heroSubtext').innerText;
-                document.getElementById('editOnlineCount').value = document.getElementById('heroOnlineCount').innerText;
             } else {
-                alert('Invalid admin credentials! Access denied.');
+                alert("Invalid admin credentials!");
             }
         }
 
-        function switchAdminTab(tab) {
-            playSound('click');
-            document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active-tab'));
-            document.getElementById('adminTabContent').classList.add('hidden');
-            document.getElementById('adminTabGenerator').classList.add('hidden');
+        function switchAdminTab(tab, btn) {
+            document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active-btn'));
+            if(btn) btn.classList.add('active-btn');
+            
+            document.getElementById('adminTabOrders').classList.add('hidden');
+            document.getElementById('adminTabPackages').classList.add('hidden');
+            
+            if(tab === 'orders') document.getElementById('adminTabOrders').classList.remove('hidden');
+            if(tab === 'packages') document.getElementById('adminTabPackages').classList.remove('hidden');
+        }
 
-            if (tab === 'content') {
-                document.getElementById('adminTabContent').classList.remove('hidden');
-                event.target.classList.add('active-tab');
-            } else if (tab === 'generator') {
-                document.getElementById('adminTabGenerator').classList.remove('hidden');
-                event.target.classList.add('active-tab');
+        function renderOrdersTable() {
+            const tbody = document.getElementById('ordersTableBody');
+            if (orders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-center">No orders submitted yet.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = orders.map(o => `
+                <tr class="hover:bg-slate-900/50">
+                    <td class="p-3">${o.date}</td>
+                    <td class="p-3 font-bold">${o.customer}</td>
+                    <td class="p-3">${o.gameId} <br> <span class="text-[10px] text-slate-400">${o.phone}</span></td>
+                    <td class="p-3 text-pink-400">${o.product}</td>
+                    <td class="p-3">₦${Number(o.amount).toLocaleString()}</td>
+                    <td class="p-3">
+                        <img src="${o.receipt}" class="w-10 h-10 object-cover rounded border border-slate-700 cursor-pointer hover:border-pink-500" onclick="previewReceipt('${o.receipt}')">
+                    </td>
+                    <td class="p-3"><span class="px-2 py-1 bg-amber-500/20 text-amber-400 rounded text-[10px] font-bold uppercase">${o.status}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        function previewReceipt(src) {
+            document.getElementById('fullReceiptImg').src = src;
+            document.getElementById('receiptPreviewModal').classList.remove('hidden');
+            document.getElementById('receiptPreviewModal').classList.add('flex');
+        }
+
+        function renderAdminPackagesTable() {
+            const tbody = document.getElementById('packagesTableBody');
+            tbody.innerHTML = products.map(p => `
+                <tr class="hover:bg-slate-900/50">
+                    <td class="p-3 text-lg">${p.icon}</td>
+                    <td class="p-3 font-bold">${p.title}</td>
+                    <td class="p-3 uppercase text-[10px]">${p.category}</td>
+                    <td class="p-3 uppercase text-[10px] text-slate-400">${p.subTag}</td>
+                    <td class="p-3 text-pink-400">₦${Number(p.price).toLocaleString()}</td>
+                    <td class="p-3">
+                        <button class="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs font-bold hover:bg-red-500 hover:text-white transition" onclick="deletePackage(${p.id})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function savePackage(e) {
+            e.preventDefault();
+            const newPkg = {
+                id: Date.now(),
+                title: document.getElementById('pkgTitle').value,
+                price: Number(document.getElementById('pkgPrice').value),
+                category: document.getElementById('pkgCategory').value,
+                subTag: document.getElementById('pkgSubTag').value,
+                icon: document.getElementById('pkgIcon').value || '🎮'
+            };
+            products.push(newPkg);
+            localStorage.setItem('naijacp_products', JSON.stringify(products));
+            renderAdminPackagesTable();
+            renderCatalog();
+            document.getElementById('pkgForm').reset();
+            showToast("Package saved successfully!");
+        }
+
+        function deletePackage(id) {
+            if(confirm('Delete this package?')) {
+                products = products.filter(p => p.id !== id);
+                localStorage.setItem('naijacp_products', JSON.stringify(products));
+                renderAdminPackagesTable();
+                renderCatalog();
             }
         }
 
-        function applyAdminEdits() {
-            playSound('success');
-            document.getElementById('heroHeading').innerText = document.getElementById('editHeroHeading').value;
-            document.getElementById('heroSubtext').innerText = document.getElementById('editHeroSubtext').value;
-            document.getElementById('heroOnlineCount').innerText = document.getElementById('editOnlineCount').value;
-            alert('Live page updated successfully!');
-        }
-
-        // Source Code Generator & Exporter
-        function generateAndDownloadSourceCode() {
-            playSound('success');
-            
-            // Capture current DOM state for hero
-            const currentHeading = document.getElementById('heroHeading').innerText;
-            const currentSubtext = document.getElementById('heroSubtext').innerText;
-            const currentOnline = document.getElementById('heroOnlineCount').innerText;
-
-            let htmlContent = document.documentElement.outerHTML;
-            
-            // Inject updated defaults into script/DOM placeholders if necessary
-            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'lagos_life_updated.html';
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            URL.revokeObjectURL(url);
-            
-            alert('Updated source code generated and downloaded successfully!');
+        function exportUpdatedCode() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ products, orders }));
+            const anchor = document.createElement('a');
+            anchor.setAttribute("href", dataStr);
+            anchor.setAttribute("download", "naijacp_backup_data.json");
+            document.body.appendChild(anchor);
+            anchor.click();
+            anchor.remove();
+            showToast("Source Data Exported!");
         }
     </script>
 </body>
