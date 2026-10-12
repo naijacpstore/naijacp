@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="siteTitleTag">Lagos Life | Naija Life Simulator & Multiplayer Browser Game</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #050508;
+            color: #f3f4f6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050508; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #22c55e; }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(34, 197, 94, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(34, 197, 94, 0.5);
+            box-shadow: 0 12px 35px -10px rgba(34, 197, 94, 0.25);
+        }
+
+        .glass-modal {
+            background: rgba(10, 15, 28, 0.97);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .pulse-dot {
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: 200%;
+            animation: marquee 25s linear infinite;
+        }
+        
+        .active-tab {
+            background-color: #22c55e !important;
+            color: #000 !important;
+            font-weight: 800 !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-green-500 selection:text-black">
+
+    <!-- Web Audio Sound Synthesizer helper -->
+    <script>
+        function playSound(type = 'click') {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(450, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.05);
+                    gain.gain.setValueAtTime(0.08, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.05);
+                } else if (type === 'success') {
+                    osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+                    osc.frequency.setValueAtTime(880, ctx.currentTime + 0.08);
+                    gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.25);
+                }
+            } catch (e) {
+                // AudioContext not allowed before user gesture or unsupported
+            }
+        }
+    </script>
+
+    <!-- Top Ticker / Announcements -->
+    <div class="bg-gradient-to-r from-emerald-950 via-black to-emerald-950 border-b border-green-500/20 py-2.5 text-xs text-slate-300 overflow-hidden relative z-50">
+        <div class="animate-marquee whitespace-nowrap flex items-center space-x-10">
+            <span class="inline-flex items-center gap-2 font-bold text-green-400"><i class="fa-solid fa-bolt"></i> NEPA update: Steady light is law this week for everybody! 💡</span>
+            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bus text-yellow-400"></i> Danfo drivers on strike for Mushin route — enter bike! 🏍️</span>
+            <span class="inline-flex items-center gap-2 font-bold text-green-400"><i class="fa-solid fa-fire"></i> Amala Shitta extra kpomo available now! 🍲</span>
+            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-green-400"></i> NO DOWNLOAD REQUIRED — PLAY INSTANTLY IN BROWSER 🇳🇬</span>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-b border-green-900/30 px-4 sm:px-8 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="playSound('click'); window.scrollTo({top:0, behavior:'smooth'})">
+                <div class="w-11 h-11 rounded-2xl bg-green-500 flex items-center justify-center font-black text-black text-2xl shadow-lg shadow-green-500/30">
+                    <i class="fa-solid fa-city"></i>
+                </div>
+                <div>
+                    <span id="brandTitleText" class="text-xl sm:text-2xl font-black tracking-tight text-white">LAGOS<span id="secretAdminTrigger" class="text-green-500 cursor-pointer select-none" title="Secret Admin Trigger"> LIFE</span></span>
+                    <span class="block text-[10px] text-slate-400 font-semibold tracking-wider uppercase">Naija Life Simulator 🇳🇬</span>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center gap-6">
+                <a href="#mapSection" onclick="playSound('click')" class="text-sm font-bold text-slate-300 hover:text-green-400 transition">City Map</a>
+                <a href="#featuresSection" onclick="playSound('click')" class="text-sm font-bold text-slate-300 hover:text-green-400 transition">Features</a>
+                <a href="#governmentSection" onclick="playSound('click')" class="text-sm font-bold text-slate-300 hover:text-green-400 transition">Elections & Gov</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <button onclick="playSound('success'); openModal('authModal')" class="px-5 py-2.5 rounded-xl bg-green-500 hover:bg-green-400 text-black font-black text-xs shadow-lg shadow-green-500/20 transition flex items-center gap-2">
+                    <i class="fa-solid fa-gamepad"></i> Play Free Now
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="relative pt-16 pb-20 overflow-hidden px-4 sm:px-6 text-center border-b border-green-500/20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-950/20 via-black to-black">
+        <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/30 text-xs font-bold text-slate-300 mb-6">
+            <span class="w-3 h-3 rounded-full bg-green-500 pulse-dot"></span>
+            <span id="heroOnlineCount" class="text-green-400 font-extrabold text-sm">109,420</span>
+            <span id="heroOnlineLabel">Lagosians Online Right Now</span>
+        </div>
+        <h1 id="heroHeading" class="text-4xl sm:text-6xl font-black text-white mb-5 tracking-tight max-w-4xl mx-auto">
+            Ride Danfo, Chop Amala at Shitta, Survive NEPA.
+        </h1>
+        <p id="heroSubtext" class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto font-medium mb-8">
+            The viral multiplayer life simulator set in Lagos, Abuja & Port Harcourt. Build your career, buy property, run for governor, and vibe with real players instantly in your browser. No download required.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-4">
+            <button onclick="playSound('success'); openModal('authModal')" class="px-8 py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-black text-base shadow-xl shadow-green-500/30 transition flex items-center gap-3">
+                <i class="fa-solid fa-play"></i> Launch Game Session
+            </button>
+            <a href="#mapSection" onclick="playSound('click')" class="px-8 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-green-400 border border-green-500/30 font-extrabold text-base transition flex items-center gap-3">
+                <i class="fa-solid fa-map-location-dot"></i> Explore City Map
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full space-y-16">
+
+        <!-- STATS BANNER -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass-card p-6 rounded-3xl text-center">
+                <span class="block text-xs uppercase font-extrabold text-slate-400 mb-1">Active Players</span>
+                <span id="statPlayers" class="text-2xl sm:text-3xl font-black text-green-400">2,109,420</span>
+            </div>
+            <div class="glass-card p-6 rounded-3xl text-center">
+                <span class="block text-xs uppercase font-extrabold text-slate-400 mb-1">Named Locations</span>
+                <span id="statLocations" class="text-2xl sm:text-3xl font-black text-white">30+</span>
+            </div>
+            <div class="glass-card p-6 rounded-3xl text-center">
+                <span class="block text-xs uppercase font-extrabold text-slate-400 mb-1">Careers & Gigs</span>
+                <span id="statCareers" class="text-2xl sm:text-3xl font-black text-green-400">25 Tracks</span>
+            </div>
+            <div class="glass-card p-6 rounded-3xl text-center">
+                <span class="block text-xs uppercase font-extrabold text-slate-400 mb-1">Server Status</span>
+                <span id="statStatus" class="text-2xl sm:text-3xl font-black text-yellow-400">Stable 🟢</span>
+            </div>
+        </div>
+
+        <!-- LANDMARKS & MAP SECTION -->
+        <section id="mapSection" class="scroll-mt-24">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight border-l-4 border-green-500 pl-4">
+                        📍 Iconic City Locations & Hangouts
+                    </h2>
+                    <p class="text-slate-400 text-sm mt-1 pl-4">Walk around real spots across Lagos, Abuja, and Port Harcourt.</p>
+                </div>
+            </div>
+
+            <div id="landmarksGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Dynamically rendered landmarks -->
+            </div>
+        </section>
+
+        <!-- GAME FEATURES SECTION -->
+        <section id="featuresSection" class="scroll-mt-24 py-6 border-t border-green-500/20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-black text-white mb-2">How You Play Lagos Life</h2>
+                <p class="text-slate-400 text-sm max-w-xl mx-auto">Manage your character's needs, climb the career ladder, and survive the city vibes.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card p-6 rounded-3xl border border-green-500/20">
+                    <div class="w-12 h-12 rounded-2xl bg-green-500/20 text-green-400 flex items-center justify-center text-xl mb-4 font-bold">🍔</div>
+                    <h3 class="text-lg font-bold text-white mb-2">6 Vital Sim Meters</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">Keep your hunger, energy, fun, social, hygiene, and bladder bars green while hustling through daily struggles.</p>
+                </div>
+                <div class="glass-card p-6 rounded-3xl border border-green-500/20">
+                    <div class="w-12 h-12 rounded-2xl bg-green-500/20 text-green-400 flex items-center justify-center text-xl mb-4 font-bold">🗳️</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Elected Government</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">Vote for real players as Governor. Winning policies apply city-wide to taxes, curfews, and city development.</p>
+                </div>
+                <div class="glass-card p-6 rounded-3xl border border-green-500/20">
+                    <div class="w-12 h-12 rounded-2xl bg-green-500/20 text-green-400 flex items-center justify-center text-xl mb-4 font-bold">💬</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Real-Time Multiplayer Chat</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">Meet and chat with thousands of active players in venues, clubs, and streets across Nigeria.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- GOVERNMENT / GOVERNOR SECTION -->
+        <section id="governmentSection" class="scroll-mt-24 p-8 rounded-3xl bg-gradient-to-r from-green-950/40 via-slate-900 to-slate-950 border border-green-500/30 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+                <span class="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-xs font-bold uppercase">Active Administration</span>
+                <h3 class="text-2xl font-black text-white mt-2">Current Lagos State Governor: <span class="text-green-400">Gov @Franka</span></h3>
+                <p class="text-slate-400 text-xs mt-1">Next election cycle starts this weekend. Campaign across Yaba, Surulere, and Lekki to win votes!</p>
+            </div>
+            <button onclick="playSound('success'); openModal('authModal')" class="px-6 py-3 rounded-xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-xs transition whitespace-nowrap">
+                Register to Run for Office 🏛️
+            </button>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-black py-10 text-slate-500 text-xs text-center mt-auto">
+        <div class="max-w-7xl mx-auto px-4 space-y-3">
+            <p>&copy; 2026 Lagos Life. All Rights Reserved. A browser-based multiplayer life simulator set in Nigeria.</p>
+            <p class="text-[11px] text-slate-400">Rated 18+ for adult themes, chat, and simulated city life. Not a real-world financial investment platform.</p>
+        </div>
+    </footer>
+
+    <!-- MODALS -->
+
+    <!-- AUTH / GAME LAUNCH MODAL -->
+    <div id="authModal" class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+        <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-2xl">
+            <button onclick="playSound('click'); closeModal('authModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 rounded-2xl bg-green-500/20 text-green-400 flex items-center justify-center text-2xl mx-auto mb-3 font-bold">🇳🇬</div>
+                <h3 class="text-xl font-black text-white">Enter Lagos Life</h3>
+                <p class="text-slate-400 text-xs mt-1">Choose how you want to start your simulation session.</p>
+            </div>
+
+            <div class="space-y-3">
+                <button onclick="playSound('success'); alert('Connected to Lagos Live Server! Enjoy your session.'); closeModal('authModal');" class="w-full py-3.5 rounded-xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-xs transition">
+                    🎮 Quick Play as Guest
+                </button>
+                <button onclick="playSound('click'); alert('Opening account registration portal...'); closeModal('authModal');" class="w-full py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-green-400 border border-green-500/30 font-extrabold text-xs transition">
+                    🔑 Sign Up / Log In with Email
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN LOGIN MODAL -->
+    <div id="adminAuthModal" class="fixed inset-0 z-[70] hidden flex items-center justify-center p-4 bg-black/95 backdrop-blur-md">
+        <div class="glass-modal w-full max-w-sm rounded-3xl p-6 text-center border border-green-500/40 relative">
+            <button onclick="playSound('click'); closeModal('adminAuthModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="w-12 h-12 rounded-2xl bg-green-500/20 border border-green-500/40 text-green-400 flex items-center justify-center mx-auto mb-3 text-xl">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <h3 class="text-lg font-extrabold text-white mb-4">Admin Authentication</h3>
+            
+            <form onsubmit="handleAdminLogin(event)" class="space-y-3">
+                <input type="text" id="adminUser" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm text-center focus:outline-none focus:border-green-500" placeholder="Username" required>
+                <input type="password" id="adminPass" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm text-center focus:outline-none focus:border-green-500" placeholder="Password" required>
+                <button type="submit" class="w-full py-3 rounded-xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition">
+                    Access Dashboard ⚡
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD MODAL -->
+    <div id="adminModal" class="fixed inset-0 z-[80] hidden flex items-center justify-center p-2 sm:p-4 bg-black/95 backdrop-blur-md">
+        <div class="glass-modal w-full max-w-5xl h-[92vh] rounded-3xl p-4 sm:p-6 relative shadow-2xl border border-green-500/40 flex flex-col">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
+                <h3 class="text-xl font-black text-white flex items-center gap-2">
+                    <i class="fa-solid fa-gears text-green-400"></i> Admin Control Panel & Source Generator
+                </h3>
+                <button onclick="playSound('click'); closeModal('adminModal')" class="text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="flex gap-2 overflow-x-auto pb-2 mb-4 border-b border-slate-800 flex-shrink-0">
+                <button class="admin-tab-btn active-tab px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 transition" onclick="switchAdminTab('content')">Edit Site Content</button>
+                <button class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 transition" onclick="switchAdminTab('generator')">📥 Generate & Download Source Code</button>
+            </div>
+
+            <!-- TAB 1: EDIT CONTENT -->
+            <div id="adminTabContent" class="flex-1 overflow-y-auto pr-2 space-y-4">
+                <h4 class="text-sm font-bold text-green-400 mb-2">Live Page Settings</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Hero Heading</label>
+                        <input type="text" id="editHeroHeading" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white text-xs">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Online Players Counter</label>
+                        <input type="text" id="editOnlineCount" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white text-xs">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Hero Subtext Description</label>
+                        <textarea id="editHeroSubtext" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white text-xs"></textarea>
+                    </div>
+                </div>
+                <button onclick="applyAdminEdits()" class="px-5 py-2.5 bg-green-500 hover:bg-green-400 text-black font-extrabold text-xs rounded-xl transition">
+                    Apply Changes to Live Site 🚀
+                </button>
+            </div>
+
+            <!-- TAB 2: GENERATOR -->
+            <div id="adminTabGenerator" class="hidden flex-1 overflow-y-auto pr-2 space-y-4 text-center py-10">
+                <div class="max-w-md mx-auto space-y-4">
+                    <div class="w-16 h-16 rounded-3xl bg-green-500/20 text-green-400 flex items-center justify-center text-3xl mx-auto">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white">Export Updated Source Code</h4>
+                    <p class="text-slate-400 text-xs">Click the button below to generate and download a fresh, complete self-contained HTML file containing all your live edits and custom configurations.</p>
+                    <button onclick="generateAndDownloadSourceCode()" class="w-full py-4 bg-green-500 hover:bg-green-400 text-black font-black text-sm rounded-2xl shadow-lg shadow-green-500/30 transition">
+                        📥 Download Updated HTML Source Code
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        // Default Landmarks Database
+        let landmarks = [
+            { name: "Afrika Shrine", category: "Nightlife & Music", desc: "Legendary afrobeat venue for late-night vibes and drinks.", icon: "🎷" },
+            { name: "Amala Shitta", category: "Food & Dining", desc: "Hot amala, gbegiri, ewedu, and giant kpomo in Surulere.", icon: "🍲" },
+            { name: "Quilox Club", category: "Nightlife", desc: "High-end Victoria Island club where big boys spray money.", icon: "🍾" },
+            { name: "CcHub Yaba", category: "Tech & Business", desc: "The startup and freelance hub where techies grind for cash.", icon: "💻" },
+            { name: "Elegushi Beach", category: "Hangout", desc: "Weekend concerts, horse riding, and ocean breeze.", icon: "🌊" },
+            { name: "Balogun Market", category: "Commerce", desc: "Busy Island market for wholesale shopping and hustling.", icon: "🛍️" }
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderLandmarks();
+            initSecretAdminTrigger();
+            startLiveCounter();
+        });
+
+        function renderLandmarks() {
+            const grid = document.getElementById('landmarksGrid');
+            grid.innerHTML = landmarks.map(l => `
+                <div class="glass-card p-6 rounded-3xl flex flex-col justify-between border border-slate-800">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-3xl">${l.icon}</span>
+                            <span class="px-3 py-1 rounded-full bg-green-500/10 text-green-400 text-[10px] font-bold uppercase border border-green-500/20">${l.category}</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">${l.name}</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed">${l.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Secret Admin Trigger: Click '.NG' or ' LIFE' 5 times quickly
+        function initSecretAdminTrigger() {
+            let clicks = 0;
+            const trigger = document.getElementById('secretAdminTrigger');
+            trigger.addEventListener('click', () => {
+                clicks++;
+                playSound('click');
+                if (clicks >= 5) {
+                    openModal('adminAuthModal');
+                    clicks = 0;
+                }
+                setTimeout(() => { clicks = 0; }, 3000);
+            });
+        }
+
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        function startLiveCounter() {
+            setInterval(() => {
+                const el = document.getElementById('heroOnlineCount');
+                let curr = parseInt(el.innerText.replace(/,/g, ''));
+                let diff = Math.floor(Math.random() * 25) - 10;
+                curr += diff;
+                if (curr > 120000) curr = 108500;
+                if (curr < 100000) curr = 101200;
+                el.innerText = curr.toLocaleString();
+            }, 4000);
+        }
+
+        // Admin Auth & Dashboard
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('adminUser').value.trim();
+            const p = document.getElementById('adminPass').value.trim();
+
+            if (u === 'Merlin' && p === 'merlin1') {
+                playSound('success');
+                closeModal('adminAuthModal');
+                openModal('adminModal');
+                
+                // Load current values into inputs
+                document.getElementById('editHeroHeading').value = document.getElementById('heroHeading').innerText;
+                document.getElementById('editHeroSubtext').value = document.getElementById('heroSubtext').innerText;
+                document.getElementById('editOnlineCount').value = document.getElementById('heroOnlineCount').innerText;
+            } else {
+                alert('Invalid admin credentials! Access denied.');
+            }
+        }
+
+        function switchAdminTab(tab) {
+            playSound('click');
+            document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active-tab'));
+            document.getElementById('adminTabContent').classList.add('hidden');
+            document.getElementById('adminTabGenerator').classList.add('hidden');
+
+            if (tab === 'content') {
+                document.getElementById('adminTabContent').classList.remove('hidden');
+                event.target.classList.add('active-tab');
+            } else if (tab === 'generator') {
+                document.getElementById('adminTabGenerator').classList.remove('hidden');
+                event.target.classList.add('active-tab');
+            }
+        }
+
+        function applyAdminEdits() {
+            playSound('success');
+            document.getElementById('heroHeading').innerText = document.getElementById('editHeroHeading').value;
+            document.getElementById('heroSubtext').innerText = document.getElementById('editHeroSubtext').value;
+            document.getElementById('heroOnlineCount').innerText = document.getElementById('editOnlineCount').value;
+            alert('Live page updated successfully!');
+        }
+
+        // Source Code Generator & Exporter
+        function generateAndDownloadSourceCode() {
+            playSound('success');
+            
+            // Capture current DOM state for hero
+            const currentHeading = document.getElementById('heroHeading').innerText;
+            const currentSubtext = document.getElementById('heroSubtext').innerText;
+            const currentOnline = document.getElementById('heroOnlineCount').innerText;
+
+            let htmlContent = document.documentElement.outerHTML;
+            
+            // Inject updated defaults into script/DOM placeholders if necessary
+            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'lagos_life_updated.html';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+            
+            alert('Updated source code generated and downloaded successfully!');
+        }
+    </script>
+</body>
+</html>
