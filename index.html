@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NAIJACP.NG | Africa's Top Gaming Marketplace &amp; Digital Top-Up Services</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,7 +16,8 @@
             background-color: #060508;
             color: #f3f4f6;
             overflow-x: hidden;
-            scroll-behavior: smooth;
+            overflow-anchor: none;
+            -webkit-overflow-scrolling: touch;
         }
 
         ::-webkit-scrollbar { width: 7px; }
@@ -119,7 +120,7 @@
     <div class="relative pt-12 pb-16 overflow-hidden px-4 sm:px-6 text-center border-b border-pink-500/20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-pink-950/20 via-black to-black">
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-slate-300 mb-6">
             <span class="w-2.5 h-2.5 rounded-full bg-pink-500 pulse-dot"></span>
-            <span id="liveUserCounter" class="text-pink-400 font-extrabold text-sm">6,854</span>
+            <span class="text-pink-400 font-extrabold text-sm">6,854</span>
             <span>Gamers Online Right Now</span>
         </div>
         <h1 class="text-4xl sm:text-5xl font-black text-white mb-4 tracking-tight">Top Up Your Favorite Games Fast</h1>
@@ -967,8 +968,7 @@
         ];
         /* --- PRODUCTS DATABASE END --- */
 
-        // Persistent State with Cache Reset Key to force new logos
-        let products = JSON.parse(localStorage.getItem('naijacp_products_v5')) || defaultProducts;
+        let products = JSON.parse(localStorage.getItem('naijacp_products')) || defaultProducts;
         let orders = JSON.parse(localStorage.getItem('naijacp_orders')) || [];
         let currentMainCat = 'games';
         let currentSubFilter = 'all';
@@ -977,22 +977,20 @@
         let sensiShareCount = 0;
         let dataShareCount = 0;
 
-        // Flags to ensure duplicate errors only trigger once per milestone and then allow progress
         let dataErrorTriggered3 = false;
         let dataErrorTriggered8 = false;
         let sensiErrorTriggered2 = false;
 
         document.addEventListener("DOMContentLoaded", () => {
-            localStorage.setItem('naijacp_products_v5', JSON.stringify(products));
+            if(!localStorage.getItem('naijacp_products')) {
+                localStorage.setItem('naijacp_products', JSON.stringify(defaultProducts));
+            }
             renderCatalog();
             renderOrdersTable();
             renderAdminPackagesTable();
-            startLiveUsers();
-            startFakePurchases();
             initSecretAdminTrigger();
         });
 
-        // Utilities
         function showToast(message) {
             const container = document.getElementById('liveToastContainer');
             const toast = document.createElement('div');
@@ -1024,7 +1022,6 @@
             showToast("Copied Account Number: " + accNum);
         }
 
-        // Secret Admin Trigger
         function initSecretAdminTrigger() {
             let clicks = 0;
             const trigger = document.getElementById('secretAdminTrigger');
@@ -1038,37 +1035,6 @@
             });
         }
 
-        // Live Fake Purchases & Users
-        function startLiveUsers() {
-            setInterval(() => {
-                const el = document.getElementById('liveUserCounter');
-                let curr = parseInt(el.innerText.replace(',', ''));
-                let diff = Math.floor(Math.random() * 15) - 5;
-                curr = curr + diff;
-                
-                if (curr > 8000) curr = 7990 - Math.floor(Math.random() * 10);
-                if (curr < 6000) curr = 6010 + Math.floor(Math.random() * 10);
-                
-                el.innerText = curr.toLocaleString();
-            }, 3500);
-        }
-
-        function startFakePurchases() {
-            const names = ['Chinedu', 'Oluwaseun', 'Amina', 'Ngozi', 'Emeka', 'Fatima', 'Bolaji', 'Ibrahim', 'Kehinde', 'Uche', 'Adebayo', 'Chioma', 'Yusuf', 'Ezekiel'];
-            const prefixes = ['0803', '0810', '0902', '0706', '0814', '0913', '0703'];
-            
-            setInterval(() => {
-                if(Math.random() > 0.4) {
-                    const randomName = names[Math.floor(Math.random() * names.length)];
-                    const randomPhone = prefixes[Math.floor(Math.random() * prefixes.length)] + "***" + Math.floor(1000 + Math.random() * 9000);
-                    const randomProduct = products[Math.floor(Math.random() * products.length)];
-                    
-                    showToast(`<span class="text-pink-400 font-bold">${randomName} (${randomPhone})</span> just purchased <br><span class="font-bold">${randomProduct.title}</span>`);
-                }
-            }, 8000);
-        }
-
-        /* Navigation & Filtering */
         function switchMainCategory(cat) {
             currentMainCat = cat;
             currentSubFilter = 'all';
@@ -1104,7 +1070,6 @@
             document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
         }
 
-        /* Render Catalog Cards */
         function renderCatalog() {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
@@ -1122,7 +1087,7 @@
                 grid.innerHTML += `
                     <div class="glass-card p-4 rounded-3xl flex flex-col justify-between text-center group cursor-pointer border border-slate-800 hover:border-pink-500 transition duration-300">
                         <div class="w-16 h-16 mx-auto bg-slate-900/80 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-slate-700/50 group-hover:scale-110 transition duration-300 overflow-hidden">
-                            ${p.icon.length > 5 ? `<img src="\${p.icon}" class="w-full h-full object-cover rounded-2xl">` : p.icon}
+                            ${p.icon && p.icon.length > 5 ? `<img src="\${p.icon}" class="w-full h-full object-cover rounded-2xl">` : '🎮'}
                         </div>
                         <h3 class="font-bold text-sm text-white mb-2 leading-tight">${p.title}</h3>
                         <div class="text-pink-400 font-black text-lg mb-4">₦${Number(p.price).toLocaleString()}</div>
@@ -1134,7 +1099,6 @@
             });
         }
 
-        /* Free 2GB Data Pack Sharing Tool with Non-Blocking Duplicate Check */
         function proceedToDataShare() {
             const phone = document.getElementById('dataPhoneNumber').value.trim();
             if(!phone || phone.length < 10) {
@@ -1149,20 +1113,18 @@
         function shareDataToWhatsApp() {
             let nextCount = dataShareCount + 1;
 
-            // Trigger duplicate error on 3rd share once
             if (nextCount === 3 && !dataErrorTriggered3) {
                 dataErrorTriggered3 = true;
                 showToast("⚠️ Share didn't count! Duplicate group detected. Please share to a different WhatsApp group.");
                 alert("⚠️ Share not counted! Please share to a different WhatsApp group or person. Duplicate shares are not allowed.");
-                return; // Pauses on 2/10 once, next click will proceed successfully
+                return;
             }
 
-            // Trigger duplicate error on 8th share once
             if (nextCount === 8 && !dataErrorTriggered8) {
                 dataErrorTriggered8 = true;
                 showToast("⚠️ Share didn't count! Duplicate group detected. Please share to a different WhatsApp group.");
                 alert("⚠️ Share not counted! Please share to a different WhatsApp group or person. Duplicate shares are not allowed.");
-                return; // Pauses on 7/10 once, next click will proceed successfully
+                return;
             }
 
             dataShareCount = nextCount;
@@ -1183,16 +1145,14 @@
             }
         }
 
-        /* Free Fire Generator with Non-Blocking Duplicate Check */
         function shareToWhatsApp() {
             let nextCount = sensiShareCount + 1;
 
-            // Trigger duplicate error on 2nd share once
             if (nextCount === 2 && !sensiErrorTriggered2) {
                 sensiErrorTriggered2 = true;
                 showToast("⚠️ Share didn't count! Duplicate group detected. Please share to a different WhatsApp group.");
                 alert("⚠️ Share not counted! Please share to a different WhatsApp group or person. Duplicate shares are not allowed.");
-                return; // Pauses on 1/5 once, next click will proceed successfully
+                return;
             }
 
             sensiShareCount = nextCount;
@@ -1271,7 +1231,6 @@
             showToast("Settings uniquely optimized for your device! 🎯");
         }
 
-        /* Multi-Step Checkout Modal Logic */
         function openCheckout(productId) {
             currentSelectedItem = products.find(p => p.id === productId);
             if (!currentSelectedItem) return;
@@ -1279,7 +1238,6 @@
             document.getElementById('checkoutItemTitle').innerHTML = `Item: <strong class="text-white">${currentSelectedItem.title}</strong>`;
             document.getElementById('checkoutItemPrice').innerText = `₦${Number(currentSelectedItem.price).toLocaleString()}`;
             
-            // Reset to Step 1
             document.getElementById('checkoutStep1').classList.remove('hidden');
             document.getElementById('checkoutStep2').classList.add('hidden');
             document.getElementById('checkoutStep3').classList.add('hidden');
@@ -1376,7 +1334,6 @@
             }, 3000);
         }
 
-        /* Admin Controls */
         function handleAdminLogin(e) {
             e.preventDefault();
             const u = document.getElementById('adminUser').value;
@@ -1429,7 +1386,7 @@
             const tbody = document.getElementById('packagesTableBody');
             tbody.innerHTML = products.map(p => `
                 <tr class="hover:bg-slate-900/50">
-                    <td class="p-3 text-lg">${p.icon.length > 5 ? `<img src="\${p.icon}" class="w-6 h-6 object-cover rounded">` : p.icon}</td>
+                    <td class="p-3 text-lg">${p.icon && p.icon.length > 5 ? `<img src="\${p.icon}" class="w-6 h-6 object-cover rounded">` : '🎮'}</td>
                     <td class="p-3 font-bold">${p.title}</td>
                     <td class="p-3 uppercase text-[10px]">${p.category}</td>
                     <td class="p-3 uppercase text-[10px] text-slate-400">${p.subTag}</td>
@@ -1464,7 +1421,7 @@
                 showToast("Package added successfully!");
             }
             
-            localStorage.setItem('naijacp_products_v5', JSON.stringify(products));
+            localStorage.setItem('naijacp_products', JSON.stringify(products));
             renderAdminPackagesTable();
             renderCatalog();
             resetPkgForm();
@@ -1493,7 +1450,7 @@
         function deletePackage(id) {
             if(confirm('Delete this package?')) {
                 products = products.filter(p => p.id !== id);
-                localStorage.setItem('naijacp_products_v5', JSON.stringify(products));
+                localStorage.setItem('naijacp_products', JSON.stringify(products));
                 renderAdminPackagesTable();
                 renderCatalog();
             }
@@ -1520,7 +1477,7 @@
             modalsToHide.forEach(id => {
                 let m = docClone.querySelector('#' + id);
                 if (m) {
-                    m.classList.0 = 'hidden';
+                    m.classList.add('hidden');
                     m.classList.remove('flex');
                 }
             });
@@ -1544,7 +1501,7 @@
         function copySourceCode() {
             const codeArea = document.getElementById('sourceCodeArea');
             codeArea.select();
-            codeArea.setSelectionRange(0, 9999999);
+            codeArea.setSelectionRange(0, 999999);
             navigator.clipboard.writeText(codeArea.value);
             showToast("✅ Source code copied! Paste it into GitHub now.");
         }
