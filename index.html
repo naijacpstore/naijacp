@@ -1135,8 +1135,13 @@
             document.getElementById('dataProgressBar').style.width = `${progress}%`;
             document.getElementById('dataSharesLeft').innerText = remaining;
 
-            const promoNote = encodeURIComponent("🔥 NAIJACP.NG - Africa's Top Gaming Marketplace! Get FREE 2GB Data Pack, Free Fire Headshot Sensi Tool, and Cheap Top-Ups for CODM CP, eFootball Coins, Free Fire Diamonds, Blood Strike Golds, TikTok Coins, DLS, Gadgets & Gift Cards! Claim yours now: http://naijacpstore.github.io");
-            window.open(`https://api.whatsapp.com/send?text=${promoNote}`, '_blank');
+            const promoText = "🔥 NAIJACP.NG - Africa's Top Gaming Marketplace! Get FREE 2GB Data Pack, Free Fire Headshot Sensi Tool, and Cheap Top-Ups for CODM CP, eFootball Coins, Free Fire Diamonds, Blood Strike Golds, TikTok Coins, DLS, Gadgets & Gift Cards! Claim yours now: https://naijacpstore.github.io";
+            
+            if (navigator.share) {
+                navigator.share({ text: promoText }).catch(() => {});
+            } else {
+                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(promoText)}`, '_blank');
+            }
 
             if(dataShareCount >= 10) {
                 setTimeout(() => {
@@ -1163,8 +1168,13 @@
             document.getElementById('progressBar').style.width = `${progress}%`;
             document.getElementById('sharesLeft').innerText = remaining;
 
-            const promoNote = encodeURIComponent("🔥 NAIJACP.NG - Africa's Top Gaming Marketplace! Get FREE 2GB Data Pack, Free Fire Headshot Sensi Tool, and Cheap Top-Ups for CODM CP, eFootball Coins, Free Fire Diamonds, Blood Strike Golds, TikTok Coins, DLS, Gadgets & Gift Cards! Claim yours now: http://naijacpstore.github.io");
-            window.open(`https://api.whatsapp.com/send?text=${promoNote}`, '_blank');
+            const promoText = "🔥 NAIJACP.NG - Africa's Top Gaming Marketplace! Get FREE 2GB Data Pack, Free Fire Headshot Sensi Tool, and Cheap Top-Ups for CODM CP, eFootball Coins, Free Fire Diamonds, Blood Strike Golds, TikTok Coins, DLS, Gadgets & Gift Cards! Claim yours now: https://naijacpstore.github.io";
+            
+            if (navigator.share) {
+                navigator.share({ text: promoText }).catch(() => {});
+            } else {
+                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(promoText)}`, '_blank');
+            }
 
             if(sensiShareCount >= 5) {
                 setTimeout(() => {
