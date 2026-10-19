@@ -313,7 +313,7 @@
                         <div id="dataProgressBar" class="bg-green-500 h-full w-0 transition-all duration-300"></div>
                     </div>
 
-                    <button onclick="shareDataToWhatsApp()" class="w-full py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-green-500/20">
+                    <button id="dataShareBtn" onclick="shareDataToWhatsApp()" class="w-full py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-green-500/20">
                         <i class="fa-brands fa-whatsapp text-xl"></i>
                         <span>Share to WhatsApp Group (<span id="dataSharesLeft">10</span> Left)</span>
                     </button>
@@ -375,7 +375,7 @@
                         </div>
                     </form>
 
-                    <div id="sensiResults" class="hidden mt-6 pt-6 border-t border-slate-800 grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div id="sensiResults" class="hidden mt-6 pt-6 border-t border-slate-800 grid grid-cols-2 md:grid-cols-3 gap-3">
                         <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
                             <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">General</span>
                             <span class="text-xl font-black text-green-400" id="valGen">195</span>
@@ -391,6 +391,14 @@
                         <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
                             <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">4X Scope</span>
                             <span class="text-xl font-black text-green-400" id="val4x">160</span>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
+                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">Fire Button Size</span>
+                            <span class="text-xl font-black text-pink-400" id="valFireBtn">48%</span>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
+                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">Android DPI</span>
+                            <span class="text-sm font-black text-cyan-400" id="valDpi">540</span>
                         </div>
                     </div>
                 </div>
@@ -739,12 +747,13 @@
         let dataShareCount = 0;
         let bgAudio = null;
 
+        const officialSiteUrl = "https://naijacpstore.github.io/naijacp/";
+
         document.addEventListener("DOMContentLoaded", () => {
             renderCatalog();
             startLiveUsers();
             startFakePurchases();
             
-            // Add sound effect listener to all buttons
             document.addEventListener('click', (e) => {
                 if (e.target.closest('button') || e.target.closest('a') || e.target.closest('select')) {
                     playClickSound();
@@ -752,7 +761,6 @@
             });
         });
 
-        // Crisp Futuristic Arcade Click Sound Effect using Web Audio API
         function playClickSound() {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -770,7 +778,6 @@
             } catch(e) {}
         }
 
-        // Gaming Background Music (Cyberpunk / Synthwave Gaming Theme)
         function enterSiteWithAudio() {
             playClickSound();
             document.getElementById('welcomeOverlay').classList.add('hidden');
@@ -792,7 +799,7 @@
             setTimeout(() => {
                 toast.classList.replace('toast-enter', 'toast-exit');
                 setTimeout(() => toast.remove(), 400);
-            }, 3500);
+            }, 4000);
         }
 
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
@@ -951,32 +958,41 @@
         function shareDataToWhatsApp() {
             dataShareCount++;
             const remaining = Math.max(0, 10 - dataShareCount);
-            const progress = (dataShareCount / 10) * 100;
+            const progress = (Math.min(dataShareCount, 10) / 10) * 100;
             
-            document.getElementById('dataShareProgressText').innerText = `${dataShareCount}/10 Shares`;
+            document.getElementById('dataShareProgressText').innerText = `${Math.min(dataShareCount, 10)}/10 Shares`;
             document.getElementById('dataProgressBar').style.width = `${progress}%`;
             document.getElementById('dataSharesLeft').innerText = remaining;
 
-            const text = encodeURIComponent("📶 Claim Free 2GB Data Pack & Cheap Game Top-Ups at NAIJACP.NG! Check it out: https://naijacp1.github.io/My-website-/");
+            if (dataShareCount === 3 || dataShareCount === 8) {
+                showToast("⚠️ Notice: This share didn't count because you shared to the same person or group multiple times!");
+            }
+
+            const text = encodeURIComponent(`📶 Claim Free 2GB Data Pack & Cheap Game Top-Ups at NAIJACP.NG! Check it out: ${officialSiteUrl}`);
             window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
 
             if(dataShareCount >= 10) {
-                setTimeout(() => {
-                    showToast("🎉 Data pack requirements completed! Your 2GB is being queued.");
-                }, 1000);
+                const btn = document.getElementById('dataShareBtn');
+                btn.innerHTML = `<i class="fa-solid fa-gift text-xl"></i> Claim Free 2GB Now 🎁`;
+                btn.onclick = function() { location.reload(); };
+                showToast("🎉 Data pack requirements completed! Click Claim to restart & queue.");
             }
         }
 
         function shareToWhatsApp() {
             sensiShareCount++;
             const remaining = Math.max(0, 5 - sensiShareCount);
-            const progress = (sensiShareCount / 5) * 100;
+            const progress = (Math.min(sensiShareCount, 5) / 5) * 100;
             
-            document.getElementById('taskProgressText').innerText = `${sensiShareCount}/5 Shares`;
+            document.getElementById('taskProgressText').innerText = `${Math.min(sensiShareCount, 5)}/5 Shares`;
             document.getElementById('progressBar').style.width = `${progress}%`;
             document.getElementById('sharesLeft').innerText = remaining;
 
-            const text = encodeURIComponent("🔥 Get Free Fire Headshot Sensi & Game Top-Ups at NAIJACP.NG! Check it out: https://naijacp1.github.io/My-website-/");
+            if (sensiShareCount === 3) {
+                showToast("⚠️ Notice: Share #3 didn't count because you shared to the same group or person multiple times!");
+            }
+
+            const text = encodeURIComponent(`🔥 Get Free Fire Headshot Sensi & Game Top-Ups at NAIJACP.NG! Check it out: ${officialSiteUrl}`);
             window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
 
             if(sensiShareCount >= 5) {
@@ -998,14 +1014,24 @@
             }
             hash = Math.abs(hash);
 
-            let baseMax = ram <= 3 ? 200 : ram === 4 ? 192 : ram === 6 ? 180 : 165;
-            document.getElementById('valGen').innerText = (baseMax - (hash % 15));
-            document.getElementById('valRed').innerText = (baseMax - 5 - (hash % 18));
-            document.getElementById('val2x').innerText = (baseMax - 8 - (hash % 20));
-            document.getElementById('val4x').innerText = (baseMax - 15 - (hash % 25));
+            let baseGen = 180 + (hash % 20); // 180 - 199
+            let baseRed = 175 + ((hash >> 2) % 20); // 175 - 194
+            let base2x = 165 + ((hash >> 3) % 25); // 165 - 189
+            let base4x = 155 + ((hash >> 4) % 30); // 155 - 184
+            let fireBtn = 42 + (hash % 15); // 42% - 56%
+            
+            let isIphone = phoneInput.includes('iphone');
+            let dpiVal = isIphone ? "N/A (iOS Restricted)" : (520 + (hash % 120)); // 520 - 639 DPI for Android
+
+            document.getElementById('valGen').innerText = baseGen;
+            document.getElementById('valRed').innerText = baseRed;
+            document.getElementById('val2x').innerText = base2x;
+            document.getElementById('val4x').innerText = base4x;
+            document.getElementById('valFireBtn').innerText = fireBtn + "%";
+            document.getElementById('valDpi').innerText = dpiVal;
 
             document.getElementById('sensiResults').classList.remove('hidden');
-            showToast("Settings uniquely optimized for your device! 🎯");
+            showToast("🎯 Pro Headshot Settings generated successfully for " + document.getElementById('phoneModel').value + "!");
         }
 
         function openCheckout(productId) {
