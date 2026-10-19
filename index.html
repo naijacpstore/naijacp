@@ -91,9 +91,9 @@
             <img src="https://cdn.phototourl.com/member/2026-10-01-240f3835-df17-4722-9f3c-0500455e8f80.jpg" alt="Logo" class="w-full h-full object-cover">
         </div>
         <h1 class="text-3xl sm:text-4xl font-black text-white mb-3">NAIJACP.NG 🇳🇬</h1>
-        <p class="text-slate-300 text-sm sm:text-base max-w-md mb-8 font-medium">Africa's Top Gaming Marketplace &amp; Digital Services. Tap below to enable background music &amp; sound effects!</p>
-        <button onclick="enterSiteWithAudio()" class="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-extrabold rounded-2xl text-base shadow-[0_0_35px_rgba(236,72,153,0.7)] transition transform hover:scale-105 flex items-center gap-3 mx-auto">
-            <i class="fa-solid fa-volume-high text-xl"></i> Tap to Play Music &amp; Enter Site 🎵
+        <p class="text-slate-300 text-sm sm:text-base max-w-md mb-8 font-medium">Africa's Top Gaming Marketplace &amp; Digital Services. Tap below to enable gaming background music &amp; enter site!</p>
+        <button onclick="enterSiteWithAudio()" class="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-extrabold rounded-2xl text-base shadow-[0_0_35px_rgba(236,72,153,0.7)] transition transform hover:scale-105 flex items-center gap-3 mx-auto cursor-pointer">
+            <i class="fa-solid fa-gamepad text-xl"></i> Tap to Play Gaming Music &amp; Enter 🎮
         </button>
         <p class="text-[11px] text-slate-500 mt-6">🛡️ CBN Licensed &amp; Regulated Secure Platform</p>
     </div>
@@ -432,7 +432,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Your Full Name / Gamer Tag</label>
-                        <input type="text" id="custName" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. John Doe">
+                        <input type="text" id="custName" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. John Doe" required>
                     </div>
                     <button type="button" onclick="nextCheckoutStep(2)" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition">
                         Next: Player ID ➔
@@ -446,11 +446,11 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Player ID / Account ID</label>
-                        <input type="text" id="custGameId" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. 6823019283">
+                        <input type="text" id="custGameId" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. 6823019283" required>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">WhatsApp Phone Number</label>
-                        <input type="tel" id="custPhone" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. 08012345678">
+                        <input type="tel" id="custPhone" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. 08012345678" required>
                     </div>
                     <div class="flex gap-2">
                         <button type="button" onclick="prevCheckoutStep(1)" class="w-1/3 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition">
@@ -516,7 +516,7 @@
                         <button type="button" onclick="prevCheckoutStep(2)" class="w-1/3 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition">
                             ⬅ Back
                         </button>
-                        <button type="submit" class="w-2/3 py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition">
+                        <button type="submit" id="submitOrderBtn" class="w-2/3 py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition">
                             Submit Order &amp; Payment 🚀
                         </button>
                     </div>
@@ -743,17 +743,44 @@
             renderCatalog();
             startLiveUsers();
             startFakePurchases();
+            
+            // Add sound effect listener to all buttons
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('button') || e.target.closest('a') || e.target.closest('select')) {
+                    playClickSound();
+                }
+            });
         });
 
+        // Crisp Futuristic Arcade Click Sound Effect using Web Audio API
+        function playClickSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(700, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(250, audioCtx.currentTime + 0.06);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.06);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.06);
+            } catch(e) {}
+        }
+
+        // Gaming Background Music (Cyberpunk / Synthwave Gaming Theme)
         function enterSiteWithAudio() {
+            playClickSound();
             document.getElementById('welcomeOverlay').classList.add('hidden');
             try {
-                bgAudio = new Audio('https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg');
+                bgAudio = new Audio('https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf7f6.mp3?filename=cyberpunk-2099-107016.mp3');
                 bgAudio.loop = true;
-                bgAudio.volume = 0.3;
+                bgAudio.volume = 0.35;
                 bgAudio.play().catch(e => console.log('Audio autoplay prevented:', e));
             } catch(err) { console.log(err); }
-            showToast("Welcome to NAIJACP.NG! Audio & effects enabled 🎵");
+            showToast("Welcome to NAIJACP.NG! Gaming music & effects enabled 🎮");
         }
 
         function showToast(message) {
@@ -1019,7 +1046,7 @@
         function submitOrder(e) {
             e.preventDefault();
             if (!uploadedReceiptBase64) {
-                alert("Please attach your payment screenshot receipt!");
+                alert("⚠️ Please attach your payment screenshot receipt before submitting!");
                 return;
             }
 
@@ -1053,7 +1080,7 @@
                 document.getElementById('processingSuccessIcon').classList.add('flex');
                 
                 document.getElementById('processingTitle').innerText = "Order Submitted Successfully! 🎉";
-                document.getElementById('processingDesc').innerText = "Processing, please wait for one of our agents to review your order receipt on the admin dashboard.";
+                document.getElementById('processingDesc').innerText = "Your payment receipt has been sent to Merlin's Admin Dashboard. Please wait for agent review.";
                 document.getElementById('closeProcessingBtn').classList.remove('hidden');
 
                 document.getElementById('orderForm').reset();
