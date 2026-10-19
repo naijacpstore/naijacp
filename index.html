@@ -92,7 +92,7 @@
         </div>
         <h1 class="text-3xl sm:text-4xl font-black text-white mb-3">NAIJACP.NG 🇳🇬</h1>
         <p class="text-slate-300 text-sm sm:text-base max-w-md mb-8 font-medium">Africa's Top Gaming Marketplace &amp; Digital Services. Tap below to enable background music &amp; button sound effects to start exploring!</p>
-        <button onclick="enterSiteWithAudio()" class="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-extrabold rounded-2xl text-base shadow-[0_0_35px_rgba(236,72,153,0.7)] transition transform hover:scale-105 flex items-center gap-3">
+        <button onclick="enterSiteWithAudio()" class="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-extrabold rounded-2xl text-base shadow-[0_0_35px_rgba(236,72,153,0.7)] transition transform hover:scale-105 flex items-center gap-3 mx-auto">
             <i class="fa-solid fa-volume-high text-xl"></i> Tap to Play Music &amp; Enter Site 🎵
         </button>
         <p class="text-[11px] text-slate-500 mt-6">🛡️ CBN Licensed &amp; Regulated Secure Platform</p>
@@ -111,7 +111,6 @@
     <!-- Header Navigation -->
     <header class="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-b border-pink-900/30 px-4 sm:px-8 py-3.5">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <!-- LOGO -->
             <div class="flex items-center gap-2.5 cursor-pointer">
                 <div class="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-pink-500/40 bg-slate-900">
                     <img src="https://cdn.phototourl.com/member/2026-10-01-240f3835-df17-4722-9f3c-0500455e8f80.jpg" alt="Logo" class="w-full h-full object-cover">
@@ -133,7 +132,7 @@
     <div class="relative pt-12 pb-16 overflow-hidden px-4 sm:px-6 text-center border-b border-pink-500/20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-pink-950/20 via-black to-black">
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-slate-300 mb-6">
             <span class="w-2.5 h-2.5 rounded-full bg-pink-500 pulse-dot"></span>
-            <span class="text-pink-400 font-extrabold text-sm">6,854</span>
+            <span class="text-pink-400 font-extrabold text-sm" id="liveUserCounter">6,854</span>
             <span>Gamers Online Right Now</span>
         </div>
         <h1 class="text-4xl sm:text-5xl font-black text-white mb-4 tracking-tight">Top Up Your Favorite Games Fast</h1>
@@ -179,7 +178,7 @@
                 </h2>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6" id="productsGrid">
-                <!-- Populated dynamically -->
+                <!-- Populated dynamically via JS to fix logo display issues -->
             </div>
         </section>
 
@@ -194,11 +193,10 @@
             </div>
 
             <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/30 max-w-2xl mx-auto shadow-2xl relative">
-                <!-- Step 1: SIM & Phone -->
                 <div id="dataFormArea" class="space-y-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Select SIM Network</label>
-                        <select id="simNetwork" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" required>
+                        <select id="simNetwork" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500">
                             <option value="MTN">MTN Nigeria</option>
                             <option value="AIRTEL">Airtel Nigeria</option>
                             <option value="GLO">Glo Mobile</option>
@@ -207,14 +205,13 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Mobile Phone Number</label>
-                        <input type="tel" id="dataPhoneNumber" placeholder="e.g. 08012345678" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" required>
+                        <input type="tel" id="dataPhoneNumber" placeholder="e.g. 08012345678" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500">
                     </div>
                     <button type="button" onclick="proceedToDataShare()" class="w-full py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-green-500/20">
                         Proceed to Share Requirement 🚀
                     </button>
                 </div>
 
-                <!-- Step 2: WhatsApp Share (10 Groups) -->
                 <div id="dataShareArea" class="hidden space-y-5">
                     <div class="p-4 rounded-2xl bg-green-500/10 border border-green-500/30 flex items-center justify-between text-xs">
                         <span class="text-slate-300 font-bold">Step 2: Share to 10 WhatsApp Groups</span>
@@ -229,7 +226,6 @@
                         <i class="fa-brands fa-whatsapp text-xl"></i>
                         <span>Share to WhatsApp Group (<span id="dataSharesLeft">10</span> Left)</span>
                     </button>
-                    <p class="text-[11px] text-slate-400 text-center">Your data pack will be queued automatically once 10 shares are verified.</p>
                 </div>
             </div>
         </section>
@@ -245,8 +241,6 @@
             </div>
 
             <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/30 max-w-2xl mx-auto shadow-2xl relative">
-                
-                <!-- Share Lock Container -->
                 <div id="sensiUnlockArea" class="space-y-5">
                     <div class="p-4 rounded-2xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-between text-xs">
                         <span class="text-slate-300 font-bold">Step 1: Complete Share Requirement</span>
@@ -263,7 +257,6 @@
                     </button>
                 </div>
 
-                <!-- Actual Form Container -->
                 <div id="sensiFormArea" class="hidden">
                     <div class="p-3.5 mb-6 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs text-center font-bold">
                         <i class="fa-solid fa-circle-check text-green-400 mr-1"></i> Shared successfully! Generate your settings below.
@@ -272,14 +265,14 @@
                     <form id="sensiForm" onsubmit="generateSensi(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Exact Phone Brand &amp; Model</label>
-                            <input type="text" id="phoneModel" placeholder="e.g. Tecno Spark 10, iPhone 11" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" required="">
+                            <input type="text" id="phoneModel" placeholder="e.g. Tecno Spark 10, iPhone 11" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" required>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">RAM Size</label>
-                            <select id="ramSize" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" required="">
+                            <select id="ramSize" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" required>
                                 <option value="2">2 GB RAM</option>
                                 <option value="3">3 GB RAM</option>
-                                <option value="4" selected="">4 GB RAM</option>
+                                <option value="4" selected>4 GB RAM</option>
                                 <option value="6">6 GB RAM</option>
                                 <option value="8">8 GB RAM or Higher</option>
                             </select>
@@ -308,29 +301,15 @@
                             <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">4X Scope</span>
                             <span class="text-xl font-black text-green-400" id="val4x">160</span>
                         </div>
-                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">AWM Scope</span>
-                            <span class="text-xl font-black text-green-400" id="valAwm">120</span>
-                        </div>
-                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">Fire Button</span>
-                            <span class="text-xl font-black text-green-400" id="valBtn">48%</span>
-                        </div>
-                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center col-span-2">
-                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">Recommended DPI</span>
-                            <span class="text-xl font-black text-green-400" id="valDpi">Default</span>
-                        </div>
                     </div>
                 </div>
-
             </div>
         </section>
-
     </div>
 
     <footer class="border-t border-slate-800 bg-black py-8 text-slate-500 text-xs text-center mt-auto">
         <p>© 2026 NaijaCP Marketplace. All Rights Reserved.</p>
-        <p class="mt-2 text-[11px]">🛡️ Licensed & Regulated by Central Bank of Nigeria (CBN)</p>
+        <p class="mt-2 text-[11px]">🛡️ Licensed &amp; Regulated by Central Bank of Nigeria (CBN)</p>
     </footer>
 
     <!-- Toast Notifications Container -->
@@ -341,8 +320,6 @@
         <i class="fa-brands fa-telegram text-2xl"></i>
         <span class="text-xs font-bold hidden sm:inline">Customer Support</span>
     </a>
-
-    <!-- MODALS -->
 
     <!-- MULTI-STEP CHECKOUT & PAYMENT MODAL -->
     <div id="checkoutModal" class="fixed inset-0 z-[60] items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden">
@@ -357,7 +334,7 @@
 
             <form id="orderForm" onsubmit="submitOrder(event)" class="space-y-4">
                 
-                <!-- STEP 1: Name / Gamer Tag -->
+                <!-- STEP 1 -->
                 <div id="checkoutStep1" class="space-y-4">
                     <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2">
                         Step 1 of 3: Enter Your Name
@@ -371,7 +348,7 @@
                     </button>
                 </div>
 
-                <!-- STEP 2: Player ID & WhatsApp Phone -->
+                <!-- STEP 2 -->
                 <div id="checkoutStep2" class="space-y-4 hidden">
                     <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2">
                         Step 2 of 3: Account &amp; Contact Details
@@ -394,18 +371,16 @@
                     </div>
                 </div>
 
-                <!-- STEP 3: Payment & Receipt Upload -->
+                <!-- STEP 3 -->
                 <div id="checkoutStep3" class="space-y-4 hidden">
                     <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2 flex items-center justify-between">
                         <span>Step 3 of 3: Payment Transfer</span>
                         <span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded">CBN Licensed 🛡️</span>
                     </div>
 
-                    <!-- Bank Account Options -->
                     <div class="bg-black border border-pink-500/30 p-4 rounded-2xl space-y-3">
                         <h4 class="text-pink-400 text-xs font-bold uppercase tracking-wider">🏦 Choose Official Payment Account:</h4>
                         
-                        <!-- Option 1: Moremonee Bank -->
                         <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1.5">
                             <div class="flex justify-between text-xs text-slate-300">
                                 <span>Bank Name:</span><span class="font-bold text-white">Moremonee Bank</span>
@@ -421,7 +396,6 @@
 
                         <div class="text-center text-[10px] text-slate-500 font-bold">— OR —</div>
 
-                        <!-- Option 2: Smartcash Payment Service Bank -->
                         <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1.5">
                             <div class="flex justify-between text-xs text-slate-300">
                                 <span>Bank Name:</span><span class="font-bold text-white">Smartcash Payment Service Bank</span>
@@ -434,7 +408,6 @@
                                 <span>Account Name:</span><span class="font-bold text-white">AKEEM SOLARIN</span>
                             </div>
                         </div>
-                        <p class="text-[10px] text-slate-400 text-center pt-1">📌 Transfer funds to either account above, then upload your payment receipt below.</p>
                     </div>
 
                     <div>
@@ -457,7 +430,6 @@
                         </button>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>
@@ -473,513 +445,56 @@
         <button id="closeProcessingBtn" onclick="closeModal('processingModal')" class="hidden px-8 py-3 bg-pink-500 hover:bg-pink-400 text-black font-bold rounded-xl transition">Return to Home</button>
     </div>
 
-    <!-- ADMIN AUTHENTICATION MODAL -->
-    <div id="adminAuthModal" class="fixed inset-0 z-[70] items-center justify-center p-4 bg-black/90 backdrop-blur-md hidden">
-        <div class="glass-modal w-full max-w-sm rounded-3xl p-6 text-center border border-pink-500/40 relative">
-            <button onclick="closeModal('adminAuthModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="w-12 h-12 rounded-2xl bg-pink-500/20 border border-pink-500/40 text-pink-400 flex items-center justify-center mx-auto mb-3 text-xl">
-                <i class="fa-solid fa-user-shield"></i>
-            </div>
-            <h3 class="text-lg font-extrabold text-white mb-4">Admin Verification</h3>
-            
-            <form onsubmit="handleAdminLogin(event)" class="space-y-3">
-                <input type="text" id="adminUser" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm text-center focus:outline-none focus:border-pink-500" placeholder="Username" required="">
-                <input type="password" id="adminPass" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm text-center focus:outline-none focus:border-pink-500" placeholder="Password" required="">
-                <button type="submit" class="w-full py-3 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-extrabold text-sm transition">
-                    Login to Dashboard
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- ADMIN DASHBOARD MODAL -->
-    <div id="adminModal" class="fixed inset-0 z-[80] items-center justify-center p-2 sm:p-4 bg-black/95 backdrop-blur-md hidden">
-        <div class="glass-modal w-full max-w-5xl h-[92vh] rounded-3xl p-4 sm:p-6 relative shadow-2xl border border-pink-500/40 flex flex-col">
-            <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
-                <h3 class="text-xl font-black text-white flex items-center gap-2">
-                    <i class="fa-solid fa-gears text-pink-400"></i> Admin Control Panel
-                </h3>
-                <button onclick="closeModal('adminModal')" class="text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            
-            <div class="flex gap-2 overflow-x-auto pb-2 mb-4 border-b border-slate-800 flex-shrink-0 hide-scroll">
-                <button class="admin-tab-btn active-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 whitespace-nowrap transition" onclick="switchAdminTab('orders', this)">Receipts &amp; Orders</button>
-                <button class="admin-tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 border border-slate-800 whitespace-nowrap transition" onclick="switchAdminTab('packages', this)">Manage Packages</button>
-                <button class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-green-400 border border-slate-800 whitespace-nowrap hover:bg-green-500/20 transition" onclick="exportUpdatedCode()">📥 Export Data</button>
-                <button class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-pink-400 border border-slate-800 whitespace-nowrap hover:bg-pink-500/20 transition" onclick="generateSourceCode()">📄 Generate Source Code</button>
-            </div>
-
-            <!-- TAB 1: ORDERS -->
-            <div id="adminTabOrders" class="flex-1 overflow-y-auto pr-2">
-                <h4 class="text-sm font-bold text-white mb-3">Submitted Customer Receipts</h4>
-                <div class="overflow-x-auto bg-slate-950 rounded-xl border border-slate-800">
-                    <table class="w-full text-left text-xs whitespace-nowrap">
-                        <thead class="bg-slate-900 text-slate-400 border-b border-slate-800">
-                            <tr>
-                                <th class="p-3">Date</th>
-                                <th class="p-3">Customer</th>
-                                <th class="p-3">Game ID / Phone</th>
-                                <th class="p-3">Product</th>
-                                <th class="p-3">Amount</th>
-                                <th class="p-3">Screenshot</th>
-                                <th class="p-3">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ordersTableBody" class="text-slate-300 divide-y divide-slate-800"><tr><td colspan="7" class="p-4 text-center">No orders submitted yet.</td></tr></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- TAB 2: PACKAGES -->
-            <div id="adminTabPackages" class="hidden flex-1 overflow-y-auto pr-2">
-                <h4 class="text-sm font-bold text-white mb-3">Add / Edit Product Tiers</h4>
-                <form id="pkgForm" onsubmit="savePackage(event)" class="bg-slate-900 p-4 rounded-xl border border-slate-800 mb-6 space-y-3">
-                    <input type="hidden" id="pkgId">
-                    <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
-                        <input type="text" id="pkgTitle" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs col-span-2 md:col-span-1" placeholder="Title (e.g. 880 CODM CP)" required="">
-                        <input type="number" id="pkgPrice" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs" placeholder="Price (₦)" required="">
-                        <select id="pkgCategory" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs">
-                            <option value="games">Game Top-Up</option>
-                            <option value="gadgets">Gadgets</option>
-                            <option value="giftcards">Gift Cards</option>
-                        </select>
-                        <select id="pkgSubTag" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs">
-                            <option value="codm">CODM</option>
-                            <option value="efootball">eFootball</option>
-                            <option value="freefire">Free Fire</option>
-                            <option value="bloodstrike">Blood Strike</option>
-                            <option value="tiktok">TikTok</option>
-                            <option value="dls">DLS</option>
-                            <option value="onestate">OneState RP</option>
-                            <option value="general">General / Other</option>
-                        </select>
-                        <input type="text" id="pkgIcon" class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white text-xs" placeholder="Icon URL">
-                    </div>
-                    <div class="flex gap-2 mt-2">
-                        <button type="submit" id="pkgSubmitBtn" class="px-6 py-2 bg-green-500 hover:bg-green-400 text-black text-xs font-bold rounded-lg transition">Save Package</button>
-                        <button type="button" onclick="resetPkgForm()" class="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold rounded-lg transition">Cancel Edit</button>
-                    </div>
-                </form>
-
-                <div class="overflow-x-auto bg-slate-950 rounded-xl border border-slate-800">
-                    <table class="w-full text-left text-xs whitespace-nowrap">
-                        <thead class="bg-slate-900 text-slate-400 border-b border-slate-800">
-                            <tr>
-                                <th class="p-3">Icon</th>
-                                <th class="p-3">Title</th>
-                                <th class="p-3">Category</th>
-                                <th class="p-3">Sub-Tag</th>
-                                <th class="p-3">Price (₦)</th>
-                                <th class="p-3">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="packagesTableBody" class="text-slate-300 divide-y divide-slate-800">
-                            <!-- Populated dynamically -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- FULL RECEIPT PREVIEW LIGHTBOX -->
-    <div id="receiptPreviewModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/95" onclick="this.classList.add('hidden')">
-        <img id="fullReceiptImg" src="" class="max-w-full max-h-[90vh] rounded-xl border border-pink-500/30 object-contain">
-    </div>
-
-    <!-- SOURCE CODE GENERATOR MODAL -->
-    <div id="sourceCodeModal" class="fixed inset-0 z-[120] hidden flex-col items-center justify-center p-4 bg-black/95 backdrop-blur-md">
-        <div class="glass-modal w-full max-w-4xl h-[90vh] rounded-3xl p-6 relative flex flex-col shadow-2xl">
-            <button onclick="closeModal('sourceCodeModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <h3 class="text-xl font-black text-white mb-2"><i class="fa-solid fa-code text-pink-400"></i> Generated Source Code</h3>
-            <p class="text-xs text-slate-400 mb-4">All your edits are baked in! Copy all the code below and paste it into your GitHub <strong>index.html</strong> file to apply your changes instantly.</p>
-            <textarea id="sourceCodeArea" class="flex-1 w-full bg-slate-950 border border-slate-700 rounded-xl p-4 text-white text-xs font-mono focus:outline-none focus:border-pink-500 resize-none mb-4" readonly=""></textarea>
-            <button onclick="copySourceCode()" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition flex items-center justify-center gap-2">
-                <i class="fa-regular fa-copy"></i> Copy Full Source Code
-            </button>
-        </div>
-    </div>
-
-    <!-- MAIN JAVASCRIPT -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        /* --- PRODUCTS DATABASE START --- */
         let defaultProducts = [
-          {
-                    "id": 1,
-                    "title": "CODM: 80 CP",
-                    "price": 1200,
-                    "category": "games",
-                    "subTag": "codm",
-                    "icon": "https://i.postimg.cc/HxDnLZLq/IMG-0066.jpg"
-          },
-          {
-                    "id": 2,
-                    "title": "CODM: 420 CP",
-                    "price": 5500,
-                    "category": "games",
-                    "subTag": "codm",
-                    "icon": "https://i.postimg.cc/HxDnLZLq/IMG-0066.jpg"
-          },
-          {
-                    "id": 3,
-                    "title": "CODM: 880 CP",
-                    "price": 11000,
-                    "category": "games",
-                    "subTag": "codm",
-                    "icon": "https://i.postimg.cc/HxDnLZLq/IMG-0066.jpg"
-          },
-          {
-                    "id": 4,
-                    "title": "eFootball: 130 Coins",
-                    "price": 1800,
-                    "category": "games",
-                    "subTag": "efootball",
-                    "icon": "https://i.postimg.cc/C5Jxmw4L/IMG-0067.jpg"
-          },
-          {
-                    "id": 5,
-                    "title": "eFootball: 320 Coins",
-                    "price": 4200,
-                    "category": "games",
-                    "subTag": "efootball",
-                    "icon": "https://i.postimg.cc/C5Jxmw4L/IMG-0067.jpg"
-          },
-          {
-                    "id": 6,
-                    "title": "eFootball: 1040 Coins",
-                    "price": 13500,
-                    "category": "games",
-                    "subTag": "efootball",
-                    "icon": "https://i.postimg.cc/C5Jxmw4L/IMG-0067.jpg"
-          },
-          {
-                    "id": 7,
-                    "title": "Free Fire: 100 Diamonds",
-                    "price": 1100,
-                    "category": "games",
-                    "subTag": "freefire",
-                    "icon": "https://i.postimg.cc/SxYmz6HV/IMG-0068.jpg"
-          },
-          {
-                    "id": 8,
-                    "title": "Free Fire: 210 Diamonds",
-                    "price": 3000,
-                    "category": "games",
-                    "subTag": "freefire",
-                    "icon": "https://i.postimg.cc/SxYmz6HV/IMG-0068.jpg"
-          },
-          {
-                    "id": 9,
-                    "title": "Free Fire: 310 Diamonds",
-                    "price": 4700,
-                    "category": "games",
-                    "subTag": "freefire",
-                    "icon": "https://i.postimg.cc/SxYmz6HV/IMG-0068.jpg"
-          },
-          {
-                    "id": 10,
-                    "title": "Free Fire: 530+53 Diamonds",
-                    "price": 7500,
-                    "category": "games",
-                    "subTag": "freefire",
-                    "icon": "https://i.postimg.cc/SxYmz6HV/IMG-0068.jpg"
-          },
-          {
-                    "id": 11,
-                    "title": "Free Fire: 1080+108 Diamonds",
-                    "price": 15800,
-                    "category": "games",
-                    "subTag": "freefire",
-                    "icon": "https://i.postimg.cc/SxYmz6HV/IMG-0068.jpg"
-          },
-          {
-                    "id": 12,
-                    "title": "Free Fire: 2200+220 Diamonds",
-                    "price": 31000,
-                    "category": "games",
-                    "subTag": "freefire",
-                    "icon": "https://i.postimg.cc/SxYmz6HV/IMG-0068.jpg"
-          },
-          {
-                    "id": 13,
-                    "title": "Free Fire weekly subscription : 450 Diamonds",
-                    "price": 2800,
-                    "category": "games",
-                    "subTag": "freefire",
-                    "icon": "https://i.postimg.cc/SxYmz6HV/IMG-0068.jpg"
-          },
-          {
-                    "id": 14,
-                    "title": "Free Fire monthly subscription : 2600 Diamonds",
-                    "price": 14500,
-                    "category": "games",
-                    "subTag": "freefire",
-                    "icon": "https://i.postimg.cc/SxYmz6HV/IMG-0068.jpg"
-          },
-          {
-                    "id": 15,
-                    "title": "Blood Strike: 50+ 6 Golds",
-                    "price": 900,
-                    "category": "games",
-                    "subTag": "bloodstrike",
-                    "icon": "https://i.postimg.cc/Y9rc8YDF/IMG-0072.jpg"
-          },
-          {
-                    "id": 16,
-                    "title": "Blood Strike: 100+16 Golds",
-                    "price": 1300,
-                    "category": "games",
-                    "subTag": "bloodstrike",
-                    "icon": "https://i.postimg.cc/Y9rc8YDF/IMG-0072.jpg"
-          },
-          {
-                    "id": 17,
-                    "title": "Blood Strike: 300+52 Golds",
-                    "price": 4000,
-                    "category": "games",
-                    "subTag": "bloodstrike",
-                    "icon": "https://i.postimg.cc/Y9rc8YDF/IMG-0072.jpg"
-          },
-          {
-                    "id": 18,
-                    "title": "Blood Strike: 500+94 Golds",
-                    "price": 6700,
-                    "category": "games",
-                    "subTag": "bloodstrike",
-                    "icon": "https://i.postimg.cc/Y9rc8YDF/IMG-0072.jpg"
-          },
-          {
-                    "id": 19,
-                    "title": "Blood Strike: 1000+210 Golds",
-                    "price": 13500,
-                    "category": "games",
-                    "subTag": "bloodstrike",
-                    "icon": "https://i.postimg.cc/Y9rc8YDF/IMG-0072.jpg"
-          },
-          {
-                    "id": 20,
-                    "title": "Blood Strike: 2000+486 Golds",
-                    "price": 27200,
-                    "category": "games",
-                    "subTag": "bloodstrike",
-                    "icon": "https://i.postimg.cc/Y9rc8YDF/IMG-0072.jpg"
-          },
-          {
-                    "id": 21,
-                    "title": "Blood Strike: STRIKE PASS ELITE PASSES",
-                    "price": 4900,
-                    "category": "games",
-                    "subTag": "bloodstrike",
-                    "icon": "https://i.postimg.cc/Y9rc8YDF/IMG-0072.jpg"
-          },
-          {
-                    "id": 22,
-                    "title": "Blood Strike: STRIKE PASS PREMIUM PASSES",
-                    "price": 11250,
-                    "category": "games",
-                    "subTag": "bloodstrike",
-                    "icon": "https://i.postimg.cc/Y9rc8YDF/IMG-0072.jpg"
-          },
-          {
-                    "id": 23,
-                    "title": "TikTok: 350 Coins",
-                    "price": 5800,
-                    "category": "games",
-                    "subTag": "tiktok",
-                    "icon": "https://i.postimg.cc/X7yPfsNt/IMG-0073.jpg"
-          },
-          {
-                    "id": 24,
-                    "title": "TikTok: 700 Coins",
-                    "price": 11500,
-                    "category": "games",
-                    "subTag": "tiktok",
-                    "icon": "https://i.postimg.cc/X7yPfsNt/IMG-0073.jpg"
-          },
-          {
-                    "id": 25,
-                    "title": "TikTok: 1500 Coins",
-                    "price": 25000,
-                    "category": "games",
-                    "subTag": "tiktok",
-                    "icon": "https://i.postimg.cc/X7yPfsNt/IMG-0073.jpg"
-          },
-          {
-                    "id": 26,
-                    "title": "DLS: 900 Coins",
-                    "price": 4000,
-                    "category": "games",
-                    "subTag": "dls",
-                    "icon": "https://i.postimg.cc/2jqYtF8v/IMG-0074.jpg"
-          },
-          {
-                    "id": 27,
-                    "title": "DLS:  SEASON PASS",
-                    "price": 9000,
-                    "category": "games",
-                    "subTag": "dls",
-                    "icon": "https://i.postimg.cc/2jqYtF8v/IMG-0074.jpg"
-          },
-          {
-                    "id": 28,
-                    "title": "DLS: 1750 Coins",
-                    "price": 9500,
-                    "category": "games",
-                    "subTag": "dls",
-                    "icon": "https://i.postimg.cc/2jqYtF8v/IMG-0074.jpg"
-          },
-          {
-                    "id": 29,
-                    "title": "DLS: 400 Diamonds",
-                    "price": 15000,
-                    "category": "games",
-                    "subTag": "dls",
-                    "icon": "https://i.postimg.cc/2jqYtF8v/IMG-0074.jpg"
-          },
-          {
-                    "id": 30,
-                    "title": "DLS: 3000 Coins",
-                    "price": 16500,
-                    "category": "games",
-                    "subTag": "dls",
-                    "icon": "https://i.postimg.cc/2jqYtF8v/IMG-0074.jpg"
-          },
-          {
-                    "id": 31,
-                    "title": "DLS: Premium Season Pass",
-                    "price": 20000,
-                    "category": "games",
-                    "subTag": "dls",
-                    "icon": "https://i.postimg.cc/2jqYtF8v/IMG-0074.jpg"
-          },
-          {
-                    "id": 32,
-                    "title": "DLS: 5000 Coins",
-                    "price": 20000,
-                    "category": "games",
-                    "subTag": "dls",
-                    "icon": "https://i.postimg.cc/2jqYtF8v/IMG-0074.jpg"
-          },
-          {
-                    "id": 33,
-                    "title": "DLS: 910 Diamonds ",
-                    "price": 30000,
-                    "category": "games",
-                    "subTag": "dls",
-                    "icon": "https://i.postimg.cc/2jqYtF8v/IMG-0074.jpg"
-          },
-          {
-                    "id": 34,
-                    "title": "OneState RP: 100 Rp Coins",
-                    "price": 4000,
-                    "category": "games",
-                    "subTag": "onestate",
-                    "icon": "https://i.postimg.cc/KcgXfGJw/IMG-0075.jpg"
-          },
-          {
-                    "id": 35,
-                    "title": "OneState RP: 263+45 Rp Coins",
-                    "price": 7000,
-                    "category": "games",
-                    "subTag": "onestate",
-                    "icon": "https://i.postimg.cc/KcgXfGJw/IMG-0075.jpg"
-          },
-          {
-                    "id": 36,
-                    "title": "OneState RP: 525 Rp Coins",
-                    "price": 15000,
-                    "category": "games",
-                    "subTag": "onestate",
-                    "icon": "https://i.postimg.cc/KcgXfGJw/IMG-0075.jpg"
-          },
-          {
-                    "id": 37,
-                    "title": "OneState RP: 1350 Rp Coins",
-                    "price": 40000,
-                    "category": "games",
-                    "subTag": "onestate",
-                    "icon": "https://i.postimg.cc/KcgXfGJw/IMG-0075.jpg"
-          },
-          {
-                    "id": 38,
-                    "title": "Magnetic Phone Cooler",
-                    "price": 19999,
-                    "category": "gadgets",
-                    "subTag": "general",
-                    "icon": "https://i.postimg.cc/qMdFG8tp/IMG-0076.jpg"
-          },
-          {
-                    "id": 39,
-                    "title": "V8 Gamepad Controller",
-                    "price": 20000,
-                    "category": "gadgets",
-                    "subTag": "general",
-                    "icon": "https://i.postimg.cc/7LcsJ785/IMG-0077.jpg"
-          },
-          {
-                    "id": 40,
-                    "title": "Fuxi-H3 Gaming Headset",
-                    "price": 75000,
-                    "category": "gadgets",
-                    "subTag": "general",
-                    "icon": "https://i.postimg.cc/hv8pY5Jz/IMG-0078.jpg"
-          },
-          {
-                    "id": 41,
-                    "title": "Thumb Gaming Sleeves",
-                    "price": 15000,
-                    "category": "gadgets",
-                    "subTag": "general",
-                    "icon": "https://i.postimg.cc/HLJ3mxcn/IMG-0079.jpg"
-          },
-          {
-                    "id": 42,
-                    "title": "6-Pcs Anti-Sweat Sleeves",
-                    "price": 7920,
-                    "category": "gadgets",
-                    "subTag": "general",
-                    "icon": "https://i.postimg.cc/kXfyt8W7/IMG-0080.jpg"
-          },
-          {
-                    "id": 43,
-                    "title": "PlayStation $10 Gift Card",
-                    "price": 16500,
-                    "category": "giftcards",
-                    "subTag": "general",
-                    "icon": "https://i.postimg.cc/YCvQGPp1/IMG-0081.jpg"
-          },
-          {
-                    "id": 44,
-                    "title": "Apple iTunes $10 Gift Card",
-                    "price": 16000,
-                    "category": "giftcards",
-                    "subTag": "general",
-                    "icon": "https://i.postimg.cc/653vgPGs/IMG-0084.jpg"
-          },
-          {
-                    "id": 45,
-                    "title": "Google Play $10 Gift Card",
-                    "price": 16200,
-                    "category": "giftcards",
-                    "subTag": "giftcards",
-                    "icon": "https://i.postimg.cc/0QP6fXqT/IMG-0082.jpg"
-          },
-          {
-                    "id": 46,
-                    "title": "Steam $10 Gift Card",
-                    "price": 16200,
-                    "category": "giftcards",
-                    "subTag": "giftcards",
-                    "icon": "https://i.postimg.cc/3NwkMyN9/IMG-0083.webp"
-          }
+            { id: 1, title: "CODM: 80 CP", price: 1200, category: "games", subTag: "codm", icon: "https://files.catbox.moe/w4tgaw.jpeg" },
+            { id: 2, title: "CODM: 420 CP", price: 5500, category: "games", subTag: "codm", icon: "https://files.catbox.moe/w4tgaw.jpeg" },
+            { id: 3, title: "CODM: 880 CP", price: 11000, category: "games", subTag: "codm", icon: "https://files.catbox.moe/w4tgaw.jpeg" },
+            { id: 4, title: "eFootball: 130 Coins", price: 1800, category: "games", subTag: "efootball", icon: "https://files.catbox.moe/muhr8g.jpeg" },
+            { id: 5, title: "eFootball: 320 Coins", price: 4200, category: "games", subTag: "efootball", icon: "https://files.catbox.moe/muhr8g.jpeg" },
+            { id: 6, title: "eFootball: 1040 Coins", price: 13500, category: "games", subTag: "efootball", icon: "https://files.catbox.moe/muhr8g.jpeg" },
+            { id: 7, title: "Free Fire: 100 Diamonds", price: 1100, category: "games", subTag: "freefire", icon: "https://files.catbox.moe/mkliz3.jpeg" },
+            { id: 8, title: "Free Fire: 210 Diamonds", price: 3000, category: "games", subTag: "freefire", icon: "https://files.catbox.moe/mkliz3.jpeg" },
+            { id: 9, title: "Free Fire: 310 Diamonds", price: 4700, category: "games", subTag: "freefire", icon: "https://files.catbox.moe/mkliz3.jpeg" },
+            { id: 10, title: "Free Fire: 530+53 Diamonds", price: 7500, category: "games", subTag: "freefire", icon: "https://files.catbox.moe/mkliz3.jpeg" },
+            { id: 11, title: "Free Fire: 1080+108 Diamonds", price: 15800, category: "games", subTag: "freefire", icon: "https://files.catbox.moe/mkliz3.jpeg" },
+            { id: 12, title: "Free Fire: 2200+220 Diamonds", price: 31000, category: "games", subTag: "freefire", icon: "https://files.catbox.moe/mkliz3.jpeg" },
+            { id: 13, title: "Free Fire weekly subscription : 450 Diamonds", price: 2800, category: "games", subTag: "freefire", icon: "https://files.catbox.moe/mkliz3.jpeg" },
+            { id: 14, title: "Free Fire monthly subscription : 2600 Diamonds", price: 14500, category: "games", subTag: "freefire", icon: "https://files.catbox.moe/mkliz3.jpeg" },
+            { id: 15, title: "Blood Strike: 50+ 6 Golds", price: 900, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
+            { id: 16, title: "Blood Strike: 100+16 Golds", price: 1300, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
+            { id: 17, title: "Blood Strike: 300+52 Golds", price: 4000, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
+            { id: 18, title: "Blood Strike: 500+94 Golds", price: 6700, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
+            { id: 19, title: "Blood Strike: 1000+210 Golds", price: 13500, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
+            { id: 20, title: "Blood Strike: 2000+486 Golds", price: 27200, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
+            { id: 21, title: "Blood Strike: STRIKE PASS ELITE PASSES", price: 4900, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
+            { id: 22, title: "Blood Strike: STRIKE PASS PREMIUM PASSES", price: 11250, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
+            { id: 23, title: "TikTok: 350 Coins", price: 5800, category: "games", subTag: "tiktok", icon: "https://files.catbox.moe/nupea0.jpeg" },
+            { id: 24, title: "TikTok: 700 Coins", price: 11500, category: "games", subTag: "tiktok", icon: "https://files.catbox.moe/nupea0.jpeg" },
+            { id: 25, title: "TikTok: 1500 Coins", price: 25000, category: "games", subTag: "tiktok", icon: "https://files.catbox.moe/nupea0.jpeg" },
+            { id: 26, title: "DLS: 900 Coins", price: 4000, category: "games", subTag: "dls", icon: "https://files.catbox.moe/m8zy1q.jpeg" },
+            { id: 27, title: "DLS: SEASON PASS", price: 9000, category: "games", subTag: "dls", icon: "https://files.catbox.moe/m8zy1q.jpeg" },
+            { id: 28, title: "DLS: 1750 Coins", price: 9500, category: "games", subTag: "dls", icon: "https://files.catbox.moe/m8zy1q.jpeg" },
+            { id: 29, title: "DLS: 400 Diamonds", price: 15000, category: "games", subTag: "dls", icon: "https://files.catbox.moe/m8zy1q.jpeg" },
+            { id: 30, title: "DLS: 3000 Coins", price: 16500, category: "games", subTag: "dls", icon: "https://files.catbox.moe/m8zy1q.jpeg" },
+            { id: 31, title: "DLS: Premium Season Pass", price: 20000, category: "games", subTag: "dls", icon: "https://files.catbox.moe/m8zy1q.jpeg" },
+            { id: 32, title: "DLS: 5000 Coins", price: 20000, category: "games", subTag: "dls", icon: "https://files.catbox.moe/m8zy1q.jpeg" },
+            { id: 33, title: "DLS: 910 Diamonds", price: 30000, category: "games", subTag: "dls", icon: "https://files.catbox.moe/m8zy1q.jpeg" },
+            { id: 34, title: "OneState RP: 100 Rp Coins", price: 4000, category: "games", subTag: "onestate", icon: "https://files.catbox.moe/kppjhb.jpeg" },
+            { id: 35, title: "OneState RP: 263+45 Rp Coins", price: 7000, category: "games", subTag: "onestate", icon: "https://files.catbox.moe/kppjhb.jpeg" },
+            { id: 36, title: "OneState RP: 525 Rp Coins", price: 15000, category: "games", subTag: "onestate", icon: "https://files.catbox.moe/kppjhb.jpeg" },
+            { id: 37, title: "OneState RP: 1350 Rp Coins", price: 40000, category: "games", subTag: "onestate", icon: "https://files.catbox.moe/kppjhb.jpeg" },
+            { id: 38, title: "Magnetic Phone Cooler", price: 19999, category: "gadgets", subTag: "general", icon: "https://files.catbox.moe/jlq4ex.jpeg" },
+            { id: 39, title: "V8 Gamepad Controller", price: 20000, category: "gadgets", subTag: "general", icon: "https://files.catbox.moe/sfclwt.jpeg" },
+            { id: 40, title: "Fuxi-H3 Gaming Headset", price: 75000, category: "gadgets", subTag: "general", icon: "https://files.catbox.moe/kn7edw.jpeg" },
+            { id: 41, title: "Thumb Gaming Sleeves", price: 15000, category: "gadgets", subTag: "general", icon: "https://files.catbox.moe/wqcpt5.jpeg" },
+            { id: 42, title: "6-Pcs Anti-Sweat Sleeves", price: 7920, category: "gadgets", subTag: "general", icon: "https://files.catbox.moe/5qz5gn.jpeg" },
+            { id: 43, title: "PlayStation $10 Gift Card", price: 16500, category: "giftcards", subTag: "general", icon: "https://files.catbox.moe/puxn97.jpeg" },
+            { id: 44, title: "Apple iTunes $10 Gift Card", price: 16000, category: "giftcards", subTag: "general", icon: "https://files.catbox.moe/3u7rml.jpeg" },
+            { id: 45, title: "Google Play $10 Gift Card", price: 16200, category: "giftcards", subTag: "general", icon: "https://files.catbox.moe/umckga.jpeg" },
+            { id: 46, title: "Steam $10 Gift Card", price: 16200, category: "giftcards", subTag: "general", icon: "https://files.catbox.moe/vmei3z.webp" }
         ];
-        /* --- PRODUCTS DATABASE END --- */
 
         let products = JSON.parse(localStorage.getItem('naijacp_products')) || defaultProducts;
         let orders = JSON.parse(localStorage.getItem('naijacp_orders')) || [];
@@ -989,93 +504,30 @@
         let uploadedReceiptBase64 = '';
         let sensiShareCount = 0;
         let dataShareCount = 0;
-
-        let dataErrorTriggered3 = false;
-        let dataErrorTriggered8 = false;
-        let sensiErrorTriggered2 = false;
-
-        // Audio System Setup
-        let audioCtx = null;
-        let isAudioInitialized = false;
-
-        function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-        }
-
-        function playClickSound() {
-            if (!audioCtx) return;
-            try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.08);
-                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.08);
-            } catch(e){}
-        }
-
-        function startBackgroundMusic() {
-            if (!audioCtx) return;
-            const notes = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63];
-            let noteIdx = 0;
-            setInterval(() => {
-                if (audioCtx && audioCtx.state === 'running') {
-                    try {
-                        const osc = audioCtx.createOscillator();
-                        const gain = audioCtx.createGain();
-                        osc.type = 'triangle';
-                        osc.frequency.setValueAtTime(notes[noteIdx], audioCtx.currentTime);
-                        gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-                        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
-                        osc.connect(gain);
-                        gain.connect(audioCtx.destination);
-                        osc.start();
-                        osc.stop(audioCtx.currentTime + 0.4);
-                        noteIdx = (noteIdx + 1) % notes.length;
-                    } catch(e){}
-                }
-            }, 500);
-        }
-
-        function enterSiteWithAudio() {
-            initAudio();
-            startBackgroundMusic();
-            playClickSound();
-            document.getElementById('welcomeOverlay').classList.add('hidden');
-        }
-
-        document.addEventListener("click", (e) => {
-            if (e.target.tagName === 'BUTTON' || e.target.closest('button') || e.target.tagName === 'A') {
-                playClickSound();
-            }
-        });
+        let bgAudio = null;
 
         document.addEventListener("DOMContentLoaded", () => {
-            if(!localStorage.getItem('naijacp_products')) {
-                localStorage.setItem('naijacp_products', JSON.stringify(defaultProducts));
-            }
             renderCatalog();
-            renderOrdersTable();
-            renderAdminPackagesTable();
-            initSecretAdminTrigger();
+            startLiveUsers();
+            startFakePurchases();
         });
+
+        function enterSiteWithAudio() {
+            document.getElementById('welcomeOverlay').classList.add('hidden');
+            try {
+                bgAudio = new Audio('https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg');
+                bgAudio.loop = true;
+                bgAudio.volume = 0.3;
+                bgAudio.play().catch(e => console.log('Audio autoplay prevented:', e));
+            } catch(err) { console.log(err); }
+            showToast("Welcome to NAIJACP.NG! Audio & effects enabled 🎵");
+        }
 
         function showToast(message) {
             const container = document.getElementById('liveToastContainer');
             const toast = document.createElement('div');
             toast.className = 'toast-enter p-3.5 rounded-2xl bg-slate-900 border border-pink-500/40 text-white text-xs shadow-2xl flex items-center gap-3';
             toast.innerHTML = `<i class="fa-solid fa-bell text-pink-400 text-lg"></i> <span class="font-medium">${message}</span>`;
-            
             container.appendChild(toast);
             setTimeout(() => {
                 toast.classList.replace('toast-enter', 'toast-exit');
@@ -1083,35 +535,45 @@
             }, 3500);
         }
 
-        function openModal(id) { 
-            document.getElementById(id).classList.remove('hidden'); 
-            if(id === 'processingModal' || id === 'sourceCodeModal') {
-                document.getElementById(id).classList.add('flex');
-            }
-        }
-        function closeModal(id) { 
-            document.getElementById(id).classList.add('hidden'); 
-            if(id === 'processingModal' || id === 'sourceCodeModal') {
-                document.getElementById(id).classList.remove('flex');
-            }
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
         }
 
         function copyCustomAccount(accNum) {
             navigator.clipboard.writeText(accNum);
-            showToast("Copied Account Number: " + accNum);
+            showToast(`Copied Account Number: ${accNum}`);
         }
 
-        function initSecretAdminTrigger() {
-            let clicks = 0;
-            const trigger = document.getElementById('secretAdminTrigger');
-            trigger.addEventListener('click', () => {
-                clicks++;
-                if (clicks >= 5) {
-                    openModal('adminAuthModal');
-                    clicks = 0;
+        function startLiveUsers() {
+            setInterval(() => {
+                const el = document.getElementById('liveUserCounter');
+                if(!el) return;
+                let curr = parseInt(el.innerText.replace(',', ''));
+                let diff = Math.floor(Math.random() * 15) - 5;
+                curr = curr + diff;
+                if (curr > 8000) curr = 7990;
+                if (curr < 6000) curr = 6010;
+                el.innerText = curr.toLocaleString();
+            }, 3500);
+        }
+
+        // Fixed fake purchases with Nigerian names and phone numbers matching the first site
+        function startFakePurchases() {
+            const names = ['Chinedu', 'Oluwaseun', 'Amina', 'Ngozi', 'Emeka', 'Fatima', 'Bolaji', 'Ibrahim', 'Kehinde', 'Uche', 'Adebayo', 'Chioma', 'Yusuf', 'Ezekiel'];
+            const prefixes = ['0803', '0810', '0902', '0706', '0814', '0913', '0703'];
+            
+            setInterval(() => {
+                if(Math.random() > 0.4) {
+                    const randomName = names[Math.floor(Math.random() * names.length)];
+                    const randomPhone = prefixes[Math.floor(Math.random() * prefixes.length)] + "***" + Math.floor(1000 + Math.random() * 9000);
+                    const randomProduct = products[Math.floor(Math.random() * products.length)];
+                    
+                    showToast(`<span class="text-pink-400 font-bold">${randomName} (${randomPhone})</span> just purchased <br><span class="font-bold">${randomProduct.title}</span>`);
                 }
-                setTimeout(() => { clicks = 0; }, 2500);
-            });
+            }, 8000);
         }
 
         function switchMainCategory(cat) {
@@ -1145,10 +607,7 @@
             renderCatalog();
         }
 
-        function scrollToSection(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-        }
-
+        // Fixed catalog rendering to safely output product logos/images without question marks
         function renderCatalog() {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
@@ -1166,7 +625,7 @@
                 grid.innerHTML += `
                     <div class="glass-card p-4 rounded-3xl flex flex-col justify-between text-center group cursor-pointer border border-slate-800 hover:border-pink-500 transition duration-300">
                         <div class="w-16 h-16 mx-auto bg-slate-900/80 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-slate-700/50 group-hover:scale-110 transition duration-300 overflow-hidden">
-                            ${p.icon && p.icon.length > 5 ? `<img src="\${p.icon}" class="w-full h-full object-cover rounded-2xl">` : '🎮'}
+                            <img src="${p.icon}" class="w-full h-full object-cover rounded-2xl" onerror="this.src='https://files.catbox.moe/w4tgaw.jpeg'">
                         </div>
                         <h3 class="font-bold text-sm text-white mb-2 leading-tight">${p.title}</h3>
                         <div class="text-pink-400 font-black text-lg mb-4">₦${Number(p.price).toLocaleString()}</div>
@@ -1180,33 +639,16 @@
 
         function proceedToDataShare() {
             const phone = document.getElementById('dataPhoneNumber').value.trim();
-            if(!phone || phone.length < 10) {
-                alert("Please enter a valid mobile phone number!");
+            if(!phone) {
+                alert("Please enter your mobile phone number first!");
                 return;
             }
             document.getElementById('dataFormArea').classList.add('hidden');
             document.getElementById('dataShareArea').classList.remove('hidden');
-            showToast("Number saved! Now share to 10 WhatsApp groups.");
         }
 
         function shareDataToWhatsApp() {
-            let nextCount = dataShareCount + 1;
-
-            if (nextCount === 3 && !dataErrorTriggered3) {
-                dataErrorTriggered3 = true;
-                showToast("⚠️ Share didn't count! Duplicate group detected. Please share to a different WhatsApp group.");
-                alert("⚠️ Share not counted! Please share to a different WhatsApp group or person. Duplicate shares are not allowed.");
-                return;
-            }
-
-            if (nextCount === 8 && !dataErrorTriggered8) {
-                dataErrorTriggered8 = true;
-                showToast("⚠️ Share didn't count! Duplicate group detected. Please share to a different WhatsApp group.");
-                alert("⚠️ Share not counted! Please share to a different WhatsApp group or person. Duplicate shares are not allowed.");
-                return;
-            }
-
-            dataShareCount = nextCount;
+            dataShareCount++;
             const remaining = Math.max(0, 10 - dataShareCount);
             const progress = (dataShareCount / 10) * 100;
             
@@ -1214,27 +656,18 @@
             document.getElementById('dataProgressBar').style.width = `${progress}%`;
             document.getElementById('dataSharesLeft').innerText = remaining;
 
-            const promoText = "🔥 NAIJACP.NG - Africa's Top Gaming Marketplace! Get FREE 2GB Data Pack, Free Fire Headshot Sensi Tool, and Cheap Top-Ups for CODM CP, eFootball Coins, Free Fire Diamonds, Blood Strike Golds, TikTok Coins, DLS, Gadgets & Gift Cards! Claim yours now: https://naijacpstore.github.io/naijacp/";
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(promoText)}`, '_blank');
+            const text = encodeURIComponent("📶 Claim Free 2GB Data Pack & Cheap Game Top-Ups at NAIJACP.NG! Check it out: https://naijacp1.github.io/My-website-/");
+            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
 
             if(dataShareCount >= 10) {
                 setTimeout(() => {
-                    window.location.reload();
+                    showToast("🎉 Data pack requirements completed! Your 2GB is being queued.");
                 }, 1000);
             }
         }
 
         function shareToWhatsApp() {
-            let nextCount = sensiShareCount + 1;
-
-            if (nextCount === 2 && !sensiErrorTriggered2) {
-                sensiErrorTriggered2 = true;
-                showToast("⚠️ Share didn't count! Duplicate group detected. Please share to a different WhatsApp group.");
-                alert("⚠️ Share not counted! Please share to a different WhatsApp group or person. Duplicate shares are not allowed.");
-                return;
-            }
-
-            sensiShareCount = nextCount;
+            sensiShareCount++;
             const remaining = Math.max(0, 5 - sensiShareCount);
             const progress = (sensiShareCount / 5) * 100;
             
@@ -1242,8 +675,8 @@
             document.getElementById('progressBar').style.width = `${progress}%`;
             document.getElementById('sharesLeft').innerText = remaining;
 
-            const promoText = "🔥 NAIJACP.NG - Africa's Top Gaming Marketplace! Get FREE 2GB Data Pack, Free Fire Headshot Sensi Tool, and Cheap Top-Ups for CODM CP, eFootball Coins, Free Fire Diamonds, Blood Strike Golds, TikTok Coins, DLS, Gadgets & Gift Cards! Claim yours now: https://naijacpstore.github.io/naijacp/";
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(promoText)}`, '_blank');
+            const text = encodeURIComponent("🔥 Get Free Fire Headshot Sensi & Game Top-Ups at NAIJACP.NG! Check it out: https://naijacp1.github.io/My-website-/");
+            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
 
             if(sensiShareCount >= 5) {
                 setTimeout(() => {
@@ -1256,8 +689,7 @@
         function generateSensi(e) {
             e.preventDefault();
             const ram = parseInt(document.getElementById('ramSize').value);
-            const phoneInputRaw = document.getElementById('phoneModel').value.trim();
-            const phoneInput = phoneInputRaw.toLowerCase();
+            const phoneInput = document.getElementById('phoneModel').value.trim().toLowerCase();
             
             let hash = 0;
             for (let i = 0; i < phoneInput.length; i++) {
@@ -1265,48 +697,13 @@
             }
             hash = Math.abs(hash);
 
-            let baseMax;
-            if (ram <= 3) baseMax = 200;
-            else if (ram === 4) baseMax = 192;
-            else if (ram === 6) baseMax = 180;
-            else baseMax = 165;
+            let baseMax = ram <= 3 ? 200 : ram === 4 ? 192 : ram === 6 ? 180 : 165;
+            document.getElementById('valGen').innerText = (baseMax - (hash % 15));
+            document.getElementById('valRed').innerText = (baseMax - 5 - (hash % 18));
+            document.getElementById('val2x').innerText = (baseMax - 8 - (hash % 20));
+            document.getElementById('val4x').innerText = (baseMax - 15 - (hash % 25));
 
-            let gen = (baseMax - (hash % 15)); 
-            let red = (baseMax - 5 - (hash % 18));
-            let scope2 = (baseMax - 8 - (hash % 20));
-            let scope4 = (baseMax - 15 - (hash % 25));
-            let awm = (120 - (hash % 30));
-            let btn = (40 + (hash % 22)) + '%';
-            
-            let dpi = (380 + (hash % 220)) + ' DPI';
-            if (ram <= 3) dpi = (450 + (hash % 100)) + ' DPI';
-
-            let shortName = phoneInputRaw.replace(/[^A-Z0-9a-z]/g, '').substring(0, 5).toUpperCase() || "DEV";
-            let codeRandomness = Math.floor(10000 + (hash % 89999));
-            const sensiCode = `FF-${shortName}-${ram}G-${codeRandomness}`;
-
-            document.getElementById('valGen').innerText = gen;
-            document.getElementById('valRed').innerText = red;
-            document.getElementById('val2x').innerText = scope2;
-            document.getElementById('val4x').innerText = scope4;
-            document.getElementById('valAwm').innerText = awm;
-            document.getElementById('valBtn').innerText = btn;
-            document.getElementById('valDpi').innerText = dpi;
-
-            const resultsDiv = document.getElementById('sensiResults');
-
-            let codeBox = document.getElementById('generatedSensiCode');
-            if(!codeBox) {
-                codeBox = document.createElement('div');
-                codeBox.id = 'generatedSensiCode';
-                codeBox.className = 'col-span-2 md:col-span-4 mt-3 bg-slate-900 p-3 rounded-xl border border-pink-500/30 text-center shadow-lg';
-                resultsDiv.appendChild(codeBox);
-            }
-            codeBox.innerHTML = `<span class="block text-[11px] text-pink-400 uppercase font-bold mb-1">Your Custom Optimized Device Code</span>
-                                 <span class="text-xl font-black text-white font-mono select-all">${sensiCode}</span>
-                                 <p class="text-[10px] text-slate-500 mt-1">Unique setup generated exclusively for ${phoneInputRaw}</p>`;
-
-            resultsDiv.classList.remove('hidden');
+            document.getElementById('sensiResults').classList.remove('hidden');
             showToast("Settings uniquely optimized for your device! 🎯");
         }
 
@@ -1317,43 +714,23 @@
             document.getElementById('checkoutItemTitle').innerHTML = `Item: <strong class="text-white">${currentSelectedItem.title}</strong>`;
             document.getElementById('checkoutItemPrice').innerText = `₦${Number(currentSelectedItem.price).toLocaleString()}`;
             
-            document.getElementById('checkoutStep1').classList.remove('hidden');
-            document.getElementById('checkoutStep2').classList.add('hidden');
-            document.getElementById('checkoutStep3').classList.add('hidden');
-            document.getElementById('orderForm').reset();
-            
+            // Reset to step 1
+            nextCheckoutStep(1);
             openModal('checkoutModal');
         }
 
         function nextCheckoutStep(step) {
-            if (step === 2) {
-                const name = document.getElementById('custName').value.trim();
-                if (!name) {
-                    alert("Please enter your name or gamer tag!");
-                    return;
-                }
-                document.getElementById('checkoutStep1').classList.add('hidden');
-                document.getElementById('checkoutStep2').classList.remove('hidden');
-            } else if (step === 3) {
-                const gameId = document.getElementById('custGameId').value.trim();
-                const phone = document.getElementById('custPhone').value.trim();
-                if (!gameId || !phone) {
-                    alert("Please enter your Player ID and WhatsApp Phone Number!");
-                    return;
-                }
-                document.getElementById('checkoutStep2').classList.add('hidden');
-                document.getElementById('checkoutStep3').classList.remove('hidden');
-            }
+            document.getElementById('checkoutStep1').classList.add('hidden');
+            document.getElementById('checkoutStep2').classList.add('hidden');
+            document.getElementById('checkoutStep3').classList.add('hidden');
+            
+            if(step === 1) document.getElementById('checkoutStep1').classList.remove('hidden');
+            if(step === 2) document.getElementById('checkoutStep2').classList.remove('hidden');
+            if(step === 3) document.getElementById('checkoutStep3').classList.remove('hidden');
         }
 
         function prevCheckoutStep(step) {
-            if (step === 1) {
-                document.getElementById('checkoutStep2').classList.add('hidden');
-                document.getElementById('checkoutStep1').classList.remove('hidden');
-            } else if (step === 2) {
-                document.getElementById('checkoutStep3').classList.add('hidden');
-                document.getElementById('checkoutStep2').classList.remove('hidden');
-            }
+            nextCheckoutStep(step);
         }
 
         function handleFileSelect(e) {
@@ -1366,6 +743,7 @@
             }
         }
 
+        // Fixed submitOrder sequence to properly transition modals and show processing confirmation
         function submitOrder(e) {
             e.preventDefault();
             if (!uploadedReceiptBase64) {
@@ -1387,7 +765,6 @@
 
             orders.unshift(newOrder);
             localStorage.setItem('naijacp_orders', JSON.stringify(orders));
-            renderOrdersTable();
             
             closeModal('checkoutModal');
             openModal('processingModal');
@@ -1403,186 +780,14 @@
                 document.getElementById('processingSuccessIcon').classList.remove('hidden');
                 document.getElementById('processingSuccessIcon').classList.add('flex');
                 
-                document.getElementById('processingTitle').innerText = "Processing Order...";
-                document.getElementById('processingDesc').innerText = "Your order will be successful once one of the agents receives your payment.";
+                document.getElementById('processingTitle').innerText = "Order Successful! 🎉";
+                document.getElementById('processingDesc').innerText = "Processing, please wait for one of our agents to review your order.";
                 document.getElementById('closeProcessingBtn').classList.remove('hidden');
 
                 document.getElementById('orderForm').reset();
                 document.getElementById('fileLabel').innerHTML = `<i class="fa-solid fa-cloud-arrow-up text-pink-400 text-xl"></i> Click to choose receipt screenshot image`;
                 uploadedReceiptBase64 = '';
             }, 3000);
-        }
-
-        function handleAdminLogin(e) {
-            e.preventDefault();
-            const u = document.getElementById('adminUser').value;
-            const p = document.getElementById('adminPass').value;
-            if (u && p) {
-                closeModal('adminAuthModal');
-                openModal('adminModal');
-            }
-        }
-
-        function switchAdminTab(tab, btn) {
-            document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active-btn'));
-            if(btn) btn.classList.add('active-btn');
-            
-            document.getElementById('adminTabOrders').classList.add('hidden');
-            document.getElementById('adminTabPackages').classList.add('hidden');
-            
-            if(tab === 'orders') document.getElementById('adminTabOrders').classList.remove('hidden');
-            if(tab === 'packages') document.getElementById('adminTabPackages').classList.remove('hidden');
-        }
-
-        function renderOrdersTable() {
-            const tbody = document.getElementById('ordersTableBody');
-            if (orders.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-center">No orders submitted yet.</td></tr>';
-                return;
-            }
-            tbody.innerHTML = orders.map(o => `
-                <tr class="hover:bg-slate-900/50">
-                    <td class="p-3">${o.date}</td>
-                    <td class="p-3 font-bold">${o.customer}</td>
-                    <td class="p-3">${o.gameId} <br> <span class="text-[10px] text-slate-400">${o.phone}</span></td>
-                    <td class="p-3 text-pink-400">${o.product}</td>
-                    <td class="p-3">₦${Number(o.amount).toLocaleString()}</td>
-                    <td class="p-3">
-                        <img src="${o.receipt}" class="w-10 h-10 object-cover rounded border border-slate-700 cursor-pointer hover:border-pink-500" onclick="previewReceipt('${o.receipt}')">
-                    </td>
-                    <td class="p-3"><span class="px-2 py-1 bg-amber-500/20 text-amber-400 rounded text-[10px] font-bold uppercase">${o.status}</span></td>
-                </tr>
-            `).join('');
-        }
-
-        function previewReceipt(src) {
-            document.getElementById('fullReceiptImg').src = src;
-            document.getElementById('receiptPreviewModal').classList.remove('hidden');
-            document.getElementById('receiptPreviewModal').classList.add('flex');
-        }
-
-        function renderAdminPackagesTable() {
-            const tbody = document.getElementById('packagesTableBody');
-            tbody.innerHTML = products.map(p => `
-                <tr class="hover:bg-slate-900/50">
-                    <td class="p-3 text-lg">${p.icon && p.icon.length > 5 ? `<img src="\${p.icon}" class="w-6 h-6 object-cover rounded">` : '🎮'}</td>
-                    <td class="p-3 font-bold">${p.title}</td>
-                    <td class="p-3 uppercase text-[10px]">${p.category}</td>
-                    <td class="p-3 uppercase text-[10px] text-slate-400">${p.subTag}</td>
-                    <td class="p-3 text-pink-400">₦${Number(p.price).toLocaleString()}</td>
-                    <td class="p-3">
-                        <button class="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs font-bold hover:bg-blue-500 hover:text-white transition mr-1" onclick="editPackage(${p.id})">Edit</button>
-                        <button class="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs font-bold hover:bg-red-500 hover:text-white transition" onclick="deletePackage(${p.id})">Delete</button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function savePackage(e) {
-            e.preventDefault();
-            const idField = document.getElementById('pkgId').value;
-            
-            const newPkg = {
-                id: idField ? parseInt(idField) : Date.now(),
-                title: document.getElementById('pkgTitle').value,
-                price: Number(document.getElementById('pkgPrice').value),
-                category: document.getElementById('pkgCategory').value,
-                subTag: document.getElementById('pkgSubTag').value,
-                icon: document.getElementById('pkgIcon').value || '🎮'
-            };
-
-            if (idField) {
-                const index = products.findIndex(p => p.id === parseInt(idField));
-                products[index] = newPkg;
-                showToast("Package updated successfully!");
-            } else {
-                products.push(newPkg);
-                showToast("Package added successfully!");
-            }
-            
-            localStorage.setItem('naijacp_products', JSON.stringify(products));
-            renderAdminPackagesTable();
-            renderCatalog();
-            resetPkgForm();
-        }
-
-        function editPackage(id) {
-            const pkg = products.find(p => p.id === id);
-            if(pkg) {
-                document.getElementById('pkgId').value = pkg.id;
-                document.getElementById('pkgTitle').value = pkg.title;
-                document.getElementById('pkgPrice').value = pkg.price;
-                document.getElementById('pkgCategory').value = pkg.category;
-                document.getElementById('pkgSubTag').value = pkg.subTag;
-                document.getElementById('pkgIcon').value = pkg.icon;
-                document.getElementById('pkgSubmitBtn').innerText = "Update Package";
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
-        function resetPkgForm() {
-            document.getElementById('pkgForm').reset();
-            document.getElementById('pkgId').value = "";
-            document.getElementById('pkgSubmitBtn').innerText = "Save Package";
-        }
-
-        function deletePackage(id) {
-            if(confirm('Delete this package?')) {
-                products = products.filter(p => p.id !== id);
-                localStorage.setItem('naijacp_products', JSON.stringify(products));
-                renderAdminPackagesTable();
-                renderCatalog();
-            }
-        }
-
-        function exportUpdatedCode() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ products, orders }));
-            const anchor = document.createElement('a');
-            anchor.setAttribute("href", dataStr);
-            anchor.setAttribute("download", "naijacp_backup_data.json");
-            document.body.appendChild(anchor);
-            anchor.click();
-            anchor.remove();
-            showToast("Backup Data Exported!");
-        }
-
-        function generateSourceCode() {
-            let docClone = document.documentElement.cloneNode(true);
-
-            let toastContainer = docClone.querySelector('#liveToastContainer');
-            if (toastContainer) toastContainer.innerHTML = '';
-
-            let modalsToHide = ['adminAuthModal', 'adminModal', 'checkoutModal', 'processingModal', 'sourceCodeModal', 'receiptPreviewModal'];
-            modalsToHide.forEach(id => {
-                let m = docClone.querySelector('#' + id);
-                if (m) {
-                    m.classList.add('hidden');
-                    m.classList.remove('flex');
-                }
-            });
-
-            let scripts = docClone.querySelectorAll('script');
-            let mainScript = Array.from(scripts).find(s => s.innerHTML.includes('/* --- PRODUCTS DATABASE START --- */'));
-
-            if (mainScript) {
-                let currentProductsJson = JSON.stringify(products, null, 12);
-                let regex = /\/\* --- PRODUCTS DATABASE START --- \*\/[\s\S]*?\/\* --- PRODUCTS DATABASE END --- \*\//;
-                let replacement = `/* --- PRODUCTS DATABASE START --- */\n        let defaultProducts = ${currentProductsJson};\n        /* --- PRODUCTS DATABASE END --- */`;
-                mainScript.innerHTML = mainScript.innerHTML.replace(regex, replacement);
-            }
-
-            let finalHTML = "<!DOCTYPE html>\n<html lang=\"en\">\n" + docClone.innerHTML + "\n</html>";
-
-            document.getElementById('sourceCodeArea').value = finalHTML;
-            openModal('sourceCodeModal');
-        }
-
-        function copySourceCode() {
-            const codeArea = document.getElementById('sourceCodeArea');
-            codeArea.select();
-            codeArea.setSelectionRange(0, 999999);
-            navigator.clipboard.writeText(codeArea.value);
-            showToast("✅ Source code copied! Paste it into GitHub now.");
         }
     </script>
 </body>
