@@ -573,9 +573,9 @@
         <div class="max-w-5xl mx-auto w-full">
             <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-800">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-pink-500/20 border border-pink-500 text-pink-400 flex items-center justify-center font-black">M</div>
+                    <div class="w-10 h-10 rounded-xl bg-pink-500/20 border border-pink-500 text-pink-400 flex items-center justify-center font-black">N</div>
                     <div>
-                        <h2 class="text-xl font-black text-white">Merlin's Admin Dashboard 🚀</h2>
+                        <h2 class="text-xl font-black text-white">Naija cp Admin Dashboard 🚀</h2>
                         <span class="text-xs text-green-400 font-bold">● Active Session</span>
                     </div>
                 </div>
@@ -782,7 +782,7 @@
             playClickSound();
             document.getElementById('welcomeOverlay').classList.add('hidden');
             try {
-                bgAudio = new Audio('https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf7f6.mp3?filename=cyberpunk-2099-107016.mp3');
+                bgAudio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
                 bgAudio.loop = true;
                 bgAudio.volume = 0.35;
                 bgAudio.play().catch(e => console.log('Audio autoplay prevented:', e));
@@ -1106,7 +1106,7 @@
                 document.getElementById('processingSuccessIcon').classList.add('flex');
                 
                 document.getElementById('processingTitle').innerText = "Order Submitted Successfully! 🎉";
-                document.getElementById('processingDesc').innerText = "Your payment receipt has been sent to Merlin's Admin Dashboard. Please wait for agent review.";
+                document.getElementById('processingDesc').innerText = "Your payment receipt has been sent to Naija cp Admin Dashboard. Please wait for agent review.";
                 document.getElementById('closeProcessingBtn').classList.remove('hidden');
 
                 document.getElementById('orderForm').reset();
@@ -1131,7 +1131,7 @@
                 renderAdminOrders();
                 renderAdminProducts();
                 generateCodeForExport();
-                showToast("Welcome back, Merlin! Admin access granted 🚀");
+                showToast("Welcome back! Admin access granted to Naija cp 🚀");
             } else {
                 alert("Invalid username or password! (Hint: Merlin / merlin1)");
             }
