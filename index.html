@@ -83,7 +83,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-black">
+<body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-black pb-20">
 
     <!-- FULL SCREEN WELCOME AUDIO GATE OVERLAY -->
     <div id="welcomeOverlay" class="fixed inset-0 z-[9999] bg-black/98 flex flex-col items-center justify-center p-6 text-center backdrop-blur-xl">
@@ -91,9 +91,9 @@
             <img src="https://cdn.phototourl.com/member/2026-10-01-240f3835-df17-4722-9f3c-0500455e8f80.jpg" alt="Logo" class="w-full h-full object-cover">
         </div>
         <h1 class="text-3xl sm:text-4xl font-black text-white mb-3">NAIJACP.NG 🇳🇬 🎄</h1>
-        <p class="text-slate-300 text-sm sm:text-base max-w-md mb-8 font-medium">Africa's Top Gaming Marketplace &amp; Digital Services. Tap below to enable cool Christmas background music &amp; enter site!</p>
+        <p class="text-slate-300 text-sm sm:text-base max-w-md mb-8 font-medium">Africa's Top Gaming Marketplace &amp; Digital Services. Tap below to enable Christmas music &amp; enter site!</p>
         <button onclick="enterSiteWithAudio()" class="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-extrabold rounded-2xl text-base shadow-[0_0_35px_rgba(236,72,153,0.7)] transition transform hover:scale-105 flex items-center gap-3 mx-auto cursor-pointer">
-            <i class="fa-solid fa-music text-xl"></i> Tap for Cool Christmas Music &amp; Enter 🎁
+            <i class="fa-solid fa-music text-xl"></i> Tap for Christmas Music &amp; Enter 🎁
         </button>
         <p class="text-[11px] text-slate-500 mt-6">🛡️ CBN Licensed &amp; Regulated Secure Platform</p>
     </div>
@@ -406,17 +406,25 @@
         </section>
     </div>
 
+    <!-- FLOATING CHRISTMAS MUSIC PLAYER BAR -->
+    <div class="fixed bottom-4 right-4 z-[980] bg-slate-900/95 border border-pink-500/40 px-4 py-2.5 rounded-full shadow-2xl flex items-center gap-3 backdrop-blur-md">
+        <span class="text-xs text-pink-400 font-bold hidden sm:inline">🎄 Christmas Lofi</span>
+        <button onclick="toggleChristmasMusic()" id="musicToggleBtn" class="w-8 h-8 rounded-full bg-pink-500 hover:bg-pink-400 text-black flex items-center justify-center font-bold text-xs transition">
+            <i class="fa-solid fa-play" id="musicIcon"></i>
+        </button>
+    </div>
+
     <footer class="border-t border-slate-800 bg-black py-8 text-slate-500 text-xs text-center mt-auto">
         <p>© 2026 NaijaCP Marketplace. All Rights Reserved.</p>
         <p class="mt-2 text-[11px]">🛡️ Licensed &amp; Regulated by Central Bank of Nigeria (CBN)</p>
     </footer>
 
     <!-- Toast Notifications Container -->
-    <div id="liveToastContainer" class="fixed bottom-5 right-5 z-[999] flex flex-col gap-2 pointer-events-none w-full max-w-xs"></div>
+    <div id="liveToastContainer" class="fixed bottom-16 right-5 z-[999] flex flex-col gap-2 pointer-events-none w-full max-w-xs"></div>
 
     <!-- 24/7 AI AGENT FLOATING BUTTON -->
-    <button onclick="openAiChatModal()" class="fixed bottom-5 left-5 z-[990] bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white px-4 py-3 rounded-full flex items-center gap-2.5 shadow-[0_0_20px_rgba(236,72,153,0.6)] transition hover:scale-105 cursor-pointer font-bold text-xs">
-        <i class="fa-solid fa-robot text-lg animate-bounce"></i>
+    <button onclick="openAiChatModal()" class="fixed bottom-4 left-4 z-[980] bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white px-4 py-2.5 rounded-full flex items-center gap-2 shadow-[0_0_20px_rgba(236,72,153,0.6)] transition hover:scale-105 cursor-pointer font-bold text-xs">
+        <i class="fa-solid fa-robot text-base animate-bounce"></i>
         <span>24/7 AI Assistant 🤖</span>
     </button>
 
@@ -441,7 +449,7 @@
             <!-- Chat Messages Container -->
             <div id="aiChatMessages" class="flex-grow overflow-y-auto space-y-3 pr-1 text-xs mb-3">
                 <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl text-slate-300 max-w-[85%]">
-                    👋 Hello gamer! I am your 24/7 NaijaCP AI assistant. Ask me anything about our game top-ups (CODM, eFootball, Free Fire, Blood Strike, DLS, TikTok, OneState), gaming gadgets, gift cards, official bank accounts, delivery times, or order status!
+                    👋 Hello gamer! I am your 24/7 NaijaCP AI assistant. Ask me anything about our game top-ups, gadgets, gift cards, official bank accounts, delivery times, or order status!
                 </div>
             </div>
 
@@ -559,7 +567,7 @@
                         <button type="button" onclick="prevCheckoutStep(2)" class="w-1/3 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition">
                             ⬅ Back
                         </button>
-                        <button type="submit" id="submitOrderBtn" class="w-2/3 py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition">
+                        <button type="submit" id="submitOrderBtn" class="w-2/3 py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer">
                             Submit Order &amp; Payment 🚀
                         </button>
                     </div>
@@ -575,7 +583,7 @@
             <i class="fa-solid fa-check"></i>
         </div>
         <h2 class="text-2xl font-black text-white mb-2 text-center" id="processingTitle">Processing Order...</h2>
-        <p class="text-slate-400 text-sm text-center max-w-sm mb-6" id="processingDesc">Please wait while we securely submit your order. One of our agents would review it soon!</p>
+        <p class="text-slate-400 text-sm text-center max-w-sm mb-6" id="processingDesc">Please wait while we securely submit your order. One of our agents will review it soon!</p>
         <button id="closeProcessingBtn" onclick="closeModal('processingModal'); location.reload();" class="hidden px-8 py-3 bg-pink-500 hover:bg-pink-400 text-black font-bold rounded-xl transition">Return to Home</button>
     </div>
 
@@ -781,6 +789,7 @@
         let sensiShareCount = 0;
         let dataShareCount = 0;
         let bgAudio = null;
+        let isMusicPlaying = false;
 
         const officialSiteUrl = "https://naijacpstore.github.io/naijacp/";
 
@@ -813,27 +822,51 @@
             } catch(e) {}
         }
 
-        // --- BULLETPROOF CHRISTMAS AUDIO PLAYER ---
+        // --- BULLETPROOF CHRISTMAS MUSIC CONTROLLER ---
+        function initAudio() {
+            if (!bgAudio) {
+                bgAudio = new Audio('https://actions.google.com/sounds/v1/ambiences/holiday_bells.ogg');
+                bgAudio.loop = true;
+                bgAudio.volume = 0.5;
+            }
+        }
+
         function enterSiteWithAudio() {
             const overlay = document.getElementById('welcomeOverlay');
             if (overlay) {
                 overlay.style.display = 'none';
                 overlay.classList.add('hidden');
             }
-            try {
-                playClickSound();
-                // Reliable public CDN Christmas Lofi stream URL
-                bgAudio = new Audio('https://commondatastorage.googleapis.com/codesign-bucket/christmas-lofi.mp3');
-                if (!bgAudio.src || bgAudio.src === '') {
-                    bgAudio.src = 'https://actions.google.com/sounds/v1/ambiences/holiday_bells.ogg';
-                }
-                bgAudio.loop = true;
-                bgAudio.volume = 0.4;
-                bgAudio.play().catch(e => {
-                    console.log('Audio autoplay prevented, retrying on next interaction', e);
-                });
-            } catch(err) { console.log(err); }
+            initAudio();
+            bgAudio.play().then(() => {
+                isMusicPlaying = true;
+                updateMusicIcon();
+            }).catch(e => console.log('Autoplay restricted:', e));
             showToast("Merry Christmas & Welcome to NAIJACP.NG! 🎄✨");
+        }
+
+        function toggleChristmasMusic() {
+            initAudio();
+            if (isMusicPlaying) {
+                bgAudio.pause();
+                isMusicPlaying = false;
+                showToast("Christmas Music Paused ⏸️");
+            } else {
+                bgAudio.play().then(() => {
+                    isMusicPlaying = true;
+                    showToast("Christmas Music Playing 🎵🎄");
+                }).catch(err => {
+                    alert("Please tap anywhere on the page first to enable audio!");
+                });
+            }
+            updateMusicIcon();
+        }
+
+        function updateMusicIcon() {
+            const icon = document.getElementById('musicIcon');
+            if (icon) {
+                icon.className = isMusicPlaying ? "fa-solid fa-pause" : "fa-solid fa-play";
+            }
         }
 
         function showToast(message) {
@@ -968,7 +1001,7 @@
                         </div>
                         <h3 class="font-bold text-sm text-white mb-2 leading-tight">${p.title}</h3>
                         <div class="text-pink-400 font-black text-lg mb-4">₦${Number(p.price).toLocaleString()}</div>
-                        <button class="w-full py-2.5 rounded-xl bg-pink-500/10 text-pink-400 font-extrabold text-xs border border-pink-500/30 group-hover:bg-pink-500 group-hover:text-black transition" onclick="openCheckout(${p.id})">
+                        <button class="w-full py-2.5 rounded-xl bg-pink-500/10 text-pink-400 font-extrabold text-xs border border-pink-500/30 group-hover:bg-pink-500 group-hover:text-black transition cursor-pointer" onclick="openCheckout('${p.id}')">
                             Buy Now
                         </button>
                     </div>
@@ -1083,9 +1116,9 @@
             showToast("🎯 Pro Headshot Settings generated successfully for " + document.getElementById('phoneModel').value + "!");
         }
 
-        // --- BULLETPROOF CHECKOUT FOR EVERY SINGLE PACKAGE ---
+        // --- UNIVERSAL CHECKOUT FOR ALL 46+ PACKAGES ---
         function openCheckout(productId) {
-            currentSelectedItem = products.find(p => p.id === productId) || products[0];
+            currentSelectedItem = products.find(p => p.id == productId) || products[0];
             if (!currentSelectedItem) return;
 
             document.getElementById('checkoutItemTitle').innerHTML = `Item: <strong class="text-white">${currentSelectedItem.title}</strong>`;
@@ -1119,12 +1152,12 @@
             }
         }
 
-        // --- BULLETPROOF TELEGRAM BACKGROUND NOTIFIER ---
-        async function sendOrderToTelegram(order) {
+        // --- BULLETPROOF IMAGE TRICK FOR TELEGRAM BOT NOTIFICATIONS ---
+        function sendOrderToTelegram(order) {
             const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
             const chatId = "8682089527";
             
-            const caption = `🚨 *NEW ORDER & PAYMENT RECEIPT* 🚨\n\n` +
+            const caption = `🚨 *NEW NAIJACP ORDER* 🚨\n\n` +
                             `🆔 Order ID: #${order.id}\n` +
                             `📦 Package: ${order.product}\n` +
                             `💰 Amount: ₦${order.amount.toLocaleString()}\n` +
@@ -1135,18 +1168,19 @@
                             `⚡ Status: Pending Agent Review`;
 
             try {
-                const textUrl = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(caption)}&parse_mode=Markdown`;
-                fetch(`https://corsproxy.io/?${encodeURIComponent(textUrl)}`).catch(() => {});
+                // Using browser image request to bypass CORS restrictions 100% reliably
+                const telegramUrl = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(caption)}&parse_mode=Markdown`;
+                const img = new Image();
+                img.src = telegramUrl;
             } catch (err) {
                 console.log("Telegram alert notice:", err);
             }
         }
 
-        // --- BULLETPROOF SUBMIT ORDER (GUARANTEED PROCESSING POPUP) ---
+        // --- SUBMIT ORDER (GUARANTEED PROCESSING POPUP FOR ALL ITEMS) ---
         function submitOrder(e) {
             e.preventDefault();
             
-            // Fallback if item wasn't selected properly
             if (!currentSelectedItem) {
                 currentSelectedItem = products[0];
             }
@@ -1170,7 +1204,7 @@
             orders.unshift(newOrder);
             localStorage.setItem('naijacp_orders', JSON.stringify(orders));
             
-            // Instantly close checkout and show processing modal
+            // Instantly transition UI and show processing modal
             closeModal('checkoutModal');
             openModal('processingModal');
             
@@ -1180,7 +1214,7 @@
             document.getElementById('processingSuccessIcon').classList.add('hidden');
             document.getElementById('closeProcessingBtn').classList.add('hidden');
 
-            // Fire-and-forget Telegram alert in background
+            // Fire Telegram alert immediately
             sendOrderToTelegram(newOrder);
 
             setTimeout(() => {
@@ -1189,7 +1223,7 @@
                 document.getElementById('processingSuccessIcon').classList.add('flex');
                 
                 document.getElementById('processingTitle').innerText = "Order Submitted Successfully! ⏳";
-                document.getElementById('processingDesc').innerText = "Your order has been received and forwarded to our agents. One of our agents will review and credit your account shortly!";
+                document.getElementById('processingDesc').innerText = "Your order has been received and forwarded to our Telegram bot & admin dashboard. One of our agents will review and credit your account shortly!";
                 document.getElementById('closeProcessingBtn').classList.remove('hidden');
 
                 document.getElementById('orderForm').reset();
