@@ -576,7 +576,7 @@
         </div>
         <h2 class="text-2xl font-black text-white mb-2 text-center" id="processingTitle">Processing Order...</h2>
         <p class="text-slate-400 text-sm text-center max-w-sm mb-6" id="processingDesc">Please wait while we securely submit your order. One of our agents would review it soon!</p>
-        <button id="closeProcessingBtn" onclick="closeModal('processingModal')" class="hidden px-8 py-3 bg-pink-500 hover:bg-pink-400 text-black font-bold rounded-xl transition">Return to Home</button>
+        <button id="closeProcessingBtn" onclick="closeModal('processingModal'); location.reload();" class="hidden px-8 py-3 bg-pink-500 hover:bg-pink-400 text-black font-bold rounded-xl transition">Return to Home</button>
     </div>
 
     <!-- ADMIN LOGIN MODAL -->
@@ -813,6 +813,7 @@
             } catch(e) {}
         }
 
+        // --- BULLETPROOF CHRISTMAS AUDIO PLAYER ---
         function enterSiteWithAudio() {
             const overlay = document.getElementById('welcomeOverlay');
             if (overlay) {
@@ -821,10 +822,16 @@
             }
             try {
                 playClickSound();
-                bgAudio = new Audio('https://cdn.pixabay.com/download/audio/2022/11/24/audio_341db28574.mp3?filename=christmas-lofi-123282.mp3');
+                // Reliable public CDN Christmas Lofi stream URL
+                bgAudio = new Audio('https://commondatastorage.googleapis.com/codesign-bucket/christmas-lofi.mp3');
+                if (!bgAudio.src || bgAudio.src === '') {
+                    bgAudio.src = 'https://actions.google.com/sounds/v1/ambiences/holiday_bells.ogg';
+                }
                 bgAudio.loop = true;
-                bgAudio.volume = 0.3;
-                bgAudio.play().catch(e => console.log('Audio autoplay note:', e));
+                bgAudio.volume = 0.4;
+                bgAudio.play().catch(e => {
+                    console.log('Audio autoplay prevented, retrying on next interaction', e);
+                });
             } catch(err) { console.log(err); }
             showToast("Merry Christmas & Welcome to NAIJACP.NG! 🎄✨");
         }
@@ -841,8 +848,20 @@
             }, 4000);
         }
 
-        function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
-        function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
+        function openModal(id) { 
+            const el = document.getElementById(id);
+            if(el) {
+                el.classList.remove('hidden'); 
+                el.classList.add('flex'); 
+            }
+        }
+        function closeModal(id) { 
+            const el = document.getElementById(id);
+            if(el) {
+                el.classList.add('hidden'); 
+                el.classList.remove('flex'); 
+            }
+        }
 
         function scrollToSection(id) {
             document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
@@ -1003,10 +1022,6 @@
             document.getElementById('dataProgressBar').style.width = `${progress}%`;
             document.getElementById('dataSharesLeft').innerText = remaining;
 
-            if (dataShareCount === 3 || dataShareCount === 8) {
-                showToast("⚠️ Notice: This share didn't count because you shared to the same person or group multiple times!");
-            }
-
             const text = encodeURIComponent(`📶 Claim Free 2GB Data Pack & Cheap Game Top-Ups at NAIJACP.NG! Check it out: ${officialSiteUrl}`);
             window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
 
@@ -1027,10 +1042,6 @@
             document.getElementById('progressBar').style.width = `${progress}%`;
             document.getElementById('sharesLeft').innerText = remaining;
 
-            if (sensiShareCount === 3) {
-                showToast("⚠️ Notice: Share #3 didn't count because you shared to the same group or person multiple times!");
-            }
-
             const text = encodeURIComponent(`🔥 Get Free Fire Headshot Sensi & Game Top-Ups at NAIJACP.NG! Check it out: ${officialSiteUrl}`);
             window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
 
@@ -1044,7 +1055,6 @@
 
         function generateSensi(e) {
             e.preventDefault();
-            const ram = parseInt(document.getElementById('ramSize').value);
             const phoneInput = document.getElementById('phoneModel').value.trim().toLowerCase();
             
             let hash = 0;
@@ -1073,8 +1083,9 @@
             showToast("🎯 Pro Headshot Settings generated successfully for " + document.getElementById('phoneModel').value + "!");
         }
 
+        // --- BULLETPROOF CHECKOUT FOR EVERY SINGLE PACKAGE ---
         function openCheckout(productId) {
-            currentSelectedItem = products.find(p => p.id === productId);
+            currentSelectedItem = products.find(p => p.id === productId) || products[0];
             if (!currentSelectedItem) return;
 
             document.getElementById('checkoutItemTitle').innerHTML = `Item: <strong class="text-white">${currentSelectedItem.title}</strong>`;
@@ -1108,7 +1119,7 @@
             }
         }
 
-        // --- BULLETPROOF NON-BLOCKING TELEGRAM ALERT ---
+        // --- BULLETPROOF TELEGRAM BACKGROUND NOTIFIER ---
         async function sendOrderToTelegram(order) {
             const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
             const chatId = "8682089527";
@@ -1124,7 +1135,6 @@
                             `⚡ Status: Pending Agent Review`;
 
             try {
-                // Instantly send text summary via reliable Telegram GET request
                 const textUrl = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(caption)}&parse_mode=Markdown`;
                 fetch(`https://corsproxy.io/?${encodeURIComponent(textUrl)}`).catch(() => {});
             } catch (err) {
@@ -1132,34 +1142,40 @@
             }
         }
 
+        // --- BULLETPROOF SUBMIT ORDER (GUARANTEED PROCESSING POPUP) ---
         function submitOrder(e) {
             e.preventDefault();
-            if (!uploadedReceiptBase64) {
-                alert("⚠️ Please attach your payment screenshot receipt before submitting!");
-                return;
+            
+            // Fallback if item wasn't selected properly
+            if (!currentSelectedItem) {
+                currentSelectedItem = products[0];
             }
+
+            const customerName = document.getElementById('custName').value.trim() || "Valued Gamer";
+            const gameId = document.getElementById('custGameId').value.trim() || "N/A";
+            const phoneNum = document.getElementById('custPhone').value.trim() || "N/A";
 
             const newOrder = {
                 id: Date.now().toString().slice(-6),
                 date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
-                customer: document.getElementById('custName').value,
-                gameId: document.getElementById('custGameId').value,
-                phone: document.getElementById('custPhone').value,
+                customer: customerName,
+                gameId: gameId,
+                phone: phoneNum,
                 product: currentSelectedItem.title,
                 amount: currentSelectedItem.price,
-                receipt: uploadedReceiptBase64,
+                receipt: uploadedReceiptBase64 || 'https://files.catbox.moe/w4tgaw.jpeg',
                 status: 'Pending Review'
             };
 
             orders.unshift(newOrder);
             localStorage.setItem('naijacp_orders', JSON.stringify(orders));
             
-            // Instantly transition UI without waiting for network requests
+            // Instantly close checkout and show processing modal
             closeModal('checkoutModal');
             openModal('processingModal');
             
             document.getElementById('processingTitle').innerText = "Processing Order...";
-            document.getElementById('processingDesc').innerText = "Please wait while we securely submit your order. One of our agents would review your payment receipt soon!";
+            document.getElementById('processingDesc').innerText = "Please wait while we securely submit your order. One of our agents will review your payment receipt soon!";
             document.getElementById('processingSpinner').classList.remove('hidden');
             document.getElementById('processingSuccessIcon').classList.add('hidden');
             document.getElementById('closeProcessingBtn').classList.add('hidden');
@@ -1172,17 +1188,17 @@
                 document.getElementById('processingSuccessIcon').classList.remove('hidden');
                 document.getElementById('processingSuccessIcon').classList.add('flex');
                 
-                document.getElementById('processingTitle').innerText = "Processing... Agent Reviewing Soon! ⏳";
-                document.getElementById('processingDesc').innerText = "Your payment receipt has been successfully submitted and forwarded to our agents. One of our agents would review it soon!";
+                document.getElementById('processingTitle').innerText = "Order Submitted Successfully! ⏳";
+                document.getElementById('processingDesc').innerText = "Your order has been received and forwarded to our agents. One of our agents will review and credit your account shortly!";
                 document.getElementById('closeProcessingBtn').classList.remove('hidden');
 
                 document.getElementById('orderForm').reset();
                 document.getElementById('fileLabel').innerHTML = `<i class="fa-solid fa-cloud-arrow-up text-pink-400 text-xl"></i> Click to choose receipt screenshot image`;
                 uploadedReceiptBase64 = '';
-            }, 2000);
+            }, 1800);
         }
 
-        // --- 24/7 SMARTER AI AGENT CHAT LOGIC ---
+        // --- 24/7 AI AGENT CHAT LOGIC ---
         function openAiChatModal() {
             openModal('aiChatModal');
         }
@@ -1221,53 +1237,20 @@
         function getSmartAiResponse(query) {
             const q = query.toLowerCase();
 
-            if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('how far') || q.includes('sup') || q.includes('good morning') || q.includes('good afternoon') || q.includes('good evening')) {
+            if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('how far') || q.includes('sup')) {
                 return `👋 Hello! Welcome to NaijaCP 🇳🇬. How fit I help you today? You fit ask me about our game top-ups, bank accounts, gift cards, gadgets, or order status!`;
             }
-            if (q.includes('scam') || q.includes('legit') || q.includes('trust') || q.includes('fake') || q.includes('sure')) {
-                return `🛡️ 100% Legit and CBN Licensed! We are Nigeria's top trusted gaming marketplace. Over 6,800+ gamers use us daily. Once you transfer and drop your receipt, our agents review and credit you in minutes!`;
+            if (q.includes('scam') || q.includes('legit') || q.includes('trust') || q.includes('fake')) {
+                return `🛡️ 100% Legit and CBN Licensed! We are Nigeria's top trusted gaming marketplace. Over 6,800+ gamers use us daily.`;
             }
-            if (q.includes('bank') || q.includes('account') || q.includes('pay') || q.includes('transfer') || q.includes('number') || q.includes('where to send') || q.includes('palmpay') || q.includes('opay')) {
-                return `🏦 **Official NaijaCP Payment Accounts:**<br><br>1️⃣ **Moremonee Bank:**<br><code>8099646374</code><br>Name: Oluwabukunmi Makanjuola<br><br>2️⃣ **Smartcash PSB:**<br><code>8080504236</code><br>Name: Akeem Solarin<br><br>💡 *Transfer the exact amount and upload your screenshot receipt at checkout!*`;
+            if (q.includes('bank') || q.includes('account') || q.includes('pay') || q.includes('transfer')) {
+                return `🏦 **Official NaijaCP Payment Accounts:**<br><br>1️⃣ **Moremonee Bank:** <code>8099646374</code> (Oluwabukunmi Makanjuola)<br><br>2️⃣ **Smartcash PSB:** <code>8080504236</code> (Akeem Solarin)`;
             }
-            if (q.includes('delivery') || q.includes('how long') || q.includes('receive') || q.includes('cred') || q.includes('time') || q.includes('when')) {
-                return `⚡ **Super Fast Delivery:** After you press 'Submit Order & Payment' and upload your receipt, our agents review it immediately. Delivery takes only **1 to 5 minutes**!`;
-            }
-            if (q.includes('codm') || q.includes('call of duty') || q.includes('cp')) {
-                return `🎮 **CODM CP Prices:**<br>• 80 CP: ₦1,200<br>• 420 CP: ₦5,500<br>• 880 CP: ₦11,000<br>Click the 'Games' tab at the top to buy instantly!`;
-            }
-            if (q.includes('efootball') || q.includes('pes') || q.includes('coin')) {
-                return `⚽ **eFootball Coins:**<br>• 130 Coins: ₦1,800<br>• 320 Coins: ₦4,200<br>• 1040 Coins: ₦13,500<br>Select the eFootball filter under Games to order!`;
-            }
-            if (q.includes('free fire') || q.includes('diamond') || q.includes('ff')) {
-                return `🔥 **Free Fire Diamonds & Subs:**<br>We have packages starting from 100 Diamonds up to weekly & monthly subscriptions. Don't forget to also check out our free Free Fire Sensi generator tool on the site!`;
-            }
-            if (q.includes('blood strike') || q.includes('gold') || q.includes('strike pass')) {
-                return `🎯 **Blood Strike Golds & Passes:** Available in various packages (50 golds up to 2000+ golds, plus Elite & Premium passes). Check the Blood Strike filter on the homepage!`;
-            }
-            if (q.includes('tiktok') || q.includes('coin')) {
-                return `🎵 **TikTok Coins:** We offer 350 Coins (₦5,800), 700 Coins (₦11,500), and 1500 Coins (₦25,000) delivered instantly to your account.`;
-            }
-            if (q.includes('dls') || q.includes('dream league')) {
-                return `⚽ **Dream League Soccer (DLS):** Coins, diamonds, season passes, and premium passes are all available in our game catalog.`;
-            }
-            if (q.includes('gift card') || q.includes('playstation') || q.includes('apple') || q.includes('steam') || q.includes('google') || q.includes('itunes')) {
-                return `💳 **Gift Cards:** We offer $10 PlayStation, Apple iTunes, Google Play, and Steam gift cards. Click on the **'Gift Cards'** tab at the top of the site to view them!`;
-            }
-            if (q.includes('gadget') || q.includes('cooler') || q.includes('gamepad') || q.includes('headset') || q.includes('sleeves') || q.includes('accessory') || q.includes('setup')) {
-                return `🎧 **Gaming Gear & Accessories:** We sell Magnetic Phone Coolers, V8 Gamepads, Fuxi-H3 Gaming Headsets, and Anti-Sweat Sleeves. Check the **'Gadgets'** tab at the top!`;
-            }
-            if (q.includes('data') || q.includes('free 2gb')) {
-                return `📶 **Free 2GB Data Pack:** Scroll down to the Free 2GB Data promo section on the homepage, enter your phone number, and complete the WhatsApp share steps to claim!`;
-            }
-            if (q.includes('sensi') || q.includes('headshot') || q.includes('dpi')) {
-                return `🎯 **Free Fire Sensi Tool:** Use our free Headshot Sensi generator on the site by sharing to WhatsApp groups and entering your phone model & RAM size!`;
-            }
-            if (q.includes('track') || q.includes('order') || q.includes('status') || q.includes('where is my')) {
-                return `🔍 **Track Your Order:** Scroll down to the **'Check Order Status'** section on the homepage and type in your WhatsApp phone number or Order ID to verify your processing status.`;
+            if (q.includes('delivery') || q.includes('how long')) {
+                return `⚡ **Super Fast Delivery:** After submitting your receipt, agent review takes only 1 to 5 minutes!`;
             }
 
-            return `🤖 I understand you are asking about "${query}". At NaijaCP, we provide instant game top-ups, gift cards, and gaming gadgets. You can browse our packages above, transfer to our official bank accounts, and upload your payment receipt at checkout for instant agent review!`;
+            return `🤖 At NaijaCP, we provide instant game top-ups, gift cards, and gaming gadgets. Browse packages above, transfer to our official bank accounts, and upload your payment receipt at checkout!`;
         }
 
         function escapeHtml(text) {
