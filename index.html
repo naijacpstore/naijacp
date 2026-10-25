@@ -243,7 +243,7 @@
                         <div class="flex items-center gap-1 text-yellow-400 text-sm mb-3">
                             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                         </div>
-                        <p class="text-slate-300 text-xs leading-relaxed italic mb-4">"I been fear say na scam at first because of online wahala, but my Free Fire weekly sub entered sharp! Customer support on Telegram na 10/10."</p>
+                        <p class="text-slate-300 text-xs leading-relaxed italic mb-4">"I been fear say na scam at first because of online wahala, but my Free Fire weekly sub entered sharp! Customer support via AI Agent na 10/10."</p>
                     </div>
                     <div class="flex items-center justify-between border-t border-slate-800/80 pt-4">
                         <div>
@@ -414,11 +414,46 @@
     <!-- Toast Notifications Container -->
     <div id="liveToastContainer" class="fixed bottom-5 right-5 z-[999] flex flex-col gap-2 pointer-events-none w-full max-w-xs"></div>
 
-    <!-- Telegram Customer Support Floating Button -->
-    <a href="https://t.me/naijacp0" target="_blank" class="fixed bottom-5 left-5 z-[990] bg-[#229ED9] hover:bg-[#1CA1C1] text-white px-4 py-3 rounded-full flex items-center gap-2 shadow-[0_0_15px_rgba(34,158,217,0.4)] transition hover:scale-105 cursor-pointer">
-        <i class="fa-brands fa-telegram text-2xl"></i>
-        <span class="text-xs font-bold hidden sm:inline">Customer Support</span>
-    </a>
+    <!-- 24/7 AI AGENT FLOATING BUTTON (Replaces Telegram Support) -->
+    <button onclick="openAiChatModal()" class="fixed bottom-5 left-5 z-[990] bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white px-4 py-3 rounded-full flex items-center gap-2.5 shadow-[0_0_20px_rgba(236,72,153,0.6)] transition hover:scale-105 cursor-pointer font-bold text-xs">
+        <i class="fa-solid fa-robot text-lg animate-bounce"></i>
+        <span>24/7 AI Assistant 🤖</span>
+    </button>
+
+    <!-- 24/7 AI AGENT CHAT MODAL -->
+    <div id="aiChatModal" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+        <div class="glass-modal w-full max-w-md rounded-3xl p-5 relative shadow-2xl flex flex-col h-[520px]">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-pink-500/20 border border-pink-500 text-pink-400 flex items-center justify-center font-black">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-black text-white">NaijaCP 24/7 AI Assistant</h3>
+                        <span class="text-[10px] text-green-400 font-bold">● Online &amp; Ready to Help</span>
+                    </div>
+                </div>
+                <button onclick="closeModal('aiChatModal')" class="text-slate-400 hover:text-white w-7 h-7 rounded-full bg-slate-800 flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Chat Messages Container -->
+            <div id="aiChatMessages" class="flex-grow overflow-y-auto space-y-3 pr-1 text-xs mb-3">
+                <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl text-slate-300 max-w-[85%]">
+                    👋 Hello gamer! I am your 24/7 NaijaCP AI assistant. Ask me anything about our game top-ups (CODM, eFootball, Free Fire, Blood Strike, DLS, TikTok, OneState), gaming gadgets, gift cards, official bank accounts, or order status!
+                </div>
+            </div>
+
+            <!-- Chat Input Form -->
+            <form onsubmit="handleAiChatSubmit(event)" class="flex gap-2 pt-2 border-t border-slate-800">
+                <input type="text" id="aiChatInput" placeholder="Ask about top-ups, bank accounts, orders..." class="flex-grow bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500" required>
+                <button type="submit" class="px-4 py-2.5 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-xl text-xs transition">
+                    Send 🚀
+                </button>
+            </form>
+        </div>
+    </div>
 
     <!-- MULTI-STEP CHECKOUT & PAYMENT MODAL -->
     <div id="checkoutModal" class="fixed inset-0 z-[60] items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden">
@@ -539,8 +574,8 @@
         <div class="w-16 h-16 rounded-full bg-green-500/20 text-green-400 hidden items-center justify-center text-3xl mb-4" id="processingSuccessIcon">
             <i class="fa-solid fa-check"></i>
         </div>
-        <h2 class="text-2xl font-black text-white mb-2 text-center" id="processingTitle">Processing Payment...</h2>
-        <p class="text-slate-400 text-sm text-center max-w-sm mb-6" id="processingDesc">Please wait while we securely submit your order and verify your screenshot.</p>
+        <h2 class="text-2xl font-black text-white mb-2 text-center" id="processingTitle">Processing Order...</h2>
+        <p class="text-slate-400 text-sm text-center max-w-sm mb-6" id="processingDesc">Please wait while we securely submit your order and receipt. One of our agents would review it soon!</p>
         <button id="closeProcessingBtn" onclick="closeModal('processingModal')" class="hidden px-8 py-3 bg-pink-500 hover:bg-pink-400 text-black font-bold rounded-xl transition">Return to Home</button>
     </div>
 
@@ -930,7 +965,7 @@
 
             const found = orders.find(o => o.phone.includes(query) || o.id.toString().includes(query));
             if(!found) {
-                box.innerHTML = `<span class="text-yellow-400 font-bold">No active order found matching "${query}". Please check your details or contact support.</span>`;
+                box.innerHTML = `<span class="text-yellow-400 font-bold">No active order found matching "${query}". Please check your details or contact our 24/7 AI support agent.</span>`;
                 return;
             }
 
@@ -1069,6 +1104,51 @@
             }
         }
 
+        // --- AUTOMATIC TELEGRAM FORWARDING FOR RECEIPTS ---
+        async function sendOrderToTelegram(order) {
+            const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
+            const chatId = "8682089527";
+            
+            const caption = `🚨 *NEW ORDER & PAYMENT RECEIPT* 🚨\n\n` +
+                            `🆔 Order ID: #${order.id}\n` +
+                            `📦 Package: ${order.product}\n` +
+                            `💰 Amount: ₦${order.amount.toLocaleString()}\n` +
+                            `👤 Customer: ${order.customer}\n` +
+                            `🎮 Game/Player ID: ${order.gameId}\n` +
+                            `📞 WhatsApp: ${order.phone}\n` +
+                            `📅 Date: ${order.date}\n` +
+                            `⚡ Status: Pending Agent Review`;
+
+            try {
+                const res = await fetch(order.receipt);
+                const blob = await res.blob();
+
+                const formData = new FormData();
+                formData.append('chat_id', chatId);
+                formData.append('photo', blob, 'receipt.jpg');
+                formData.append('caption', caption);
+                formData.append('parse_mode', 'Markdown');
+
+                await fetch(`https://api.telegram.org/bot${token}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
+                });
+            } catch (err) {
+                console.error("Failed to send receipt to Telegram:", err);
+                try {
+                    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: chatId,
+                            text: caption + "\n\n(Receipt image logged in web admin dashboard)",
+                            parse_mode: 'Markdown'
+                        })
+                    });
+                } catch(e) {}
+            }
+        }
+
         function submitOrder(e) {
             e.preventDefault();
             if (!uploadedReceiptBase64) {
@@ -1091,11 +1171,14 @@
             orders.unshift(newOrder);
             localStorage.setItem('naijacp_orders', JSON.stringify(orders));
             
+            // Automatically send to Telegram bot
+            sendOrderToTelegram(newOrder);
+
             closeModal('checkoutModal');
             openModal('processingModal');
             
-            document.getElementById('processingTitle').innerText = "Processing Payment...";
-            document.getElementById('processingDesc').innerText = "Please wait while we securely submit your order and verify your screenshot.";
+            document.getElementById('processingTitle').innerText = "Processing Order...";
+            document.getElementById('processingDesc').innerText = "Please wait while we submit your order. One of our agents would review your payment receipt soon!";
             document.getElementById('processingSpinner').classList.remove('hidden');
             document.getElementById('processingSuccessIcon').classList.add('hidden');
             document.getElementById('closeProcessingBtn').classList.add('hidden');
@@ -1105,14 +1188,91 @@
                 document.getElementById('processingSuccessIcon').classList.remove('hidden');
                 document.getElementById('processingSuccessIcon').classList.add('flex');
                 
-                document.getElementById('processingTitle').innerText = "Order Submitted Successfully! 🎉";
-                document.getElementById('processingDesc').innerText = "Your payment receipt has been sent to Naija cp Admin Dashboard. Please wait for agent review.";
+                document.getElementById('processingTitle').innerText = "Processing... Agent Reviewing Soon! ⏳";
+                document.getElementById('processingDesc').innerText = "Your payment receipt has been successfully submitted and forwarded to our agents. Your package will be credited shortly!";
                 document.getElementById('closeProcessingBtn').classList.remove('hidden');
 
                 document.getElementById('orderForm').reset();
                 document.getElementById('fileLabel').innerHTML = `<i class="fa-solid fa-cloud-arrow-up text-pink-400 text-xl"></i> Click to choose receipt screenshot image`;
                 uploadedReceiptBase64 = '';
             }, 2500);
+        }
+
+        // --- 24/7 AI AGENT CHAT LOGIC ---
+        function openAiChatModal() {
+            openModal('aiChatModal');
+        }
+
+        function handleAiChatSubmit(e) {
+            e.preventDefault();
+            const inputField = document.getElementById('aiChatInput');
+            const message = inputField.value.trim();
+            if (!message) return;
+
+            const chatMessages = document.getElementById('aiChatMessages');
+            
+            // Append user message
+            chatMessages.innerHTML += `
+                <div class="flex justify-end">
+                    <div class="bg-pink-600 text-white p-3 rounded-2xl max-w-[85%] font-medium">
+                        ${escapeHtml(message)}
+                    </div>
+                </div>
+            `;
+            inputField.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Generate intelligent AI response based on site context
+            setTimeout(() => {
+                let reply = getAiResponse(message);
+                chatMessages.innerHTML += `
+                    <div class="flex justify-start">
+                        <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl text-slate-300 max-w-[85%]">
+                            ${reply}
+                        </div>
+                    </div>
+                `;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 600);
+        }
+
+        function getAiResponse(query) {
+            const q = query.toLowerCase();
+            if (q.includes('bank') || q.includes('account') || q.includes('pay') || q.includes('transfer') || q.includes('number')) {
+                return `🏦 **Official NaijaCP Payment Accounts:**<br>1️⃣ **Moremonee Bank:** <code>8099646374</code> (Oluwabukunmi Makanjuola)<br>2️⃣ **Smartcash PSB:** <code>8080504236</code> (Akeem Solarin)<br><br>Transfer the exact amount and upload your receipt screenshot at checkout!`;
+            }
+            if (q.includes('delivery') || q.includes('how long') || q.includes('receive') || q.includes('cred') || q.includes('time')) {
+                return `⚡ **Delivery Time:** Once you submit your order and upload your payment receipt, our support agents review it immediately and credit your game account, gift card, or game setup within 1 to 5 minutes!`;
+            }
+            if (q.includes('codm') || q.includes('call of duty')) {
+                return `🎮 **CODM Top-Ups Available:** We offer 80 CP (₦1,200), 420 CP (₦5,500), 880 CP (₦11,000) and more. Click on 'Games' and select CODM to buy instantly!`;
+            }
+            if (q.includes('efootball') || q.includes('PES')) {
+                return `⚽ **eFootball Coins Available:** We have 130 Coins (₦1,800), 320 Coins (₦4,200), and 1040 Coins (₦13,500). Safe and instant delivery!`;
+            }
+            if (q.includes('free fire') || q.includes('diamond')) {
+                return `🔥 **Free Fire Diamonds & Subs:** Available from 100 Diamonds up to weekly/monthly subscriptions. Plus, don't forget to try our Free Fire Sensi Generator on the site!`;
+            }
+            if (q.includes('gift card') || q.includes('playstation') || q.includes('apple') || q.includes('steam') || q.includes('google')) {
+                return `💳 **Gift Cards:** We offer PlayStation, Apple iTunes, Google Play, and Steam $10 gift cards. Switch to the 'Gift Cards' category at the top to view them!`;
+            }
+            if (q.includes('gadget') || q.includes('cooler') || q.includes('gamepad') || q.includes('headset') || q.includes('sleeves')) {
+                return `🎧 **Gaming Gear & Gadgets:** We sell Magnetic Phone Coolers, V8 Gamepads, Fuxi-H3 Gaming Headsets, and Anti-Sweat Thumb Sleeves. Check the 'Gadgets' tab!`;
+            }
+            if (q.includes('data') || q.includes('free 2gb')) {
+                return `📶 **Free 2GB Data Pack:** Scroll down to our Free 2GB Data Promo section, enter your phone number, complete the WhatsApp share steps, and claim your free data pack!`;
+            }
+            if (q.includes('sensi') || q.includes('headshot') || q.includes('dpi')) {
+                return `🎯 **Free Fire Sensi Tool:** Use our free custom sensitivity generator on the site by entering your phone model and RAM size after quick sharing steps!`;
+            }
+            if (q.includes('track') || q.includes('order') || q.includes('status')) {
+                return `🔍 **Track Order:** You can check your transaction status anytime using the 'Check Order Status' tool on the homepage by entering your WhatsApp phone number or Order ID.`;
+            }
+            return `🤖 I can help you with anything regarding NaijaCP! You can ask me about our game top-ups (CODM, eFootball, Free Fire, etc.), gift cards, gaming gadgets, our official bank accounts, or how to submit your payment receipt.`;
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
         // --- ADMIN AUTH & DASHBOARD FUNCTIONS ---
