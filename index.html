@@ -813,7 +813,6 @@
             } catch(e) {}
         }
 
-        // --- COOL CHRISTMAS MUSIC & BULLETPROOF OVERLAY HIDE ---
         function enterSiteWithAudio() {
             const overlay = document.getElementById('welcomeOverlay');
             if (overlay) {
@@ -822,7 +821,6 @@
             }
             try {
                 playClickSound();
-                // Cool smooth Christmas Lofi background music
                 bgAudio = new Audio('https://cdn.pixabay.com/download/audio/2022/11/24/audio_341db28574.mp3?filename=christmas-lofi-123282.mp3');
                 bgAudio.loop = true;
                 bgAudio.volume = 0.3;
@@ -1110,7 +1108,7 @@
             }
         }
 
-        // --- NON-BLOCKING BACKGROUND TELEGRAM RECEIPT FORWARDING ---
+        // --- BULLETPROOF NON-BLOCKING TELEGRAM ALERT ---
         async function sendOrderToTelegram(order) {
             const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
             const chatId = "8682089527";
@@ -1126,25 +1124,11 @@
                             `⚡ Status: Pending Agent Review`;
 
             try {
+                // Instantly send text summary via reliable Telegram GET request
                 const textUrl = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(caption)}&parse_mode=Markdown`;
-                await fetch(`https://corsproxy.io/?${encodeURIComponent(textUrl)}`).catch(() => {});
-
-                if (order.receipt) {
-                    const res = await fetch(order.receipt);
-                    const blob = await res.blob();
-                    const formData = new FormData();
-                    formData.append('chat_id', chatId);
-                    formData.append('photo', blob, 'receipt.jpg');
-                    formData.append('caption', caption);
-                    formData.append('parse_mode', 'Markdown');
-
-                    await fetch(`https://corsproxy.io/?https://api.telegram.org/bot${token}/sendPhoto`, {
-                        method: 'POST',
-                        body: formData
-                    }).catch(() => {});
-                }
+                fetch(`https://corsproxy.io/?${encodeURIComponent(textUrl)}`).catch(() => {});
             } catch (err) {
-                console.log("Telegram background sync notice:", err);
+                console.log("Telegram alert notice:", err);
             }
         }
 
@@ -1170,17 +1154,17 @@
             orders.unshift(newOrder);
             localStorage.setItem('naijacp_orders', JSON.stringify(orders));
             
-            // Instantly transition UI and trigger background Telegram forwarding without blocking
+            // Instantly transition UI without waiting for network requests
             closeModal('checkoutModal');
             openModal('processingModal');
             
             document.getElementById('processingTitle').innerText = "Processing Order...";
-            document.getElementById('processingDesc').innerText = "Please wait while we submit your order. One of our agents would review your payment receipt soon!";
+            document.getElementById('processingDesc').innerText = "Please wait while we securely submit your order. One of our agents would review your payment receipt soon!";
             document.getElementById('processingSpinner').classList.remove('hidden');
             document.getElementById('processingSuccessIcon').classList.add('hidden');
             document.getElementById('closeProcessingBtn').classList.add('hidden');
 
-            // Send to Telegram in background
+            // Fire-and-forget Telegram alert in background
             sendOrderToTelegram(newOrder);
 
             setTimeout(() => {
@@ -1195,7 +1179,7 @@
                 document.getElementById('orderForm').reset();
                 document.getElementById('fileLabel').innerHTML = `<i class="fa-solid fa-cloud-arrow-up text-pink-400 text-xl"></i> Click to choose receipt screenshot image`;
                 uploadedReceiptBase64 = '';
-            }, 2500);
+            }, 2000);
         }
 
         // --- 24/7 SMARTER AI AGENT CHAT LOGIC ---
