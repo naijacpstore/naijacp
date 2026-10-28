@@ -90,13 +90,13 @@
 </head>
 <body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-black pb-20">
 
-    <!-- CODASHOP-STYLE AUTHENTICATION MODAL -->
+    <!-- CODASHOP-STYLE AUTHENTICATION MODAL (GOOGLE, FACEBOOK & EMAIL) -->
     <div id="authWallModal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4 bg-black/95 backdrop-blur-3xl">
         <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-[0_0_60px_rgba(236,72,153,0.3)] border border-pink-500/40">
             <div class="text-center mb-6">
                 <div class="flex items-center justify-center gap-2 mb-2">
                     <i class="fa-solid fa-gem text-pink-500 text-2xl"></i>
-                    <h2 class="text-2xl font-black text-white tracking-tight">CODASHOP <span class="text-xs bg-pink-500 text-black px-2 py-0.5 rounded-full font-bold ml-1">NAIJACP</span></h2>
+                    <h2 class="text-2xl font-black text-white tracking-tight">NAIJACP<span class="text-pink-500">.NG</span></h2>
                 </div>
                 <p class="text-slate-300 text-xs mt-2 font-medium">Faster top up, better deals.</p>
                 <h3 class="text-xl font-extrabold text-white mt-1">Join NAIJACP Now.</h3>
@@ -118,23 +118,23 @@
                     <div class="flex-grow border-t border-slate-800"></div>
                 </div>
 
-                <!-- Email Sign Up / Login Toggle Button -->
+                <!-- Email Sign Up / Login Button -->
                 <button type="button" onclick="openEmailAuthModal()" class="w-full py-3.5 rounded-2xl bg-slate-900 border border-slate-700 hover:border-pink-500 text-white font-extrabold text-xs flex items-center justify-center gap-2.5 transition cursor-pointer">
-                    <i class="fa-solid fa-envelope text-pink-400 text-base"></i> Sign up with Email
+                    <i class="fa-solid envelope text-pink-400 text-base"></i> Sign in with Email &amp; Password
                 </button>
             </div>
 
             <div class="mt-6 text-center text-xs border-t border-slate-800/80 pt-4">
-                <span class="text-slate-400">Already have an account?</span> 
-                <button onclick="openEmailAuthModal()" class="text-pink-400 font-bold ml-1 cursor-pointer hover:underline">Sign In</button>
+                <span class="text-slate-400">New gamer here?</span> 
+                <button onclick="openEmailAuthModal()" class="text-pink-400 font-bold ml-1 cursor-pointer hover:underline">Create Free Account</button>
             </div>
             <div class="mt-4 text-[10px] text-slate-500 text-center">
-                By signing up, you agree to the <a href="#" class="underline">Terms of Service</a> and <a href="#" class="underline">Privacy Policy</a>[cite: 15].
+                By signing up, you agree to our <a href="#" class="underline">Terms of Service</a> &amp; <a href="#" class="underline">Privacy Policy</a>.
             </div>
         </div>
     </div>
 
-    <!-- EMAIL AUTH SUB-MODAL -->
+    <!-- EMAIL & PASSWORD AUTH SUB-MODAL -->
     <div id="emailAuthModal" class="fixed inset-0 z-[210] hidden items-center justify-center p-4 bg-black/90 backdrop-blur-md">
         <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-2xl border border-pink-500/40">
             <button onclick="closeModal('emailAuthModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">
@@ -145,8 +145,8 @@
 
             <form onsubmit="handleEmailAuthSubmit(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5" id="emailAuthLabel">Email Address / Username</label>
-                    <input type="text" id="authEmailInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. gamer@gmail.com" required>
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Email Address</label>
+                    <input type="email" id="authEmailInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. gamer@gmail.com" required>
                 </div>
                 <div class="relative">
                     <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Password</label>
@@ -166,7 +166,7 @@
         </div>
     </div>
 
-    <!-- Codashop-Style Header Navbar -->
+    <!-- Header Navbar -->
     <header class="sticky top-0 z-40 bg-[#09070c]/95 backdrop-blur-xl border-b border-pink-950/40 px-4 sm:px-8 py-3.5">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer" onclick="switchMainCategory('games')">
@@ -174,11 +174,11 @@
                     <i class="fa-solid fa-gem text-pink-500 text-xl"></i>
                 </div>
                 <span class="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-1.5">
-                    CODASHOP <span class="text-xs text-black bg-pink-500 px-2 py-0.5 rounded-full font-extrabold">NAIJACP</span>
+                    NAIJACP<span class="text-pink-500">.NG</span>
                 </span>
             </div>
 
-            <!-- Codashop Top Navigation & Icons -->
+            <!-- Header Wallet & Region -->
             <div class="flex items-center gap-3.5">
                 <button onclick="openUserDashboard()" class="px-3.5 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500 hover:text-black font-extrabold text-xs transition cursor-pointer flex items-center gap-2 shadow-sm">
                     <i class="fa-solid fa-wallet text-pink-400"></i> 
@@ -193,8 +193,8 @@
         </div>
     </header>
 
-    <!-- Codashop Featured Hero Banner -->
-    <div class="relative bg-gradient-to-r from-purple-950 via-black to-pink-950 border-b border-pink-500/20 py-8 px-4 sm:px-8">
+    <!-- Hero Banner -->
+    <div class="relative bg-gradient-to-r from-pink-950 via-black to-pink-950 border-b border-pink-500/20 py-8 px-4 sm:px-8">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="text-center md:text-left space-y-2">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-400 text-xs font-extrabold uppercase">
@@ -202,7 +202,7 @@
                     <span id="liveUserCounter">6,854</span> Gamers Online
                 </div>
                 <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">Stock Up FC Points &amp; Top Games Today!</h1>
-                <p class="text-slate-400 text-xs sm:text-sm max-w-xl">Fast, safe, and secure game top-ups in Nigeria. Powered by NAIJACP &amp; Codashop architecture.</p>
+                <p class="text-slate-400 text-xs sm:text-sm max-w-xl">Fast, safe, and secure game top-ups in Nigeria. Powered by NAIJACP.</p>
             </div>
             <div class="flex flex-wrap gap-3">
                 <button onclick="openAddFundsModal()" class="px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-black font-black rounded-2xl text-xs shadow-lg transition flex items-center gap-2 cursor-pointer">
@@ -245,7 +245,7 @@
             </div>
         </div>
 
-        <!-- PRODUCTS GRID (CODASHOP FEATURED STYLE) -->
+        <!-- PRODUCTS GRID -->
         <section id="catalogSection" class="mb-16">
             <div class="flex items-center gap-3 mb-6">
                 <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight border-l-4 border-pink-500 pl-4 uppercase" id="sectionHeading">
@@ -411,8 +411,8 @@
 
     <!-- SECRET FOOTER TRIGGER -->
     <footer class="border-t border-slate-800 bg-[#040306] py-8 text-slate-500 text-xs text-center mt-auto select-none">
-        <p onclick="handleSecretFooterClick()">© 2026 Codashop &amp; NaijaCP Marketplace. All Rights Reserved.</p>
-        <p class="mt-2 text-[11px]">🛡️ Powered by Codashop Global &amp; Centralized Game Top-Up Infrastructure</p>
+        <p onclick="handleSecretFooterClick()">© 2026 NaijaCP Marketplace. All Rights Reserved.</p>
+        <p class="mt-2 text-[11px]">🛡️ Secure Centralized Gaming &amp; Digital Top-Up Infrastructure</p>
     </footer>
 
     <!-- Toast Notifications Container -->
@@ -433,7 +433,7 @@
                         <i class="fa-solid fa-robot"></i>
                     </div>
                     <div>
-                        <h3 class="text-sm font-black text-white">Codashop AI Assistant</h3>
+                        <h3 class="text-sm font-black text-white">NaijaCP AI Assistant</h3>
                         <span class="text-[10px] text-green-400 font-bold">● Online &amp; Ready to Help</span>
                     </div>
                 </div>
@@ -445,7 +445,7 @@
             <!-- Chat Messages Container -->
             <div id="aiChatMessages" class="flex-grow overflow-y-auto space-y-3 pr-1 text-xs mb-3">
                 <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-2xl text-slate-300 max-w-[85%] leading-relaxed">
-                    👋 Welcome to Codashop Nigeria x NaijaCP! 🇳🇬 I am your sharp 24/7 AI assistant. Whether you want to login with Google/Facebook, fund your wallet, buy CODM CP or eFootball coins, talk to me! Wetin you wan run today?
+                    👋 Welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI assistant. Whether you want to login with Google, Facebook, or Email, fund your wallet, buy CODM CP or eFootball coins, talk to me! Wetin you wan run today?
                 </div>
             </div>
 
@@ -530,7 +530,7 @@
                     <input type="number" id="depositAmount" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-emerald-500 transition" placeholder="e.g. 5000" min="500" required>
                 </div>
 
-                <!-- OFFICIAL BANK ACCOUNTS (UPDATED) -->
+                <!-- OFFICIAL BANK ACCOUNTS -->
                 <div class="bg-black border border-emerald-500/30 p-4 rounded-2xl space-y-3">
                     <h4 class="text-emerald-400 text-xs font-bold uppercase tracking-wider">🏦 Official Bank Accounts:</h4>
                     
@@ -686,7 +686,7 @@
                             </div>
                         </div>
                         <button type="button" onclick="showToast('Paystack automated gateway is coming soon! Please use Wallet Balance.')" class="px-3 py-1.5 bg-slate-800 text-slate-400 rounded-lg text-xs font-bold cursor-pointer">
-                            Notify Me
+                            Notify
                         </button>
                     </div>
 
@@ -746,7 +746,7 @@
                     <div class="w-10 h-10 rounded-xl bg-pink-500/20 border border-pink-500 text-pink-400 flex items-center justify-center font-black">N</div>
                     <div>
                         <h2 class="text-xl font-black text-white">NaijaCP Secret Admin Portal (Cloud Sync ⚡)</h2>
-                        <span class="text-xs text-green-400 font-bold">● Secure Cloud Active</span>
+                        <span class="text-xs text-green-400 font-bold">● Secure Cloud Active (Publicly Synced)</span>
                     </div>
                 </div>
                 <button onclick="closeModal('adminDashboardModal')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition cursor-pointer">
@@ -1031,7 +1031,7 @@
             }
         }
 
-        // --- GOOGLE & FACEBOOK LOGIN HANDLERS ---
+        // --- GOOGLE, FACEBOOK & EMAIL AUTH HANDLERS ---
         function loginWithGoogle() {
             if(!auth || !db) { alert("Firebase not initialized."); return; }
             const provider = new firebase.auth.GoogleAuthProvider();
@@ -1081,7 +1081,7 @@
 
         function toggleEmailAuthMode() {
             isRegisteringEmail = !isRegisteringEmail;
-            document.getElementById('emailAuthTitle').innerText = isRegisteringEmail ? "Create New Account" : "Sign In with Email";
+            document.getElementById('emailAuthTitle').innerText = isRegisteringEmail ? "Create Free Account" : "Sign In with Email";
             document.getElementById('emailAuthSub').innerText = isRegisteringEmail ? "Fill in your details to create a free account." : "Enter your email and password to access your account.";
             document.getElementById('emailAuthSubmitBtn').innerText = isRegisteringEmail ? "Create Account 🚀" : "Sign In 🚀";
             document.getElementById('emailAuthToggleLink').innerText = isRegisteringEmail ? "Already have an account? Sign In" : "Need an account? Create one here";
@@ -1687,7 +1687,7 @@
             const q = query.toLowerCase();
 
             if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('how far') || q.includes('sup') || q.includes('gm')) {
-                return `👋 Welcome to Codashop x NaijaCP! 🇳🇬 I am your sharp 24/7 AI assistant. Whether you want to login with Google or Facebook, fund your wallet, buy CODM CP or eFootball coins, talk to me! Wetin you wan run today?`;
+                return `👋 Welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI assistant. Whether you want to login with Google, Facebook, or Email, fund your wallet, buy CODM CP or eFootball coins, talk to me! Wetin you wan run today?`;
             }
             if (q.includes('wallet') || q.includes('balance') || q.includes('funds') || q.includes('add money')) {
                 return `💳 **Wallet System:** You can fund your wallet by clicking "+ Add Funds", transferring to Moremonee Bank (8099646374 - oluwabukunmi makanjuola) or Smartcash Bank (8080504236 - AKEEM SOLARIN), and uploading your receipt! Verified within 3 minutes.`;
@@ -1696,10 +1696,10 @@
                 return `🏦 **Official NaijaCP Bank Accounts:**<br><br>1️⃣ **Moremonee Bank:** <code>8099646374</code> (oluwabukunmi makanjuola)<br><br>2️⃣ **Smartcash PSB:** <code>8080504236</code> (AKEEM SOLARIN)`;
             }
             if (q.includes('google') || q.includes('facebook') || q.includes('login') || q.includes('sign in')) {
-                return `🔐 **Social Login:** You can log in instantly using our Codashop-style authentication popup with Google or Facebook, or create an account with your email!`;
+                return `🔐 **Social & Email Login:** You can log in instantly using Google, Facebook, or our Email & Password authentication popup!`;
             }
             if (q.includes('paystack')) {
-                return `💳 **Paystack Gateway:** Automated Paystack card and bank transfer payments are currently coming soon! For now, please use your Wallet Balance or Direct Bank Transfer to add funds.`;
+                return `💳 **Paystack Gateway:** Automated Paystack card and bank transfer payments are currently coming soon! For now, please use your Wallet Balance.`;
             }
             if (q.includes('codm') || q.includes('cp')) {
                 return `🎮 **CODM Top-Up:** We have 80 CP, 420 CP, 880 CP and more available instantly. Pay with your wallet balance!`;
