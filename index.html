@@ -925,7 +925,7 @@
 
         const officialSiteUrl = "https://naijacpstore.github.io/naijacp/";
 
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", async () => {
             initCloudSync();
             startLiveUsers();
             startFakePurchases();
@@ -934,9 +934,13 @@
             window.addEventListener('hashchange', checkSecretAdminHash);
 
             if(auth) {
-                // Handle mobile redirect login result securely
-                auth.getRedirectResult().then(async (result) => {
-                    if (result.user) {
+                // Keep session persistent across redirects
+                await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(e => console.log(e));
+
+                // Handle mobile redirect login result first before checking auth state
+                try {
+                    const result = await auth.getRedirectResult();
+                    if (result && result.user) {
                         const user = result.user;
                         const userRef = db.collection("users").doc(user.uid);
                         const doc = await userRef.get();
@@ -950,11 +954,11 @@
                         }
                         showToast("🎉 Successfully signed in!");
                     }
-                }).catch((error) => {
-                    console.log("Redirect auth notice:", error);
-                });
+                } catch (err) {
+                    console.log("Redirect result notice:", err);
+                }
 
-                auth.onAuthStateChanged(user => {
+                auth.onAuthStateChanged(async user => {
                     currentUser = user;
                     const wall = document.getElementById('authWallModal');
                     
@@ -1051,7 +1055,7 @@
             }
         }
 
-        // --- MOBILE-FRIENDLY REDIRECT AUTH HANDLERS ---
+        // --- UNIVERSAL REDIRECT AUTH HANDLERS ---
         function loginWithGoogle() {
             if(!auth || !db) { alert("Firebase not initialized."); return; }
             const provider = new firebase.auth.GoogleAuthProvider();
