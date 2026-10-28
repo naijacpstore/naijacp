@@ -49,15 +49,6 @@ animation: pulse 1.8s infinite;
 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(236, 72, 153, 0); }
 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
 }
-@keyframes marquee {
-0% { transform: translateX(0%); }
-100% { transform: translateX(-50%); }
-}
-.animate-marquee {
-display: flex;
-width: 200%;
-animation: marquee 24s linear infinite;
-}
 @keyframes slideInUp {
 from { transform: translateY(120%) scale(0.9); opacity: 0; }
 to { transform: translateY(0) scale(1); opacity: 1; }
@@ -77,7 +68,7 @@ box-shadow: 0 8px 20px -4px rgba(236, 72, 153, 0.5) !important;
 </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-black pb-20">
-<!-- CODASHOP-STYLE AUTHENTICATION MODAL -->
+<!-- MAIN AUTHENTICATION MODAL -->
 <div id="authWallModal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4 bg-black/95 backdrop-blur-3xl">
 <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-[0_0_60px_rgba(236,72,153,0.3)] border border-pink-500/40">
 <div class="text-center mb-6">
@@ -86,15 +77,25 @@ box-shadow: 0 8px 20px -4px rgba(236, 72, 153, 0.5) !important;
 <h2 class="text-2xl font-black text-white tracking-tight">NAIJACP<span class="text-pink-500">.NG</span></h2>
 </div>
 <p class="text-slate-300 text-xs mt-2 font-medium">Faster top up, better deals.</p>
-<h3 class="text-xl font-extrabold text-white mt-1">Join NAIJACP Now.</h3>
+<h3 class="text-xl font-extrabold text-white mt-1">Join NAIJACP Now</h3>
 </div>
 <!-- Fallback Notice Banner -->
-<div class="bg-pink-500/10 border border-pink-500/30 rounded-2xl p-3 mb-4 text-center">
-<p class="text-[11px] text-pink-300 leading-relaxed">
-<i class="fa-solid fa-circle-info text-pink-400 mr-1"></i> Having trouble with Google or Facebook on your browser? <strong>Use Email & Password below for instant access!</strong> 🚀
+<div class="bg-pink-500/10 border border-pink-500/30 rounded-2xl p-3.5 mb-5 text-center shadow-inner">
+<p class="text-[11px] text-pink-300 leading-relaxed font-medium">
+<i class="fa-solid fa-circle-info text-pink-400 mr-1 text-xs"></i>
+Is Google or Facebook redirecting back? <strong>Use Username & Password below for instant, guaranteed access!</strong> 🚀
 </p>
 </div>
-<div class="space-y-3 mt-4">
+<div class="space-y-3">
+<!-- Username & Password Direct Login Button -->
+<button type="button" onclick="openEmailAuthModal('login')" class="w-full py-4 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-black font-black text-xs flex items-center justify-center gap-2.5 transition cursor-pointer shadow-lg shadow-pink-500/25">
+<i class="fa-solid fa-user-shield text-black text-base"></i> Sign in with Username & Password
+</button>
+<div class="relative flex py-2 items-center">
+<div class="flex-grow border-t border-slate-800"></div>
+<span class="flex-shrink mx-4 text-slate-500 text-[10px] uppercase font-bold">Or Social Sign-In</span>
+<div class="flex-grow border-t border-slate-800"></div>
+</div>
 <!-- Google Login Button -->
 <button type="button" onclick="loginWithGoogle()" class="w-full py-3.5 rounded-2xl bg-white hover:bg-slate-100 text-black font-extrabold text-xs flex items-center justify-center gap-3 transition cursor-pointer shadow-lg">
 <i class="fa-brands fa-google text-red-500 text-base"></i> Continue with Google
@@ -103,19 +104,10 @@ box-shadow: 0 8px 20px -4px rgba(236, 72, 153, 0.5) !important;
 <button type="button" onclick="loginWithFacebook()" class="w-full py-3.5 rounded-2xl bg-[#1877F2] hover:bg-[#166fe5] text-white font-extrabold text-xs flex items-center justify-center gap-3 transition cursor-pointer shadow-lg">
 <i class="fa-brands fa-facebook text-base"></i> Continue with Facebook
 </button>
-<div class="relative flex py-2 items-center">
-<div class="flex-grow border-t border-slate-800"></div>
-<span class="flex-shrink mx-4 text-slate-500 text-[10px] uppercase font-bold">Or</span>
-<div class="flex-grow border-t border-slate-800"></div>
-</div>
-<!-- Email & Username Login / Sign Up Button -->
-<button type="button" onclick="openEmailAuthModal('login')" class="w-full py-3.5 rounded-2xl bg-slate-900 border border-slate-700 hover:border-pink-500 text-white font-extrabold text-xs flex items-center justify-center gap-2.5 transition cursor-pointer">
-<i class="fa-solid fa-user-shield text-pink-400 text-base"></i> Sign in with Username & Password
-</button>
 </div>
 <div class="mt-6 text-center text-xs border-t border-slate-800/80 pt-4">
 <span class="text-slate-400">New gamer here?</span>
-<button onclick="openEmailAuthModal('register')" class="text-pink-400 font-bold ml-1 cursor-pointer hover:underline">Create Free Account</button>
+<button onclick="openEmailAuthModal('register')" class="text-pink-400 font-extrabold ml-1 cursor-pointer hover:underline">Create Free Account</button>
 </div>
 <div class="mt-4 text-[10px] text-slate-500 text-center">
 By signing up, you agree to our <a href="#" class="underline">Terms of Service</a> & <a href="#" class="underline">Privacy Policy</a>.
@@ -407,7 +399,7 @@ Generate Unique Settings ⚡
 <!-- Chat Messages Container -->
 <div id="aiChatMessages" class="flex-grow overflow-y-auto space-y-3 pr-1 text-xs mb-3">
 <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-2xl text-slate-300 max-w-[85%] leading-relaxed">
-👋 Welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI assistant. Whether you want to login with Google, Facebook, or Email, fund your wallet, buy CODM CP or eFootball coins, talk to me! Wetin you wan run today?
+👋 Welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI assistant. Whether you want to login with Username & Password, Google, or Facebook, fund your wallet, buy CODM CP or eFootball coins, talk to me! Wetin you wan run today?
 </div>
 </div>
 <!-- Chat Input Form -->
