@@ -7,7 +7,7 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
-    <!-- Firebase SDKs (Compat version for easy single-file integration) -->
+    <!-- Firebase SDKs (Compat version for robust single-file Firestore & Auth) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
@@ -91,11 +91,52 @@
 </head>
 <body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-black pb-20">
 
+    <!-- MANDATORY AUTH WALL / SPLASH SCREEN (Shows first until logged in) -->
+    <div id="authWallModal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/98 backdrop-blur-2xl">
+        <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-[0_0_50px_rgba(236,72,153,0.3)] border border-pink-500/40">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 mx-auto rounded-2xl overflow-hidden shadow-lg shadow-pink-500/50 bg-slate-900 mb-3 border border-pink-500/30">
+                    <img src="https://cdn.phototourl.com/member/2026-10-01-240f3835-df17-4722-9f3c-0500455e8f80.jpg" alt="Logo" class="w-full h-full object-cover">
+                </div>
+                <h2 class="text-2xl font-black text-white tracking-tight">NAIJACP<span class="text-pink-500">.NG</span></h2>
+                <p class="text-slate-400 text-xs mt-1" id="authWallSubText">Create an account or log in to access Africa's top gaming store.</p>
+            </div>
+
+            <form onsubmit="handleAuthWallSubmit(event)" class="space-y-4">
+                <div id="wallUsernameGroup" class="hidden">
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Username / Gamer Tag</label>
+                    <input type="text" id="wallUsername" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. MerlinCPM">
+                    <p id="usernameSuggestion" class="text-[11px] text-pink-400 mt-1 hidden"></p>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Email Address</label>
+                    <input type="email" id="wallEmail" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. gamer@gmail.com" required>
+                </div>
+                <div class="relative">
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Password</label>
+                    <input type="password" id="wallPassword" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4.5 py-3 pr-12 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="••••••••" required>
+                    <button type="button" onclick="togglePasswordVisibility('wallPassword', this)" class="absolute right-3.5 top-9 text-slate-400 hover:text-white text-sm cursor-pointer">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+
+                <button type="submit" id="wallSubmitBtn" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer mt-2">
+                    Login to Store 🚀
+                </button>
+            </form>
+
+            <div class="mt-6 text-center text-xs border-t border-slate-800/80 pt-4">
+                <span id="wallToggleText" class="text-slate-400">New gamer here?</span> 
+                <button onclick="toggleAuthWallMode()" class="text-pink-400 font-bold ml-1 cursor-pointer hover:underline" id="wallToggleBtn">Create Free Account</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Top Promo Banner -->
     <div class="bg-gradient-to-r from-pink-950 via-black to-pink-950 border-b border-pink-500/20 py-2 text-xs text-slate-300 overflow-hidden relative z-50">
         <div class="animate-marquee whitespace-nowrap flex items-center space-x-8">
             <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-pink-400"></i> INSTANT GAME TOP-UP IN NIGERIA 🇳🇬</span>
-            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-shield-halved text-pink-400"></i> PAYSTACK AUTOMATED &amp; SECURE BANK TRANSFERS</span>
+            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-shield-halved text-pink-400"></i> SECURE CBN LICENSED BANK TRANSFERS</span>
             <span class="inline-flex items-center gap-2"><i class="fa-solid fa-wifi text-pink-400"></i> FREE 2GB DATA PACK &amp; FREE FIRE SENSI</span>
             <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-pink-400"></i> FAST AUTOMATED DELIVERY 24/7 IN NIGERIA 🇳🇬</span>
         </div>
@@ -109,7 +150,7 @@
                     <img src="https://cdn.phototourl.com/member/2026-10-01-240f3835-df17-4722-9f3c-0500455e8f80.jpg" alt="Logo" class="w-full h-full object-cover">
                 </div>
                 <span class="text-xl sm:text-2xl font-black tracking-tight text-white">
-                    NAIJACP<span id="secretAdminTrigger" onclick="openAdminLoginModal()" class="text-pink-500 cursor-pointer select-none" title="Click to Open Admin Login">.NG</span>
+                    NAIJACP<span class="text-pink-500">.NG</span>
                 </span>
             </div>
 
@@ -120,8 +161,8 @@
             </nav>
 
             <div class="flex items-center gap-3">
-                <button id="authNavBtn" onclick="openAuthModal()" class="px-4 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500 hover:text-black font-bold text-xs transition cursor-pointer flex items-center gap-2">
-                    <i class="fa-solid fa-user-circle"></i> <span id="authBtnText">Login / Account</span>
+                <button onclick="handleAccountLogout()" class="px-4 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500 hover:text-black font-bold text-xs transition cursor-pointer flex items-center gap-2">
+                    <i class="fa-solid fa-user-circle"></i> <span id="headerUserDisplay">My Account</span>
                 </button>
             </div>
         </div>
@@ -135,7 +176,7 @@
             <span>Gamers Online Right Now</span>
         </div>
         <h1 class="text-4xl sm:text-5xl font-black text-white mb-4 tracking-tight">Top Up Your Favorite Games Fast</h1>
-        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-medium mb-8">Buy CODM CP, eFootball Coins, Free Fire Diamonds, and Gaming Accessories with Ease. Paid securely via Paystack &amp; CBN Licensed Banks.</p>
+        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-medium mb-8">Buy CODM CP, eFootball Coins, Free Fire Diamonds, and Gaming Accessories with Ease. Paid securely via CBN Licensed Bank Transfers.</p>
         
         <div class="flex flex-wrap items-center justify-center gap-4">
             <button onclick="scrollToSection('sensitivity')" class="px-6 py-3.5 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-2xl text-sm shadow-[0_0_20px_rgba(236,72,153,0.5)] transition flex items-center gap-2 cursor-pointer">
@@ -185,7 +226,7 @@
                 </h2>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6" id="productsGrid">
-                <!-- Populated dynamically via Firebase Real-Time Sync -->
+                <!-- Populated dynamically via Firebase Real-Time Cloud Sync -->
             </div>
         </section>
 
@@ -225,7 +266,7 @@
                         <div class="flex items-center gap-1 text-yellow-400 text-sm mb-3">
                             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                         </div>
-                        <p class="text-slate-300 text-xs leading-relaxed italic mb-4">"Omo, these guys are too fast! Paid with Paystack for CODM 420 CP and before 3 minutes reach, my account don credited. Best plug ever!"</p>
+                        <p class="text-slate-300 text-xs leading-relaxed italic mb-4">"Omo, these guys are too fast! Paid via bank transfer for CODM 420 CP and before 3 minutes reach, my account don credited. Best plug ever!"</p>
                     </div>
                     <div class="flex items-center justify-between border-t border-slate-800/80 pt-4">
                         <div>
@@ -259,7 +300,7 @@
                         <div class="flex items-center gap-1 text-yellow-400 text-sm mb-3">
                             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                         </div>
-                        <p class="text-slate-300 text-xs leading-relaxed italic mb-4">"Bought eFootball coins for my weekend tournament. Smooth Paystack transaction and very reliable. NaijaCP dey carry us well!"</p>
+                        <p class="text-slate-300 text-xs leading-relaxed italic mb-4">"Bought eFootball coins for my weekend tournament. Smooth bank transfer and very reliable. NaijaCP dey carry us well!"</p>
                     </div>
                     <div class="flex items-center justify-between border-t border-slate-800/80 pt-4">
                         <div>
@@ -405,9 +446,10 @@
         </section>
     </div>
 
-    <footer class="border-t border-slate-800 bg-black py-8 text-slate-500 text-xs text-center mt-auto">
-        <p>© 2026 NaijaCP Marketplace. All Rights Reserved.</p>
-        <p class="mt-2 text-[11px]">🛡️ Licensed &amp; Regulated by Central Bank of Nigeria (CBN) &amp; Paystack</p>
+    <!-- SECRET FOOTER TRIGGER (Triple click copyright to open admin) -->
+    <footer class="border-t border-slate-800 bg-black py-8 text-slate-500 text-xs text-center mt-auto select-none">
+        <p onclick="handleSecretFooterClick()">© 2026 NaijaCP Marketplace. All Rights Reserved.</p>
+        <p class="mt-2 text-[11px]">🛡️ Licensed &amp; Regulated by Central Bank of Nigeria (CBN)</p>
     </footer>
 
     <!-- Toast Notifications Container -->
@@ -440,53 +482,17 @@
             <!-- Chat Messages Container -->
             <div id="aiChatMessages" class="flex-grow overflow-y-auto space-y-3 pr-1 text-xs mb-3">
                 <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl text-slate-300 max-w-[85%]">
-                    👋 Omo, welcome to NaijaCP! 🇳🇬 I am your 24/7 AI plug. Whether you wan buy CODM CP, eFootball coins, Free Fire diamonds, TikTok coins, or use Paystack automated checkout, talk to me! Wetin you wan run today?
+                    👋 Omo, welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI plug. Whether you wan buy CODM CP, eFootball coins, Free Fire diamonds, or use our secure bank transfers, talk to me! Wetin you wan run today?
                 </div>
             </div>
 
             <!-- Chat Input Form -->
             <form onsubmit="handleAiChatSubmit(event)" class="flex gap-2 pt-2 border-t border-slate-800">
-                <input type="text" id="aiChatInput" placeholder="Ask about top-ups, Paystack, bank accounts..." class="flex-grow bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500" required>
+                <input type="text" id="aiChatInput" placeholder="Ask about top-ups, bank accounts, prices..." class="flex-grow bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500" required>
                 <button type="submit" class="px-4 py-2.5 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-xl text-xs transition cursor-pointer">
                     Send 🚀
                 </button>
             </form>
-        </div>
-    </div>
-
-    <!-- CUSTOMER AUTH (LOGIN / REGISTER) MODAL -->
-    <div id="authModal" class="fixed inset-0 z-[140] hidden items-center justify-center p-4 bg-black/90 backdrop-blur-md">
-        <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-2xl">
-            <button onclick="closeModal('authModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            
-            <h3 class="text-xl font-black text-white mb-1" id="authModalTitle">Customer Account</h3>
-            <p class="text-slate-400 text-xs mb-6" id="authModalDesc">Log in to view your order history and saved details.</p>
-
-            <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
-                <div id="registerNameField" class="hidden">
-                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Full Name</label>
-                    <input type="text" id="authName" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. John Doe">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Email Address</label>
-                    <input type="email" id="authEmail" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. gamer@gmail.com" required>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Password</label>
-                    <input type="password" id="authPassword" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="••••••••" required>
-                </div>
-
-                <button type="submit" id="authSubmitBtn" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer">
-                    Login 🚀
-                </button>
-            </form>
-
-            <div class="mt-6 text-center text-xs">
-                <span id="authToggleText" class="text-slate-400">Don't have an account?</span> 
-                <button onclick="toggleAuthMode()" class="text-pink-400 font-bold ml-1 cursor-pointer hover:underline" id="authToggleBtn">Register Now</button>
-            </div>
         </div>
     </div>
 
@@ -540,19 +546,21 @@
                     </div>
                 </div>
 
-                <!-- STEP 3 (PAYSTACK + MANUAL BANK TRANSFER) -->
+                <!-- STEP 3 (PAYSTACK COMING SOON + MANUAL BANK TRANSFER) -->
                 <div id="checkoutStep3" class="space-y-4 hidden">
                     <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2 flex items-center justify-between">
                         <span>Step 3 of 3: Choose Payment Method</span>
-                        <span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded">Paystack &amp; CBN Licensed 🛡️</span>
+                        <span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded">CBN Licensed 🛡️</span>
                     </div>
 
-                    <!-- PAYSTACK INSTANT AUTOMATED BUTTON -->
-                    <button type="button" onclick="payWithPaystack()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-black font-black text-sm shadow-lg shadow-green-500/30 transition flex items-center justify-center gap-2 cursor-pointer">
-                        <i class="fa-solid fa-credit-card text-lg"></i> Pay Instantly with Paystack (Card / Transfer)
-                    </button>
+                    <!-- PAYSTACK COMING SOON BUTTON -->
+                    <div class="relative group">
+                        <button type="button" disabled class="w-full py-4 rounded-2xl bg-slate-900 border border-slate-800 text-slate-500 font-bold text-xs cursor-not-allowed flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-credit-card"></i> Pay with Paystack <span class="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded text-[10px] font-extrabold">🚧 COMING SOON</span>
+                        </button>
+                    </div>
 
-                    <div class="text-center text-[10px] text-slate-500 font-bold">— OR USE MANUAL BANK TRANSFER —</div>
+                    <div class="text-center text-[10px] text-pink-400 font-extrabold">— USE SECURE BANK TRANSFER BELOW —</div>
 
                     <div class="bg-black border border-pink-500/30 p-4 rounded-2xl space-y-3">
                         <h4 class="text-pink-400 text-xs font-bold uppercase tracking-wider">🏦 Official Bank Accounts:</h4>
@@ -587,7 +595,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Upload Payment Screenshot 🧾 (Manual Transfer Only)</label>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Upload Payment Screenshot 🧾</label>
                         <div class="border-2 border-dashed border-pink-500/40 hover:border-pink-500 bg-slate-950 rounded-2xl p-4 text-center cursor-pointer transition" onclick="document.getElementById('receiptFile').click()">
                             <input type="file" id="receiptFile" accept="image/*" class="hidden" onchange="handleFileSelect(event)">
                             <div id="fileLabel" class="text-xs text-white font-semibold flex flex-col items-center gap-2">
@@ -602,7 +610,7 @@
                             ⬅ Back
                         </button>
                         <button type="submit" id="submitOrderBtn" class="w-2/3 py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer">
-                            Submit Manual Order 🚀
+                            Submit Order 🚀
                         </button>
                     </div>
                 </div>
@@ -621,22 +629,25 @@
         <button id="closeProcessingBtn" onclick="closeModal('processingModal'); location.reload();" class="hidden px-8 py-3 bg-pink-500 hover:bg-pink-400 text-black font-bold rounded-xl transition cursor-pointer">Return to Home</button>
     </div>
 
-    <!-- ADMIN LOGIN MODAL -->
+    <!-- ADMIN LOGIN MODAL (Secret trigger only) -->
     <div id="adminLoginModal" class="fixed inset-0 z-[120] hidden items-center justify-center p-4 bg-black/90 backdrop-blur-md">
         <div class="glass-modal w-full max-w-sm rounded-3xl p-6 relative shadow-2xl">
             <button onclick="closeModal('adminLoginModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white w-7 h-7 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <h3 class="text-lg font-black text-white mb-1">🔐 Admin Access</h3>
-            <p class="text-slate-400 text-xs mb-4">Enter your credentials to access management dashboard.</p>
+            <h3 class="text-lg font-black text-white mb-1">🔐 Secret Admin Access</h3>
+            <p class="text-slate-400 text-xs mb-4">Enter master credentials to access management dashboard.</p>
             <form onsubmit="handleAdminLogin(event)" class="space-y-3">
                 <div>
                     <label class="block text-[11px] font-bold text-slate-300 uppercase mb-1">Username</label>
                     <input type="text" id="adminUser" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500" placeholder="Username" required>
                 </div>
-                <div>
+                <div class="relative">
                     <label class="block text-[11px] font-bold text-slate-300 uppercase mb-1">Password</label>
-                    <input type="password" id="adminPass" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500" placeholder="Password" required>
+                    <input type="password" id="adminPass" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 pr-10 text-white text-xs focus:outline-none focus:border-pink-500" placeholder="Password" required>
+                    <button type="button" onclick="togglePasswordVisibility('adminPass', this)" class="absolute right-3 top-7 text-slate-400 hover:text-white text-xs cursor-pointer">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
                 </div>
                 <button type="submit" class="w-full py-3 bg-pink-500 hover:bg-pink-400 text-black font-black text-xs rounded-xl shadow-lg transition mt-2 cursor-pointer">
                     Login to Dashboard ⚡
@@ -645,15 +656,15 @@
         </div>
     </div>
 
-    <!-- ADMIN DASHBOARD MODAL -->
+    <!-- ADMIN DASHBOARD MODAL (Source code downloads/displays completely removed) -->
     <div id="adminDashboardModal" class="fixed inset-0 z-[125] hidden flex-col bg-black/95 backdrop-blur-xl p-4 sm:p-8 overflow-y-auto">
         <div class="max-w-5xl mx-auto w-full">
             <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-800">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-pink-500/20 border border-pink-500 text-pink-400 flex items-center justify-center font-black">N</div>
                     <div>
-                        <h2 class="text-xl font-black text-white">Naija cp Admin Dashboard (Cloud Sync ⚡)</h2>
-                        <span class="text-xs text-green-400 font-bold">● Live Cloud Active</span>
+                        <h2 class="text-xl font-black text-white">NaijaCP Secret Admin Portal (Cloud Sync ⚡)</h2>
+                        <span class="text-xs text-green-400 font-bold">● Secure Cloud Active</span>
                     </div>
                 </div>
                 <button onclick="closeModal('adminDashboardModal')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition cursor-pointer">
@@ -745,21 +756,22 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT & FIREBASE CLOUD SYNC LOGIC -->
+    <!-- JAVASCRIPT & FIREBASE CLOUD SYNC & TIGHTENED SECURITY LOGIC -->
     <script>
         // ==========================================
-        // FIREBASE CLOUD CONFIGURATION (REPLACE WITH YOUR FREE FIREBASE KEYS)
+        // FIREBASE CLOUD CONFIGURATION (NAIJACP STORE)
         // ==========================================
         const firebaseConfig = {
-            apiKey: "AIzaSyDummyKeyForNaijaCP_ReplaceWithYours",
+            apiKey: "AIzaSyDTdutOr9kvrs1AuVm5CB7uu130NdSICPA",
             authDomain: "naijacp-store.firebaseapp.com",
             projectId: "naijacp-store",
-            storageBucket: "naijacp-store.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123:web:abc"
+            storageBucket: "naijacp-store.firebasestorage.app",
+            messagingSenderId: "157952707745",
+            appId: "1:157952707745:web:29b5fc5397812d1b8ab4e0",
+            measurementId: "G-M6FK6HPGF5"
         };
 
-        // Initialize Firebase (with local fallback if not yet configured)
+        // Initialize Firebase
         let db = null;
         let auth = null;
         try {
@@ -767,7 +779,7 @@
             db = firebase.firestore();
             auth = firebase.auth();
         } catch(e) {
-            console.log("Firebase init notice (running local mode until config is updated):", e);
+            console.log("Firebase init notice:", e);
         }
 
         let defaultProducts = [
@@ -783,21 +795,21 @@
             { id: 10, title: "Free Fire: 530+53 Diamonds", price: 7500, category: "games", subTag: "freefire", icon: "https://files.catbox.moe/mkliz3.jpeg" },
             { id: 11, title: "Free Fire: 1080+108 Diamonds", price: 15800, category: "games", subTag: "freefire", icon: "https://files.catbox.moe/mkliz3.jpeg" },
             { id: 12, title: "Free Fire: 2200+220 Diamonds", price: 31000, category: "games", subTag: "freefire", icon: "https://files.catbox.moe/mkliz3.jpeg" },
-            { id: 13, title: "Free Fire weekly subscription : 450 Diamonds", price: 2800, category: "games", subTag: "freefire", icon: "https://files.catbox.moe/mkliz3.jpeg" },
-            { id: 14, title: "Free Fire monthly subscription : 2600 Diamonds", price: 14500, category: "games", subTag: "freefire", icon: "https://files.catbox.moe/mkliz3.jpeg" },
-            { id: 15, title: "Blood Strike: 50+ 6 Golds", price: 900, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
+            { id: 13, title: "Free Fire weekly sub: 450 Diamonds", price: 2800, category: "games", subTag: "freefire", icon: "https://files.catbox.moe/mkliz3.jpeg" },
+            { id: 14, title: "Free Fire monthly sub: 2600 Diamonds", price: 14500, category: "games", subTag: "freefire", icon: "https://files.catbox.moe/mkliz3.jpeg" },
+            { id: 15, title: "Blood Strike: 50+6 Golds", price: 900, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
             { id: 16, title: "Blood Strike: 100+16 Golds", price: 1300, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
             { id: 17, title: "Blood Strike: 300+52 Golds", price: 4000, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
             { id: 18, title: "Blood Strike: 500+94 Golds", price: 6700, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
             { id: 19, title: "Blood Strike: 1000+210 Golds", price: 13500, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
             { id: 20, title: "Blood Strike: 2000+486 Golds", price: 27200, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
-            { id: 21, title: "Blood Strike: STRIKE PASS ELITE PASSES", price: 4900, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
-            { id: 22, title: "Blood Strike: STRIKE PASS PREMIUM PASSES", price: 11250, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
+            { id: 21, title: "Blood Strike: Strike Pass Elite", price: 4900, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
+            { id: 22, title: "Blood Strike: Strike Pass Premium", price: 11250, category: "games", subTag: "bloodstrike", icon: "https://files.catbox.moe/5i1beg.jpeg" },
             { id: 23, title: "TikTok: 350 Coins", price: 5800, category: "games", subTag: "tiktok", icon: "https://files.catbox.moe/nupea0.jpeg" },
             { id: 24, title: "TikTok: 700 Coins", price: 11500, category: "games", subTag: "tiktok", icon: "https://files.catbox.moe/nupea0.jpeg" },
             { id: 25, title: "TikTok: 1500 Coins", price: 25000, category: "games", subTag: "tiktok", icon: "https://files.catbox.moe/nupea0.jpeg" },
             { id: 26, title: "DLS: 900 Coins", price: 4000, category: "games", subTag: "dls", icon: "https://files.catbox.moe/m8zy1q.jpeg" },
-            { id: 27, title: "DLS: SEASON PASS", price: 9000, category: "games", subTag: "dls", icon: "https://files.catbox.moe/m8zy1q.jpeg" },
+            { id: 27, title: "DLS: Season Pass", price: 9000, category: "games", subTag: "dls", icon: "https://files.catbox.moe/m8zy1q.jpeg" },
             { id: 28, title: "DLS: 1750 Coins", price: 9500, category: "games", subTag: "dls", icon: "https://files.catbox.moe/m8zy1q.jpeg" },
             { id: 29, title: "DLS: 400 Diamonds", price: 15000, category: "games", subTag: "dls", icon: "https://files.catbox.moe/m8zy1q.jpeg" },
             { id: 30, title: "DLS: 3000 Coins", price: 16500, category: "games", subTag: "dls", icon: "https://files.catbox.moe/m8zy1q.jpeg" },
@@ -829,25 +841,34 @@
         let sensiShareCount = 0;
         let dataShareCount = 0;
         let currentUser = null;
-        let isRegistering = false;
+        let isRegisteringWall = false;
 
         const officialSiteUrl = "https://naijacpstore.github.io/naijacp/";
 
         document.addEventListener("DOMContentLoaded", () => {
             initCloudSync();
-            renderCatalog();
             startLiveUsers();
             startFakePurchases();
-            
+            checkSecretAdminHash();
+
+            window.addEventListener('hashchange', checkSecretAdminHash);
+
             if(auth) {
                 auth.onAuthStateChanged(user => {
                     currentUser = user;
-                    const btnText = document.getElementById('authBtnText');
+                    const wall = document.getElementById('authWallModal');
+                    const userDisplay = document.getElementById('headerUserDisplay');
+                    
                     if(user) {
-                        btnText.innerText = user.email.split('@')[0];
-                        showToast("🎉 Welcome back, " + user.email.split('@')[0] + "!");
+                        wall.classList.add('hidden');
+                        wall.classList.remove('flex');
+                        const displayName = user.displayName || user.email.split('@')[0];
+                        userDisplay.innerText = displayName;
+                        renderCatalog();
                     } else {
-                        btnText.innerText = "Login / Account";
+                        wall.classList.remove('hidden');
+                        wall.classList.add('flex');
+                        userDisplay.innerText = "My Account";
                     }
                 });
             }
@@ -863,7 +884,6 @@
         function initCloudSync() {
             if(!db) return;
             
-            // Real-time products sync
             db.collection("products").onSnapshot(snapshot => {
                 if(!snapshot.empty) {
                     products = [];
@@ -875,14 +895,12 @@
                         renderAdminProducts();
                     }
                 } else {
-                    // Seed default products if empty
                     defaultProducts.forEach(p => {
                         db.collection("products").doc(p.id.toString()).set(p);
                     });
                 }
             });
 
-            // Real-time orders sync
             db.collection("orders").orderBy("timestamp", "desc").onSnapshot(snapshot => {
                 orders = [];
                 snapshot.forEach(doc => {
@@ -892,6 +910,99 @@
                     renderAdminOrders();
                 }
             });
+        }
+
+        // --- PASSWORD VISIBILITY TOGGLE ---
+        function togglePasswordVisibility(fieldId, btnEl) {
+            const input = document.getElementById(fieldId);
+            const icon = btnEl.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        // --- MANDATORY AUTH WALL & USERNAME SUGGESTION ---
+        function toggleAuthWallMode() {
+            isRegisteringWall = !isRegisteringWall;
+            document.getElementById('wallSubmitBtn').innerText = isRegisteringWall ? "Create Account & Enter 🚀" : "Login to Store 🚀";
+            document.getElementById('wallUsernameGroup').classList.toggle('hidden', !isRegisteringWall);
+            document.getElementById('wallToggleText').innerText = isRegisteringWall ? "Already have an account?" : "New gamer here?";
+            document.getElementById('wallToggleBtn').innerText = isRegisteringWall ? "Login Here" : "Create Free Account";
+        }
+
+        async function handleAuthWallSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('wallEmail').value.trim();
+            const password = document.getElementById('wallPassword').value.trim();
+            const usernameInput = document.getElementById('wallUsername').value.trim();
+
+            if(!auth) {
+                alert("Firebase Auth is not connected yet.");
+                return;
+            }
+
+            if(isRegisteringWall) {
+                if(!usernameInput) {
+                    alert("Please enter a username / gamer tag.");
+                    return;
+                }
+                
+                // Check if username exists in Firestore
+                try {
+                    const checkQuery = await db.collection("users").where("username", "==", usernameInput).get();
+                    if(!checkQuery.empty) {
+                        const suggested = usernameInput + "_" + Math.floor(100 + Math.random() * 900);
+                        document.getElementById('usernameSuggestion').innerText = `⚠️ Username taken! Try available: ${suggested}`;
+                        document.getElementById('usernameSuggestion').classList.remove('hidden');
+                        document.getElementById('wallUsername').value = suggested;
+                        return;
+                    }
+
+                    const res = await auth.createUserWithEmailAndPassword(email, password);
+                    await res.user.updateProfile({ displayName: usernameInput });
+                    await db.collection("users").doc(res.user.uid).set({
+                        username: usernameInput,
+                        email: email,
+                        createdAt: Date.now()
+                    });
+                    showToast("🎉 Account created successfully!");
+                } catch(err) {
+                    alert(err.message);
+                }
+            } else {
+                auth.signInWithEmailAndPassword(email, password)
+                    .then(() => showToast("Welcome back!"))
+                    .catch(err => alert(err.message));
+            }
+        }
+
+        function handleAccountLogout() {
+            if(currentUser) {
+                if(confirm("Log out of your account?")) {
+                    auth.signOut();
+                    showToast("Logged out.");
+                }
+            }
+        }
+
+        // --- SECRET ADMIN ACCESS ---
+        let footerClickCount = 0;
+        function handleSecretFooterClick() {
+            footerClickCount++;
+            if(footerClickCount >= 3) {
+                footerClickCount = 0;
+                openModal('adminLoginModal');
+            }
+        }
+
+        function checkSecretAdminHash() {
+            if(window.location.hash === '#naijacp-admin-secure') {
+                openModal('adminLoginModal');
+            }
         }
 
         function playClickSound() {
@@ -925,17 +1036,11 @@
 
         function openModal(id) { 
             const el = document.getElementById(id);
-            if(el) {
-                el.classList.remove('hidden'); 
-                el.classList.add('flex'); 
-            }
+            if(el) { el.classList.remove('hidden'); el.classList.add('flex'); }
         }
         function closeModal(id) { 
             const el = document.getElementById(id);
-            if(el) {
-                el.classList.add('hidden'); 
-                el.classList.remove('flex'); 
-            }
+            if(el) { el.classList.add('hidden'); el.classList.remove('flex'); }
         }
 
         function scrollToSection(id) {
@@ -961,7 +1066,7 @@
         }
 
         function startFakePurchases() {
-            const names = ['Chinedu', 'Oluwaseun', 'Amina', 'Ngozi', 'Emeka', 'Fatima', 'Bolaji', 'Ibrahim', 'Kehinde', 'Uche', 'Adebayo', 'Chioma', 'Yusuf', 'Ezekiel'];
+            const names = ['Chinedu', 'Oluwaseun', 'Amina', 'Ngozi', 'Emeka', 'Fatima', 'Bolaji', 'Ibrahim', 'Kehinde', 'Uche', 'Adebayo', 'Chioma'];
             const prefixes = ['0803', '0810', '0902', '0706', '0814', '0913', '0703'];
             
             setInterval(() => {
@@ -1051,55 +1156,6 @@
             });
         }
 
-        // --- CUSTOMER AUTH FUNCTIONS ---
-        function openAuthModal() {
-            if(currentUser) {
-                if(confirm("You are logged in as " + currentUser.email + ". Do you want to log out?")) {
-                    auth.signOut();
-                    showToast("Logged out successfully.");
-                }
-                return;
-            }
-            openModal('authModal');
-        }
-
-        function toggleAuthMode() {
-            isRegistering = !isRegistering;
-            document.getElementById('authModalTitle').innerText = isRegistering ? "Create Customer Account" : "Customer Login";
-            document.getElementById('authModalDesc').innerText = isRegistering ? "Sign up to track all your game top-up orders." : "Log in to view your order history and saved details.";
-            document.getElementById('authSubmitBtn').innerText = isRegistering ? "Register 🚀" : "Login 🚀";
-            document.getElementById('registerNameField').classList.toggle('hidden', !isRegistering);
-            document.getElementById('authToggleText').innerText = isRegistering ? "Already have an account?" : "Don't have an account?";
-            document.getElementById('authToggleBtn').innerText = isRegistering ? "Login Here" : "Register Now";
-        }
-
-        function handleAuthSubmit(e) {
-            e.preventDefault();
-            const email = document.getElementById('authEmail').value.trim();
-            const password = document.getElementById('authPassword').value.trim();
-
-            if(!auth) {
-                alert("Firebase Auth is not fully configured yet. Please update firebaseConfig keys.");
-                return;
-            }
-
-            if(isRegistering) {
-                auth.createUserWithEmailAndPassword(email, password)
-                    .then(res => {
-                        showToast("Account created successfully!");
-                        closeModal('authModal');
-                    })
-                    .catch(err => alert(err.message));
-            } else {
-                auth.signInWithEmailAndPassword(email, password)
-                    .then(res => {
-                        showToast("Logged in successfully!");
-                        closeModal('authModal');
-                    })
-                    .catch(err => alert(err.message));
-            }
-        }
-
         function checkOrderStatus() {
             const query = document.getElementById('trackQuery').value.trim();
             const box = document.getElementById('trackResultBox');
@@ -1112,7 +1168,7 @@
 
             const found = orders.find(o => (o.phone && o.phone.includes(query)) || (o.id && o.id.toString().includes(query)));
             if(!found) {
-                box.innerHTML = `<span class="text-yellow-400 font-bold">No active order found matching "${query}". Please check your details or contact our AI support.</span>`;
+                box.innerHTML = `<span class="text-yellow-400 font-bold">No active order found matching "${query}". Please check your details or chat with our 24/7 AI Support.</span>`;
                 return;
             }
 
@@ -1153,7 +1209,7 @@
                 const btn = document.getElementById('dataShareBtn');
                 btn.innerHTML = `<i class="fa-solid fa-gift text-xl"></i> Claim Free 2GB Now 🎁`;
                 btn.onclick = function() { location.reload(); };
-                showToast("🎉 Data pack requirements completed! Click Claim to restart & queue.");
+                showToast("🎉 Data pack requirements completed! Click Claim to restart.");
             }
         }
 
@@ -1204,7 +1260,7 @@
             document.getElementById('valDpi').innerText = dpiVal;
 
             document.getElementById('sensiResults').classList.remove('hidden');
-            showToast("🎯 Pro Headshot Settings generated successfully for " + document.getElementById('phoneModel').value + "!");
+            showToast("🎯 Headshot Sensi generated successfully!");
         }
 
         // --- UNIVERSAL CHECKOUT ---
@@ -1243,75 +1299,6 @@
             }
         }
 
-        // --- PAYSTACK AUTOMATED PAYMENT ---
-        function payWithPaystack() {
-            const customerName = document.getElementById('custName').value.trim();
-            const customerPhone = document.getElementById('custPhone').value.trim();
-            const gameId = document.getElementById('custGameId').value.trim();
-
-            if (!customerName || !customerPhone || !gameId) {
-                alert("Please complete Steps 1 and 2 (Name, Game ID, and WhatsApp Number) before paying!");
-                nextCheckoutStep(1);
-                return;
-            }
-
-            if (!currentSelectedItem) {
-                alert("No package selected.");
-                return;
-            }
-
-            let handler = PaystackPop.setup({
-                key: 'Pk_test_f83b816145536743620d0647241f78d9d4650ae4',
-                email: customerPhone + '@naijacp.ng',
-                amount: currentSelectedItem.price * 100,
-                currency: 'NGN',
-                ref: 'NCP_' + Math.floor((Math.random() * 1000000000) + 1),
-                metadata: {
-                    custom_fields: [
-                        { display_name: "Customer Name", variable_name: "customer_name", value: customerName },
-                        { display_name: "Game ID / UID", variable_name: "game_id", value: gameId },
-                        { display_name: "WhatsApp Phone", variable_name: "phone_number", value: customerPhone },
-                        { display_name: "Package Title", variable_name: "package_title", value: currentSelectedItem.title }
-                    ]
-                },
-                callback: function(response) {
-                    showToast("Payment confirmed! Ref: " + response.reference);
-
-                    const newOrder = {
-                        id: Date.now().toString().slice(-6),
-                        date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
-                        customer: customerName,
-                        gameId: gameId,
-                        phone: customerPhone,
-                        product: currentSelectedItem.title,
-                        amount: currentSelectedItem.price,
-                        receipt: 'Paystack Automated (Ref: ' + response.reference + ')',
-                        status: 'Completed (Paid via Paystack ⚡)',
-                        timestamp: Date.now()
-                    };
-
-                    saveOrderToCloud(newOrder);
-
-                    closeModal('checkoutModal');
-                    openModal('processingModal');
-                    
-                    document.getElementById('processingTitle').innerText = "Payment Successful & Verified! ⚡";
-                    document.getElementById('processingDesc').innerText = "Paystack successfully confirmed your payment of ₦" + currentSelectedItem.price.toLocaleString() + ". Your order has been logged!";
-                    document.getElementById('processingSpinner').classList.add('hidden');
-                    document.getElementById('processingSuccessIcon').classList.remove('hidden');
-                    document.getElementById('processingSuccessIcon').classList.add('flex');
-                    document.getElementById('closeProcessingBtn').classList.remove('hidden');
-
-                    sendOrderToTelegram(newOrder);
-                },
-                onClose: function() {
-                    alert('Transaction window closed.');
-                }
-            });
-            
-            handler.openIframe();
-        }
-
         // --- TELEGRAM NOTIFICATIONS ---
         function sendOrderToTelegram(order) {
             const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
@@ -1322,8 +1309,8 @@
                             `📦 Package Bought: ${order.product}\n` +
                             `💰 Price: ₦${order.amount.toLocaleString()}\n` +
                             `👤 Customer Name: ${order.customer}\n` +
-                            `🎮 Game / Player ID (UID): ${order.gameId}\n` +
-                            `📞 WhatsApp Number: ${order.phone}\n` +
+                            `🎮 Game ID (UID): ${order.gameId}\n` +
+                            `📞 WhatsApp: ${order.phone}\n` +
                             `📅 Date: ${order.date}\n` +
                             `⚡ Status: ${order.status}`;
 
@@ -1398,7 +1385,7 @@
             }, 1800);
         }
 
-        // --- 24/7 AI AGENT ---
+        // --- 24/7 AI AGENT (Sharper & Smarter) ---
         function openAiChatModal() {
             openModal('aiChatModal');
         }
@@ -1438,46 +1425,52 @@
             const q = query.toLowerCase();
 
             if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('how far') || q.includes('sup') || q.includes('gm')) {
-                return `👋 Omo, welcome to NaijaCP! 🇳🇬 I am your 24/7 AI plug. Whether you wan buy CODM CP, eFootball coins, Free Fire diamonds, TikTok coins, or use Paystack automated checkout, talk to me! Wetin you wan run today?`;
+                return `👋 Omo, welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI plug. Whether you wan buy CODM CP, eFootball coins, Free Fire diamonds, TikTok coins, or use our secure bank transfers, talk to me! Wetin you wan run today?`;
             }
-            if (q.includes('paystack') || q.includes('card') || q.includes('automated') || q.includes('online payment')) {
-                return `💳 **Paystack Automated Payment:** You can pay instantly with your ATM card or automated bank transfer by clicking the green **"Pay Instantly with Paystack"** button during checkout!`;
+            if (q.includes('paystack') || q.includes('card') || q.includes('online payment')) {
+                return `🚧 **Paystack Automated Payment:** Currently under compliance review (Coming Soon)! For now, use our instant **Bank Transfer** (Moremonee or Smartcash) and upload your screenshot—we credit you within 2 minutes max! ⚡`;
             }
             if (q.includes('scam') || q.includes('legit') || q.includes('trust') || q.includes('fake') || q.includes('safe')) {
-                return `🛡️ Zero cap, we are 100% legit and trusted across Nigeria! Over 6,800+ active gamers use NaijaCP daily.`;
+                return `🛡️ Zero cap, we are 100% legit and trusted across Nigeria! Over 6,800+ active gamers use NaijaCP daily. Check our verified reviews on the site!`;
             }
             if (q.includes('bank') || q.includes('account') || q.includes('transfer') || q.includes('manual') || q.includes('moremonee') || q.includes('smartcash')) {
-                return `🏦 **Official NaijaCP Manual Bank Accounts:**<br><br>1️⃣ **Moremonee Bank:** <code>8099646374</code> (Oluwabukunmi Makanjuola)<br><br>2️⃣ **Smartcash PSB:** <code>8080504236</code> (Akeem Solarin)`;
+                return `🏦 **Official NaijaCP Bank Accounts:**<br><br>1️⃣ **Moremonee Bank:** <code>8099646374</code> (Oluwabukunmi Makanjuola)<br><br>2️⃣ **Smartcash PSB:** <code>8080504236</code> (Akeem Solarin)`;
             }
             if (q.includes('delivery') || q.includes('how long') || q.includes('credit')) {
-                return `⚡ **Super Fast Delivery:** Paystack orders are verified instantly! Manual transfers with receipt uploads are credited within 1 to 5 minutes max!`;
+                return `⚡ **Super Fast Delivery:** Bank transfers with uploaded screenshots are verified and credited within 1 to 3 minutes!`;
+            }
+            if (q.includes('codm') || q.includes('cp')) {
+                return `🎮 **CODM Top-Up:** We have 80 CP, 420 CP, 880 CP and more available instantly. Just tap "Buy Now" on any package!`;
+            }
+            if (q.includes('efootball') || q.includes('coins')) {
+                return `⚽ **eFootball Coins:** Grab 130, 320, or 1040 coins instantly via our catalog!`;
+            }
+            if (q.includes('free fire') || q.includes('diamonds')) {
+                return `💎 **Free Fire Diamonds & Subs:** Weekly & monthly subscriptions plus diamond packs available instantly!`;
             }
 
-            return `🤖 Boss, I dey for you! You fit ask me about any game package, Paystack card payments, our official bank accounts, or tracking your order. How I fit help you now?`;
+            return `🤖 Boss, I dey for you! You fit ask me about any game package, bank transfer details, free 2GB data, or tracking your order. How I fit help you now?`;
         }
 
         function escapeHtml(text) {
             return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
-        // --- ADMIN AUTH & CLOUD DASHBOARD ---
-        function openAdminLoginModal() {
-            openModal('adminLoginModal');
-        }
-
+        // --- SECURE ADMIN DASHBOARD ---
         function handleAdminLogin(e) {
             e.preventDefault();
+            // Obscured credential check
             const u = document.getElementById('adminUser').value.trim();
             const p = document.getElementById('adminPass').value.trim();
 
-            if (u === 'Merlin' && p === 'merlin1') {
+            if (u === atob('TWVybGlu') && p === atob('bWVybGluMQ==')) {
                 closeModal('adminLoginModal');
                 openModal('adminDashboardModal');
                 renderAdminOrders();
                 renderAdminProducts();
-                showToast("Welcome back! Cloud Admin access granted 🚀");
+                showToast("Welcome back, boss! Secret admin access granted 🚀");
             } else {
-                alert("Invalid username or password! (Hint: Merlin / merlin1)");
+                alert("Invalid master credentials!");
             }
         }
 
@@ -1521,11 +1514,11 @@
 
         function viewAdminReceipt(orderId) {
             const ord = orders.find(o => o.id === orderId);
-            if(ord && ord.receipt && !ord.receipt.includes('Paystack')) {
+            if(ord && ord.receipt) {
                 document.getElementById('adminReceiptImg').src = ord.receipt;
                 openModal('receiptViewerModal');
             } else {
-                alert("This order was paid automatically via Paystack (No manual receipt uploaded).");
+                alert("No receipt found.");
             }
         }
 
