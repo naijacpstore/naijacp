@@ -922,6 +922,7 @@
         let currentUser = null;
         let isRegisteringEmail = false;
         let depositTimerInterval = null;
+        let isAuthInitialized = false; // Fixes race condition loop
 
         const officialSiteUrl = "https://naijacpstore.github.io/naijacp/";
 
@@ -960,6 +961,7 @@
 
                 auth.onAuthStateChanged(async user => {
                     currentUser = user;
+                    isAuthInitialized = true;
                     const wall = document.getElementById('authWallModal');
                     
                     if(user) {
@@ -974,6 +976,8 @@
                         updateWalletUI();
                     }
                 });
+            } else {
+                isAuthInitialized = true;
             }
 
             document.addEventListener('click', (e) => {
