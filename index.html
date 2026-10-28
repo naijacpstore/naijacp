@@ -49,6 +49,15 @@ animation: pulse 1.8s infinite;
 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(236, 72, 153, 0); }
 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
 }
+@keyframes marquee {
+0% { transform: translateX(0%); }
+100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+display: flex;
+width: 200%;
+animation: marquee 24s linear infinite;
+}
 @keyframes slideInUp {
 from { transform: translateY(120%) scale(0.9); opacity: 0; }
 to { transform: translateY(0) scale(1); opacity: 1; }
@@ -68,32 +77,31 @@ box-shadow: 0 8px 20px -4px rgba(236, 72, 153, 0.5) !important;
 </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-black pb-20">
-<!-- MAIN AUTHENTICATION MODAL -->
+<!-- CODASHOP-STYLE AUTHENTICATION MODAL -->
 <div id="authWallModal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4 bg-black/95 backdrop-blur-3xl">
 <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-[0_0_60px_rgba(236,72,153,0.3)] border border-pink-500/40">
-<div class="text-center mb-6">
+<div class="text-center mb-5">
 <div class="flex items-center justify-center gap-2 mb-2">
 <i class="fa-solid fa-gem text-pink-500 text-2xl"></i>
 <h2 class="text-2xl font-black text-white tracking-tight">NAIJACP<span class="text-pink-500">.NG</span></h2>
 </div>
-<p class="text-slate-300 text-xs mt-2 font-medium">Faster top up, better deals.</p>
-<h3 class="text-xl font-extrabold text-white mt-1">Join NAIJACP Now</h3>
+<p class="text-slate-300 text-xs mt-1 font-medium">Faster top up, better deals.</p>
+<h3 class="text-xl font-extrabold text-white mt-1">Join NAIJACP Now.</h3>
 </div>
-<!-- Fallback Notice Banner -->
-<div class="bg-pink-500/10 border border-pink-500/30 rounded-2xl p-3.5 mb-5 text-center shadow-inner">
-<p class="text-[11px] text-pink-300 leading-relaxed font-medium">
-<i class="fa-solid fa-circle-info text-pink-400 mr-1 text-xs"></i>
-Is Google or Facebook redirecting back? <strong>Use Username & Password below for instant, guaranteed access!</strong> 🚀
+<!-- Glowing Fallback Notice -->
+<div class="bg-pink-500/15 border border-pink-500/40 rounded-2xl p-3.5 mb-4 text-center shadow-[0_0_20px_rgba(236,72,153,0.2)]">
+<p class="text-[11px] text-pink-300 font-medium leading-relaxed">
+<i class="fa-solid fa-triangle-exclamation text-pink-400 mr-1"></i> Having trouble with Google or Facebook? Try signing up / logging in with <strong>Email, Username & Password</strong> below.
 </p>
 </div>
 <div class="space-y-3">
-<!-- Username & Password Direct Login Button -->
-<button type="button" onclick="openEmailAuthModal('login')" class="w-full py-4 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-400 hover:to-rose-400 text-black font-black text-xs flex items-center justify-center gap-2.5 transition cursor-pointer shadow-lg shadow-pink-500/25">
-<i class="fa-solid fa-user-shield text-black text-base"></i> Sign in with Username & Password
+<!-- Username & Password Login Button -->
+<button type="button" onclick="openEmailAuthModal('login')" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-black text-xs flex items-center justify-center gap-2.5 transition cursor-pointer shadow-lg shadow-pink-500/25">
+<i class="fa-solid fa-user-shield text-base"></i> Sign in with Username & Password
 </button>
-<div class="relative flex py-2 items-center">
+<div class="relative flex py-1 items-center">
 <div class="flex-grow border-t border-slate-800"></div>
-<span class="flex-shrink mx-4 text-slate-500 text-[10px] uppercase font-bold">Or Social Sign-In</span>
+<span class="flex-shrink mx-4 text-slate-500 text-[10px] uppercase font-bold">Or Social Logins</span>
 <div class="flex-grow border-t border-slate-800"></div>
 </div>
 <!-- Google Login Button -->
@@ -105,11 +113,11 @@ Is Google or Facebook redirecting back? <strong>Use Username & Password below fo
 <i class="fa-brands fa-facebook text-base"></i> Continue with Facebook
 </button>
 </div>
-<div class="mt-6 text-center text-xs border-t border-slate-800/80 pt-4">
+<div class="mt-5 text-center text-xs border-t border-slate-800/80 pt-4">
 <span class="text-slate-400">New gamer here?</span>
-<button onclick="openEmailAuthModal('register')" class="text-pink-400 font-extrabold ml-1 cursor-pointer hover:underline">Create Free Account</button>
+<button onclick="openEmailAuthModal('register')" class="text-pink-400 font-bold ml-1 cursor-pointer hover:underline">Create Free Account</button>
 </div>
-<div class="mt-4 text-[10px] text-slate-500 text-center">
+<div class="mt-3 text-[10px] text-slate-500 text-center">
 By signing up, you agree to our <a href="#" class="underline">Terms of Service</a> & <a href="#" class="underline">Privacy Policy</a>.
 </div>
 </div>
@@ -129,7 +137,7 @@ By signing up, you agree to our <a href="#" class="underline">Terms of Service</
 </div>
 <div>
 <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5" id="usernameLabel">Username</label>
-<input type="text" id="authUsernameInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. naijagamer" required>
+<input type="text" id="authUsernameInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. gamerpro" required>
 </div>
 <div class="relative">
 <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Password</label>
@@ -580,7 +588,7 @@ Next: Payment ➔
 </button>
 </div>
 </div>
-<!-- STEP 3 -->
+<!-- STEP 3 (WALLET PAYMENT + PAYSTACK COMING SOON) -->
 <div id="checkoutStep3" class="space-y-4 hidden">
 <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2 flex items-center justify-between">
 <span>Step 3 of 3: Select Payment Method</span>
@@ -599,6 +607,21 @@ Next: Payment ➔
 </div>
 <button type="submit" id="payWithWalletBtn" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer flex items-center justify-center gap-2">
 <i class="fa-solid fa-wallet"></i> Pay Instantly with Wallet Balance ⚡
+</button>
+</div>
+<!-- PAYSTACK COMING SOON BADGE -->
+<div class="bg-slate-950 border border-slate-800 p-4 rounded-2xl flex items-center justify-between opacity-75">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold">
+<i class="fa-solid fa-credit-card"></i>
+</div>
+<div>
+<h4 class="text-xs font-bold text-white">Paystack Card / Bank Transfer</h4>
+<span class="text-[10px] text-pink-400 font-extrabold">🚀 Coming Soon</span>
+</div>
+</div>
+<button type="button" onclick="showToast('Paystack automated gateway is coming soon! Please use Wallet Balance.')" class="px-3 py-1.5 bg-slate-800 text-slate-400 rounded-lg text-xs font-bold cursor-pointer">
+Notify
 </button>
 </div>
 <div class="flex gap-2 pt-2">
@@ -994,7 +1017,6 @@ try {
 if (isRegisteringEmail) {
 const email = document.getElementById('authEmailInput').value.trim();
 if(!email) { alert("Please enter a valid email."); return; }
-// Check if username is already taken
 const querySnap = await db.collection("users").where("username", "==", usernameInput).get();
 if(!querySnap.empty) {
 alert("Username is already taken by another gamer. Choose a different one!");
@@ -1009,7 +1031,6 @@ createdAt: Date.now()
 });
 showToast("🎉 Account created successfully!");
 } else {
-// Login with Username: Find email mapped to this username first
 const querySnap = await db.collection("users").where("username", "==", usernameInput).get();
 if(querySnap.empty) {
 alert("Username not found! Please check your username or create a free account.");
