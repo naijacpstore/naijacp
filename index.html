@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NAIJACP.NG | Africa's Premier Gaming &amp; Digital Marketplace</title>
+    <title>NAIJACP.NG | Africa's Premier Gaming Marketplace &amp; Digital Top-Up Services</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
@@ -19,44 +19,44 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #09090b;
-            color: #f4f4f5;
+            background-color: #050507;
+            color: #f3f4f6;
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
         }
 
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #09090b; }
-        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        ::-webkit-scrollbar-track { background: #050507; }
+        ::-webkit-scrollbar-thumb { background: #1e1b2e; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ec4899; }
 
         .glass-card {
-            background: rgba(18, 18, 24, 0.8);
+            background: rgba(18, 12, 22, 0.85);
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(139, 92, 246, 0.12);
+            border: 1px solid rgba(236, 72, 153, 0.15);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .glass-card:hover {
             transform: translateY(-4px);
-            border-color: rgba(139, 92, 246, 0.4);
-            box-shadow: 0 12px 40px -10px rgba(139, 92, 246, 0.25);
+            border-color: rgba(236, 72, 153, 0.5);
+            box-shadow: 0 12px 40px -10px rgba(236, 72, 153, 0.35);
         }
 
         .glass-modal {
-            background: rgba(12, 12, 18, 0.98);
+            background: rgba(12, 10, 16, 0.98);
             backdrop-filter: blur(24px);
-            border: 1px solid rgba(139, 92, 246, 0.3);
+            border: 1px solid rgba(236, 72, 153, 0.35);
         }
 
         .pulse-dot {
-            box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7);
+            box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7);
             animation: pulse 1.8s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(139, 92, 246, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(236, 72, 153, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
         }
 
         @keyframes marquee {
@@ -81,110 +81,137 @@
         .toast-exit { animation: fadeOutDown 0.4s cubic-bezier(0.7, 0, 0.84, 0) forwards; }
         
         .active-btn {
-            background: linear-gradient(135deg, #8b5cf6, #06b6d4) !important;
-            color: #ffffff !important;
-            border-color: transparent !important;
-            box-shadow: 0 8px 20px -4px rgba(139, 92, 246, 0.5) !important;
+            background: #ec4899 !important;
+            color: #000000 !important;
+            border-color: #ec4899 !important;
+            box-shadow: 0 8px 20px -4px rgba(236, 72, 153, 0.5) !important;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-violet-500 selection:text-white pb-20">
+<body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-black pb-20">
 
-    <!-- AUTH WALL MODAL -->
-    <div id="authWallModal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/95 backdrop-blur-3xl">
-        <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-[0_0_60px_rgba(139,92,246,0.25)] border border-violet-500/30">
+    <!-- CODASHOP-STYLE AUTHENTICATION MODAL -->
+    <div id="authWallModal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4 bg-black/95 backdrop-blur-3xl">
+        <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-[0_0_60px_rgba(236,72,153,0.3)] border border-pink-500/40">
             <div class="text-center mb-6">
-                <div class="w-16 h-16 mx-auto rounded-2xl overflow-hidden shadow-xl shadow-violet-500/30 bg-slate-900 mb-3 border border-violet-500/30 flex items-center justify-center">
-                    <img src="https://cdn.phototourl.com/member/2026-10-01-240f3835-df17-4722-9f3c-0500455e8f80.jpg" alt="Logo" class="w-full h-full object-cover">
+                <div class="flex items-center justify-center gap-2 mb-2">
+                    <i class="fa-solid fa-gem text-pink-500 text-2xl"></i>
+                    <h2 class="text-2xl font-black text-white tracking-tight">CODASHOP <span class="text-xs bg-pink-500 text-black px-2 py-0.5 rounded-full font-bold ml-1">NAIJACP</span></h2>
                 </div>
-                <h2 class="text-2xl font-black text-white tracking-tight">NAIJACP<span class="text-violet-400">.NG</span></h2>
-                <p class="text-slate-400 text-xs mt-1" id="authWallSubText">Access Africa's elite gaming &amp; digital store.</p>
+                <p class="text-slate-300 text-xs mt-2 font-medium">Faster top up, better deals.</p>
+                <h3 class="text-xl font-extrabold text-white mt-1">Join NAIJACP Now.</h3>
             </div>
 
-            <form onsubmit="handleAuthWallSubmit(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5" id="wallUsernameLabel">Username / Gamer Tag</label>
-                    <input type="text" id="wallUsername" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 transition" placeholder="Enter your username" required>
-                    <p id="usernameSuggestion" class="text-[11px] text-violet-400 mt-1 hidden"></p>
+            <div class="space-y-3 mt-4">
+                <!-- Google Login Button -->
+                <button type="button" onclick="loginWithGoogle()" class="w-full py-3.5 rounded-2xl bg-white hover:bg-slate-100 text-black font-extrabold text-xs flex items-center justify-center gap-3 transition cursor-pointer shadow-lg">
+                    <i class="fa-brands fa-google text-red-500 text-base"></i> Continue with Google
+                </button>
+                <!-- Facebook Login Button -->
+                <button type="button" onclick="loginWithFacebook()" class="w-full py-3.5 rounded-2xl bg-[#1877F2] hover:bg-[#166fe5] text-white font-extrabold text-xs flex items-center justify-center gap-3 transition cursor-pointer shadow-lg">
+                    <i class="fa-brands fa-facebook text-base"></i> Continue with Facebook
+                </button>
+                
+                <div class="relative flex py-2 items-center">
+                    <div class="flex-grow border-t border-slate-800"></div>
+                    <span class="flex-shrink mx-4 text-slate-500 text-[10px] uppercase font-bold">Or</span>
+                    <div class="flex-grow border-t border-slate-800"></div>
                 </div>
-                <div id="wallEmailGroup" class="hidden">
-                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Email Address (Gmail)</label>
-                    <input type="email" id="wallEmail" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 transition" placeholder="e.g. gamer@gmail.com">
+
+                <!-- Email Sign Up / Login Toggle Button -->
+                <button type="button" onclick="openEmailAuthModal()" class="w-full py-3.5 rounded-2xl bg-slate-900 border border-slate-700 hover:border-pink-500 text-white font-extrabold text-xs flex items-center justify-center gap-2.5 transition cursor-pointer">
+                    <i class="fa-solid fa-envelope text-pink-400 text-base"></i> Sign up with Email
+                </button>
+            </div>
+
+            <div class="mt-6 text-center text-xs border-t border-slate-800/80 pt-4">
+                <span class="text-slate-400">Already have an account?</span> 
+                <button onclick="openEmailAuthModal()" class="text-pink-400 font-bold ml-1 cursor-pointer hover:underline">Sign In</button>
+            </div>
+            <div class="mt-4 text-[10px] text-slate-500 text-center">
+                By signing up, you agree to the <a href="#" class="underline">Terms of Service</a> and <a href="#" class="underline">Privacy Policy</a>[cite: 15].
+            </div>
+        </div>
+    </div>
+
+    <!-- EMAIL AUTH SUB-MODAL -->
+    <div id="emailAuthModal" class="fixed inset-0 z-[210] hidden items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+        <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-2xl border border-pink-500/40">
+            <button onclick="closeModal('emailAuthModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-xl font-black text-white mb-1" id="emailAuthTitle">Sign In with Email</h3>
+            <p class="text-slate-400 text-xs mb-6" id="emailAuthSub">Enter your email and password to access your account.</p>
+
+            <form onsubmit="handleEmailAuthSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5" id="emailAuthLabel">Email Address / Username</label>
+                    <input type="text" id="authEmailInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. gamer@gmail.com" required>
                 </div>
                 <div class="relative">
                     <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Password</label>
-                    <input type="password" id="wallPassword" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4.5 py-3 pr-12 text-white text-sm focus:outline-none focus:border-violet-500 transition" placeholder="••••••••" required>
-                    <button type="button" onclick="togglePasswordVisibility('wallPassword', this)" class="absolute right-3.5 top-9 text-slate-400 hover:text-white text-sm cursor-pointer">
+                    <input type="password" id="authPasswordInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4.5 py-3 pr-12 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="••••••••" required>
+                    <button type="button" onclick="togglePasswordVisibility('authPasswordInput', this)" class="absolute right-3.5 top-9 text-slate-400 hover:text-white text-sm cursor-pointer">
                         <i class="fa-solid fa-eye"></i>
                     </button>
                 </div>
-
-                <button type="submit" id="wallSubmitBtn" class="w-full py-4 rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-black text-sm shadow-lg shadow-violet-600/30 transition cursor-pointer mt-2">
-                    Login to Store 🚀
+                <button type="submit" id="emailAuthSubmitBtn" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer mt-2">
+                    Sign In 🚀
                 </button>
             </form>
 
-            <div class="mt-6 text-center text-xs border-t border-slate-800/80 pt-4">
-                <span id="wallToggleText" class="text-slate-400">New gamer here?</span> 
-                <button onclick="toggleAuthWallMode()" class="text-violet-400 font-bold ml-1 cursor-pointer hover:underline" id="wallToggleBtn">Create Free Account</button>
+            <div class="mt-5 text-center text-xs">
+                <button onclick="toggleEmailAuthMode()" class="text-pink-400 font-bold cursor-pointer hover:underline" id="emailAuthToggleLink">Need an account? Create one here</button>
             </div>
         </div>
     </div>
 
-    <!-- Top Ticker Bar -->
-    <div class="bg-gradient-to-r from-violet-950 via-slate-950 to-cyan-950 border-b border-violet-500/20 py-2.5 text-xs text-slate-300 overflow-hidden relative z-40">
-        <div class="animate-marquee whitespace-nowrap flex items-center space-x-10">
-            <span class="inline-flex items-center gap-2 font-semibold"><i class="fa-solid fa-bolt text-violet-400"></i> INSTANT AUTOMATED GAME TOP-UP 🇳🇬</span>
-            <span class="inline-flex items-center gap-2 font-semibold"><i class="fa-solid fa-shield-halved text-cyan-400"></i> 100% SECURE WALLET SYSTEM</span>
-            <span class="inline-flex items-center gap-2 font-semibold"><i class="fa-solid fa-wifi text-emerald-400"></i> FREE 2GB DATA PACK &amp; FREE FIRE SENSI</span>
-            <span class="inline-flex items-center gap-2 font-semibold"><i class="fa-solid fa-headset text-violet-400"></i> 24/7 DEDICATED DISPATCH &amp; SUPPORT</span>
-        </div>
-    </div>
-
-    <!-- Header Navigation -->
-    <header class="sticky top-0 z-30 bg-[#09090b]/90 backdrop-blur-xl border-b border-slate-800 px-4 sm:px-8 py-4">
+    <!-- Codashop-Style Header Navbar -->
+    <header class="sticky top-0 z-40 bg-[#09070c]/95 backdrop-blur-xl border-b border-pink-950/40 px-4 sm:px-8 py-3.5">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer" onclick="switchMainCategory('games')">
-                <div class="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-violet-500/30 bg-slate-900 border border-violet-500/30">
-                    <img src="https://cdn.phototourl.com/member/2026-10-01-240f3835-df17-4722-9f3c-0500455e8f80.jpg" alt="Logo" class="w-full h-full object-cover">
+                <div class="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-pink-500/40 bg-slate-900 border border-pink-500/30 flex items-center justify-center">
+                    <i class="fa-solid fa-gem text-pink-500 text-xl"></i>
                 </div>
-                <span class="text-xl sm:text-2xl font-black tracking-tight text-white">
-                    NAIJACP<span class="text-violet-500">.NG</span>
+                <span class="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-1.5">
+                    CODASHOP <span class="text-xs text-black bg-pink-500 px-2 py-0.5 rounded-full font-extrabold">NAIJACP</span>
                 </span>
             </div>
 
-            <nav class="hidden md:flex items-center gap-6 bg-slate-950/80 px-6 py-2 rounded-2xl border border-slate-800/80">
-                <a onclick="switchMainCategory('games')" id="nav-games" class="text-xs font-extrabold text-violet-400 cursor-pointer transition hover:text-white uppercase tracking-wider">Games</a>
-                <a onclick="switchMainCategory('gadgets')" id="nav-gadgets" class="text-xs font-extrabold text-slate-400 cursor-pointer transition hover:text-white uppercase tracking-wider">Gadgets</a>
-                <a onclick="switchMainCategory('giftcards')" id="nav-giftcards" class="text-xs font-extrabold text-slate-400 cursor-pointer transition hover:text-white uppercase tracking-wider">Gift Cards</a>
-            </nav>
-
-            <div class="flex items-center gap-3">
-                <button onclick="openUserDashboard()" class="px-4 py-2.5 rounded-xl bg-violet-500/10 border border-violet-500/30 text-violet-300 hover:bg-violet-500 hover:text-white font-extrabold text-xs transition cursor-pointer flex items-center gap-2 shadow-sm">
-                    <i class="fa-solid fa-wallet text-violet-400"></i> 
+            <!-- Codashop Top Navigation & Icons -->
+            <div class="flex items-center gap-3.5">
+                <button onclick="openUserDashboard()" class="px-3.5 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500 hover:text-black font-extrabold text-xs transition cursor-pointer flex items-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-wallet text-pink-400"></i> 
                     <span>₦<span id="headerWalletBalance">0</span></span>
                 </button>
+                
+                <div class="hidden sm:flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800 text-xs font-bold text-slate-300">
+                    <i class="fa-solid fa-earth-africa text-pink-500"></i>
+                    <span>NG / EN</span>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <div class="relative pt-14 pb-16 overflow-hidden px-4 sm:px-6 text-center border-b border-slate-800 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-950/20 via-[#09090b] to-[#09090b]">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/30 text-xs font-bold text-slate-300 mb-6 shadow-inner">
-            <span class="w-2.5 h-2.5 rounded-full bg-violet-500 pulse-dot"></span>
-            <span class="text-violet-400 font-extrabold text-sm" id="liveUserCounter">6,854</span>
-            <span>Gamers Online Right Now</span>
-        </div>
-        <h1 class="text-4xl sm:text-6xl font-black text-white mb-4 tracking-tight">The Ultimate Gaming <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">Marketplace</span></h1>
-        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-medium mb-8">Instant top-up for CODM, eFootball, Free Fire, and high-end gaming accessories. Funded instantly via your secure wallet balance.</p>
-        
-        <div class="flex flex-wrap items-center justify-center gap-4">
-            <button onclick="openAddFundsModal()" class="px-7 py-4 bg-emerald-500 hover:bg-emerald-400 text-black font-black rounded-2xl text-sm shadow-[0_0_30px_rgba(16,185,129,0.35)] transition flex items-center gap-2.5 cursor-pointer">
-                <i class="fa-solid fa-wallet text-base"></i> 💳 + ADD FUNDS TO WALLET
-            </button>
-            <button onclick="scrollToSection('sensitivity')" class="px-7 py-4 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-black rounded-2xl text-sm shadow-[0_0_30px_rgba(139,92,246,0.35)] transition flex items-center gap-2.5 cursor-pointer">
-                <i class="fa-solid fa-crosshair text-base"></i> 🔥 FREE FIRE SENSI
-            </button>
+    <!-- Codashop Featured Hero Banner -->
+    <div class="relative bg-gradient-to-r from-purple-950 via-black to-pink-950 border-b border-pink-500/20 py-8 px-4 sm:px-8">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-center md:text-left space-y-2">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-400 text-xs font-extrabold uppercase">
+                    <span class="w-2 h-2 rounded-full bg-pink-500 pulse-dot"></span>
+                    <span id="liveUserCounter">6,854</span> Gamers Online
+                </div>
+                <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">Stock Up FC Points &amp; Top Games Today!</h1>
+                <p class="text-slate-400 text-xs sm:text-sm max-w-xl">Fast, safe, and secure game top-ups in Nigeria. Powered by NAIJACP &amp; Codashop architecture.</p>
+            </div>
+            <div class="flex flex-wrap gap-3">
+                <button onclick="openAddFundsModal()" class="px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-black font-black rounded-2xl text-xs shadow-lg transition flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-wallet"></i> 💳 + ADD FUNDS TO WALLET
+                </button>
+                <button onclick="scrollToSection('sensitivity')" class="px-6 py-3.5 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-2xl text-xs shadow-lg transition flex items-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-crosshair"></i> 🔥 FREE FIRE SENSI
+                </button>
+            </div>
         </div>
     </div>
 
@@ -199,7 +226,7 @@
         </div>
 
         <!-- GAME SUB-FILTER BUTTONS & INSTANT SEARCH BAR -->
-        <div class="flex flex-col md:flex-row gap-4 mb-8 items-center justify-between bg-slate-900/60 p-4 rounded-3xl border border-slate-800/80 backdrop-blur-md">
+        <div class="flex flex-col md:flex-row gap-4 mb-8 items-center justify-between bg-slate-900/60 p-4 rounded-3xl border border-slate-800 backdrop-blur-md">
             <div id="gameSubFilters" class="flex flex-wrap gap-2 w-full md:w-auto">
                 <button class="btn-subfilter active-btn px-3.5 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('all', this)">All Games</button>
                 <button class="btn-subfilter px-3.5 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('codm', this)">CODM</button>
@@ -214,15 +241,15 @@
             <!-- Instant Search Input -->
             <div class="relative w-full md:w-72">
                 <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-500 text-xs"></i>
-                <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search packages (e.g. 80 CP, AirPods)..." class="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-10 pr-4 py-2.5 text-white text-xs focus:outline-none focus:border-violet-500 transition">
+                <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search packages (e.g. 80 CP, AirPods)..." class="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-10 pr-4 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500 transition">
             </div>
         </div>
 
-        <!-- PRODUCTS GRID -->
+        <!-- PRODUCTS GRID (CODASHOP FEATURED STYLE) -->
         <section id="catalogSection" class="mb-16">
             <div class="flex items-center gap-3 mb-6">
-                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight border-l-4 border-violet-500 pl-4" id="sectionHeading">
-                    🎮 Game Top-Up Packages
+                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight border-l-4 border-pink-500 pl-4 uppercase" id="sectionHeading">
+                    🔥 Featured Games &amp; Top-Ups
                 </h2>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6" id="productsGrid">
@@ -231,17 +258,17 @@
         </section>
 
         <!-- ORDER STATUS & HISTORY CHECKER TOOL -->
-        <section class="py-10 mb-16 border-t border-b border-slate-800">
-            <div class="max-w-xl mx-auto glass-modal p-6 sm:p-8 rounded-3xl border border-violet-500/30 text-center shadow-xl">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/30 text-violet-400 text-xs font-bold mb-3">
+        <section class="py-10 mb-16 border-t border-b border-pink-500/20">
+            <div class="max-w-xl mx-auto glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/30 text-center shadow-xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-bold mb-3">
                     <i class="fa-solid fa-magnifying-glass-chart"></i> Track Your Transaction
                 </div>
                 <h3 class="text-xl font-black text-white mb-2">Check Order Status</h3>
                 <p class="text-slate-400 text-xs mb-6">Enter your WhatsApp phone number or Order ID to verify processing status.</p>
                 
                 <div class="flex gap-2">
-                    <input type="text" id="trackQuery" placeholder="e.g. 08012345678" class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-violet-500 transition">
-                    <button onclick="checkOrderStatus()" class="px-5 py-3 bg-violet-600 hover:bg-violet-500 text-white font-black rounded-xl text-xs transition cursor-pointer shadow-md">
+                    <input type="text" id="trackQuery" placeholder="e.g. 08012345678" class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-pink-500 transition">
+                    <button onclick="checkOrderStatus()" class="px-5 py-3 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-xl text-xs transition cursor-pointer shadow-md">
                         Check 🔍
                     </button>
                 </div>
@@ -250,20 +277,20 @@
         </section>
 
         <!-- FREE 2GB DATA PACK TOOL -->
-        <section id="dataPackTool" class="py-12 border-t border-slate-800 scroll-mt-24 mb-12">
+        <section id="dataPackTool" class="py-12 border-t border-pink-500/20 scroll-mt-24 mb-12">
             <div class="text-center mb-8">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-extrabold uppercase mb-3">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-green-500/20 border border-green-500/40 text-green-400 text-xs font-extrabold uppercase mb-3">
                     <i class="fa-solid fa-wifi"></i> 100% Free Promo
                 </div>
                 <h2 class="text-3xl font-extrabold text-white">Claim Free 2GB Data Pack 📶</h2>
                 <p class="text-slate-400 text-sm mt-2">Select your network, enter your number, and share to 10 WhatsApp groups to claim instantly!</p>
             </div>
 
-            <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-emerald-500/30 max-w-2xl mx-auto shadow-2xl relative">
+            <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/30 max-w-2xl mx-auto shadow-2xl relative">
                 <div id="dataFormArea" class="space-y-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Select SIM Network</label>
-                        <select id="simNetwork" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-emerald-500 transition">
+                        <select id="simNetwork" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition">
                             <option value="MTN">MTN Nigeria</option>
                             <option value="AIRTEL">Airtel Nigeria</option>
                             <option value="GLO">Glo Mobile</option>
@@ -272,24 +299,24 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Mobile Phone Number</label>
-                        <input type="tel" id="dataPhoneNumber" placeholder="e.g. 08012345678" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-emerald-500 transition">
+                        <input type="tel" id="dataPhoneNumber" placeholder="e.g. 08012345678" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition">
                     </div>
-                    <button type="button" onclick="proceedToDataShare()" class="w-full py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 cursor-pointer">
+                    <button type="button" onclick="proceedToDataShare()" class="w-full py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-green-500/20 cursor-pointer">
                         Proceed to Share Requirement 🚀
                     </button>
                 </div>
 
                 <div id="dataShareArea" class="hidden space-y-5">
-                    <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between text-xs">
+                    <div class="p-4 rounded-2xl bg-green-500/10 border border-green-500/30 flex items-center justify-between text-xs">
                         <span class="text-slate-300 font-bold">Step 2: Share to 10 WhatsApp Groups</span>
-                        <span id="dataShareProgressText" class="text-emerald-400 font-black text-sm">0/10 Shares</span>
+                        <span id="dataShareProgressText" class="text-green-400 font-black text-sm">0/10 Shares</span>
                     </div>
 
                     <div class="w-full bg-slate-900 rounded-full h-3 overflow-hidden border border-slate-800">
-                        <div id="dataProgressBar" class="bg-emerald-500 h-full w-0 transition-all duration-300"></div>
+                        <div id="dataProgressBar" class="bg-green-500 h-full w-0 transition-all duration-300"></div>
                     </div>
 
-                    <button id="dataShareBtn" onclick="shareDataToWhatsApp()" class="w-full py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 cursor-pointer">
+                    <button id="dataShareBtn" onclick="shareDataToWhatsApp()" class="w-full py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-green-500/20 cursor-pointer">
                         <i class="fa-brands fa-whatsapp text-xl"></i>
                         <span>Share to WhatsApp Group (<span id="dataSharesLeft">10</span> Left)</span>
                     </button>
@@ -298,45 +325,45 @@
         </section>
 
         <!-- FREE FIRE SENSITIVITY GENERATOR TOOL -->
-        <section id="sensitivity" class="py-12 border-t border-slate-800 scroll-mt-24">
+        <section id="sensitivity" class="py-12 border-t border-pink-500/20 scroll-mt-24">
             <div class="text-center mb-8">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-violet-500/15 border border-violet-500/30 text-violet-400 text-xs font-extrabold uppercase mb-3">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-400 text-xs font-extrabold uppercase mb-3">
                     <i class="fa-solid fa-crosshair"></i> 100% Free Tool
                 </div>
                 <h2 class="text-3xl font-extrabold text-white">Free Fire Auto-Headshot Sensi</h2>
                 <p class="text-slate-400 text-sm mt-2">Share to 5 WhatsApp groups to unlock your custom optimal sensitivity settings.</p>
             </div>
 
-            <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-violet-500/30 max-w-2xl mx-auto shadow-2xl relative">
+            <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/30 max-w-2xl mx-auto shadow-2xl relative">
                 <div id="sensiUnlockArea" class="space-y-5">
-                    <div class="p-4 rounded-2xl bg-violet-500/10 border border-violet-500/30 flex items-center justify-between text-xs">
+                    <div class="p-4 rounded-2xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-between text-xs">
                         <span class="text-slate-300 font-bold">Step 1: Complete Share Requirement</span>
-                        <span id="taskProgressText" class="text-violet-400 font-black text-sm">0/5 Shares</span>
+                        <span id="taskProgressText" class="text-pink-400 font-black text-sm">0/5 Shares</span>
                     </div>
 
                     <div class="w-full bg-slate-900 rounded-full h-3 overflow-hidden border border-slate-800">
-                        <div id="progressBar" class="bg-violet-500 h-full w-0 transition-all duration-300"></div>
+                        <div id="progressBar" class="bg-pink-500 h-full w-0 transition-all duration-300"></div>
                     </div>
 
-                    <button onclick="shareToWhatsApp()" class="w-full py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 cursor-pointer">
+                    <button onclick="shareToWhatsApp()" class="w-full py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-green-500/20 cursor-pointer">
                         <i class="fa-brands fa-whatsapp text-xl"></i>
                         <span>Share to WhatsApp Group (<span id="sharesLeft">5</span> Left)</span>
                     </button>
                 </div>
 
                 <div id="sensiFormArea" class="hidden">
-                    <div class="p-3.5 mb-6 rounded-xl bg-violet-500/20 border border-violet-500/40 text-violet-200 text-xs text-center font-bold">
-                        <i class="fa-solid fa-circle-check text-emerald-400 mr-1"></i> Shared successfully! Generate your settings below.
+                    <div class="p-3.5 mb-6 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs text-center font-bold">
+                        <i class="fa-solid fa-circle-check text-green-400 mr-1"></i> Shared successfully! Generate your settings below.
                     </div>
                     
                     <form id="sensiForm" onsubmit="generateSensi(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Exact Phone Brand &amp; Model</label>
-                            <input type="text" id="phoneModel" placeholder="e.g. Tecno Spark 10, iPhone 11" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 transition" required>
+                            <input type="text" id="phoneModel" placeholder="e.g. Tecno Spark 10, iPhone 11" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" required>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">RAM Size</label>
-                            <select id="ramSize" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 transition" required>
+                            <select id="ramSize" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" required>
                                 <option value="2">2 GB RAM</option>
                                 <option value="3">3 GB RAM</option>
                                 <option value="4" selected>4 GB RAM</option>
@@ -345,7 +372,7 @@
                             </select>
                         </div>
                         <div class="md:col-span-2 mt-2">
-                            <button type="submit" class="w-full py-4 rounded-2xl bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-violet-600/30 cursor-pointer">
+                            <button type="submit" class="w-full py-4 rounded-2xl bg-pink-500 hover:bg-pink-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-pink-500/20 cursor-pointer">
                                 Generate Unique Settings ⚡
                             </button>
                         </div>
@@ -354,23 +381,23 @@
                     <div id="sensiResults" class="hidden mt-6 pt-6 border-t border-slate-800 grid grid-cols-2 md:grid-cols-3 gap-3">
                         <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
                             <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">General</span>
-                            <span class="text-xl font-black text-emerald-400" id="valGen">195</span>
+                            <span class="text-xl font-black text-green-400" id="valGen">195</span>
                         </div>
                         <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
                             <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Red Dot</span>
-                            <span class="text-xl font-black text-emerald-400" id="valRed">185</span>
+                            <span class="text-xl font-black text-green-400" id="valRed">185</span>
                         </div>
                         <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
                             <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">2X Scope</span>
-                            <span class="text-xl font-black text-emerald-400" id="val2x">175</span>
+                            <span class="text-xl font-black text-green-400" id="val2x">175</span>
                         </div>
                         <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
                             <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">4X Scope</span>
-                            <span class="text-xl font-black text-emerald-400" id="val4x">160</span>
+                            <span class="text-xl font-black text-green-400" id="val4x">160</span>
                         </div>
                         <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
                             <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Fire Button Size</span>
-                            <span class="text-xl font-black text-violet-400" id="valFireBtn">48%</span>
+                            <span class="text-xl font-black text-pink-400" id="valFireBtn">48%</span>
                         </div>
                         <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
                             <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Android DPI</span>
@@ -383,16 +410,16 @@
     </div>
 
     <!-- SECRET FOOTER TRIGGER -->
-    <footer class="border-t border-slate-800/80 bg-[#060608] py-8 text-slate-500 text-xs text-center mt-auto select-none">
-        <p onclick="handleSecretFooterClick()">© 2026 NaijaCP Marketplace. All Rights Reserved.</p>
-        <p class="mt-2 text-[11px]">🛡️ Secure Centralized Gaming &amp; Digital Infrastructure</p>
+    <footer class="border-t border-slate-800 bg-[#040306] py-8 text-slate-500 text-xs text-center mt-auto select-none">
+        <p onclick="handleSecretFooterClick()">© 2026 Codashop &amp; NaijaCP Marketplace. All Rights Reserved.</p>
+        <p class="mt-2 text-[11px]">🛡️ Powered by Codashop Global &amp; Centralized Game Top-Up Infrastructure</p>
     </footer>
 
     <!-- Toast Notifications Container -->
     <div id="liveToastContainer" class="fixed bottom-16 right-5 z-[999] flex flex-col gap-2 pointer-events-none w-full max-w-xs"></div>
 
     <!-- 24/7 AI AGENT FLOATING BUTTON -->
-    <button onclick="openAiChatModal()" class="fixed bottom-5 left-5 z-[980] bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white px-4 py-3 rounded-full flex items-center gap-2.5 shadow-[0_0_25px_rgba(139,92,246,0.5)] transition hover:scale-105 cursor-pointer font-bold text-xs">
+    <button onclick="openAiChatModal()" class="fixed bottom-5 left-5 z-[980] bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white px-4.5 py-3 rounded-full flex items-center gap-2.5 shadow-[0_0_25px_rgba(236,72,153,0.6)] transition hover:scale-105 cursor-pointer font-bold text-xs">
         <i class="fa-solid fa-robot text-base animate-bounce"></i>
         <span>24/7 AI Assistant 🤖</span>
     </button>
@@ -402,12 +429,12 @@
         <div class="glass-modal w-full max-w-md rounded-3xl p-5 relative shadow-2xl flex flex-col h-[520px]">
             <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-xl bg-violet-500/20 border border-violet-500/40 text-violet-400 flex items-center justify-center font-black">
+                    <div class="w-9 h-9 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-400 flex items-center justify-center font-black">
                         <i class="fa-solid fa-robot"></i>
                     </div>
                     <div>
-                        <h3 class="text-sm font-black text-white">NaijaCP 24/7 AI Assistant</h3>
-                        <span class="text-[10px] text-emerald-400 font-bold">● Online &amp; Ready to Help</span>
+                        <h3 class="text-sm font-black text-white">Codashop AI Assistant</h3>
+                        <span class="text-[10px] text-green-400 font-bold">● Online &amp; Ready to Help</span>
                     </div>
                 </div>
                 <button onclick="closeModal('aiChatModal')" class="text-slate-400 hover:text-white w-7 h-7 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">
@@ -418,14 +445,14 @@
             <!-- Chat Messages Container -->
             <div id="aiChatMessages" class="flex-grow overflow-y-auto space-y-3 pr-1 text-xs mb-3">
                 <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-2xl text-slate-300 max-w-[85%] leading-relaxed">
-                    👋 Omo, welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI plug. Whether you wan buy CODM CP, eFootball coins, Free Fire diamonds, or use our wallet balance, talk to me! Wetin you wan run today?
+                    👋 Welcome to Codashop Nigeria x NaijaCP! 🇳🇬 I am your sharp 24/7 AI assistant. Whether you want to login with Google/Facebook, fund your wallet, buy CODM CP or eFootball coins, talk to me! Wetin you wan run today?
                 </div>
             </div>
 
             <!-- Chat Input Form -->
             <form onsubmit="handleAiChatSubmit(event)" class="flex gap-2 pt-2 border-t border-slate-800">
-                <input type="text" id="aiChatInput" placeholder="Ask about top-ups, wallet balance, bank accounts..." class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-violet-500 transition" required>
-                <button type="submit" class="px-4 py-2.5 bg-violet-600 hover:bg-violet-500 text-white font-black rounded-xl text-xs transition cursor-pointer">
+                <input type="text" id="aiChatInput" placeholder="Ask about login, top-ups, wallet balance, bank accounts..." class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500 transition" required>
+                <button type="submit" class="px-4 py-2.5 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-xl text-xs transition cursor-pointer">
                     Send 🚀
                 </button>
             </form>
@@ -440,7 +467,7 @@
             </button>
             
             <div class="flex items-center gap-3.5 mb-6 pb-4 border-b border-slate-800">
-                <div class="w-12 h-12 rounded-2xl bg-violet-500/20 border border-violet-500/40 text-violet-400 flex items-center justify-center text-xl font-black">
+                <div class="w-12 h-12 rounded-2xl bg-pink-500/20 border border-pink-500/40 text-pink-400 flex items-center justify-center text-xl font-black">
                     <i class="fa-solid fa-wallet"></i>
                 </div>
                 <div>
@@ -452,9 +479,9 @@
             <div class="space-y-6">
                 <!-- User Stats & Wallet Box -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div class="bg-gradient-to-br from-violet-950/40 to-slate-950 p-4 rounded-2xl border border-violet-500/30 sm:col-span-2 flex items-center justify-between">
+                    <div class="bg-gradient-to-br from-pink-950/40 to-slate-950 p-4 rounded-2xl border border-pink-500/30 sm:col-span-2 flex items-center justify-between">
                         <div>
-                            <span class="block text-[10px] text-violet-400 uppercase font-extrabold mb-1">Available Wallet Balance</span>
+                            <span class="block text-[10px] text-pink-400 uppercase font-extrabold mb-1">Available Wallet Balance</span>
                             <span class="text-3xl font-black text-white">₦<span id="modalWalletBalance">0</span></span>
                         </div>
                         <button onclick="closeModal('userDashboardModal'); openAddFundsModal();" class="px-4.5 py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold rounded-xl text-xs transition shadow-lg cursor-pointer flex items-center gap-1.5">
@@ -573,7 +600,7 @@
         </div>
     </div>
 
-    <!-- MULTI-STEP CHECKOUT MODAL (WALLET-ONLY) -->
+    <!-- MULTI-STEP CHECKOUT MODAL (WALLET-ONLY + PAYSTACK COMING SOON) -->
     <div id="checkoutModal" class="fixed inset-0 z-[60] items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden">
         <div class="glass-modal w-full max-w-lg rounded-3xl p-6 sm:p-8 relative shadow-2xl max-h-[95vh] overflow-y-auto">
             <button onclick="closeModal('checkoutModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">
@@ -582,68 +609,84 @@
             
             <h3 class="text-xl font-black text-white mb-1">Complete Your Order</h3>
             <p class="text-slate-400 text-xs mb-2" id="checkoutItemTitle">Item: <strong class="text-white">CODM: 80 CP</strong></p>
-            <p class="text-violet-400 text-2xl font-black mb-6" id="checkoutItemPrice">₦1,200</p>
+            <p class="text-pink-400 text-2xl font-black mb-6" id="checkoutItemPrice">₦1,200</p>
 
             <form id="orderForm" onsubmit="submitOrder(event)" class="space-y-4">
                 
                 <!-- STEP 1 -->
                 <div id="checkoutStep1" class="space-y-4">
-                    <div class="p-3 rounded-xl bg-violet-500/10 border border-violet-500/30 text-xs font-bold text-violet-400 mb-2">
+                    <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2">
                         Step 1 of 3: Enter Your Name
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Your Full Name / Gamer Tag</label>
-                        <input type="text" id="custName" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 transition" placeholder="e.g. John Doe" required>
+                        <input type="text" id="custName" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. John Doe" required>
                     </div>
-                    <button type="button" onclick="nextCheckoutStep(2)" class="w-full py-4 rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-black text-sm shadow-lg shadow-violet-600/30 transition cursor-pointer">
+                    <button type="button" onclick="nextCheckoutStep(2)" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer">
                         Next: Player ID ➔
                     </button>
                 </div>
 
                 <!-- STEP 2 -->
                 <div id="checkoutStep2" class="space-y-4 hidden">
-                    <div class="p-3 rounded-xl bg-violet-500/10 border border-violet-500/30 text-xs font-bold text-violet-400 mb-2">
+                    <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2">
                         Step 2 of 3: Account &amp; Contact Details
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Player ID / Account ID</label>
-                        <input type="text" id="custGameId" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 transition" placeholder="e.g. 6823019283" required>
+                        <input type="text" id="custGameId" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. 6823019283" required>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">WhatsApp Phone Number</label>
-                        <input type="tel" id="custPhone" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 transition" placeholder="e.g. 08012345678" required>
+                        <input type="tel" id="custPhone" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. 08012345678" required>
                     </div>
                     <div class="flex gap-2">
                         <button type="button" onclick="prevCheckoutStep(1)" class="w-1/3 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition cursor-pointer">
                             ⬅ Back
                         </button>
-                        <button type="button" onclick="nextCheckoutStep(3)" class="w-2/3 py-3.5 rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-black text-sm shadow-lg shadow-violet-600/30 transition cursor-pointer">
-                            Next: Wallet Payment ➔
+                        <button type="button" onclick="nextCheckoutStep(3)" class="w-2/3 py-3.5 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer">
+                            Next: Payment ➔
                         </button>
                     </div>
                 </div>
 
-                <!-- STEP 3 (WALLET PAYMENT ONLY - DIRECT BANK TRANSFER REMOVED) -->
+                <!-- STEP 3 (WALLET PAYMENT + PAYSTACK COMING SOON) -->
                 <div id="checkoutStep3" class="space-y-4 hidden">
-                    <div class="p-3 rounded-xl bg-violet-500/10 border border-violet-500/30 text-xs font-bold text-violet-400 mb-2 flex items-center justify-between">
-                        <span>Step 3 of 3: Instant Wallet Payment</span>
-                        <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">Wallet Balance ⚡</span>
+                    <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2 flex items-center justify-between">
+                        <span>Step 3 of 3: Select Payment Method</span>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">Instant Wallet ⚡</span>
                     </div>
 
                     <!-- WALLET PAY BOX -->
-                    <div class="bg-gradient-to-br from-violet-950/50 to-slate-950 border border-violet-500/40 p-5 rounded-2xl space-y-4">
+                    <div class="bg-gradient-to-br from-pink-950/50 to-slate-950 border border-pink-500/40 p-4 rounded-2xl space-y-3">
                         <div class="flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-slate-400 uppercase font-extrabold tracking-wider">Your Wallet Balance</span>
-                                <div class="text-2xl font-black text-white mt-0.5">₦<span id="checkoutWalletBalance">0</span></div>
+                                <div class="text-xl font-black text-white mt-0.5">₦<span id="checkoutWalletBalance">0</span></div>
                             </div>
-                            <button type="button" onclick="closeModal('checkoutModal'); openAddFundsModal();" class="px-3.5 py-2.5 bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black rounded-xl font-extrabold text-xs transition cursor-pointer flex items-center gap-1.5 border border-emerald-500/30">
+                            <button type="button" onclick="closeModal('checkoutModal'); openAddFundsModal();" class="px-3 py-2 bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black rounded-xl font-extrabold text-xs transition cursor-pointer flex items-center gap-1 border border-emerald-500/30">
                                 <i class="fa-solid fa-plus"></i> Add Funds
                             </button>
                         </div>
                         
-                        <button type="submit" id="payWithWalletBtn" class="w-full py-4 rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-black text-sm shadow-lg shadow-violet-600/30 transition cursor-pointer flex items-center justify-center gap-2">
+                        <button type="submit" id="payWithWalletBtn" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer flex items-center justify-center gap-2">
                             <i class="fa-solid fa-wallet"></i> Pay Instantly with Wallet Balance ⚡
+                        </button>
+                    </div>
+
+                    <!-- PAYSTACK COMING SOON BADGE -->
+                    <div class="bg-slate-950 border border-slate-800 p-4 rounded-2xl flex items-center justify-between opacity-75">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-credit-card"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white">Paystack Card / Bank Transfer</h4>
+                                <span class="text-[10px] text-pink-400 font-extrabold">🚀 Coming Soon</span>
+                            </div>
+                        </div>
+                        <button type="button" onclick="showToast('Paystack automated gateway is coming soon! Please use Wallet Balance.')" class="px-3 py-1.5 bg-slate-800 text-slate-400 rounded-lg text-xs font-bold cursor-pointer">
+                            Notify Me
                         </button>
                     </div>
 
@@ -659,13 +702,13 @@
 
     <!-- PROCESSING MODAL -->
     <div id="processingModal" class="fixed inset-0 z-[110] hidden flex-col items-center justify-center p-4 bg-black/95 backdrop-blur-md">
-        <div class="w-16 h-16 border-4 border-violet-500 border-t-transparent rounded-full animate-spin mb-4" id="processingSpinner"></div>
-        <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 hidden items-center justify-center text-3xl mb-4" id="processingSuccessIcon">
+        <div class="w-16 h-16 border-4 border-pink-500 border-t-transparent rounded-full animate-spin mb-4" id="processingSpinner"></div>
+        <div class="w-16 h-16 rounded-full bg-green-500/20 text-green-400 hidden items-center justify-center text-3xl mb-4" id="processingSuccessIcon">
             <i class="fa-solid fa-check"></i>
         </div>
         <h2 class="text-2xl font-black text-white mb-2 text-center" id="processingTitle">Order Submitted Successfully!</h2>
         <p class="text-slate-400 text-sm text-center max-w-sm mb-6" id="processingDesc">Your top-up order is currently being verified by our dispatch system. Delivery takes 1–3 minutes.</p>
-        <button id="closeProcessingBtn" onclick="closeModal('processingModal'); location.reload();" class="hidden px-8 py-3.5 bg-gradient-to-r from-violet-600 to-cyan-600 text-white font-bold rounded-xl transition cursor-pointer shadow-lg">Return to Store 🎮</button>
+        <button id="closeProcessingBtn" onclick="closeModal('processingModal'); location.reload();" class="hidden px-8 py-3 bg-pink-500 hover:bg-pink-400 text-black font-bold rounded-xl transition cursor-pointer">Return to Store 🎮</button>
     </div>
 
     <!-- ADMIN LOGIN MODAL -->
@@ -679,16 +722,16 @@
             <form onsubmit="handleAdminLogin(event)" class="space-y-3">
                 <div>
                     <label class="block text-[11px] font-bold text-slate-300 uppercase mb-1">Username</label>
-                    <input type="text" id="adminUser" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-violet-500 transition" placeholder="Username" required>
+                    <input type="text" id="adminUser" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500 transition" placeholder="Username" required>
                 </div>
                 <div class="relative">
                     <label class="block text-[11px] font-bold text-slate-300 uppercase mb-1">Password</label>
-                    <input type="password" id="adminPass" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 pr-10 text-white text-xs focus:outline-none focus:border-violet-500 transition" placeholder="Password" required>
+                    <input type="password" id="adminPass" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 pr-10 text-white text-xs focus:outline-none focus:border-pink-500 transition" placeholder="Password" required>
                     <button type="button" onclick="togglePasswordVisibility('adminPass', this)" class="absolute right-3 top-7 text-slate-400 hover:text-white text-xs cursor-pointer">
                         <i class="fa-solid fa-eye"></i>
                     </button>
                 </div>
-                <button type="submit" class="w-full py-3 bg-gradient-to-r from-violet-600 to-cyan-600 text-white font-black text-xs rounded-xl shadow-lg transition mt-2 cursor-pointer">
+                <button type="submit" class="w-full py-3 bg-pink-500 hover:bg-pink-400 text-black font-black text-xs rounded-xl shadow-lg transition mt-2 cursor-pointer">
                     Login to Dashboard ⚡
                 </button>
             </form>
@@ -700,10 +743,10 @@
         <div class="max-w-5xl mx-auto w-full">
             <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-800">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-violet-500/20 border border-violet-500 text-violet-400 flex items-center justify-center font-black">N</div>
+                    <div class="w-10 h-10 rounded-xl bg-pink-500/20 border border-pink-500 text-pink-400 flex items-center justify-center font-black">N</div>
                     <div>
                         <h2 class="text-xl font-black text-white">NaijaCP Secret Admin Portal (Cloud Sync ⚡)</h2>
-                        <span class="text-xs text-emerald-400 font-bold">● Secure Cloud Active</span>
+                        <span class="text-xs text-green-400 font-bold">● Secure Cloud Active</span>
                     </div>
                 </div>
                 <button onclick="closeModal('adminDashboardModal')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition cursor-pointer">
@@ -712,7 +755,7 @@
             </div>
 
             <div class="flex flex-wrap gap-2 mb-6">
-                <button onclick="switchAdminTab('orders')" id="adminTabBtn-orders" class="px-5 py-2.5 rounded-xl bg-violet-600 text-white font-bold text-xs transition cursor-pointer">📦 Orders Management</button>
+                <button onclick="switchAdminTab('orders')" id="adminTabBtn-orders" class="px-5 py-2.5 rounded-xl bg-pink-500 text-black font-bold text-xs transition cursor-pointer">📦 Orders Management</button>
                 <button onclick="switchAdminTab('deposits')" id="adminTabBtn-deposits" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">💳 Deposit Requests</button>
                 <button onclick="switchAdminTab('products')" id="adminTabBtn-products" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">⚙️ Cloud Packages &amp; Prices</button>
             </div>
@@ -765,7 +808,7 @@
                             <input type="url" id="newProdIcon" placeholder="https://files.catbox.moe/..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs" required>
                         </div>
                         <div class="sm:col-span-2">
-                            <button type="submit" class="w-full py-3 bg-violet-600 hover:bg-violet-500 text-white font-black text-xs rounded-xl shadow-lg transition cursor-pointer">
+                            <button type="submit" class="w-full py-3 bg-pink-500 hover:bg-pink-400 text-black font-black text-xs rounded-xl shadow-lg transition cursor-pointer">
                                 Save to Cloud Database 🚀
                             </button>
                         </div>
@@ -877,7 +920,7 @@
         let sensiShareCount = 0;
         let dataShareCount = 0;
         let currentUser = null;
-        let isRegisteringWall = false;
+        let isRegisteringEmail = false;
         let depositTimerInterval = null;
 
         const officialSiteUrl = "https://naijacpstore.github.io/naijacp/";
@@ -988,68 +1031,85 @@
             }
         }
 
-        function toggleAuthWallMode() {
-            isRegisteringWall = !isRegisteringWall;
-            document.getElementById('wallSubmitBtn').innerText = isRegisteringWall ? "Create Account & Enter 🚀" : "Login to Store 🚀";
-            document.getElementById('wallEmailGroup').classList.toggle('hidden', !isRegisteringWall);
-            document.getElementById('wallEmail').toggleAttribute('required', isRegisteringWall);
-            document.getElementById('wallUsernameLabel').innerText = isRegisteringWall ? "Username / Gamer Tag" : "Username or Email";
-            document.getElementById('wallUsername').placeholder = isRegisteringWall ? "e.g. ProGamer" : "Enter your username";
-            document.getElementById('wallToggleText').innerText = isRegisteringWall ? "Already have an account?" : "New gamer here?";
-            document.getElementById('wallToggleBtn').innerText = isRegisteringWall ? "Login Here" : "Create Free Account";
+        // --- GOOGLE & FACEBOOK LOGIN HANDLERS ---
+        function loginWithGoogle() {
+            if(!auth || !db) { alert("Firebase not initialized."); return; }
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then(async (result) => {
+                    const user = result.user;
+                    const userRef = db.collection("users").doc(user.uid);
+                    const doc = await userRef.get();
+                    if (!doc.exists) {
+                        await userRef.set({
+                            username: user.displayName ? user.displayName.replace(/\s+/g, '').toLowerCase() : user.email.split('@')[0],
+                            email: user.email,
+                            balance: 0,
+                            createdAt: Date.now()
+                        });
+                    }
+                    showToast("🎉 Successfully signed in with Google!");
+                })
+                .catch((error) => { alert("Google Login Error: " + error.message); });
         }
 
-        async function handleAuthWallSubmit(e) {
-            e.preventDefault();
-            const inputVal = document.getElementById('wallUsername').value.trim();
-            const password = document.getElementById('wallPassword').value.trim();
+        function loginWithFacebook() {
+            if(!auth || !db) { alert("Firebase not initialized."); return; }
+            const provider = new firebase.auth.FacebookAuthProvider();
+            auth.signInWithPopup(provider)
+                .then(async (result) => {
+                    const user = result.user;
+                    const userRef = db.collection("users").doc(user.uid);
+                    const doc = await userRef.get();
+                    if (!doc.exists) {
+                        await userRef.set({
+                            username: user.displayName ? user.displayName.replace(/\s+/g, '').toLowerCase() : user.email.split('@')[0],
+                            email: user.email || `${user.uid}@facebook.com`,
+                            balance: 0,
+                            createdAt: Date.now()
+                        });
+                    }
+                    showToast("🎉 Successfully signed in with Facebook!");
+                })
+                .catch((error) => { alert("Facebook Login Error: " + error.message); });
+        }
 
-            if(!auth || !db) {
-                alert("Firebase Auth or Firestore is not initialized.");
-                return;
-            }
+        function openEmailAuthModal() {
+            closeModal('authWallModal');
+            openModal('emailAuthModal');
+        }
+
+        function toggleEmailAuthMode() {
+            isRegisteringEmail = !isRegisteringEmail;
+            document.getElementById('emailAuthTitle').innerText = isRegisteringEmail ? "Create New Account" : "Sign In with Email";
+            document.getElementById('emailAuthSub').innerText = isRegisteringEmail ? "Fill in your details to create a free account." : "Enter your email and password to access your account.";
+            document.getElementById('emailAuthSubmitBtn').innerText = isRegisteringEmail ? "Create Account 🚀" : "Sign In 🚀";
+            document.getElementById('emailAuthToggleLink').innerText = isRegisteringEmail ? "Already have an account? Sign In" : "Need an account? Create one here";
+        }
+
+        async function handleEmailAuthSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('authEmailInput').value.trim();
+            const password = document.getElementById('authPasswordInput').value.trim();
+
+            if(!auth || !db) { alert("Firebase Auth not initialized."); return; }
 
             try {
-                if(isRegisteringWall) {
-                    const email = document.getElementById('wallEmail').value.trim();
-                    if(!inputVal || !email) {
-                        alert("Please enter both your username and Gmail address.");
-                        return;
-                    }
-
-                    const checkQuery = await db.collection("users").where("username", "==", inputVal).get();
-                    if(!checkQuery.empty) {
-                        const suggested = inputVal + "_" + Math.floor(100 + Math.random() * 900);
-                        document.getElementById('usernameSuggestion').innerText = `⚠️ Username taken! Try available: ${suggested}`;
-                        document.getElementById('usernameSuggestion').classList.remove('hidden');
-                        document.getElementById('wallUsername').value = suggested;
-                        return;
-                    }
-
+                if(isRegisteringEmail) {
                     const res = await auth.createUserWithEmailAndPassword(email, password);
-                    await res.user.updateProfile({ displayName: inputVal });
-                    
+                    const username = email.split('@')[0];
                     await db.collection("users").doc(res.user.uid).set({
-                        username: inputVal,
+                        username: username,
                         email: email,
                         balance: 0,
                         createdAt: Date.now()
                     });
-                    showToast("🎉 Account created with wallet successfully!");
+                    showToast("🎉 Account created successfully!");
                 } else {
-                    let loginEmail = inputVal;
-                    if(!inputVal.includes('@')) {
-                        const userQuery = await db.collection("users").where("username", "==", inputVal).get();
-                        if(userQuery.empty) {
-                            alert("Username not found. Please check your spelling or click 'Create Free Account'.");
-                            return;
-                        }
-                        loginEmail = userQuery.docs[0].data().email;
-                    }
-
-                    await auth.signInWithEmailAndPassword(loginEmail, password);
-                    showToast("Welcome back, boss! 🚀");
+                    await auth.signInWithEmailAndPassword(email, password);
+                    showToast("Welcome back! 🚀");
                 }
+                closeModal('emailAuthModal');
             } catch(err) {
                 alert("Authentication Error: " + err.message);
             }
@@ -1064,12 +1124,15 @@
         }
 
         function openUserDashboard() {
-            if(!currentUser) return;
+            if(!currentUser) {
+                openModal('authWallModal');
+                return;
+            }
             document.getElementById('dashUserEmail').innerText = currentUser.email;
             const historyList = document.getElementById('dashOrderHistoryList');
             historyList.innerHTML = '';
 
-            const userOrders = orders.filter(o => o.userEmail === currentUser.email || o.customer?.toLowerCase() === currentUser.displayName?.toLowerCase());
+            const userOrders = orders.filter(o => o.userEmail === currentUser.email);
             const userDeposits = deposits.filter(d => d.userEmail === currentUser.email);
             document.getElementById('dashTotalOrders').innerText = userOrders.length;
             document.getElementById('modalWalletBalance').innerText = userWalletBalance.toLocaleString();
@@ -1090,11 +1153,11 @@
                         historyList.innerHTML += `
                             <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center justify-between text-xs">
                                 <div>
-                                    <span class="text-violet-400 font-bold">🛒 Order #${item.id} - ${item.product}</span>
+                                    <span class="text-pink-400 font-bold">🛒 Order #${item.id} - ${item.product}</span>
                                     <div class="text-slate-300 mt-0.5">Game ID: <strong>${item.gameId}</strong> | ₦${item.amount?.toLocaleString()}</div>
                                     <div class="text-slate-500 text-[10px] mt-1">${item.date}</div>
                                 </div>
-                                <span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${item.status.includes('Completed') ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'}">
+                                <span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${item.status.includes('Completed') ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'}">
                                     ${item.status} ⚡
                                 </span>
                             </div>
@@ -1107,7 +1170,7 @@
                                     <div class="text-slate-300 mt-0.5">Ref: #${item.id}</div>
                                     <div class="text-slate-500 text-[10px] mt-1">${item.date}</div>
                                 </div>
-                                <span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${item.status === 'Approved' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'}">
+                                <span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${item.status === 'Approved' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'}">
                                     ${item.status} ⚡
                                 </span>
                             </div>
@@ -1120,7 +1183,7 @@
 
         function openAddFundsModal() {
             if(!currentUser) {
-                alert("Please log in to add funds to your wallet.");
+                openModal('authWallModal');
                 return;
             }
             openModal('addFundsModal');
@@ -1165,25 +1228,21 @@
 
             closeModal('addFundsModal');
             openModal('depositTimerModal');
-            startDepositCountdown(180); // 3 minutes
+            startDepositCountdown(180);
             showToast("💳 Deposit request submitted! Verification in progress.");
         }
 
         function startDepositCountdown(durationSeconds) {
             let timer = durationSeconds, minutes, seconds;
             const display = document.getElementById('depositCountdownDisplay');
-            
             if(depositTimerInterval) clearInterval(depositTimerInterval);
 
             depositTimerInterval = setInterval(() => {
                 minutes = parseInt(timer / 60, 10);
                 seconds = parseInt(timer % 60, 10);
-
                 minutes = minutes < 10 ? "0" + minutes : minutes;
                 seconds = seconds < 10 ? "0" + seconds : seconds;
-
                 display.textContent = minutes + ":" + seconds;
-
                 if (--timer < 0) {
                     clearInterval(depositTimerInterval);
                     display.textContent = "00:00";
@@ -1226,8 +1285,8 @@
         function showToast(message) {
             const container = document.getElementById('liveToastContainer');
             const toast = document.createElement('div');
-            toast.className = 'toast-enter p-3.5 rounded-2xl bg-slate-900 border border-violet-500/40 text-white text-xs shadow-2xl flex items-center gap-3';
-            toast.innerHTML = `<i class="fa-solid fa-bell text-violet-400 text-lg"></i> <span class="font-medium">${message}</span>`;
+            toast.className = 'toast-enter p-3.5 rounded-2xl bg-slate-900 border border-pink-500/40 text-white text-xs shadow-2xl flex items-center gap-3';
+            toast.innerHTML = `<i class="fa-solid fa-bell text-pink-400 text-lg"></i> <span class="font-medium">${message}</span>`;
             container.appendChild(toast);
             setTimeout(() => {
                 toast.classList.replace('toast-enter', 'toast-exit');
@@ -1276,7 +1335,7 @@
                     const randomPhone = prefixes[Math.floor(Math.random() * prefixes.length)] + "***" + Math.floor(1000 + Math.random() * 9000);
                     const randomProduct = products[Math.floor(Math.random() * products.length)];
                     
-                    showToast(`<span class="text-violet-400 font-bold">${randomName} (${randomPhone})</span> just purchased <br><span class="font-bold">${randomProduct.title}</span>`);
+                    showToast(`<span class="text-pink-400 font-bold">${randomName} (${randomPhone})</span> just purchased <br><span class="font-bold">${randomProduct.title}</span>`);
                 }
             }, 8000);
         }
@@ -1289,15 +1348,11 @@
 
             document.querySelectorAll('.btn-cat').forEach(b => b.classList.remove('active-btn'));
             document.getElementById(`catBtn-${cat}`).classList.add('active-btn');
-            
-            document.querySelectorAll('header nav a').forEach(a => a.classList.replace('text-white', 'text-slate-400'));
-            document.querySelectorAll('header nav a').forEach(a => a.classList.remove('text-violet-400'));
-            document.getElementById(`nav-${cat}`)?.classList.add('text-violet-400');
 
             const subFilterBox = document.getElementById('gameSubFilters');
             if (cat === 'games') {
                 subFilterBox.classList.remove('hidden');
-                document.getElementById('sectionHeading').innerHTML = "🎮 Game Top-Up Packages";
+                document.getElementById('sectionHeading').innerHTML = "🔥 Featured Games & Top-Ups";
             } else if (cat === 'gadgets') {
                 subFilterBox.classList.add('hidden');
                 document.getElementById('sectionHeading').innerHTML = "🎧 Gaming Gear & Accessories";
@@ -1341,16 +1396,16 @@
 
             filtered.forEach(p => {
                 grid.innerHTML += `
-                    <div class="glass-card p-4 rounded-3xl flex flex-col justify-between text-center group cursor-pointer border border-slate-800 hover:border-violet-500 transition duration-300">
+                    <div class="glass-card p-4 rounded-3xl flex flex-col justify-between text-center group cursor-pointer border border-slate-800 hover:border-pink-500 transition duration-300">
                         <div class="relative">
-                            <span class="absolute -top-2 -right-2 text-[9px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-bold border border-emerald-500/30">⚡ Instant</span>
+                            <span class="absolute -top-2 -right-2 text-[9px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full font-bold border border-green-500/30">⚡ Instant</span>
                             <div class="w-16 h-16 mx-auto bg-slate-900/80 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-slate-800 group-hover:scale-110 transition duration-300 overflow-hidden shadow-inner">
                                 <img src="${p.icon}" class="w-full h-full object-cover rounded-2xl" onerror="this.src='https://files.catbox.moe/w4tgaw.jpeg'">
                             </div>
                         </div>
                         <h3 class="font-bold text-sm text-white mb-2 leading-tight">${p.title}</h3>
-                        <div class="text-violet-400 font-black text-lg mb-4">₦${Number(p.price).toLocaleString()}</div>
-                        <button class="w-full py-2.5 rounded-xl bg-violet-500/10 text-violet-300 font-extrabold text-xs border border-violet-500/30 group-hover:bg-gradient-to-r group-hover:from-violet-600 group-hover:to-cyan-600 group-hover:text-white transition cursor-pointer" onclick="openCheckout('${p.id}')">
+                        <div class="text-pink-400 font-black text-lg mb-4">₦${Number(p.price).toLocaleString()}</div>
+                        <button class="w-full py-2.5 rounded-xl bg-pink-500/10 text-pink-300 font-extrabold text-xs border border-pink-500/30 group-hover:bg-pink-500 group-hover:text-black transition cursor-pointer" onclick="openCheckout('${p.id}')">
                             Buy Now
                         </button>
                     </div>
@@ -1370,16 +1425,16 @@
 
             const found = orders.find(o => (o.phone && o.phone.includes(query)) || (o.id && o.id.toString().includes(query)));
             if(!found) {
-                box.innerHTML = `<span class="text-amber-400 font-bold">No active order found matching "${query}". Please check your details or chat with our 24/7 AI Support.</span>`;
+                box.innerHTML = `<span class="text-yellow-400 font-bold">No active order found matching "${query}". Please check your details or chat with our 24/7 AI Support.</span>`;
                 return;
             }
 
             box.innerHTML = `
                 <div class="space-y-1">
                     <div class="flex justify-between"><span class="text-slate-400">Order ID:</span> <span class="font-bold text-white">#${found.id}</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Item:</span> <span class="font-bold text-violet-400">${found.product}</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Item:</span> <span class="font-bold text-pink-400">${found.product}</span></div>
                     <div class="flex justify-between"><span class="text-slate-400">Customer:</span> <span class="font-bold text-white">${found.customer}</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Status:</span> <span class="font-bold text-emerald-400">${found.status} ⚡</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Status:</span> <span class="font-bold text-green-400">${found.status} ⚡</span></div>
                     <div class="flex justify-between"><span class="text-slate-400">Date:</span> <span class="text-slate-300">${found.date}</span></div>
                 </div>
             `;
@@ -1546,7 +1601,6 @@
             const gameId = document.getElementById('custGameId').value.trim() || "N/A";
             const phoneNum = document.getElementById('custPhone').value.trim() || "N/A";
 
-            // Deduct wallet balance
             userWalletBalance -= currentSelectedItem.price;
             if(db && currentUser) {
                 db.collection("users").doc(currentUser.uid).update({ balance: userWalletBalance });
@@ -1608,7 +1662,7 @@
             
             chatMessages.innerHTML += `
                 <div class="flex justify-end">
-                    <div class="bg-gradient-to-r from-violet-600 to-cyan-600 text-white p-3 rounded-2xl max-w-[85%] font-medium">
+                    <div class="bg-pink-600 text-white p-3 rounded-2xl max-w-[85%] font-medium">
                         ${escapeHtml(message)}
                     </div>
                 </div>
@@ -1633,19 +1687,25 @@
             const q = query.toLowerCase();
 
             if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('how far') || q.includes('sup') || q.includes('gm')) {
-                return `👋 Omo, welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI plug. Whether you wan buy CODM CP, eFootball coins, Free Fire diamonds, or use our wallet balance, talk to me! Wetin you wan run today?`;
+                return `👋 Welcome to Codashop x NaijaCP! 🇳🇬 I am your sharp 24/7 AI assistant. Whether you want to login with Google or Facebook, fund your wallet, buy CODM CP or eFootball coins, talk to me! Wetin you wan run today?`;
             }
             if (q.includes('wallet') || q.includes('balance') || q.includes('funds') || q.includes('add money')) {
-                return `💳 **Wallet System:** You can fund your wallet by clicking "+ Add Funds", transferring to our official bank account, and uploading your receipt! Our admin will approve and credit your balance within 3 minutes.`;
+                return `💳 **Wallet System:** You can fund your wallet by clicking "+ Add Funds", transferring to Moremonee Bank (8099646374 - oluwabukunmi makanjuola) or Smartcash Bank (8080504236 - AKEEM SOLARIN), and uploading your receipt! Verified within 3 minutes.`;
             }
             if (q.includes('bank') || q.includes('account') || q.includes('transfer')) {
                 return `🏦 **Official NaijaCP Bank Accounts:**<br><br>1️⃣ **Moremonee Bank:** <code>8099646374</code> (oluwabukunmi makanjuola)<br><br>2️⃣ **Smartcash PSB:** <code>8080504236</code> (AKEEM SOLARIN)`;
+            }
+            if (q.includes('google') || q.includes('facebook') || q.includes('login') || q.includes('sign in')) {
+                return `🔐 **Social Login:** You can log in instantly using our Codashop-style authentication popup with Google or Facebook, or create an account with your email!`;
+            }
+            if (q.includes('paystack')) {
+                return `💳 **Paystack Gateway:** Automated Paystack card and bank transfer payments are currently coming soon! For now, please use your Wallet Balance or Direct Bank Transfer to add funds.`;
             }
             if (q.includes('codm') || q.includes('cp')) {
                 return `🎮 **CODM Top-Up:** We have 80 CP, 420 CP, 880 CP and more available instantly. Pay with your wallet balance!`;
             }
 
-            return `🤖 Boss, I dey for you! You fit ask me about your wallet balance, game packages, bank transfer details, or free 2GB data. How I fit help you now?`;
+            return `🤖 Boss, I dey for you! You fit ask me about your wallet balance, Google/Facebook login, game packages, bank transfer details, or Paystack gateway. How I fit help you now?`;
         }
 
         function escapeHtml(text) {
@@ -1680,7 +1740,7 @@
             document.getElementById('adminTabBtn-products').className = 'px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer';
 
             document.getElementById(`adminTab-${tab}`).classList.remove('hidden');
-            document.getElementById(`adminTabBtn-${tab}`).className = 'px-5 py-2.5 rounded-xl bg-violet-600 text-white font-bold text-xs transition cursor-pointer';
+            document.getElementById(`adminTabBtn-${tab}`).className = 'px-5 py-2.5 rounded-xl bg-pink-500 text-black font-bold text-xs transition cursor-pointer';
         }
 
         function renderAdminOrders() {
@@ -1694,12 +1754,12 @@
                 list.innerHTML += `
                     <div class="glass-modal p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs">
                         <div class="space-y-1">
-                            <span class="text-violet-400 font-bold">#${o.id} - ${o.product} (₦${o.amount.toLocaleString()})</span>
+                            <span class="text-pink-400 font-bold">#${o.id} - ${o.product} (₦${o.amount.toLocaleString()})</span>
                             <div class="text-slate-300">Customer: <strong>${o.customer}</strong> | ID: <strong>${o.gameId}</strong> | Phone: <strong>${o.phone}</strong></div>
                             <div class="text-slate-500 text-[11px]">${o.date}</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button onclick="viewAdminReceipt('${o.receipt}')" class="px-3.5 py-2 bg-violet-500/20 hover:bg-violet-500 hover:text-white text-violet-300 rounded-xl font-bold transition cursor-pointer">View Receipt 🧾</button>
+                            <button onclick="viewAdminReceipt('${o.receipt}')" class="px-3.5 py-2 bg-pink-500/20 hover:bg-pink-500 hover:text-black text-pink-400 rounded-xl font-bold transition cursor-pointer">View Receipt 🧾</button>
                             <select onchange="updateOrderStatus('${o.id}', this.value)" class="bg-slate-950 border border-slate-800 text-white px-3 py-1.5 rounded-lg font-bold">
                                 <option value="Pending Review" ${o.status==='Pending Review'?'selected':''}>Pending Review</option>
                                 <option value="Completed" ${o.status.includes('Completed')?'selected':''}>Completed ⚡</option>
@@ -1726,7 +1786,7 @@
                             <div class="text-slate-500 text-[11px]">${d.date}</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button onclick="viewAdminReceipt('${d.receipt}')" class="px-3.5 py-2 bg-violet-500/20 hover:bg-violet-500 hover:text-white text-violet-300 rounded-xl font-bold transition cursor-pointer">View Receipt 🧾</button>
+                            <button onclick="viewAdminReceipt('${d.receipt}')" class="px-3.5 py-2 bg-pink-500/20 hover:bg-pink-500 hover:text-black text-pink-400 rounded-xl font-bold transition cursor-pointer">View Receipt 🧾</button>
                             ${d.status === 'Approved' ? '<span class="text-emerald-400 font-bold">Approved ✅</span>' : `<button onclick="approveDeposit('${d.id}', '${d.userId}', ${d.amount})" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold rounded-xl transition cursor-pointer">Approve & Credit Balance ⚡</button>`}
                         </div>
                     </div>
@@ -1787,11 +1847,11 @@
                             <img src="${p.icon}" class="w-8 h-8 rounded-lg object-cover">
                             <div>
                                 <span class="font-bold text-white">${p.title}</span>
-                                <span class="text-violet-400 font-bold ml-2">₦${p.price.toLocaleString()}</span>
+                                <span class="text-pink-400 font-bold ml-2">₦${p.price.toLocaleString()}</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <button onclick="editProductPriceCloud('${p.id}')" class="px-2.5 py-1 bg-violet-500/20 text-violet-300 hover:bg-violet-500 hover:text-white rounded-lg font-bold transition cursor-pointer">Edit Price</button>
+                            <button onclick="editProductPriceCloud('${p.id}')" class="px-2.5 py-1 bg-pink-500/20 text-pink-300 hover:bg-pink-500 hover:text-black rounded-lg font-bold transition cursor-pointer">Edit Price</button>
                             <button onclick="deleteProductCloud('${p.id}')" class="px-2.5 py-1 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white rounded-lg font-bold transition cursor-pointer">Delete</button>
                         </div>
                     </div>
