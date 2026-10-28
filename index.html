@@ -7,6 +7,11 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
+    <!-- Firebase SDKs (Compat version for easy single-file integration) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -113,6 +118,12 @@
                 <a onclick="switchMainCategory('gadgets')" id="nav-gadgets" class="text-sm font-bold text-slate-300 cursor-pointer transition hover:text-pink-400">Gadgets</a>
                 <a onclick="switchMainCategory('giftcards')" id="nav-giftcards" class="text-sm font-bold text-slate-300 cursor-pointer transition hover:text-pink-400">Gift Cards</a>
             </nav>
+
+            <div class="flex items-center gap-3">
+                <button id="authNavBtn" onclick="openAuthModal()" class="px-4 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500 hover:text-black font-bold text-xs transition cursor-pointer flex items-center gap-2">
+                    <i class="fa-solid fa-user-circle"></i> <span id="authBtnText">Login / Account</span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -174,11 +185,11 @@
                 </h2>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6" id="productsGrid">
-                <!-- Populated dynamically via JS -->
+                <!-- Populated dynamically via Firebase Real-Time Sync -->
             </div>
         </section>
 
-        <!-- ORDER STATUS CHECKER TOOL -->
+        <!-- ORDER STATUS & HISTORY CHECKER TOOL -->
         <section class="py-10 mb-16 border-t border-b border-pink-500/20">
             <div class="max-w-xl mx-auto glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/30 text-center">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-bold mb-3">
@@ -443,6 +454,42 @@
         </div>
     </div>
 
+    <!-- CUSTOMER AUTH (LOGIN / REGISTER) MODAL -->
+    <div id="authModal" class="fixed inset-0 z-[140] hidden items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+        <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-2xl">
+            <button onclick="closeModal('authModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <h3 class="text-xl font-black text-white mb-1" id="authModalTitle">Customer Account</h3>
+            <p class="text-slate-400 text-xs mb-6" id="authModalDesc">Log in to view your order history and saved details.</p>
+
+            <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                <div id="registerNameField" class="hidden">
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Full Name</label>
+                    <input type="text" id="authName" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. John Doe">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Email Address</label>
+                    <input type="email" id="authEmail" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. gamer@gmail.com" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Password</label>
+                    <input type="password" id="authPassword" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" id="authSubmitBtn" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer">
+                    Login 🚀
+                </button>
+            </form>
+
+            <div class="mt-6 text-center text-xs">
+                <span id="authToggleText" class="text-slate-400">Don't have an account?</span> 
+                <button onclick="toggleAuthMode()" class="text-pink-400 font-bold ml-1 cursor-pointer hover:underline" id="authToggleBtn">Register Now</button>
+            </div>
+        </div>
+    </div>
+
     <!-- MULTI-STEP CHECKOUT & PAYMENT MODAL -->
     <div id="checkoutModal" class="fixed inset-0 z-[60] items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden">
         <div class="glass-modal w-full max-w-lg rounded-3xl p-6 sm:p-8 relative shadow-2xl max-h-[95vh] overflow-y-auto">
@@ -605,8 +652,8 @@
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-pink-500/20 border border-pink-500 text-pink-400 flex items-center justify-center font-black">N</div>
                     <div>
-                        <h2 class="text-xl font-black text-white">Naija cp Admin Dashboard 🚀</h2>
-                        <span class="text-xs text-green-400 font-bold">● Active Session</span>
+                        <h2 class="text-xl font-black text-white">Naija cp Admin Dashboard (Cloud Sync ⚡)</h2>
+                        <span class="text-xs text-green-400 font-bold">● Live Cloud Active</span>
                     </div>
                 </div>
                 <button onclick="closeModal('adminDashboardModal')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition cursor-pointer">
@@ -617,23 +664,22 @@
             <!-- Admin Tabs -->
             <div class="flex flex-wrap gap-2 mb-6">
                 <button onclick="switchAdminTab('orders')" id="adminTabBtn-orders" class="px-5 py-2.5 rounded-xl bg-pink-500 text-black font-bold text-xs transition cursor-pointer">📦 Orders Management</button>
-                <button onclick="switchAdminTab('products')" id="adminTabBtn-products" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">⚙️ Manage &amp; Add Packages</button>
-                <button onclick="switchAdminTab('export')" id="adminTabBtn-export" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">💻 Copy Code for GitHub Redeployment</button>
+                <button onclick="switchAdminTab('products')" id="adminTabBtn-products" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">⚙️ Cloud Packages &amp; Prices</button>
             </div>
 
             <!-- Tab 1: Orders -->
             <div id="adminTab-orders" class="space-y-4">
                 <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-3">Incoming Customer Orders</h3>
                 <div id="adminOrdersList" class="space-y-3">
-                    <!-- Populated dynamically -->
+                    <!-- Populated dynamically from Firestore -->
                 </div>
             </div>
 
-            <!-- Tab 2: Products -->
+            <!-- Tab 2: Products (Cloud Firestore Sync) -->
             <div id="adminTab-products" class="hidden space-y-6">
                 <div class="glass-modal p-6 rounded-3xl border border-slate-800">
-                    <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">➕ Add New Package / Item</h3>
-                    <form onsubmit="addNewProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">➕ Add New Package (Syncs Instantly to All Visitors)</h3>
+                    <form onsubmit="addNewProductCloud(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-300 mb-1">Package Title</label>
                             <input type="text" id="newProdTitle" placeholder="e.g. CODM: 1500 CP" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs" required>
@@ -669,33 +715,17 @@
                         </div>
                         <div class="sm:col-span-2">
                             <button type="submit" class="w-full py-3 bg-pink-500 hover:bg-pink-400 text-black font-black text-xs rounded-xl shadow-lg transition cursor-pointer">
-                                Add Product to Catalog 🚀
+                                Save to Cloud Database 🚀
                             </button>
                         </div>
                     </form>
                 </div>
 
                 <div class="glass-modal p-6 rounded-3xl border border-slate-800">
-                    <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">📋 Existing Catalog Items (Edit / Delete)</h3>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">📋 Live Cloud Catalog Items (Edit / Delete)</h3>
                     <div id="adminProductsList" class="space-y-2 max-h-96 overflow-y-auto">
                         <!-- Populated dynamically -->
                     </div>
-                </div>
-            </div>
-
-            <!-- Tab 3: Code Export for GitHub -->
-            <div id="adminTab-export" class="hidden space-y-4">
-                <div class="glass-modal p-6 rounded-3xl border border-slate-800">
-                    <div class="flex items-center justify-between mb-4">
-                        <div>
-                            <h3 class="text-sm font-bold text-white uppercase tracking-wider">💻 Redeploy Code Generator</h3>
-                            <p class="text-slate-400 text-xs mt-1">Whenever you add items or change prices, copy this updated code and paste it into your `index.html` file on GitHub.</p>
-                        </div>
-                        <button onclick="copyGeneratedCode()" class="px-5 py-3 bg-pink-500 hover:bg-pink-400 text-black font-black text-xs rounded-xl shadow-lg transition flex items-center gap-2 cursor-pointer">
-                            <i class="fa-solid fa-copy"></i> Copy Full Source Code
-                        </button>
-                    </div>
-                    <textarea id="codeExportArea" readonly class="w-full h-80 bg-slate-950 border border-slate-800 rounded-2xl p-4 text-green-400 font-mono text-[11px] focus:outline-none"></textarea>
                 </div>
             </div>
         </div>
@@ -715,8 +745,31 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- JAVASCRIPT & FIREBASE CLOUD SYNC LOGIC -->
     <script>
+        // ==========================================
+        // FIREBASE CLOUD CONFIGURATION (REPLACE WITH YOUR FREE FIREBASE KEYS)
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDummyKeyForNaijaCP_ReplaceWithYours",
+            authDomain: "naijacp-store.firebaseapp.com",
+            projectId: "naijacp-store",
+            storageBucket: "naijacp-store.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123:web:abc"
+        };
+
+        // Initialize Firebase (with local fallback if not yet configured)
+        let db = null;
+        let auth = null;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            auth = firebase.auth();
+        } catch(e) {
+            console.log("Firebase init notice (running local mode until config is updated):", e);
+        }
+
         let defaultProducts = [
             { id: 1, title: "CODM: 80 CP", price: 1200, category: "games", subTag: "codm", icon: "https://files.catbox.moe/w4tgaw.jpeg" },
             { id: 2, title: "CODM: 420 CP", price: 5500, category: "games", subTag: "codm", icon: "https://files.catbox.moe/w4tgaw.jpeg" },
@@ -775,20 +828,71 @@
         let uploadedReceiptBase64 = '';
         let sensiShareCount = 0;
         let dataShareCount = 0;
+        let currentUser = null;
+        let isRegistering = false;
 
         const officialSiteUrl = "https://naijacpstore.github.io/naijacp/";
 
         document.addEventListener("DOMContentLoaded", () => {
+            initCloudSync();
             renderCatalog();
             startLiveUsers();
             startFakePurchases();
             
+            if(auth) {
+                auth.onAuthStateChanged(user => {
+                    currentUser = user;
+                    const btnText = document.getElementById('authBtnText');
+                    if(user) {
+                        btnText.innerText = user.email.split('@')[0];
+                        showToast("🎉 Welcome back, " + user.email.split('@')[0] + "!");
+                    } else {
+                        btnText.innerText = "Login / Account";
+                    }
+                });
+            }
+
             document.addEventListener('click', (e) => {
                 if (e.target.closest('button') || e.target.closest('a') || e.target.closest('select')) {
                     playClickSound();
                 }
             });
         });
+
+        // --- REAL-TIME CLOUD SYNC WITH FIRESTORE ---
+        function initCloudSync() {
+            if(!db) return;
+            
+            // Real-time products sync
+            db.collection("products").onSnapshot(snapshot => {
+                if(!snapshot.empty) {
+                    products = [];
+                    snapshot.forEach(doc => {
+                        products.push({ firestoreId: doc.id, ...doc.data() });
+                    });
+                    renderCatalog();
+                    if(document.getElementById('adminDashboardModal').classList.contains('flex')) {
+                        renderAdminProducts();
+                    }
+                } else {
+                    // Seed default products if empty
+                    defaultProducts.forEach(p => {
+                        db.collection("products").doc(p.id.toString()).set(p);
+                    });
+                }
+            });
+
+            // Real-time orders sync
+            db.collection("orders").orderBy("timestamp", "desc").onSnapshot(snapshot => {
+                orders = [];
+                snapshot.forEach(doc => {
+                    orders.push({ firestoreId: doc.id, ...doc.data() });
+                });
+                if(document.getElementById('adminDashboardModal').classList.contains('flex')) {
+                    renderAdminOrders();
+                }
+            });
+        }
 
         function playClickSound() {
             try {
@@ -947,6 +1051,55 @@
             });
         }
 
+        // --- CUSTOMER AUTH FUNCTIONS ---
+        function openAuthModal() {
+            if(currentUser) {
+                if(confirm("You are logged in as " + currentUser.email + ". Do you want to log out?")) {
+                    auth.signOut();
+                    showToast("Logged out successfully.");
+                }
+                return;
+            }
+            openModal('authModal');
+        }
+
+        function toggleAuthMode() {
+            isRegistering = !isRegistering;
+            document.getElementById('authModalTitle').innerText = isRegistering ? "Create Customer Account" : "Customer Login";
+            document.getElementById('authModalDesc').innerText = isRegistering ? "Sign up to track all your game top-up orders." : "Log in to view your order history and saved details.";
+            document.getElementById('authSubmitBtn').innerText = isRegistering ? "Register 🚀" : "Login 🚀";
+            document.getElementById('registerNameField').classList.toggle('hidden', !isRegistering);
+            document.getElementById('authToggleText').innerText = isRegistering ? "Already have an account?" : "Don't have an account?";
+            document.getElementById('authToggleBtn').innerText = isRegistering ? "Login Here" : "Register Now";
+        }
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('authEmail').value.trim();
+            const password = document.getElementById('authPassword').value.trim();
+
+            if(!auth) {
+                alert("Firebase Auth is not fully configured yet. Please update firebaseConfig keys.");
+                return;
+            }
+
+            if(isRegistering) {
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then(res => {
+                        showToast("Account created successfully!");
+                        closeModal('authModal');
+                    })
+                    .catch(err => alert(err.message));
+            } else {
+                auth.signInWithEmailAndPassword(email, password)
+                    .then(res => {
+                        showToast("Logged in successfully!");
+                        closeModal('authModal');
+                    })
+                    .catch(err => alert(err.message));
+            }
+        }
+
         function checkOrderStatus() {
             const query = document.getElementById('trackQuery').value.trim();
             const box = document.getElementById('trackResultBox');
@@ -957,7 +1110,7 @@
                 return;
             }
 
-            const found = orders.find(o => o.phone.includes(query) || o.id.toString().includes(query));
+            const found = orders.find(o => (o.phone && o.phone.includes(query)) || (o.id && o.id.toString().includes(query)));
             if(!found) {
                 box.innerHTML = `<span class="text-yellow-400 font-bold">No active order found matching "${query}". Please check your details or contact our AI support.</span>`;
                 return;
@@ -1054,7 +1207,7 @@
             showToast("🎯 Pro Headshot Settings generated successfully for " + document.getElementById('phoneModel').value + "!");
         }
 
-        // --- UNIVERSAL CHECKOUT FOR ALL PACKAGES ---
+        // --- UNIVERSAL CHECKOUT ---
         function openCheckout(productId) {
             currentSelectedItem = products.find(p => p.id == productId) || products[0];
             if (!currentSelectedItem) return;
@@ -1090,7 +1243,7 @@
             }
         }
 
-        // --- PAYSTACK AUTOMATED PAYMENT INTEGRATION ---
+        // --- PAYSTACK AUTOMATED PAYMENT ---
         function payWithPaystack() {
             const customerName = document.getElementById('custName').value.trim();
             const customerPhone = document.getElementById('custPhone').value.trim();
@@ -1108,9 +1261,9 @@
             }
 
             let handler = PaystackPop.setup({
-                key: 'Pk_test_f83b816145536743620d0647241f78d9d4650ae4', // Your correct Test Public Key
+                key: 'Pk_test_f83b816145536743620d0647241f78d9d4650ae4',
                 email: customerPhone + '@naijacp.ng',
-                amount: currentSelectedItem.price * 100, // Converted to kobo
+                amount: currentSelectedItem.price * 100,
                 currency: 'NGN',
                 ref: 'NCP_' + Math.floor((Math.random() * 1000000000) + 1),
                 metadata: {
@@ -1133,17 +1286,17 @@
                         product: currentSelectedItem.title,
                         amount: currentSelectedItem.price,
                         receipt: 'Paystack Automated (Ref: ' + response.reference + ')',
-                        status: 'Completed (Paid via Paystack ⚡)'
+                        status: 'Completed (Paid via Paystack ⚡)',
+                        timestamp: Date.now()
                     };
 
-                    orders.unshift(newOrder);
-                    localStorage.setItem('naijacp_orders', JSON.stringify(orders));
+                    saveOrderToCloud(newOrder);
 
                     closeModal('checkoutModal');
                     openModal('processingModal');
                     
                     document.getElementById('processingTitle').innerText = "Payment Successful & Verified! ⚡";
-                    document.getElementById('processingDesc').innerText = "Paystack successfully confirmed your payment of ₦" + currentSelectedItem.price.toLocaleString() + ". Your order has been logged and sent to our agents!";
+                    document.getElementById('processingDesc').innerText = "Paystack successfully confirmed your payment of ₦" + currentSelectedItem.price.toLocaleString() + ". Your order has been logged!";
                     document.getElementById('processingSpinner').classList.add('hidden');
                     document.getElementById('processingSuccessIcon').classList.remove('hidden');
                     document.getElementById('processingSuccessIcon').classList.add('flex');
@@ -1159,7 +1312,7 @@
             handler.openIframe();
         }
 
-        // --- TELEGRAM BOT NOTIFICATIONS ---
+        // --- TELEGRAM NOTIFICATIONS ---
         function sendOrderToTelegram(order) {
             const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
             const chatId = "8682089527";
@@ -1180,6 +1333,15 @@
                 img.src = telegramUrl;
             } catch (err) {
                 console.log("Telegram alert notice:", err);
+            }
+        }
+
+        function saveOrderToCloud(order) {
+            if(db) {
+                db.collection("orders").doc(order.id).set(order);
+            } else {
+                orders.unshift(order);
+                localStorage.setItem('naijacp_orders', JSON.stringify(orders));
             }
         }
 
@@ -1204,11 +1366,11 @@
                 product: currentSelectedItem.title,
                 amount: currentSelectedItem.price,
                 receipt: uploadedReceiptBase64 || 'https://files.catbox.moe/w4tgaw.jpeg',
-                status: 'Pending Review'
+                status: 'Pending Review',
+                timestamp: Date.now()
             };
 
-            orders.unshift(newOrder);
-            localStorage.setItem('naijacp_orders', JSON.stringify(orders));
+            saveOrderToCloud(newOrder);
             
             closeModal('checkoutModal');
             openModal('processingModal');
@@ -1236,7 +1398,7 @@
             }, 1800);
         }
 
-        // --- UPGRADED 24/7 AI AGENT (SMARTER & WISER) ---
+        // --- 24/7 AI AGENT ---
         function openAiChatModal() {
             openModal('aiChatModal');
         }
@@ -1279,44 +1441,26 @@
                 return `👋 Omo, welcome to NaijaCP! 🇳🇬 I am your 24/7 AI plug. Whether you wan buy CODM CP, eFootball coins, Free Fire diamonds, TikTok coins, or use Paystack automated checkout, talk to me! Wetin you wan run today?`;
             }
             if (q.includes('paystack') || q.includes('card') || q.includes('automated') || q.includes('online payment')) {
-                return `💳 **Paystack Automated Payment:** You can pay instantly with your ATM card or automated bank transfer by clicking the green **"Pay Instantly with Paystack"** button during checkout! It credits and confirms your order sharp-sharp without needing receipts.`;
+                return `💳 **Paystack Automated Payment:** You can pay instantly with your ATM card or automated bank transfer by clicking the green **"Pay Instantly with Paystack"** button during checkout!`;
             }
             if (q.includes('scam') || q.includes('legit') || q.includes('trust') || q.includes('fake') || q.includes('safe')) {
-                return `🛡️ Zero cap, we are 100% legit and trusted across Nigeria! Over 6,800+ active gamers use NaijaCP daily. Check our verified customer reviews right on the homepage—we don't play with our reputation!`;
+                return `🛡️ Zero cap, we are 100% legit and trusted across Nigeria! Over 6,800+ active gamers use NaijaCP daily.`;
             }
             if (q.includes('bank') || q.includes('account') || q.includes('transfer') || q.includes('manual') || q.includes('moremonee') || q.includes('smartcash')) {
-                return `🏦 **Official NaijaCP Manual Bank Accounts:**<br><br>1️⃣ **Moremonee Bank:** <code>8099646374</code> (Oluwabukunmi Makanjuola)<br><br>2️⃣ **Smartcash PSB:** <code>8080504236</code> (Akeem Solarin)<br><br><em>(Tip: You can also use our instant **Paystack** button for automatic payment confirmation!)</em>`;
+                return `🏦 **Official NaijaCP Manual Bank Accounts:**<br><br>1️⃣ **Moremonee Bank:** <code>8099646374</code> (Oluwabukunmi Makanjuola)<br><br>2️⃣ **Smartcash PSB:** <code>8080504236</code> (Akeem Solarin)`;
             }
-            if (q.includes('delivery') || q.includes('how long') || q.includes('credit') || q.includes('when')) {
-                return `⚡ **Super Fast Delivery:** If you pay via **Paystack**, your order is verified instantly! If you use manual bank transfer and upload your receipt, our agents review and credit you within 1 to 5 minutes max!`;
-            }
-            if (q.includes('codm') || q.includes('call of duty') || q.includes('cp')) {
-                return `🎮 **CODM Top-Ups available:** From 80 CP (₦1,200) up to 880 CP and more! Just click "Buy Now" on the CODM package, enter your Player UID, and pay securely via Paystack or transfer.`;
-            }
-            if (q.includes('free fire') || q.includes('ff') || q.includes('diamond')) {
-                return `🔥 **Free Fire Diamond & Subscriptions:** We got 100 diamonds, weekly subs, monthly subs, and bulk packs! Also check our free Headshot Sensi tool on the page to upgrade your aim!`;
-            }
-            if (q.includes('efootball') || q.includes('coin') || q.includes('pes')) {
-                return `⚽ **eFootball Coins:** Grab 130, 320, or 1040 coins for your dream team tournament. Instant delivery guaranteed!`;
-            }
-            if (q.includes('data') || q.includes('free data') || q.includes('2gb')) {
-                return `📶 You want free data? Scroll down to our **Free 2GB Data Pack** tool, select your network, enter your number, and share to WhatsApp groups to claim!`;
-            }
-            if (q.includes('sensi') || q.includes('headshot') || q.includes('sensitivity')) {
-                return `🎯 Scroll down to our **Free Fire Sensi Generator**, put your phone model and RAM size, and get custom pro headshot settings instantly!`;
-            }
-            if (q.includes('track') || q.includes('order') || q.includes('status')) {
-                return `🔍 You can track your transaction anytime! Just scroll to the **Check Order Status** section on the site, type your WhatsApp number or Order ID, and check your live status.`;
+            if (q.includes('delivery') || q.includes('how long') || q.includes('credit')) {
+                return `⚡ **Super Fast Delivery:** Paystack orders are verified instantly! Manual transfers with receipt uploads are credited within 1 to 5 minutes max!`;
             }
 
-            return `🤖 Boss, I dey for you! You fit ask me about any game package (CODM, Free Fire, eFootball, DLS, Blood Strike, TikTok, OneState), Paystack card payments, our official bank accounts, or tracking your order. How I fit help you now?`;
+            return `🤖 Boss, I dey for you! You fit ask me about any game package, Paystack card payments, our official bank accounts, or tracking your order. How I fit help you now?`;
         }
 
         function escapeHtml(text) {
             return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
-        // --- ADMIN AUTH & DASHBOARD FUNCTIONS ---
+        // --- ADMIN AUTH & CLOUD DASHBOARD ---
         function openAdminLoginModal() {
             openModal('adminLoginModal');
         }
@@ -1331,8 +1475,7 @@
                 openModal('adminDashboardModal');
                 renderAdminOrders();
                 renderAdminProducts();
-                generateCodeForExport();
-                showToast("Welcome back! Admin access granted to Naija cp 🚀");
+                showToast("Welcome back! Cloud Admin access granted 🚀");
             } else {
                 alert("Invalid username or password! (Hint: Merlin / merlin1)");
             }
@@ -1341,11 +1484,9 @@
         function switchAdminTab(tab) {
             document.getElementById('adminTab-orders').classList.add('hidden');
             document.getElementById('adminTab-products').classList.add('hidden');
-            document.getElementById('adminTab-export').classList.add('hidden');
 
             document.getElementById('adminTabBtn-orders').className = 'px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer';
             document.getElementById('adminTabBtn-products').className = 'px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer';
-            document.getElementById('adminTabBtn-export').className = 'px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer';
 
             document.getElementById(`adminTab-${tab}`).classList.remove('hidden');
             document.getElementById(`adminTabBtn-${tab}`).className = 'px-5 py-2.5 rounded-xl bg-pink-500 text-black font-bold text-xs transition cursor-pointer';
@@ -1392,6 +1533,9 @@
             const ord = orders.find(o => o.id === id);
             if(ord) {
                 ord.status = status;
+                if(db && ord.firestoreId) {
+                    db.collection("orders").doc(ord.firestoreId).update({ status: status });
+                }
                 localStorage.setItem('naijacp_orders', JSON.stringify(orders));
                 showToast(`Order #${id} status updated to ${status}`);
             }
@@ -1411,15 +1555,15 @@
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <button onclick="editProductPrice(${p.id})" class="px-2.5 py-1 bg-pink-500/20 text-pink-400 hover:bg-pink-500 hover:text-black rounded-lg font-bold transition cursor-pointer">Edit Price</button>
-                            <button onclick="deleteProduct(${p.id})" class="px-2.5 py-1 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white rounded-lg font-bold transition cursor-pointer">Delete</button>
+                            <button onclick="editProductPriceCloud('${p.id}')" class="px-2.5 py-1 bg-pink-500/20 text-pink-400 hover:bg-pink-500 hover:text-black rounded-lg font-bold transition cursor-pointer">Edit Price</button>
+                            <button onclick="deleteProductCloud('${p.id}')" class="px-2.5 py-1 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white rounded-lg font-bold transition cursor-pointer">Delete</button>
                         </div>
                     </div>
                 `;
             });
         }
 
-        function addNewProduct(e) {
+        function addNewProductCloud(e) {
             e.preventDefault();
             const newP = {
                 id: Date.now(),
@@ -1430,49 +1574,47 @@
                 icon: document.getElementById('newProdIcon').value.trim()
             };
 
-            products.unshift(newP);
-            localStorage.setItem('naijacp_products', JSON.stringify(products));
-            renderCatalog();
-            renderAdminProducts();
-            generateCodeForExport();
+            if(db) {
+                db.collection("products").doc(newP.id.toString()).set(newP).then(() => {
+                    showToast("Added & synced live to cloud! 🚀");
+                });
+            } else {
+                products.unshift(newP);
+                renderCatalog();
+                renderAdminProducts();
+            }
             e.target.reset();
-            showToast("New package added successfully! 🚀");
         }
 
-        function editProductPrice(id) {
-            const p = products.find(x => x.id === id);
+        function editProductPriceCloud(id) {
+            const p = products.find(x => x.id == id);
             if(!p) return;
             const newPrice = prompt(`Enter new price for ${p.title} (Current: ₦${p.price}):`, p.price);
             if(newPrice && !isNaN(newPrice)) {
                 p.price = parseFloat(newPrice);
-                localStorage.setItem('naijacp_products', JSON.stringify(products));
-                renderCatalog();
-                renderAdminProducts();
-                generateCodeForExport();
-                showToast(`Price updated for ${p.title}! ⚡`);
+                if(db) {
+                    db.collection("products").doc(id.toString()).update({ price: parseFloat(newPrice) }).then(() => {
+                        showToast(`Price updated live on cloud for ${p.title}! ⚡`);
+                    });
+                } else {
+                    renderCatalog();
+                    renderAdminProducts();
+                }
             }
         }
 
-        function deleteProduct(id) {
+        function deleteProductCloud(id) {
             if(confirm("Are you sure you want to delete this package?")) {
-                products = products.filter(x => x.id !== id);
-                localStorage.setItem('naijacp_products', JSON.stringify(products));
-                renderCatalog();
-                renderAdminProducts();
-                generateCodeForExport();
-                showToast("Package deleted.");
+                if(db) {
+                    db.collection("products").doc(id.toString()).delete().then(() => {
+                        showToast("Package deleted from cloud.");
+                    });
+                } else {
+                    products = products.filter(x => x.id != id);
+                    renderCatalog();
+                    renderAdminProducts();
+                }
             }
-        }
-
-        function generateCodeForExport() {
-            document.getElementById('codeExportArea').value = document.documentElement.outerHTML;
-        }
-
-        function copyGeneratedCode() {
-            const textarea = document.getElementById('codeExportArea');
-            textarea.select();
-            navigator.clipboard.writeText(textarea.value);
-            showToast("Copied full updated source code to clipboard! Ready to paste into GitHub 📋");
         }
     </script>
 </body>
