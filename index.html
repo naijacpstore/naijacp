@@ -6,6 +6,7 @@
     <title>NAIJACP.NG | Africa's Top Gaming Marketplace &amp; Digital Top-Up Services</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -89,7 +90,7 @@
     <div class="bg-gradient-to-r from-pink-950 via-black to-pink-950 border-b border-pink-500/20 py-2 text-xs text-slate-300 overflow-hidden relative z-50">
         <div class="animate-marquee whitespace-nowrap flex items-center space-x-8">
             <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-pink-400"></i> INSTANT GAME TOP-UP IN NIGERIA 🇳🇬</span>
-            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-shield-halved text-pink-400"></i> CBN LICENSED SECURE BANK TRANSFERS</span>
+            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-shield-halved text-pink-400"></i> PAYSTACK AUTOMATED &amp; SECURE BANK TRANSFERS</span>
             <span class="inline-flex items-center gap-2"><i class="fa-solid fa-wifi text-pink-400"></i> FREE 2GB DATA PACK &amp; FREE FIRE SENSI</span>
             <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-pink-400"></i> FAST AUTOMATED DELIVERY 24/7 IN NIGERIA 🇳🇬</span>
         </div>
@@ -123,7 +124,7 @@
             <span>Gamers Online Right Now</span>
         </div>
         <h1 class="text-4xl sm:text-5xl font-black text-white mb-4 tracking-tight">Top Up Your Favorite Games Fast</h1>
-        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-medium mb-8">Buy CODM CP, eFootball Coins, Free Fire Diamonds, and Gaming Accessories with Ease. Paid securely via Central Bank of Nigeria (CBN) Licensed Banks.</p>
+        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-medium mb-8">Buy CODM CP, eFootball Coins, Free Fire Diamonds, and Gaming Accessories with Ease. Paid securely via Paystack &amp; CBN Licensed Banks.</p>
         
         <div class="flex flex-wrap items-center justify-center gap-4">
             <button onclick="scrollToSection('sensitivity')" class="px-6 py-3.5 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-2xl text-sm shadow-[0_0_20px_rgba(236,72,153,0.5)] transition flex items-center gap-2 cursor-pointer">
@@ -213,7 +214,7 @@
                         <div class="flex items-center gap-1 text-yellow-400 text-sm mb-3">
                             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                         </div>
-                        <p class="text-slate-300 text-xs leading-relaxed italic mb-4">"Omo, these guys are too fast! Sent my transfer screenshot for CODM 420 CP and before 3 minutes reach, my account don credited. Best plug ever!"</p>
+                        <p class="text-slate-300 text-xs leading-relaxed italic mb-4">"Omo, these guys are too fast! Paid with Paystack for CODM 420 CP and before 3 minutes reach, my account don credited. Best plug ever!"</p>
                     </div>
                     <div class="flex items-center justify-between border-t border-slate-800/80 pt-4">
                         <div>
@@ -247,7 +248,7 @@
                         <div class="flex items-center gap-1 text-yellow-400 text-sm mb-3">
                             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                         </div>
-                        <p class="text-slate-300 text-xs leading-relaxed italic mb-4">"Bought eFootball coins for my weekend tournament. Smooth transaction and very reliable bank transfer accounts. NaijaCP dey carry us well!"</p>
+                        <p class="text-slate-300 text-xs leading-relaxed italic mb-4">"Bought eFootball coins for my weekend tournament. Smooth Paystack transaction and very reliable. NaijaCP dey carry us well!"</p>
                     </div>
                     <div class="flex items-center justify-between border-t border-slate-800/80 pt-4">
                         <div>
@@ -395,7 +396,7 @@
 
     <footer class="border-t border-slate-800 bg-black py-8 text-slate-500 text-xs text-center mt-auto">
         <p>© 2026 NaijaCP Marketplace. All Rights Reserved.</p>
-        <p class="mt-2 text-[11px]">🛡️ Licensed &amp; Regulated by Central Bank of Nigeria (CBN)</p>
+        <p class="mt-2 text-[11px]">🛡️ Licensed &amp; Regulated by Central Bank of Nigeria (CBN) &amp; Paystack</p>
     </footer>
 
     <!-- Toast Notifications Container -->
@@ -428,13 +429,13 @@
             <!-- Chat Messages Container -->
             <div id="aiChatMessages" class="flex-grow overflow-y-auto space-y-3 pr-1 text-xs mb-3">
                 <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl text-slate-300 max-w-[85%]">
-                    👋 Hello gamer! I am your 24/7 NaijaCP AI assistant. Ask me anything about our game top-ups, gadgets, gift cards, official bank accounts, delivery times, or order status!
+                    👋 Omo, welcome to NaijaCP! 🇳🇬 I am your 24/7 AI plug. Whether you wan buy CODM CP, eFootball coins, Free Fire diamonds, TikTok coins, or use Paystack automated checkout, talk to me! Wetin you wan run today?
                 </div>
             </div>
 
             <!-- Chat Input Form -->
             <form onsubmit="handleAiChatSubmit(event)" class="flex gap-2 pt-2 border-t border-slate-800">
-                <input type="text" id="aiChatInput" placeholder="Ask about top-ups, bank accounts, orders..." class="flex-grow bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500" required>
+                <input type="text" id="aiChatInput" placeholder="Ask about top-ups, Paystack, bank accounts..." class="flex-grow bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500" required>
                 <button type="submit" class="px-4 py-2.5 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-xl text-xs transition cursor-pointer">
                     Send 🚀
                 </button>
@@ -492,15 +493,22 @@
                     </div>
                 </div>
 
-                <!-- STEP 3 -->
+                <!-- STEP 3 (PAYSTACK + MANUAL BANK TRANSFER) -->
                 <div id="checkoutStep3" class="space-y-4 hidden">
                     <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2 flex items-center justify-between">
-                        <span>Step 3 of 3: Payment Transfer</span>
-                        <span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded">CBN Licensed 🛡️</span>
+                        <span>Step 3 of 3: Choose Payment Method</span>
+                        <span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded">Paystack &amp; CBN Licensed 🛡️</span>
                     </div>
 
+                    <!-- PAYSTACK INSTANT AUTOMATED BUTTON -->
+                    <button type="button" onclick="payWithPaystack()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-black font-black text-sm shadow-lg shadow-green-500/30 transition flex items-center justify-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-credit-card text-lg"></i> Pay Instantly with Paystack (Card / Transfer)
+                    </button>
+
+                    <div class="text-center text-[10px] text-slate-500 font-bold">— OR USE MANUAL BANK TRANSFER —</div>
+
                     <div class="bg-black border border-pink-500/30 p-4 rounded-2xl space-y-3">
-                        <h4 class="text-pink-400 text-xs font-bold uppercase tracking-wider">🏦 Choose Official Payment Account:</h4>
+                        <h4 class="text-pink-400 text-xs font-bold uppercase tracking-wider">🏦 Official Bank Accounts:</h4>
                         
                         <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1.5">
                             <div class="flex justify-between text-xs text-slate-300">
@@ -532,7 +540,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Upload Payment Screenshot 🧾</label>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Upload Payment Screenshot 🧾 (Manual Transfer Only)</label>
                         <div class="border-2 border-dashed border-pink-500/40 hover:border-pink-500 bg-slate-950 rounded-2xl p-4 text-center cursor-pointer transition" onclick="document.getElementById('receiptFile').click()">
                             <input type="file" id="receiptFile" accept="image/*" class="hidden" onchange="handleFileSelect(event)">
                             <div id="fileLabel" class="text-xs text-white font-semibold flex flex-col items-center gap-2">
@@ -547,7 +555,7 @@
                             ⬅ Back
                         </button>
                         <button type="submit" id="submitOrderBtn" class="w-2/3 py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer">
-                            Submit Order &amp; Payment 🚀
+                            Submit Manual Order 🚀
                         </button>
                     </div>
                 </div>
@@ -960,7 +968,7 @@
                     <div class="flex justify-between"><span class="text-slate-400">Order ID:</span> <span class="font-bold text-white">#${found.id}</span></div>
                     <div class="flex justify-between"><span class="text-slate-400">Item:</span> <span class="font-bold text-pink-400">${found.product}</span></div>
                     <div class="flex justify-between"><span class="text-slate-400">Customer:</span> <span class="font-bold text-white">${found.customer}</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Status:</span> <span class="font-bold text-green-400">${found.status} ⚡ (Processing, our agent will review it soon!)</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Status:</span> <span class="font-bold text-green-400">${found.status} ⚡</span></div>
                     <div class="flex justify-between"><span class="text-slate-400">Date:</span> <span class="text-slate-300">${found.date}</span></div>
                 </div>
             `;
@@ -1082,7 +1090,76 @@
             }
         }
 
-        // --- TELEGRAM BOT NOTIFICATIONS (TEXT ONLY, NO RECEIPT IMAGE SENT) ---
+        // --- PAYSTACK AUTOMATED PAYMENT INTEGRATION ---
+        function payWithPaystack() {
+            const customerName = document.getElementById('custName').value.trim();
+            const customerPhone = document.getElementById('custPhone').value.trim();
+            const gameId = document.getElementById('custGameId').value.trim();
+
+            if (!customerName || !customerPhone || !gameId) {
+                alert("Please complete Steps 1 and 2 (Name, Game ID, and WhatsApp Number) before paying!");
+                nextCheckoutStep(1);
+                return;
+            }
+
+            if (!currentSelectedItem) {
+                alert("No package selected.");
+                return;
+            }
+
+            let handler = PaystackPop.setup({
+                key: 'pk_test_f83b816145536743620dC', // Your Test Public Key
+                email: customerPhone + '@naijacp.ng',
+                amount: currentSelectedItem.price * 100, // Converted to kobo
+                currency: 'NGN',
+                ref: 'NCP_' + Math.floor((Math.random() * 1000000000) + 1),
+                metadata: {
+                    custom_fields: [
+                        { display_name: "Customer Name", variable_name: "customer_name", value: customerName },
+                        { display_name: "Game ID / UID", variable_name: "game_id", value: gameId },
+                        { display_name: "WhatsApp Phone", variable_name: "phone_number", value: customerPhone },
+                        { display_name: "Package Title", variable_name: "package_title", value: currentSelectedItem.title }
+                    ]
+                },
+                callback: function(response) {
+                    showToast("Payment confirmed! Ref: " + response.reference);
+
+                    const newOrder = {
+                        id: Date.now().toString().slice(-6),
+                        date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                        customer: customerName,
+                        gameId: gameId,
+                        phone: customerPhone,
+                        product: currentSelectedItem.title,
+                        amount: currentSelectedItem.price,
+                        receipt: 'Paystack Automated (Ref: ' + response.reference + ')',
+                        status: 'Completed (Paid via Paystack ⚡)'
+                    };
+
+                    orders.unshift(newOrder);
+                    localStorage.setItem('naijacp_orders', JSON.stringify(orders));
+
+                    closeModal('checkoutModal');
+                    openModal('processingModal');
+                    
+                    document.getElementById('processingTitle').innerText = "Payment Successful & Verified! ⚡";
+                    document.getElementById('processingDesc').innerText = "Paystack successfully confirmed your payment of ₦" + currentSelectedItem.price.toLocaleString() + ". Your order has been logged and sent to our agents!";
+                    document.getElementById('processingSpinner').classList.add('hidden');
+                    document.getElementById('processingSuccessIcon').classList.remove('hidden');
+                    document.getElementById('processingSuccessIcon').classList.add('flex');
+                    document.getElementById('closeProcessingBtn').classList.remove('hidden');
+
+                    sendOrderToTelegram(newOrder);
+                },
+                onClose: function() {
+                    alert('Transaction window closed.');
+                }
+            });
+            
+            handler.openIframe();
+        }
+
+        // --- TELEGRAM BOT NOTIFICATIONS ---
         function sendOrderToTelegram(order) {
             const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
             const chatId = "8682089527";
@@ -1095,7 +1172,7 @@
                             `🎮 Game / Player ID (UID): ${order.gameId}\n` +
                             `📞 WhatsApp Number: ${order.phone}\n` +
                             `📅 Date: ${order.date}\n` +
-                            `⚡ Status: Processing, our agent will review it soon!`;
+                            `⚡ Status: ${order.status}`;
 
             try {
                 const telegramUrl = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(caption)}&parse_mode=Markdown`;
@@ -1106,7 +1183,7 @@
             }
         }
 
-        // --- SUBMIT ORDER (SHOWS PROCESSING MESSAGE & SENDS TEXT TO TELEGRAM) ---
+        // --- SUBMIT MANUAL ORDER ---
         function submitOrder(e) {
             e.preventDefault();
             
@@ -1133,17 +1210,15 @@
             orders.unshift(newOrder);
             localStorage.setItem('naijacp_orders', JSON.stringify(orders));
             
-            // Instantly transition UI and show processing modal
             closeModal('checkoutModal');
             openModal('processingModal');
             
             document.getElementById('processingTitle').innerText = "Processing, our agent will review it soon!";
-            document.getElementById('processingDesc').innerText = "Please wait while we securely submit your order details to our Telegram bot.";
+            document.getElementById('processingDesc').innerText = "Please wait while we securely submit your order details to our system.";
             document.getElementById('processingSpinner').classList.remove('hidden');
             document.getElementById('processingSuccessIcon').classList.add('hidden');
             document.getElementById('closeProcessingBtn').classList.add('hidden');
 
-            // Fire Telegram text alert immediately (NO receipt image sent)
             sendOrderToTelegram(newOrder);
 
             setTimeout(() => {
@@ -1161,7 +1236,7 @@
             }, 1800);
         }
 
-        // --- 24/7 AI AGENT CHAT LOGIC ---
+        // --- UPGRADED 24/7 AI AGENT (SMARTER & WISER) ---
         function openAiChatModal() {
             openModal('aiChatModal');
         }
@@ -1200,20 +1275,41 @@
         function getSmartAiResponse(query) {
             const q = query.toLowerCase();
 
-            if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('how far') || q.includes('sup')) {
-                return `👋 Hello! Welcome to NaijaCP 🇳🇬. How fit I help you today? You fit ask me about our game top-ups, bank accounts, gift cards, gadgets, or order status!`;
+            if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('how far') || q.includes('sup') || q.includes('gm')) {
+                return `👋 Omo, welcome to NaijaCP! 🇳🇬 I am your 24/7 AI plug. Whether you wan buy CODM CP, eFootball coins, Free Fire diamonds, TikTok coins, or use Paystack automated checkout, talk to me! Wetin you wan run today?`;
             }
-            if (q.includes('scam') || q.includes('legit') || q.includes('trust') || q.includes('fake')) {
-                return `🛡️ 100% Legit and CBN Licensed! We are Nigeria's top trusted gaming marketplace. Over 6,800+ gamers use us daily.`;
+            if (q.includes('paystack') || q.includes('card') || q.includes('automated') || q.includes('online payment')) {
+                return `💳 **Paystack Automated Payment:** You can pay instantly with your ATM card or automated bank transfer by clicking the green **"Pay Instantly with Paystack"** button during checkout! It credits and confirms your order sharp-sharp without needing receipts.`;
             }
-            if (q.includes('bank') || q.includes('account') || q.includes('pay') || q.includes('transfer')) {
-                return `🏦 **Official NaijaCP Payment Accounts:**<br><br>1️⃣ **Moremonee Bank:** <code>8099646374</code> (Oluwabukunmi Makanjuola)<br><br>2️⃣ **Smartcash PSB:** <code>8080504236</code> (Akeem Solarin)`;
+            if (q.includes('scam') || q.includes('legit') || q.includes('trust') || q.includes('fake') || q.includes('safe')) {
+                return `🛡️ Zero cap, we are 100% legit and trusted across Nigeria! Over 6,800+ active gamers use NaijaCP daily. Check our verified customer reviews right on the homepage—we don't play with our reputation!`;
             }
-            if (q.includes('delivery') || q.includes('how long')) {
-                return `⚡ **Super Fast Delivery:** After submitting your receipt, agent review takes only 1 to 5 minutes!`;
+            if (q.includes('bank') || q.includes('account') || q.includes('transfer') || q.includes('manual') || q.includes('moremonee') || q.includes('smartcash')) {
+                return `🏦 **Official NaijaCP Manual Bank Accounts:**<br><br>1️⃣ **Moremonee Bank:** <code>8099646374</code> (Oluwabukunmi Makanjuola)<br><br>2️⃣ **Smartcash PSB:** <code>8080504236</code> (Akeem Solarin)<br><br><em>(Tip: You can also use our instant **Paystack** button for automatic payment confirmation!)</em>`;
+            }
+            if (q.includes('delivery') || q.includes('how long') || q.includes('credit') || q.includes('when')) {
+                return `⚡ **Super Fast Delivery:** If you pay via **Paystack**, your order is verified instantly! If you use manual bank transfer and upload your receipt, our agents review and credit you within 1 to 5 minutes max!`;
+            }
+            if (q.includes('codm') || q.includes('call of duty') || q.includes('cp')) {
+                return `🎮 **CODM Top-Ups available:** From 80 CP (₦1,200) up to 880 CP and more! Just click "Buy Now" on the CODM package, enter your Player UID, and pay securely via Paystack or transfer.`;
+            }
+            if (q.includes('free fire') || q.includes('ff') || q.includes('diamond')) {
+                return `🔥 **Free Fire Diamond & Subscriptions:** We got 100 diamonds, weekly subs, monthly subs, and bulk packs! Also check our free Headshot Sensi tool on the page to upgrade your aim!`;
+            }
+            if (q.includes('efootball') || q.includes('coin') || q.includes('pes')) {
+                return `⚽ **eFootball Coins:** Grab 130, 320, or 1040 coins for your dream team tournament. Instant delivery guaranteed!`;
+            }
+            if (q.includes('data') || q.includes('free data') || q.includes('2gb')) {
+                return `📶 You want free data? Scroll down to our **Free 2GB Data Pack** tool, select your network, enter your number, and share to WhatsApp groups to claim!`;
+            }
+            if (q.includes('sensi') || q.includes('headshot') || q.includes('sensitivity')) {
+                return `🎯 Scroll down to our **Free Fire Sensi Generator**, put your phone model and RAM size, and get custom pro headshot settings instantly!`;
+            }
+            if (q.includes('track') || q.includes('order') || q.includes('status')) {
+                return `🔍 You can track your transaction anytime! Just scroll to the **Check Order Status** section on the site, type your WhatsApp number or Order ID, and check your live status.`;
             }
 
-            return `🤖 At NaijaCP, we provide instant game top-ups, gift cards, and gaming gadgets. Browse packages above, transfer to our official bank accounts, and upload your payment receipt at checkout!`;
+            return `🤖 Boss, I dey for you! You fit ask me about any game package (CODM, Free Fire, eFootball, DLS, Blood Strike, TikTok, OneState), Paystack card payments, our official bank accounts, or tracking your order. How I fit help you now?`;
         }
 
         function escapeHtml(text) {
@@ -1274,7 +1370,7 @@
                             <button onclick="viewAdminReceipt('${o.id}')" class="px-3.5 py-2 bg-pink-500/20 hover:bg-pink-500 hover:text-black text-pink-400 rounded-xl font-bold transition cursor-pointer">View Receipt 🧾</button>
                             <select onchange="updateOrderStatus('${o.id}', this.value)" class="bg-slate-950 border border-slate-700 text-white px-3 py-1.5 rounded-lg font-bold">
                                 <option value="Pending Review" ${o.status==='Pending Review'?'selected':''}>Pending Review</option>
-                                <option value="Completed" ${o.status==='Completed'?'selected':''}>Completed ⚡</option>
+                                <option value="Completed" ${o.status.includes('Completed')?'selected':''}>Completed ⚡</option>
                             </select>
                         </div>
                     </div>
@@ -1284,11 +1380,11 @@
 
         function viewAdminReceipt(orderId) {
             const ord = orders.find(o => o.id === orderId);
-            if(ord && ord.receipt) {
+            if(ord && ord.receipt && !ord.receipt.includes('Paystack')) {
                 document.getElementById('adminReceiptImg').src = ord.receipt;
                 openModal('receiptViewerModal');
             } else {
-                alert("Receipt not found for this order.");
+                alert("This order was paid automatically via Paystack (No manual receipt uploaded).");
             }
         }
 
