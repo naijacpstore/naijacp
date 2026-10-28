@@ -103,14 +103,14 @@
             </div>
 
             <form onsubmit="handleAuthWallSubmit(event)" class="space-y-4">
-                <div id="wallUsernameGroup" class="hidden">
-                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Username / Gamer Tag</label>
-                    <input type="text" id="wallUsername" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. ProGamer">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5" id="wallUsernameLabel">Username / Gamer Tag</label>
+                    <input type="text" id="wallUsername" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="Enter your username" required>
                     <p id="usernameSuggestion" class="text-[11px] text-pink-400 mt-1 hidden"></p>
                 </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Email Address</label>
-                    <input type="email" id="wallEmail" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. gamer@gmail.com" required>
+                <div id="wallEmailGroup" class="hidden">
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Email Address (Gmail)</label>
+                    <input type="email" id="wallEmail" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. gamer@gmail.com">
                 </div>
                 <div class="relative">
                     <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Password</label>
@@ -672,7 +672,7 @@
         </div>
     </div>
 
-    <!-- PROCESSING MODAL (Polished & Professional) -->
+    <!-- PROCESSING MODAL -->
     <div id="processingModal" class="fixed inset-0 z-[110] hidden flex-col items-center justify-center p-4 bg-black/95 backdrop-blur-md">
         <div class="w-16 h-16 border-4 border-pink-500 border-t-transparent rounded-full animate-spin mb-4" id="processingSpinner"></div>
         <div class="w-16 h-16 rounded-full bg-green-500/20 text-green-400 hidden items-center justify-center text-3xl mb-4" id="processingSuccessIcon">
@@ -726,21 +726,16 @@
                 </button>
             </div>
 
-            <!-- Admin Tabs -->
             <div class="flex flex-wrap gap-2 mb-6">
                 <button onclick="switchAdminTab('orders')" id="adminTabBtn-orders" class="px-5 py-2.5 rounded-xl bg-pink-500 text-black font-bold text-xs transition cursor-pointer">📦 Orders Management</button>
                 <button onclick="switchAdminTab('products')" id="adminTabBtn-products" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">⚙️ Cloud Packages &amp; Prices</button>
             </div>
 
-            <!-- Tab 1: Orders -->
             <div id="adminTab-orders" class="space-y-4">
                 <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-3">Incoming Customer Orders</h3>
-                <div id="adminOrdersList" class="space-y-3">
-                    <!-- Populated dynamically from Firestore -->
-                </div>
+                <div id="adminOrdersList" class="space-y-3"></div>
             </div>
 
-            <!-- Tab 2: Products -->
             <div id="adminTab-products" class="hidden space-y-6">
                 <div class="glass-modal p-6 rounded-3xl border border-slate-800">
                     <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">➕ Add New Package (Syncs Instantly to All Visitors)</h3>
@@ -788,9 +783,7 @@
 
                 <div class="glass-modal p-6 rounded-3xl border border-slate-800">
                     <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">📋 Live Cloud Catalog Items (Edit / Delete)</h3>
-                    <div id="adminProductsList" class="space-y-2 max-h-96 overflow-y-auto">
-                        <!-- Populated dynamically -->
-                    </div>
+                    <div id="adminProductsList" class="space-y-2 max-h-96 overflow-y-auto"></div>
                 </div>
             </div>
         </div>
@@ -810,11 +803,8 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT & FIREBASE CLOUD SYNC & TIGHTENED SECURITY LOGIC -->
+    <!-- JAVASCRIPT & FIREBASE CLOUD SYNC & AUTH LOGIC -->
     <script>
-        // ==========================================
-        // FIREBASE CLOUD CONFIGURATION (NAIJACP STORE)
-        // ==========================================
         const firebaseConfig = {
             apiKey: "AIzaSyDTdutOr9kvrs1AuVm5CB7uu130NdSICPA",
             authDomain: "naijacp-store.firebaseapp.com",
@@ -825,7 +815,6 @@
             measurementId: "G-M6FK6HPGF5"
         };
 
-        // Initialize Firebase
         let db = null;
         let auth = null;
         try {
@@ -934,7 +923,6 @@
             });
         });
 
-        // --- REAL-TIME CLOUD SYNC WITH FIRESTORE ---
         function initCloudSync() {
             if(!db) return;
             
@@ -966,7 +954,6 @@
             });
         }
 
-        // --- PASSWORD VISIBILITY TOGGLE ---
         function togglePasswordVisibility(fieldId, btnEl) {
             const input = document.getElementById(fieldId);
             const icon = btnEl.querySelector('i');
@@ -979,36 +966,41 @@
             }
         }
 
-        // --- MANDATORY AUTH WALL & USERNAME SUGGESTION ---
+        // --- TOGGLE LOGIN / REGISTER MODAL ---
         function toggleAuthWallMode() {
             isRegisteringWall = !isRegisteringWall;
             document.getElementById('wallSubmitBtn').innerText = isRegisteringWall ? "Create Account & Enter 🚀" : "Login to Store 🚀";
-            document.getElementById('wallUsernameGroup').classList.toggle('hidden', !isRegisteringWall);
+            document.getElementById('wallEmailGroup').classList.toggle('hidden', !isRegisteringWall);
+            document.getElementById('wallEmail').toggleAttribute('required', isRegisteringWall);
+            document.getElementById('wallUsernameLabel').innerText = isRegisteringWall ? "Username / Gamer Tag" : "Username or Email";
+            document.getElementById('wallUsername').placeholder = isRegisteringWall ? "e.g. ProGamer" : "Enter your username";
             document.getElementById('wallToggleText').innerText = isRegisteringWall ? "Already have an account?" : "New gamer here?";
             document.getElementById('wallToggleBtn').innerText = isRegisteringWall ? "Login Here" : "Create Free Account";
         }
 
+        // --- USER AUTH HANDLER (USERNAME & PASSWORD LOGIN) ---
         async function handleAuthWallSubmit(e) {
             e.preventDefault();
-            const email = document.getElementById('wallEmail').value.trim();
+            const inputVal = document.getElementById('wallUsername').value.trim();
             const password = document.getElementById('wallPassword').value.trim();
-            const usernameInput = document.getElementById('wallUsername').value.trim();
 
-            if(!auth) {
-                alert("Firebase Auth is not connected yet.");
+            if(!auth || !db) {
+                alert("Firebase Auth or Firestore is not initialized.");
                 return;
             }
 
-            if(isRegisteringWall) {
-                if(!usernameInput) {
-                    alert("Please enter a username / gamer tag.");
-                    return;
-                }
-                
-                try {
-                    const checkQuery = await db.collection("users").where("username", "==", usernameInput).get();
+            try {
+                if(isRegisteringWall) {
+                    const email = document.getElementById('wallEmail').value.trim();
+                    if(!inputVal || !email) {
+                        alert("Please enter both your username and Gmail address.");
+                        return;
+                    }
+
+                    // Check if username is already taken
+                    const checkQuery = await db.collection("users").where("username", "==", inputVal).get();
                     if(!checkQuery.empty) {
-                        const suggested = usernameInput + "_" + Math.floor(100 + Math.random() * 900);
+                        const suggested = inputVal + "_" + Math.floor(100 + Math.random() * 900);
                         document.getElementById('usernameSuggestion').innerText = `⚠️ Username taken! Try available: ${suggested}`;
                         document.getElementById('usernameSuggestion').classList.remove('hidden');
                         document.getElementById('wallUsername').value = suggested;
@@ -1016,43 +1008,50 @@
                     }
 
                     const res = await auth.createUserWithEmailAndPassword(email, password);
-                    await res.user.updateProfile({ displayName: usernameInput });
+                    await res.user.updateProfile({ displayName: inputVal });
+                    
+                    // Save user record in Firestore
                     await db.collection("users").doc(res.user.uid).set({
-                        username: usernameInput,
+                        username: inputVal,
                         email: email,
                         createdAt: Date.now()
                     });
-                    showToast("🎉 Account created successfully!");
-                } catch(err) {
-                    alert(err.message);
+                    showToast("🎉 Account created & saved successfully!");
+                } else {
+                    // Login mode: inputVal can be a username or an email
+                    let loginEmail = inputVal;
+                    if(!inputVal.includes('@')) {
+                        const userQuery = await db.collection("users").where("username", "==", inputVal).get();
+                        if(userQuery.empty) {
+                            alert("Username not found. Please check your spelling or click 'Create Free Account'.");
+                            return;
+                        }
+                        loginEmail = userQuery.docs[0].data().email;
+                    }
+
+                    await auth.signInWithEmailAndPassword(loginEmail, password);
+                    showToast("Welcome back, boss! 🚀");
                 }
-            } else {
-                auth.signInWithEmailAndPassword(email, password)
-                    .then(() => showToast("Welcome back!"))
-                    .catch(err => alert(err.message));
+            } catch(err) {
+                alert("Authentication Error: " + err.message);
             }
         }
 
         function handleAccountLogout() {
-            if(currentUser) {
-                if(confirm("Log out of your account?")) {
-                    auth.signOut();
-                    closeModal('userDashboardModal');
-                    showToast("Logged out.");
-                }
+            if(currentUser && confirm("Log out of your account?")) {
+                auth.signOut();
+                closeModal('userDashboardModal');
+                showToast("Logged out.");
             }
         }
 
-        // --- USER PROFILE & ORDER HISTORY DASHBOARD ---
         function openUserDashboard() {
             if(!currentUser) return;
-            
             document.getElementById('dashUserEmail').innerText = currentUser.email;
             const historyList = document.getElementById('dashOrderHistoryList');
             historyList.innerHTML = '';
 
             const userOrders = orders.filter(o => o.userEmail === currentUser.email || o.customer?.toLowerCase() === currentUser.displayName?.toLowerCase());
-            
             document.getElementById('dashTotalOrders').innerText = userOrders.length;
 
             if(userOrders.length === 0) {
@@ -1078,11 +1077,9 @@
                     `;
                 });
             }
-
             openModal('userDashboardModal');
         }
 
-        // --- SECRET ADMIN ACCESS ---
         let footerClickCount = 0;
         function handleSecretFooterClick() {
             footerClickCount++;
