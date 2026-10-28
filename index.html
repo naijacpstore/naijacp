@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NAIJACP.NG | Africa's Top Gaming Marketplace &amp; Digital Top-Up Services</title>
+    <title>NAIJACP.NG | Africa's Premier Gaming &amp; Digital Marketplace</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://js.paystack.co/v1/inline.js"></script>
-    <!-- Firebase SDKs (Compat version for robust single-file Firestore & Auth) -->
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
@@ -19,45 +19,44 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #060508;
-            color: #f3f4f6;
+            background-color: #09090b;
+            color: #f4f4f5;
             overflow-x: hidden;
-            overflow-anchor: none;
             -webkit-overflow-scrolling: touch;
         }
 
-        ::-webkit-scrollbar { width: 7px; }
-        ::-webkit-scrollbar-track { background: #060508; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #ec4899; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #09090b; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
 
         .glass-card {
-            background: rgba(18, 12, 21, 0.75);
-            backdrop-filter: blur(14px);
-            border: 1px solid rgba(236, 72, 153, 0.15);
+            background: rgba(18, 18, 24, 0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(139, 92, 246, 0.12);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .glass-card:hover {
             transform: translateY(-4px);
-            border-color: rgba(236, 72, 153, 0.5);
-            box-shadow: 0 10px 30px -10px rgba(236, 72, 153, 0.35);
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 12px 40px -10px rgba(139, 92, 246, 0.25);
         }
 
         .glass-modal {
-            background: rgba(12, 10, 16, 0.96);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(236, 72, 153, 0.3);
+            background: rgba(12, 12, 18, 0.98);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
         }
 
         .pulse-dot {
-            box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7);
+            box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7);
             animation: pulse 1.8s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(236, 72, 153, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(139, 92, 246, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
         }
 
         @keyframes marquee {
@@ -67,7 +66,7 @@
         .animate-marquee {
             display: flex;
             width: 200%;
-            animation: marquee 22s linear infinite;
+            animation: marquee 24s linear infinite;
         }
 
         @keyframes slideInUp {
@@ -82,87 +81,87 @@
         .toast-exit { animation: fadeOutDown 0.4s cubic-bezier(0.7, 0, 0.84, 0) forwards; }
         
         .active-btn {
-            background-color: #ec4899 !important;
-            color: #000 !important;
-            border-color: #ec4899 !important;
-            box-shadow: 0 10px 15px -3px rgba(236, 72, 153, 0.3) !important;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4) !important;
+            color: #ffffff !important;
+            border-color: transparent !important;
+            box-shadow: 0 8px 20px -4px rgba(139, 92, 246, 0.5) !important;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-black pb-20">
+<body class="min-h-screen flex flex-col selection:bg-violet-500 selection:text-white pb-20">
 
-    <!-- MANDATORY AUTH WALL / SPLASH SCREEN -->
-    <div id="authWallModal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/98 backdrop-blur-2xl">
-        <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-[0_0_50px_rgba(236,72,153,0.3)] border border-pink-500/40">
+    <!-- AUTH WALL MODAL -->
+    <div id="authWallModal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/95 backdrop-blur-3xl">
+        <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-[0_0_60px_rgba(139,92,246,0.25)] border border-violet-500/30">
             <div class="text-center mb-6">
-                <div class="w-16 h-16 mx-auto rounded-2xl overflow-hidden shadow-lg shadow-pink-500/50 bg-slate-900 mb-3 border border-pink-500/30">
+                <div class="w-16 h-16 mx-auto rounded-2xl overflow-hidden shadow-xl shadow-violet-500/30 bg-slate-900 mb-3 border border-violet-500/30 flex items-center justify-center">
                     <img src="https://cdn.phototourl.com/member/2026-10-01-240f3835-df17-4722-9f3c-0500455e8f80.jpg" alt="Logo" class="w-full h-full object-cover">
                 </div>
-                <h2 class="text-2xl font-black text-white tracking-tight">NAIJACP<span class="text-pink-500">.NG</span></h2>
-                <p class="text-slate-400 text-xs mt-1" id="authWallSubText">Create an account or log in to access Africa's top gaming store.</p>
+                <h2 class="text-2xl font-black text-white tracking-tight">NAIJACP<span class="text-violet-400">.NG</span></h2>
+                <p class="text-slate-400 text-xs mt-1" id="authWallSubText">Access Africa's elite gaming &amp; digital store.</p>
             </div>
 
             <form onsubmit="handleAuthWallSubmit(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5" id="wallUsernameLabel">Username / Gamer Tag</label>
-                    <input type="text" id="wallUsername" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="Enter your username" required>
-                    <p id="usernameSuggestion" class="text-[11px] text-pink-400 mt-1 hidden"></p>
+                    <input type="text" id="wallUsername" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 transition" placeholder="Enter your username" required>
+                    <p id="usernameSuggestion" class="text-[11px] text-violet-400 mt-1 hidden"></p>
                 </div>
                 <div id="wallEmailGroup" class="hidden">
                     <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Email Address (Gmail)</label>
-                    <input type="email" id="wallEmail" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. gamer@gmail.com">
+                    <input type="email" id="wallEmail" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 transition" placeholder="e.g. gamer@gmail.com">
                 </div>
                 <div class="relative">
                     <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Password</label>
-                    <input type="password" id="wallPassword" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4.5 py-3 pr-12 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="••••••••" required>
+                    <input type="password" id="wallPassword" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4.5 py-3 pr-12 text-white text-sm focus:outline-none focus:border-violet-500 transition" placeholder="••••••••" required>
                     <button type="button" onclick="togglePasswordVisibility('wallPassword', this)" class="absolute right-3.5 top-9 text-slate-400 hover:text-white text-sm cursor-pointer">
                         <i class="fa-solid fa-eye"></i>
                     </button>
                 </div>
 
-                <button type="submit" id="wallSubmitBtn" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer mt-2">
+                <button type="submit" id="wallSubmitBtn" class="w-full py-4 rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-black text-sm shadow-lg shadow-violet-600/30 transition cursor-pointer mt-2">
                     Login to Store 🚀
                 </button>
             </form>
 
             <div class="mt-6 text-center text-xs border-t border-slate-800/80 pt-4">
                 <span id="wallToggleText" class="text-slate-400">New gamer here?</span> 
-                <button onclick="toggleAuthWallMode()" class="text-pink-400 font-bold ml-1 cursor-pointer hover:underline" id="wallToggleBtn">Create Free Account</button>
+                <button onclick="toggleAuthWallMode()" class="text-violet-400 font-bold ml-1 cursor-pointer hover:underline" id="wallToggleBtn">Create Free Account</button>
             </div>
         </div>
     </div>
 
-    <!-- Top Promo Banner -->
-    <div class="bg-gradient-to-r from-pink-950 via-black to-pink-950 border-b border-pink-500/20 py-2 text-xs text-slate-300 overflow-hidden relative z-50">
-        <div class="animate-marquee whitespace-nowrap flex items-center space-x-8">
-            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-pink-400"></i> INSTANT GAME TOP-UP IN NIGERIA 🇳🇬</span>
-            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-shield-halved text-pink-400"></i> SECURE CBN LICENSED BANK TRANSFERS</span>
-            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-wifi text-pink-400"></i> FREE 2GB DATA PACK &amp; FREE FIRE SENSI</span>
-            <span class="inline-flex items-center gap-2"><i class="fa-solid fa-bolt text-pink-400"></i> FAST AUTOMATED DELIVERY 24/7 IN NIGERIA 🇳🇬</span>
+    <!-- Top Ticker Bar -->
+    <div class="bg-gradient-to-r from-violet-950 via-slate-950 to-cyan-950 border-b border-violet-500/20 py-2.5 text-xs text-slate-300 overflow-hidden relative z-40">
+        <div class="animate-marquee whitespace-nowrap flex items-center space-x-10">
+            <span class="inline-flex items-center gap-2 font-semibold"><i class="fa-solid fa-bolt text-violet-400"></i> INSTANT AUTOMATED GAME TOP-UP 🇳🇬</span>
+            <span class="inline-flex items-center gap-2 font-semibold"><i class="fa-solid fa-shield-halved text-cyan-400"></i> 100% SECURE WALLET SYSTEM</span>
+            <span class="inline-flex items-center gap-2 font-semibold"><i class="fa-solid fa-wifi text-emerald-400"></i> FREE 2GB DATA PACK &amp; FREE FIRE SENSI</span>
+            <span class="inline-flex items-center gap-2 font-semibold"><i class="fa-solid fa-headset text-violet-400"></i> 24/7 DEDICATED DISPATCH &amp; SUPPORT</span>
         </div>
     </div>
 
     <!-- Header Navigation -->
-    <header class="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-b border-pink-900/30 px-4 sm:px-8 py-3.5">
+    <header class="sticky top-0 z-30 bg-[#09090b]/90 backdrop-blur-xl border-b border-slate-800 px-4 sm:px-8 py-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-2.5 cursor-pointer" onclick="switchMainCategory('games')">
-                <div class="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-pink-500/40 bg-slate-900">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchMainCategory('games')">
+                <div class="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-violet-500/30 bg-slate-900 border border-violet-500/30">
                     <img src="https://cdn.phototourl.com/member/2026-10-01-240f3835-df17-4722-9f3c-0500455e8f80.jpg" alt="Logo" class="w-full h-full object-cover">
                 </div>
                 <span class="text-xl sm:text-2xl font-black tracking-tight text-white">
-                    NAIJACP<span class="text-pink-500">.NG</span>
+                    NAIJACP<span class="text-violet-500">.NG</span>
                 </span>
             </div>
 
-            <nav class="hidden md:flex items-center gap-6">
-                <a onclick="switchMainCategory('games')" id="nav-games" class="text-sm font-bold text-pink-400 cursor-pointer transition hover:text-pink-300">Games</a>
-                <a onclick="switchMainCategory('gadgets')" id="nav-gadgets" class="text-sm font-bold text-slate-300 cursor-pointer transition hover:text-pink-400">Gadgets</a>
-                <a onclick="switchMainCategory('giftcards')" id="nav-giftcards" class="text-sm font-bold text-slate-300 cursor-pointer transition hover:text-pink-400">Gift Cards</a>
+            <nav class="hidden md:flex items-center gap-6 bg-slate-950/80 px-6 py-2 rounded-2xl border border-slate-800/80">
+                <a onclick="switchMainCategory('games')" id="nav-games" class="text-xs font-extrabold text-violet-400 cursor-pointer transition hover:text-white uppercase tracking-wider">Games</a>
+                <a onclick="switchMainCategory('gadgets')" id="nav-gadgets" class="text-xs font-extrabold text-slate-400 cursor-pointer transition hover:text-white uppercase tracking-wider">Gadgets</a>
+                <a onclick="switchMainCategory('giftcards')" id="nav-giftcards" class="text-xs font-extrabold text-slate-400 cursor-pointer transition hover:text-white uppercase tracking-wider">Gift Cards</a>
             </nav>
 
             <div class="flex items-center gap-3">
-                <button onclick="openUserDashboard()" class="px-4 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500 hover:text-black font-bold text-xs transition cursor-pointer flex items-center gap-2">
-                    <i class="fa-solid fa-wallet"></i> 
+                <button onclick="openUserDashboard()" class="px-4 py-2.5 rounded-xl bg-violet-500/10 border border-violet-500/30 text-violet-300 hover:bg-violet-500 hover:text-white font-extrabold text-xs transition cursor-pointer flex items-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-wallet text-violet-400"></i> 
                     <span>₦<span id="headerWalletBalance">0</span></span>
                 </button>
             </div>
@@ -170,21 +169,21 @@
     </header>
 
     <!-- Hero Section -->
-    <div class="relative pt-12 pb-16 overflow-hidden px-4 sm:px-6 text-center border-b border-pink-500/20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-pink-950/20 via-black to-black">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-slate-300 mb-6">
-            <span class="w-2.5 h-2.5 rounded-full bg-pink-500 pulse-dot"></span>
-            <span class="text-pink-400 font-extrabold text-sm" id="liveUserCounter">6,854</span>
+    <div class="relative pt-14 pb-16 overflow-hidden px-4 sm:px-6 text-center border-b border-slate-800 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-950/20 via-[#09090b] to-[#09090b]">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/30 text-xs font-bold text-slate-300 mb-6 shadow-inner">
+            <span class="w-2.5 h-2.5 rounded-full bg-violet-500 pulse-dot"></span>
+            <span class="text-violet-400 font-extrabold text-sm" id="liveUserCounter">6,854</span>
             <span>Gamers Online Right Now</span>
         </div>
-        <h1 class="text-4xl sm:text-5xl font-black text-white mb-4 tracking-tight">Top Up Your Favorite Games Fast</h1>
-        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-medium mb-8">Buy CODM CP, eFootball Coins, Free Fire Diamonds, and Gaming Accessories with Ease. Paid securely via Wallet Balance or Bank Transfer.</p>
+        <h1 class="text-4xl sm:text-6xl font-black text-white mb-4 tracking-tight">The Ultimate Gaming <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-cyan-400">Marketplace</span></h1>
+        <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto font-medium mb-8">Instant top-up for CODM, eFootball, Free Fire, and high-end gaming accessories. Funded instantly via your secure wallet balance.</p>
         
         <div class="flex flex-wrap items-center justify-center gap-4">
-            <button onclick="openAddFundsModal()" class="px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-black font-black rounded-2xl text-sm shadow-[0_0_20px_rgba(16,185,129,0.5)] transition flex items-center gap-2 cursor-pointer">
-                <i class="fa-solid fa-wallet"></i> 💳 + ADD FUNDS TO WALLET
+            <button onclick="openAddFundsModal()" class="px-7 py-4 bg-emerald-500 hover:bg-emerald-400 text-black font-black rounded-2xl text-sm shadow-[0_0_30px_rgba(16,185,129,0.35)] transition flex items-center gap-2.5 cursor-pointer">
+                <i class="fa-solid fa-wallet text-base"></i> 💳 + ADD FUNDS TO WALLET
             </button>
-            <button onclick="scrollToSection('sensitivity')" class="px-6 py-3.5 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-2xl text-sm shadow-[0_0_20px_rgba(236,72,153,0.5)] transition flex items-center gap-2 cursor-pointer">
-                <i class="fa-solid fa-crosshair"></i> 🔥 FREE FIRE SENSI
+            <button onclick="scrollToSection('sensitivity')" class="px-7 py-4 bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-black rounded-2xl text-sm shadow-[0_0_30px_rgba(139,92,246,0.35)] transition flex items-center gap-2.5 cursor-pointer">
+                <i class="fa-solid fa-crosshair text-base"></i> 🔥 FREE FIRE SENSI
             </button>
         </div>
     </div>
@@ -194,13 +193,13 @@
 
         <!-- MAIN CATEGORY NAVIGATION BUTTONS -->
         <div class="flex flex-wrap items-center gap-3 mb-8 justify-center sm:justify-start">
-            <button class="btn-cat active-btn px-6 py-3 rounded-2xl text-sm font-bold transition bg-slate-900 text-slate-300 border border-slate-800 cursor-pointer" id="catBtn-games" onclick="switchMainCategory('games')">🎮 All Game Packages</button>
-            <button class="btn-cat px-6 py-3 rounded-2xl text-sm font-bold transition bg-slate-900 text-slate-300 border border-slate-800 cursor-pointer" id="catBtn-gadgets" onclick="switchMainCategory('gadgets')">🎧 Gaming Gear &amp; Gadgets</button>
-            <button class="btn-cat px-6 py-3 rounded-2xl text-sm font-bold transition bg-slate-900 text-slate-300 border border-slate-800 cursor-pointer" id="catBtn-giftcards" onclick="switchMainCategory('giftcards')">💳 Gift Cards &amp; Subs</button>
+            <button class="btn-cat active-btn px-6 py-3 rounded-2xl text-xs font-extrabold uppercase tracking-wider transition bg-slate-900 text-slate-300 border border-slate-800 cursor-pointer" id="catBtn-games" onclick="switchMainCategory('games')">🎮 All Game Packages</button>
+            <button class="btn-cat px-6 py-3 rounded-2xl text-xs font-extrabold uppercase tracking-wider transition bg-slate-900 text-slate-300 border border-slate-800 cursor-pointer" id="catBtn-gadgets" onclick="switchMainCategory('gadgets')">🎧 Gaming Gear &amp; Gadgets</button>
+            <button class="btn-cat px-6 py-3 rounded-2xl text-xs font-extrabold uppercase tracking-wider transition bg-slate-900 text-slate-300 border border-slate-800 cursor-pointer" id="catBtn-giftcards" onclick="switchMainCategory('giftcards')">💳 Gift Cards &amp; Subs</button>
         </div>
 
         <!-- GAME SUB-FILTER BUTTONS & INSTANT SEARCH BAR -->
-        <div class="flex flex-col md:flex-row gap-4 mb-8 items-center justify-between bg-slate-900/60 p-4 rounded-3xl border border-slate-800">
+        <div class="flex flex-col md:flex-row gap-4 mb-8 items-center justify-between bg-slate-900/60 p-4 rounded-3xl border border-slate-800/80 backdrop-blur-md">
             <div id="gameSubFilters" class="flex flex-wrap gap-2 w-full md:w-auto">
                 <button class="btn-subfilter active-btn px-3.5 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('all', this)">All Games</button>
                 <button class="btn-subfilter px-3.5 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('codm', this)">CODM</button>
@@ -215,14 +214,14 @@
             <!-- Instant Search Input -->
             <div class="relative w-full md:w-72">
                 <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-500 text-xs"></i>
-                <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search packages (e.g. 80 CP, AirPods)..." class="w-full bg-slate-950 border border-slate-700/80 rounded-2xl pl-10 pr-4 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500 transition">
+                <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search packages (e.g. 80 CP, AirPods)..." class="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-10 pr-4 py-2.5 text-white text-xs focus:outline-none focus:border-violet-500 transition">
             </div>
         </div>
 
         <!-- PRODUCTS GRID -->
         <section id="catalogSection" class="mb-16">
             <div class="flex items-center gap-3 mb-6">
-                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight border-l-4 border-pink-500 pl-4" id="sectionHeading">
+                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight border-l-4 border-violet-500 pl-4" id="sectionHeading">
                     🎮 Game Top-Up Packages
                 </h2>
             </div>
@@ -232,17 +231,17 @@
         </section>
 
         <!-- ORDER STATUS & HISTORY CHECKER TOOL -->
-        <section class="py-10 mb-16 border-t border-b border-pink-500/20">
-            <div class="max-w-xl mx-auto glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/30 text-center">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-bold mb-3">
+        <section class="py-10 mb-16 border-t border-b border-slate-800">
+            <div class="max-w-xl mx-auto glass-modal p-6 sm:p-8 rounded-3xl border border-violet-500/30 text-center shadow-xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/30 text-violet-400 text-xs font-bold mb-3">
                     <i class="fa-solid fa-magnifying-glass-chart"></i> Track Your Transaction
                 </div>
                 <h3 class="text-xl font-black text-white mb-2">Check Order Status</h3>
                 <p class="text-slate-400 text-xs mb-6">Enter your WhatsApp phone number or Order ID to verify processing status.</p>
                 
                 <div class="flex gap-2">
-                    <input type="text" id="trackQuery" placeholder="e.g. 08012345678" class="flex-grow bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-pink-500">
-                    <button onclick="checkOrderStatus()" class="px-5 py-3 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-xl text-xs transition cursor-pointer">
+                    <input type="text" id="trackQuery" placeholder="e.g. 08012345678" class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-violet-500 transition">
+                    <button onclick="checkOrderStatus()" class="px-5 py-3 bg-violet-600 hover:bg-violet-500 text-white font-black rounded-xl text-xs transition cursor-pointer shadow-md">
                         Check 🔍
                     </button>
                 </div>
@@ -251,20 +250,20 @@
         </section>
 
         <!-- FREE 2GB DATA PACK TOOL -->
-        <section id="dataPackTool" class="py-12 border-t border-pink-500/20 scroll-mt-24 mb-12">
+        <section id="dataPackTool" class="py-12 border-t border-slate-800 scroll-mt-24 mb-12">
             <div class="text-center mb-8">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-green-500/20 border border-green-500/40 text-green-400 text-xs font-extrabold uppercase mb-3">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-extrabold uppercase mb-3">
                     <i class="fa-solid fa-wifi"></i> 100% Free Promo
                 </div>
                 <h2 class="text-3xl font-extrabold text-white">Claim Free 2GB Data Pack 📶</h2>
                 <p class="text-slate-400 text-sm mt-2">Select your network, enter your number, and share to 10 WhatsApp groups to claim instantly!</p>
             </div>
 
-            <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/30 max-w-2xl mx-auto shadow-2xl relative">
+            <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-emerald-500/30 max-w-2xl mx-auto shadow-2xl relative">
                 <div id="dataFormArea" class="space-y-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Select SIM Network</label>
-                        <select id="simNetwork" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500">
+                        <select id="simNetwork" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-emerald-500 transition">
                             <option value="MTN">MTN Nigeria</option>
                             <option value="AIRTEL">Airtel Nigeria</option>
                             <option value="GLO">Glo Mobile</option>
@@ -273,24 +272,24 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Mobile Phone Number</label>
-                        <input type="tel" id="dataPhoneNumber" placeholder="e.g. 08012345678" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500">
+                        <input type="tel" id="dataPhoneNumber" placeholder="e.g. 08012345678" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-emerald-500 transition">
                     </div>
-                    <button type="button" onclick="proceedToDataShare()" class="w-full py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-green-500/20 cursor-pointer">
+                    <button type="button" onclick="proceedToDataShare()" class="w-full py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 cursor-pointer">
                         Proceed to Share Requirement 🚀
                     </button>
                 </div>
 
                 <div id="dataShareArea" class="hidden space-y-5">
-                    <div class="p-4 rounded-2xl bg-green-500/10 border border-green-500/30 flex items-center justify-between text-xs">
+                    <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between text-xs">
                         <span class="text-slate-300 font-bold">Step 2: Share to 10 WhatsApp Groups</span>
-                        <span id="dataShareProgressText" class="text-green-400 font-black text-sm">0/10 Shares</span>
+                        <span id="dataShareProgressText" class="text-emerald-400 font-black text-sm">0/10 Shares</span>
                     </div>
 
                     <div class="w-full bg-slate-900 rounded-full h-3 overflow-hidden border border-slate-800">
-                        <div id="dataProgressBar" class="bg-green-500 h-full w-0 transition-all duration-300"></div>
+                        <div id="dataProgressBar" class="bg-emerald-500 h-full w-0 transition-all duration-300"></div>
                     </div>
 
-                    <button id="dataShareBtn" onclick="shareDataToWhatsApp()" class="w-full py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-green-500/20 cursor-pointer">
+                    <button id="dataShareBtn" onclick="shareDataToWhatsApp()" class="w-full py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 cursor-pointer">
                         <i class="fa-brands fa-whatsapp text-xl"></i>
                         <span>Share to WhatsApp Group (<span id="dataSharesLeft">10</span> Left)</span>
                     </button>
@@ -299,45 +298,45 @@
         </section>
 
         <!-- FREE FIRE SENSITIVITY GENERATOR TOOL -->
-        <section id="sensitivity" class="py-12 border-t border-pink-500/20 scroll-mt-24">
+        <section id="sensitivity" class="py-12 border-t border-slate-800 scroll-mt-24">
             <div class="text-center mb-8">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-400 text-xs font-extrabold uppercase mb-3">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-violet-500/15 border border-violet-500/30 text-violet-400 text-xs font-extrabold uppercase mb-3">
                     <i class="fa-solid fa-crosshair"></i> 100% Free Tool
                 </div>
                 <h2 class="text-3xl font-extrabold text-white">Free Fire Auto-Headshot Sensi</h2>
                 <p class="text-slate-400 text-sm mt-2">Share to 5 WhatsApp groups to unlock your custom optimal sensitivity settings.</p>
             </div>
 
-            <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/30 max-w-2xl mx-auto shadow-2xl relative">
+            <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-violet-500/30 max-w-2xl mx-auto shadow-2xl relative">
                 <div id="sensiUnlockArea" class="space-y-5">
-                    <div class="p-4 rounded-2xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-between text-xs">
+                    <div class="p-4 rounded-2xl bg-violet-500/10 border border-violet-500/30 flex items-center justify-between text-xs">
                         <span class="text-slate-300 font-bold">Step 1: Complete Share Requirement</span>
-                        <span id="taskProgressText" class="text-pink-400 font-black text-sm">0/5 Shares</span>
+                        <span id="taskProgressText" class="text-violet-400 font-black text-sm">0/5 Shares</span>
                     </div>
 
                     <div class="w-full bg-slate-900 rounded-full h-3 overflow-hidden border border-slate-800">
-                        <div id="progressBar" class="bg-pink-500 h-full w-0 transition-all duration-300"></div>
+                        <div id="progressBar" class="bg-violet-500 h-full w-0 transition-all duration-300"></div>
                     </div>
 
-                    <button onclick="shareToWhatsApp()" class="w-full py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-green-500/20 cursor-pointer">
+                    <button onclick="shareToWhatsApp()" class="w-full py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 cursor-pointer">
                         <i class="fa-brands fa-whatsapp text-xl"></i>
                         <span>Share to WhatsApp Group (<span id="sharesLeft">5</span> Left)</span>
                     </button>
                 </div>
 
                 <div id="sensiFormArea" class="hidden">
-                    <div class="p-3.5 mb-6 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs text-center font-bold">
-                        <i class="fa-solid fa-circle-check text-green-400 mr-1"></i> Shared successfully! Generate your settings below.
+                    <div class="p-3.5 mb-6 rounded-xl bg-violet-500/20 border border-violet-500/40 text-violet-200 text-xs text-center font-bold">
+                        <i class="fa-solid fa-circle-check text-emerald-400 mr-1"></i> Shared successfully! Generate your settings below.
                     </div>
                     
                     <form id="sensiForm" onsubmit="generateSensi(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Exact Phone Brand &amp; Model</label>
-                            <input type="text" id="phoneModel" placeholder="e.g. Tecno Spark 10, iPhone 11" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" required>
+                            <input type="text" id="phoneModel" placeholder="e.g. Tecno Spark 10, iPhone 11" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 transition" required>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">RAM Size</label>
-                            <select id="ramSize" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" required>
+                            <select id="ramSize" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 transition" required>
                                 <option value="2">2 GB RAM</option>
                                 <option value="3">3 GB RAM</option>
                                 <option value="4" selected>4 GB RAM</option>
@@ -346,35 +345,35 @@
                             </select>
                         </div>
                         <div class="md:col-span-2 mt-2">
-                            <button type="submit" class="w-full py-4 rounded-2xl bg-pink-500 hover:bg-pink-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-pink-500/20 cursor-pointer">
+                            <button type="submit" class="w-full py-4 rounded-2xl bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-violet-600/30 cursor-pointer">
                                 Generate Unique Settings ⚡
                             </button>
                         </div>
                     </form>
 
                     <div id="sensiResults" class="hidden mt-6 pt-6 border-t border-slate-800 grid grid-cols-2 md:grid-cols-3 gap-3">
-                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">General</span>
-                            <span class="text-xl font-black text-green-400" id="valGen">195</span>
+                        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+                            <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">General</span>
+                            <span class="text-xl font-black text-emerald-400" id="valGen">195</span>
                         </div>
-                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">Red Dot</span>
-                            <span class="text-xl font-black text-green-400" id="valRed">185</span>
+                        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+                            <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Red Dot</span>
+                            <span class="text-xl font-black text-emerald-400" id="valRed">185</span>
                         </div>
-                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">2X Scope</span>
-                            <span class="text-xl font-black text-green-400" id="val2x">175</span>
+                        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+                            <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">2X Scope</span>
+                            <span class="text-xl font-black text-emerald-400" id="val2x">175</span>
                         </div>
-                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">4X Scope</span>
-                            <span class="text-xl font-black text-green-400" id="val4x">160</span>
+                        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+                            <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">4X Scope</span>
+                            <span class="text-xl font-black text-emerald-400" id="val4x">160</span>
                         </div>
-                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">Fire Button Size</span>
-                            <span class="text-xl font-black text-pink-400" id="valFireBtn">48%</span>
+                        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+                            <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Fire Button Size</span>
+                            <span class="text-xl font-black text-violet-400" id="valFireBtn">48%</span>
                         </div>
-                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
-                            <span class="block text-[11px] text-slate-400 uppercase font-bold mb-1">Android DPI</span>
+                        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+                            <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Android DPI</span>
                             <span class="text-sm font-black text-cyan-400" id="valDpi">540</span>
                         </div>
                     </div>
@@ -384,16 +383,16 @@
     </div>
 
     <!-- SECRET FOOTER TRIGGER -->
-    <footer class="border-t border-slate-800 bg-black py-8 text-slate-500 text-xs text-center mt-auto select-none">
+    <footer class="border-t border-slate-800/80 bg-[#060608] py-8 text-slate-500 text-xs text-center mt-auto select-none">
         <p onclick="handleSecretFooterClick()">© 2026 NaijaCP Marketplace. All Rights Reserved.</p>
-        <p class="mt-2 text-[11px]">🛡️ Licensed &amp; Regulated by Central Bank of Nigeria (CBN)</p>
+        <p class="mt-2 text-[11px]">🛡️ Secure Centralized Gaming &amp; Digital Infrastructure</p>
     </footer>
 
     <!-- Toast Notifications Container -->
     <div id="liveToastContainer" class="fixed bottom-16 right-5 z-[999] flex flex-col gap-2 pointer-events-none w-full max-w-xs"></div>
 
     <!-- 24/7 AI AGENT FLOATING BUTTON -->
-    <button onclick="openAiChatModal()" class="fixed bottom-4 left-4 z-[980] bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white px-4 py-2.5 rounded-full flex items-center gap-2 shadow-[0_0_20px_rgba(236,72,153,0.6)] transition hover:scale-105 cursor-pointer font-bold text-xs">
+    <button onclick="openAiChatModal()" class="fixed bottom-5 left-5 z-[980] bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white px-4 py-3 rounded-full flex items-center gap-2.5 shadow-[0_0_25px_rgba(139,92,246,0.5)] transition hover:scale-105 cursor-pointer font-bold text-xs">
         <i class="fa-solid fa-robot text-base animate-bounce"></i>
         <span>24/7 AI Assistant 🤖</span>
     </button>
@@ -403,12 +402,12 @@
         <div class="glass-modal w-full max-w-md rounded-3xl p-5 relative shadow-2xl flex flex-col h-[520px]">
             <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-xl bg-pink-500/20 border border-pink-500 text-pink-400 flex items-center justify-center font-black">
+                    <div class="w-9 h-9 rounded-xl bg-violet-500/20 border border-violet-500/40 text-violet-400 flex items-center justify-center font-black">
                         <i class="fa-solid fa-robot"></i>
                     </div>
                     <div>
                         <h3 class="text-sm font-black text-white">NaijaCP 24/7 AI Assistant</h3>
-                        <span class="text-[10px] text-green-400 font-bold">● Online &amp; Ready to Help</span>
+                        <span class="text-[10px] text-emerald-400 font-bold">● Online &amp; Ready to Help</span>
                     </div>
                 </div>
                 <button onclick="closeModal('aiChatModal')" class="text-slate-400 hover:text-white w-7 h-7 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">
@@ -418,15 +417,15 @@
 
             <!-- Chat Messages Container -->
             <div id="aiChatMessages" class="flex-grow overflow-y-auto space-y-3 pr-1 text-xs mb-3">
-                <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl text-slate-300 max-w-[85%]">
-                    👋 Omo, welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI plug. Whether you wan buy CODM CP, eFootball coins, Free Fire diamonds, or use our wallet balance and bank transfers, talk to me! Wetin you wan run today?
+                <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-2xl text-slate-300 max-w-[85%] leading-relaxed">
+                    👋 Omo, welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI plug. Whether you wan buy CODM CP, eFootball coins, Free Fire diamonds, or use our wallet balance, talk to me! Wetin you wan run today?
                 </div>
             </div>
 
             <!-- Chat Input Form -->
             <form onsubmit="handleAiChatSubmit(event)" class="flex gap-2 pt-2 border-t border-slate-800">
-                <input type="text" id="aiChatInput" placeholder="Ask about top-ups, wallet balance, bank accounts..." class="flex-grow bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500" required>
-                <button type="submit" class="px-4 py-2.5 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-xl text-xs transition cursor-pointer">
+                <input type="text" id="aiChatInput" placeholder="Ask about top-ups, wallet balance, bank accounts..." class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-violet-500 transition" required>
+                <button type="submit" class="px-4 py-2.5 bg-violet-600 hover:bg-violet-500 text-white font-black rounded-xl text-xs transition cursor-pointer">
                     Send 🚀
                 </button>
             </form>
@@ -441,7 +440,7 @@
             </button>
             
             <div class="flex items-center gap-3.5 mb-6 pb-4 border-b border-slate-800">
-                <div class="w-12 h-12 rounded-2xl bg-pink-500/20 border border-pink-500/40 text-pink-400 flex items-center justify-center text-xl font-black">
+                <div class="w-12 h-12 rounded-2xl bg-violet-500/20 border border-violet-500/40 text-violet-400 flex items-center justify-center text-xl font-black">
                     <i class="fa-solid fa-wallet"></i>
                 </div>
                 <div>
@@ -453,12 +452,12 @@
             <div class="space-y-6">
                 <!-- User Stats & Wallet Box -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div class="bg-gradient-to-br from-pink-950/40 to-slate-950 p-4 rounded-2xl border border-pink-500/30 sm:col-span-2 flex items-center justify-between">
+                    <div class="bg-gradient-to-br from-violet-950/40 to-slate-950 p-4 rounded-2xl border border-violet-500/30 sm:col-span-2 flex items-center justify-between">
                         <div>
-                            <span class="block text-[10px] text-pink-400 uppercase font-extrabold mb-1">Available Wallet Balance</span>
+                            <span class="block text-[10px] text-violet-400 uppercase font-extrabold mb-1">Available Wallet Balance</span>
                             <span class="text-3xl font-black text-white">₦<span id="modalWalletBalance">0</span></span>
                         </div>
-                        <button onclick="closeModal('userDashboardModal'); openAddFundsModal();" class="px-4 py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold rounded-xl text-xs transition shadow-lg cursor-pointer flex items-center gap-1.5">
+                        <button onclick="closeModal('userDashboardModal'); openAddFundsModal();" class="px-4.5 py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold rounded-xl text-xs transition shadow-lg cursor-pointer flex items-center gap-1.5">
                             <i class="fa-solid fa-plus"></i> Add Funds
                         </button>
                     </div>
@@ -496,19 +495,19 @@
             </button>
             
             <h3 class="text-xl font-black text-white mb-1">Add Funds to Wallet 💳</h3>
-            <p class="text-slate-400 text-xs mb-6">Transfer to our official bank account below and upload your payment receipt.</p>
+            <p class="text-slate-400 text-xs mb-6">Transfer to our official bank accounts below and upload your payment receipt.</p>
 
             <form onsubmit="submitDepositRequest(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Amount to Add (₦)</label>
-                    <input type="number" id="depositAmount" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. 5000" min="500" required>
+                    <input type="number" id="depositAmount" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-emerald-500 transition" placeholder="e.g. 5000" min="500" required>
                 </div>
 
-                <!-- OFFICIAL BANK ACCOUNTS -->
+                <!-- OFFICIAL BANK ACCOUNTS (UPDATED) -->
                 <div class="bg-black border border-emerald-500/30 p-4 rounded-2xl space-y-3">
                     <h4 class="text-emerald-400 text-xs font-bold uppercase tracking-wider">🏦 Official Bank Accounts:</h4>
                     
-                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1.5">
+                    <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 space-y-1.5">
                         <div class="flex justify-between text-xs text-slate-300">
                             <span>Bank Name:</span><span class="font-bold text-white">Moremonee Bank</span>
                         </div>
@@ -517,13 +516,13 @@
                             <button type="button" onclick="copyCustomAccount('8099646374')" class="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer">Copy</button>
                         </div>
                         <div class="flex justify-between text-xs text-slate-300">
-                            <span>Account Name:</span><span class="font-bold text-white">NaijaCP Digital Store</span>
+                            <span>Account Name:</span><span class="font-bold text-white">oluwabukunmi makanjuola</span>
                         </div>
                     </div>
 
                     <div class="text-center text-[10px] text-slate-500 font-bold">— OR —</div>
 
-                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1.5">
+                    <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 space-y-1.5">
                         <div class="flex justify-between text-xs text-slate-300">
                             <span>Bank Name:</span><span class="font-bold text-white">Smartcash Payment Service Bank</span>
                         </div>
@@ -532,7 +531,7 @@
                             <button type="button" onclick="copyCustomAccount('8080504236')" class="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer">Copy</button>
                         </div>
                         <div class="flex justify-between text-xs text-slate-300">
-                            <span>Account Name:</span><span class="font-bold text-white">NaijaCP Digital Store</span>
+                            <span>Account Name:</span><span class="font-bold text-white">AKEEM SOLARIN</span>
                         </div>
                     </div>
                 </div>
@@ -574,7 +573,7 @@
         </div>
     </div>
 
-    <!-- MULTI-STEP CHECKOUT & PAYMENT MODAL -->
+    <!-- MULTI-STEP CHECKOUT MODAL (WALLET-ONLY) -->
     <div id="checkoutModal" class="fixed inset-0 z-[60] items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden">
         <div class="glass-modal w-full max-w-lg rounded-3xl p-6 sm:p-8 relative shadow-2xl max-h-[95vh] overflow-y-auto">
             <button onclick="closeModal('checkoutModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">
@@ -583,107 +582,74 @@
             
             <h3 class="text-xl font-black text-white mb-1">Complete Your Order</h3>
             <p class="text-slate-400 text-xs mb-2" id="checkoutItemTitle">Item: <strong class="text-white">CODM: 80 CP</strong></p>
-            <p class="text-pink-400 text-2xl font-black mb-6" id="checkoutItemPrice">₦1,200</p>
+            <p class="text-violet-400 text-2xl font-black mb-6" id="checkoutItemPrice">₦1,200</p>
 
             <form id="orderForm" onsubmit="submitOrder(event)" class="space-y-4">
                 
                 <!-- STEP 1 -->
                 <div id="checkoutStep1" class="space-y-4">
-                    <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2">
+                    <div class="p-3 rounded-xl bg-violet-500/10 border border-violet-500/30 text-xs font-bold text-violet-400 mb-2">
                         Step 1 of 3: Enter Your Name
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Your Full Name / Gamer Tag</label>
-                        <input type="text" id="custName" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. John Doe" required>
+                        <input type="text" id="custName" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 transition" placeholder="e.g. John Doe" required>
                     </div>
-                    <button type="button" onclick="nextCheckoutStep(2)" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer">
+                    <button type="button" onclick="nextCheckoutStep(2)" class="w-full py-4 rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-black text-sm shadow-lg shadow-violet-600/30 transition cursor-pointer">
                         Next: Player ID ➔
                     </button>
                 </div>
 
                 <!-- STEP 2 -->
                 <div id="checkoutStep2" class="space-y-4 hidden">
-                    <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2">
+                    <div class="p-3 rounded-xl bg-violet-500/10 border border-violet-500/30 text-xs font-bold text-violet-400 mb-2">
                         Step 2 of 3: Account &amp; Contact Details
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Player ID / Account ID</label>
-                        <input type="text" id="custGameId" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. 6823019283" required>
+                        <input type="text" id="custGameId" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 transition" placeholder="e.g. 6823019283" required>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">WhatsApp Phone Number</label>
-                        <input type="tel" id="custPhone" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500" placeholder="e.g. 08012345678" required>
+                        <input type="tel" id="custPhone" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-violet-500 transition" placeholder="e.g. 08012345678" required>
                     </div>
                     <div class="flex gap-2">
                         <button type="button" onclick="prevCheckoutStep(1)" class="w-1/3 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition cursor-pointer">
                             ⬅ Back
                         </button>
-                        <button type="button" onclick="nextCheckoutStep(3)" class="w-2/3 py-3.5 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer">
-                            Next: Payment Details ➔
+                        <button type="button" onclick="nextCheckoutStep(3)" class="w-2/3 py-3.5 rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-black text-sm shadow-lg shadow-violet-600/30 transition cursor-pointer">
+                            Next: Wallet Payment ➔
                         </button>
                     </div>
                 </div>
 
-                <!-- STEP 3 -->
+                <!-- STEP 3 (WALLET PAYMENT ONLY - DIRECT BANK TRANSFER REMOVED) -->
                 <div id="checkoutStep3" class="space-y-4 hidden">
-                    <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2 flex items-center justify-between">
-                        <span>Step 3 of 3: Payment Method</span>
-                        <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded">Instant Wallet ⚡</span>
+                    <div class="p-3 rounded-xl bg-violet-500/10 border border-violet-500/30 text-xs font-bold text-violet-400 mb-2 flex items-center justify-between">
+                        <span>Step 3 of 3: Instant Wallet Payment</span>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">Wallet Balance ⚡</span>
                     </div>
 
-                    <!-- WALLET PAY BUTTON -->
-                    <div class="bg-gradient-to-br from-pink-950/50 to-slate-950 border border-pink-500/40 p-4 rounded-2xl space-y-3">
+                    <!-- WALLET PAY BOX -->
+                    <div class="bg-gradient-to-br from-violet-950/50 to-slate-950 border border-violet-500/40 p-5 rounded-2xl space-y-4">
                         <div class="flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] text-slate-400 uppercase font-bold">Your Wallet Balance</span>
-                                <div class="text-xl font-black text-white">₦<span id="checkoutWalletBalance">0</span></div>
+                                <span class="text-[10px] text-slate-400 uppercase font-extrabold tracking-wider">Your Wallet Balance</span>
+                                <div class="text-2xl font-black text-white mt-0.5">₦<span id="checkoutWalletBalance">0</span></div>
                             </div>
-                            <button type="button" onclick="closeModal('checkoutModal'); openAddFundsModal();" class="px-3 py-2 bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black rounded-xl font-bold text-xs transition cursor-pointer">
-                                + Add Funds
+                            <button type="button" onclick="closeModal('checkoutModal'); openAddFundsModal();" class="px-3.5 py-2.5 bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black rounded-xl font-extrabold text-xs transition cursor-pointer flex items-center gap-1.5 border border-emerald-500/30">
+                                <i class="fa-solid fa-plus"></i> Add Funds
                             </button>
                         </div>
                         
-                        <button type="submit" id="payWithWalletBtn" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer flex items-center justify-center gap-2">
+                        <button type="submit" id="payWithWalletBtn" class="w-full py-4 rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 hover:from-violet-500 hover:to-cyan-500 text-white font-black text-sm shadow-lg shadow-violet-600/30 transition cursor-pointer flex items-center justify-center gap-2">
                             <i class="fa-solid fa-wallet"></i> Pay Instantly with Wallet Balance ⚡
                         </button>
                     </div>
 
-                    <div class="text-center text-[10px] text-slate-500 font-bold">— OR DIRECT BANK TRANSFER —</div>
-
-                    <div class="bg-black border border-pink-500/30 p-4 rounded-2xl space-y-3">
-                        <h4 class="text-pink-400 text-xs font-bold uppercase tracking-wider">🏦 Official Bank Accounts:</h4>
-                        
-                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1.5">
-                            <div class="flex justify-between text-xs text-slate-300">
-                                <span>Bank Name:</span><span class="font-bold text-white">Moremonee Bank</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-base font-mono font-extrabold text-pink-400">8099646374</span>
-                                <button type="button" onclick="copyCustomAccount('8099646374')" class="bg-pink-500/20 text-pink-400 hover:bg-pink-500 hover:text-black px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer">Copy</button>
-                            </div>
-                            <div class="flex justify-between text-xs text-slate-300">
-                                <span>Account Name:</span><span class="font-bold text-white">NaijaCP Digital Store</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Upload Payment Screenshot 🧾</label>
-                        <div class="border-2 border-dashed border-pink-500/40 hover:border-pink-500 bg-slate-950 rounded-2xl p-4 text-center cursor-pointer transition" onclick="document.getElementById('receiptFile').click()">
-                            <input type="file" id="receiptFile" accept="image/*" class="hidden" onchange="handleFileSelect(event)">
-                            <div id="fileLabel" class="text-xs text-white font-semibold flex flex-col items-center gap-2">
-                                <i class="fa-solid fa-cloud-arrow-up text-pink-400 text-xl"></i>
-                                Click to choose receipt screenshot image
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="flex gap-2 pt-2">
-                        <button type="button" onclick="prevCheckoutStep(2)" class="w-1/3 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition cursor-pointer">
-                            ⬅ Back
-                        </button>
-                        <button type="submit" id="submitOrderBtn" class="w-2/3 py-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-black text-sm transition cursor-pointer">
-                            Submit Bank Transfer Order 🚀
+                        <button type="button" onclick="prevCheckoutStep(2)" class="w-full py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition cursor-pointer">
+                            ⬅ Back to Details
                         </button>
                     </div>
                 </div>
@@ -693,13 +659,13 @@
 
     <!-- PROCESSING MODAL -->
     <div id="processingModal" class="fixed inset-0 z-[110] hidden flex-col items-center justify-center p-4 bg-black/95 backdrop-blur-md">
-        <div class="w-16 h-16 border-4 border-pink-500 border-t-transparent rounded-full animate-spin mb-4" id="processingSpinner"></div>
-        <div class="w-16 h-16 rounded-full bg-green-500/20 text-green-400 hidden items-center justify-center text-3xl mb-4" id="processingSuccessIcon">
+        <div class="w-16 h-16 border-4 border-violet-500 border-t-transparent rounded-full animate-spin mb-4" id="processingSpinner"></div>
+        <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 hidden items-center justify-center text-3xl mb-4" id="processingSuccessIcon">
             <i class="fa-solid fa-check"></i>
         </div>
         <h2 class="text-2xl font-black text-white mb-2 text-center" id="processingTitle">Order Submitted Successfully!</h2>
         <p class="text-slate-400 text-sm text-center max-w-sm mb-6" id="processingDesc">Your top-up order is currently being verified by our dispatch system. Delivery takes 1–3 minutes.</p>
-        <button id="closeProcessingBtn" onclick="closeModal('processingModal'); location.reload();" class="hidden px-8 py-3 bg-pink-500 hover:bg-pink-400 text-black font-bold rounded-xl transition cursor-pointer">Return to Store 🎮</button>
+        <button id="closeProcessingBtn" onclick="closeModal('processingModal'); location.reload();" class="hidden px-8 py-3.5 bg-gradient-to-r from-violet-600 to-cyan-600 text-white font-bold rounded-xl transition cursor-pointer shadow-lg">Return to Store 🎮</button>
     </div>
 
     <!-- ADMIN LOGIN MODAL -->
@@ -713,16 +679,16 @@
             <form onsubmit="handleAdminLogin(event)" class="space-y-3">
                 <div>
                     <label class="block text-[11px] font-bold text-slate-300 uppercase mb-1">Username</label>
-                    <input type="text" id="adminUser" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500" placeholder="Username" required>
+                    <input type="text" id="adminUser" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-violet-500 transition" placeholder="Username" required>
                 </div>
                 <div class="relative">
                     <label class="block text-[11px] font-bold text-slate-300 uppercase mb-1">Password</label>
-                    <input type="password" id="adminPass" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 pr-10 text-white text-xs focus:outline-none focus:border-pink-500" placeholder="Password" required>
+                    <input type="password" id="adminPass" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 pr-10 text-white text-xs focus:outline-none focus:border-violet-500 transition" placeholder="Password" required>
                     <button type="button" onclick="togglePasswordVisibility('adminPass', this)" class="absolute right-3 top-7 text-slate-400 hover:text-white text-xs cursor-pointer">
                         <i class="fa-solid fa-eye"></i>
                     </button>
                 </div>
-                <button type="submit" class="w-full py-3 bg-pink-500 hover:bg-pink-400 text-black font-black text-xs rounded-xl shadow-lg transition mt-2 cursor-pointer">
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-violet-600 to-cyan-600 text-white font-black text-xs rounded-xl shadow-lg transition mt-2 cursor-pointer">
                     Login to Dashboard ⚡
                 </button>
             </form>
@@ -734,10 +700,10 @@
         <div class="max-w-5xl mx-auto w-full">
             <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-800">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-pink-500/20 border border-pink-500 text-pink-400 flex items-center justify-center font-black">N</div>
+                    <div class="w-10 h-10 rounded-xl bg-violet-500/20 border border-violet-500 text-violet-400 flex items-center justify-center font-black">N</div>
                     <div>
                         <h2 class="text-xl font-black text-white">NaijaCP Secret Admin Portal (Cloud Sync ⚡)</h2>
-                        <span class="text-xs text-green-400 font-bold">● Secure Cloud Active</span>
+                        <span class="text-xs text-emerald-400 font-bold">● Secure Cloud Active</span>
                     </div>
                 </div>
                 <button onclick="closeModal('adminDashboardModal')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold transition cursor-pointer">
@@ -746,7 +712,7 @@
             </div>
 
             <div class="flex flex-wrap gap-2 mb-6">
-                <button onclick="switchAdminTab('orders')" id="adminTabBtn-orders" class="px-5 py-2.5 rounded-xl bg-pink-500 text-black font-bold text-xs transition cursor-pointer">📦 Orders Management</button>
+                <button onclick="switchAdminTab('orders')" id="adminTabBtn-orders" class="px-5 py-2.5 rounded-xl bg-violet-600 text-white font-bold text-xs transition cursor-pointer">📦 Orders Management</button>
                 <button onclick="switchAdminTab('deposits')" id="adminTabBtn-deposits" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">💳 Deposit Requests</button>
                 <button onclick="switchAdminTab('products')" id="adminTabBtn-products" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">⚙️ Cloud Packages &amp; Prices</button>
             </div>
@@ -767,15 +733,15 @@
                     <form onsubmit="addNewProductCloud(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-300 mb-1">Package Title</label>
-                            <input type="text" id="newProdTitle" placeholder="e.g. CODM: 1500 CP" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs" required>
+                            <input type="text" id="newProdTitle" placeholder="e.g. CODM: 1500 CP" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs" required>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-300 mb-1">Price (₦)</label>
-                            <input type="number" id="newProdPrice" placeholder="e.g. 18000" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs" required>
+                            <input type="number" id="newProdPrice" placeholder="e.g. 18000" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs" required>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-300 mb-1">Category</label>
-                            <select id="newProdCat" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs">
+                            <select id="newProdCat" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs">
                                 <option value="games">Games</option>
                                 <option value="gadgets">Gadgets</option>
                                 <option value="giftcards">Gift Cards</option>
@@ -783,7 +749,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-300 mb-1">Sub-Tag (for games)</label>
-                            <select id="newProdSub" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs">
+                            <select id="newProdSub" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs">
                                 <option value="codm">CODM</option>
                                 <option value="efootball">eFootball</option>
                                 <option value="freefire">Free Fire</option>
@@ -796,10 +762,10 @@
                         </div>
                         <div class="sm:col-span-2">
                             <label class="block text-xs font-bold text-slate-300 mb-1">Image / Logo URL</label>
-                            <input type="url" id="newProdIcon" placeholder="https://files.catbox.moe/..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs" required>
+                            <input type="url" id="newProdIcon" placeholder="https://files.catbox.moe/..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs" required>
                         </div>
                         <div class="sm:col-span-2">
-                            <button type="submit" class="w-full py-3 bg-pink-500 hover:bg-pink-400 text-black font-black text-xs rounded-xl shadow-lg transition cursor-pointer">
+                            <button type="submit" class="w-full py-3 bg-violet-600 hover:bg-violet-500 text-white font-black text-xs rounded-xl shadow-lg transition cursor-pointer">
                                 Save to Cloud Database 🚀
                             </button>
                         </div>
@@ -906,7 +872,6 @@
         let currentSubFilter = 'all';
         let searchQuery = '';
         let currentSelectedItem = null;
-        let uploadedReceiptBase64 = '';
         let uploadedDepositReceiptBase64 = '';
         let userWalletBalance = 0;
         let sensiShareCount = 0;
@@ -1125,11 +1090,11 @@
                         historyList.innerHTML += `
                             <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center justify-between text-xs">
                                 <div>
-                                    <span class="text-pink-400 font-bold">🛒 Order #${item.id} - ${item.product}</span>
+                                    <span class="text-violet-400 font-bold">🛒 Order #${item.id} - ${item.product}</span>
                                     <div class="text-slate-300 mt-0.5">Game ID: <strong>${item.gameId}</strong> | ₦${item.amount?.toLocaleString()}</div>
                                     <div class="text-slate-500 text-[10px] mt-1">${item.date}</div>
                                 </div>
-                                <span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${item.status === 'Completed' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'}">
+                                <span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${item.status.includes('Completed') ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'}">
                                     ${item.status} ⚡
                                 </span>
                             </div>
@@ -1142,7 +1107,7 @@
                                     <div class="text-slate-300 mt-0.5">Ref: #${item.id}</div>
                                     <div class="text-slate-500 text-[10px] mt-1">${item.date}</div>
                                 </div>
-                                <span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${item.status === 'Approved' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'}">
+                                <span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${item.status === 'Approved' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'}">
                                     ${item.status} ⚡
                                 </span>
                             </div>
@@ -1249,7 +1214,7 @@
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(700, audioCtx.currentTime);
                 osc.frequency.exponentialRampToValueAtTime(250, audioCtx.currentTime + 0.06);
-                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
                 gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.06);
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
@@ -1261,8 +1226,8 @@
         function showToast(message) {
             const container = document.getElementById('liveToastContainer');
             const toast = document.createElement('div');
-            toast.className = 'toast-enter p-3.5 rounded-2xl bg-slate-900 border border-pink-500/40 text-white text-xs shadow-2xl flex items-center gap-3';
-            toast.innerHTML = `<i class="fa-solid fa-bell text-pink-400 text-lg"></i> <span class="font-medium">${message}</span>`;
+            toast.className = 'toast-enter p-3.5 rounded-2xl bg-slate-900 border border-violet-500/40 text-white text-xs shadow-2xl flex items-center gap-3';
+            toast.innerHTML = `<i class="fa-solid fa-bell text-violet-400 text-lg"></i> <span class="font-medium">${message}</span>`;
             container.appendChild(toast);
             setTimeout(() => {
                 toast.classList.replace('toast-enter', 'toast-exit');
@@ -1311,7 +1276,7 @@
                     const randomPhone = prefixes[Math.floor(Math.random() * prefixes.length)] + "***" + Math.floor(1000 + Math.random() * 9000);
                     const randomProduct = products[Math.floor(Math.random() * products.length)];
                     
-                    showToast(`<span class="text-pink-400 font-bold">${randomName} (${randomPhone})</span> just purchased <br><span class="font-bold">${randomProduct.title}</span>`);
+                    showToast(`<span class="text-violet-400 font-bold">${randomName} (${randomPhone})</span> just purchased <br><span class="font-bold">${randomProduct.title}</span>`);
                 }
             }, 8000);
         }
@@ -1325,8 +1290,9 @@
             document.querySelectorAll('.btn-cat').forEach(b => b.classList.remove('active-btn'));
             document.getElementById(`catBtn-${cat}`).classList.add('active-btn');
             
-            document.querySelectorAll('header nav a').forEach(a => a.classList.replace('text-pink-400', 'text-slate-300'));
-            document.getElementById(`nav-${cat}`)?.classList.replace('text-slate-300', 'text-pink-400');
+            document.querySelectorAll('header nav a').forEach(a => a.classList.replace('text-white', 'text-slate-400'));
+            document.querySelectorAll('header nav a').forEach(a => a.classList.remove('text-violet-400'));
+            document.getElementById(`nav-${cat}`)?.classList.add('text-violet-400');
 
             const subFilterBox = document.getElementById('gameSubFilters');
             if (cat === 'games') {
@@ -1375,16 +1341,16 @@
 
             filtered.forEach(p => {
                 grid.innerHTML += `
-                    <div class="glass-card p-4 rounded-3xl flex flex-col justify-between text-center group cursor-pointer border border-slate-800 hover:border-pink-500 transition duration-300">
+                    <div class="glass-card p-4 rounded-3xl flex flex-col justify-between text-center group cursor-pointer border border-slate-800 hover:border-violet-500 transition duration-300">
                         <div class="relative">
-                            <span class="absolute -top-2 -right-2 text-[9px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full font-bold border border-green-500/30">⚡ Instant</span>
-                            <div class="w-16 h-16 mx-auto bg-slate-900/80 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-slate-700/50 group-hover:scale-110 transition duration-300 overflow-hidden">
+                            <span class="absolute -top-2 -right-2 text-[9px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-bold border border-emerald-500/30">⚡ Instant</span>
+                            <div class="w-16 h-16 mx-auto bg-slate-900/80 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-slate-800 group-hover:scale-110 transition duration-300 overflow-hidden shadow-inner">
                                 <img src="${p.icon}" class="w-full h-full object-cover rounded-2xl" onerror="this.src='https://files.catbox.moe/w4tgaw.jpeg'">
                             </div>
                         </div>
                         <h3 class="font-bold text-sm text-white mb-2 leading-tight">${p.title}</h3>
-                        <div class="text-pink-400 font-black text-lg mb-4">₦${Number(p.price).toLocaleString()}</div>
-                        <button class="w-full py-2.5 rounded-xl bg-pink-500/10 text-pink-400 font-extrabold text-xs border border-pink-500/30 group-hover:bg-pink-500 group-hover:text-black transition cursor-pointer" onclick="openCheckout('${p.id}')">
+                        <div class="text-violet-400 font-black text-lg mb-4">₦${Number(p.price).toLocaleString()}</div>
+                        <button class="w-full py-2.5 rounded-xl bg-violet-500/10 text-violet-300 font-extrabold text-xs border border-violet-500/30 group-hover:bg-gradient-to-r group-hover:from-violet-600 group-hover:to-cyan-600 group-hover:text-white transition cursor-pointer" onclick="openCheckout('${p.id}')">
                             Buy Now
                         </button>
                     </div>
@@ -1404,16 +1370,16 @@
 
             const found = orders.find(o => (o.phone && o.phone.includes(query)) || (o.id && o.id.toString().includes(query)));
             if(!found) {
-                box.innerHTML = `<span class="text-yellow-400 font-bold">No active order found matching "${query}". Please check your details or chat with our 24/7 AI Support.</span>`;
+                box.innerHTML = `<span class="text-amber-400 font-bold">No active order found matching "${query}". Please check your details or chat with our 24/7 AI Support.</span>`;
                 return;
             }
 
             box.innerHTML = `
                 <div class="space-y-1">
                     <div class="flex justify-between"><span class="text-slate-400">Order ID:</span> <span class="font-bold text-white">#${found.id}</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Item:</span> <span class="font-bold text-pink-400">${found.product}</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Item:</span> <span class="font-bold text-violet-400">${found.product}</span></div>
                     <div class="flex justify-between"><span class="text-slate-400">Customer:</span> <span class="font-bold text-white">${found.customer}</span></div>
-                    <div class="flex justify-between"><span class="text-slate-400">Status:</span> <span class="font-bold text-green-400">${found.status} ⚡</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Status:</span> <span class="font-bold text-emerald-400">${found.status} ⚡</span></div>
                     <div class="flex justify-between"><span class="text-slate-400">Date:</span> <span class="text-slate-300">${found.date}</span></div>
                 </div>
             `;
@@ -1536,16 +1502,6 @@
             nextCheckoutStep(step);
         }
 
-        function handleFileSelect(e) {
-            const file = e.target.files[0];
-            if (file) {
-                document.getElementById('fileLabel').innerHTML = `<i class="fa-solid fa-circle-check text-green-400 text-xl"></i> <span class="text-green-400 font-bold">${file.name} Attached</span>`;
-                const reader = new FileReader();
-                reader.onload = function(evt) { uploadedReceiptBase64 = evt.target.result; };
-                reader.readAsDataURL(file);
-            }
-        }
-
         function sendOrderToTelegram(order) {
             const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
             const chatId = "8682089527";
@@ -1590,16 +1546,12 @@
             const gameId = document.getElementById('custGameId').value.trim() || "N/A";
             const phoneNum = document.getElementById('custPhone').value.trim() || "N/A";
 
-            // Deduct wallet balance if enough
-            let paidViaWallet = false;
-            if(userWalletBalance >= currentSelectedItem.price) {
-                userWalletBalance -= currentSelectedItem.price;
-                paidViaWallet = true;
-                if(db && currentUser) {
-                    db.collection("users").doc(currentUser.uid).update({ balance: userWalletBalance });
-                }
-                updateWalletUI();
+            // Deduct wallet balance
+            userWalletBalance -= currentSelectedItem.price;
+            if(db && currentUser) {
+                db.collection("users").doc(currentUser.uid).update({ balance: userWalletBalance });
             }
+            updateWalletUI();
 
             const newOrder = {
                 id: Date.now().toString().slice(-6),
@@ -1610,8 +1562,8 @@
                 userEmail: currentUser ? currentUser.email : 'guest@naijacp.com',
                 product: currentSelectedItem.title,
                 amount: currentSelectedItem.price,
-                receipt: uploadedReceiptBase64 || 'https://files.catbox.moe/w4tgaw.jpeg',
-                status: paidViaWallet ? 'Completed (Wallet Paid)' : 'Pending Review',
+                receipt: 'https://files.catbox.moe/w4tgaw.jpeg',
+                status: 'Completed (Wallet Paid)',
                 timestamp: Date.now()
             };
 
@@ -1620,8 +1572,8 @@
             closeModal('checkoutModal');
             openModal('processingModal');
             
-            document.getElementById('processingTitle').innerText = paidViaWallet ? "Wallet Payment Successful! ⚡" : "Verifying Transaction...";
-            document.getElementById('processingDesc').innerText = paidViaWallet ? "Your wallet payment was successful! Your package is being fulfilled instantly." : "Your top-up order is currently being verified by our dispatch system. Delivery takes 1–3 minutes.";
+            document.getElementById('processingTitle').innerText = "Wallet Payment Successful! ⚡";
+            document.getElementById('processingDesc').innerText = "Your wallet payment was successful! Your package is being fulfilled instantly by our dispatch system (1–3 minutes).";
             document.getElementById('processingSpinner').classList.remove('hidden');
             document.getElementById('processingSuccessIcon').classList.add('hidden');
             document.getElementById('closeProcessingBtn').classList.add('hidden');
@@ -1638,8 +1590,6 @@
                 document.getElementById('closeProcessingBtn').classList.remove('hidden');
 
                 document.getElementById('orderForm').reset();
-                document.getElementById('fileLabel').innerHTML = `<i class="fa-solid fa-cloud-arrow-up text-pink-400 text-xl"></i> Click to choose receipt screenshot image`;
-                uploadedReceiptBase64 = '';
             }, 1800);
         }
 
@@ -1658,7 +1608,7 @@
             
             chatMessages.innerHTML += `
                 <div class="flex justify-end">
-                    <div class="bg-pink-600 text-white p-3 rounded-2xl max-w-[85%] font-medium">
+                    <div class="bg-gradient-to-r from-violet-600 to-cyan-600 text-white p-3 rounded-2xl max-w-[85%] font-medium">
                         ${escapeHtml(message)}
                     </div>
                 </div>
@@ -1670,7 +1620,7 @@
                 let reply = getSmartAiResponse(message);
                 chatMessages.innerHTML += `
                     <div class="flex justify-start">
-                        <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl text-slate-300 max-w-[85%] leading-relaxed">
+                        <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-2xl text-slate-300 max-w-[85%] leading-relaxed">
                             ${reply}
                         </div>
                     </div>
@@ -1689,10 +1639,10 @@
                 return `💳 **Wallet System:** You can fund your wallet by clicking "+ Add Funds", transferring to our official bank account, and uploading your receipt! Our admin will approve and credit your balance within 3 minutes.`;
             }
             if (q.includes('bank') || q.includes('account') || q.includes('transfer')) {
-                return `🏦 **Official NaijaCP Bank Accounts:**<br><br>1️⃣ **Moremonee Bank:** <code>8099646374</code> (NaijaCP Digital Store)<br><br>2️⃣ **Smartcash PSB:** <code>8080504236</code> (NaijaCP Digital Store)`;
+                return `🏦 **Official NaijaCP Bank Accounts:**<br><br>1️⃣ **Moremonee Bank:** <code>8099646374</code> (oluwabukunmi makanjuola)<br><br>2️⃣ **Smartcash PSB:** <code>8080504236</code> (AKEEM SOLARIN)`;
             }
             if (q.includes('codm') || q.includes('cp')) {
-                return `🎮 **CODM Top-Up:** We have 80 CP, 420 CP, 880 CP and more available instantly. Pay with your wallet or bank transfer!`;
+                return `🎮 **CODM Top-Up:** We have 80 CP, 420 CP, 880 CP and more available instantly. Pay with your wallet balance!`;
             }
 
             return `🤖 Boss, I dey for you! You fit ask me about your wallet balance, game packages, bank transfer details, or free 2GB data. How I fit help you now?`;
@@ -1730,7 +1680,7 @@
             document.getElementById('adminTabBtn-products').className = 'px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer';
 
             document.getElementById(`adminTab-${tab}`).classList.remove('hidden');
-            document.getElementById(`adminTabBtn-${tab}`).className = 'px-5 py-2.5 rounded-xl bg-pink-500 text-black font-bold text-xs transition cursor-pointer';
+            document.getElementById(`adminTabBtn-${tab}`).className = 'px-5 py-2.5 rounded-xl bg-violet-600 text-white font-bold text-xs transition cursor-pointer';
         }
 
         function renderAdminOrders() {
@@ -1744,13 +1694,13 @@
                 list.innerHTML += `
                     <div class="glass-modal p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs">
                         <div class="space-y-1">
-                            <span class="text-pink-400 font-bold">#${o.id} - ${o.product} (₦${o.amount.toLocaleString()})</span>
+                            <span class="text-violet-400 font-bold">#${o.id} - ${o.product} (₦${o.amount.toLocaleString()})</span>
                             <div class="text-slate-300">Customer: <strong>${o.customer}</strong> | ID: <strong>${o.gameId}</strong> | Phone: <strong>${o.phone}</strong></div>
                             <div class="text-slate-500 text-[11px]">${o.date}</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button onclick="viewAdminReceipt('${o.receipt}')" class="px-3.5 py-2 bg-pink-500/20 hover:bg-pink-500 hover:text-black text-pink-400 rounded-xl font-bold transition cursor-pointer">View Receipt 🧾</button>
-                            <select onchange="updateOrderStatus('${o.id}', this.value)" class="bg-slate-950 border border-slate-700 text-white px-3 py-1.5 rounded-lg font-bold">
+                            <button onclick="viewAdminReceipt('${o.receipt}')" class="px-3.5 py-2 bg-violet-500/20 hover:bg-violet-500 hover:text-white text-violet-300 rounded-xl font-bold transition cursor-pointer">View Receipt 🧾</button>
+                            <select onchange="updateOrderStatus('${o.id}', this.value)" class="bg-slate-950 border border-slate-800 text-white px-3 py-1.5 rounded-lg font-bold">
                                 <option value="Pending Review" ${o.status==='Pending Review'?'selected':''}>Pending Review</option>
                                 <option value="Completed" ${o.status.includes('Completed')?'selected':''}>Completed ⚡</option>
                             </select>
@@ -1776,8 +1726,8 @@
                             <div class="text-slate-500 text-[11px]">${d.date}</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button onclick="viewAdminReceipt('${d.receipt}')" class="px-3.5 py-2 bg-pink-500/20 hover:bg-pink-500 hover:text-black text-pink-400 rounded-xl font-bold transition cursor-pointer">View Receipt 🧾</button>
-                            ${d.status === 'Approved' ? '<span class="text-green-400 font-bold">Approved ✅</span>' : `<button onclick="approveDeposit('${d.id}', '${d.userId}', ${d.amount})" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold rounded-xl transition cursor-pointer">Approve & Credit Balance ⚡</button>`}
+                            <button onclick="viewAdminReceipt('${d.receipt}')" class="px-3.5 py-2 bg-violet-500/20 hover:bg-violet-500 hover:text-white text-violet-300 rounded-xl font-bold transition cursor-pointer">View Receipt 🧾</button>
+                            ${d.status === 'Approved' ? '<span class="text-emerald-400 font-bold">Approved ✅</span>' : `<button onclick="approveDeposit('${d.id}', '${d.userId}', ${d.amount})" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold rounded-xl transition cursor-pointer">Approve & Credit Balance ⚡</button>`}
                         </div>
                     </div>
                 `;
@@ -1788,10 +1738,8 @@
             if(!confirm(`Approve ₦${amount.toLocaleString()} and credit user wallet?`)) return;
 
             if(db) {
-                // Update deposit status
                 await db.collection("deposits").doc(depositId).update({ status: 'Approved' });
 
-                // Get user current balance and add
                 const userRef = db.collection("users").doc(userId);
                 const userDoc = await userRef.get();
                 if(userDoc.exists) {
@@ -1839,11 +1787,11 @@
                             <img src="${p.icon}" class="w-8 h-8 rounded-lg object-cover">
                             <div>
                                 <span class="font-bold text-white">${p.title}</span>
-                                <span class="text-pink-400 font-bold ml-2">₦${p.price.toLocaleString()}</span>
+                                <span class="text-violet-400 font-bold ml-2">₦${p.price.toLocaleString()}</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <button onclick="editProductPriceCloud('${p.id}')" class="px-2.5 py-1 bg-pink-500/20 text-pink-400 hover:bg-pink-500 hover:text-black rounded-lg font-bold transition cursor-pointer">Edit Price</button>
+                            <button onclick="editProductPriceCloud('${p.id}')" class="px-2.5 py-1 bg-violet-500/20 text-violet-300 hover:bg-violet-500 hover:text-white rounded-lg font-bold transition cursor-pointer">Edit Price</button>
                             <button onclick="deleteProductCloud('${p.id}')" class="px-2.5 py-1 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white rounded-lg font-bold transition cursor-pointer">Delete</button>
                         </div>
                     </div>
