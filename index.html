@@ -120,7 +120,7 @@
 
                 <!-- Email Sign Up / Login Button -->
                 <button type="button" onclick="openEmailAuthModal()" class="w-full py-3.5 rounded-2xl bg-slate-900 border border-slate-700 hover:border-pink-500 text-white font-extrabold text-xs flex items-center justify-center gap-2.5 transition cursor-pointer">
-                    <i class="fa-solid envelope text-pink-400 text-base"></i> Sign in with Email &amp; Password
+                    <i class="fa-solid fa-envelope text-pink-400 text-base"></i> Sign in with Email &amp; Password
                 </button>
             </div>
 
@@ -934,6 +934,26 @@
             window.addEventListener('hashchange', checkSecretAdminHash);
 
             if(auth) {
+                // Handle mobile redirect login result securely
+                auth.getRedirectResult().then(async (result) => {
+                    if (result.user) {
+                        const user = result.user;
+                        const userRef = db.collection("users").doc(user.uid);
+                        const doc = await userRef.get();
+                        if (!doc.exists) {
+                            await userRef.set({
+                                username: user.displayName ? user.displayName.replace(/\s+/g, '').toLowerCase() : user.email.split('@')[0],
+                                email: user.email || `${user.uid}@social.com`,
+                                balance: 0,
+                                createdAt: Date.now()
+                            });
+                        }
+                        showToast("🎉 Successfully signed in!");
+                    }
+                }).catch((error) => {
+                    console.log("Redirect auth notice:", error);
+                });
+
                 auth.onAuthStateChanged(user => {
                     currentUser = user;
                     const wall = document.getElementById('authWallModal');
@@ -1031,47 +1051,21 @@
             }
         }
 
-        // --- GOOGLE, FACEBOOK & EMAIL AUTH HANDLERS ---
+        // --- MOBILE-FRIENDLY REDIRECT AUTH HANDLERS ---
         function loginWithGoogle() {
             if(!auth || !db) { alert("Firebase not initialized."); return; }
             const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then(async (result) => {
-                    const user = result.user;
-                    const userRef = db.collection("users").doc(user.uid);
-                    const doc = await userRef.get();
-                    if (!doc.exists) {
-                        await userRef.set({
-                            username: user.displayName ? user.displayName.replace(/\s+/g, '').toLowerCase() : user.email.split('@')[0],
-                            email: user.email,
-                            balance: 0,
-                            createdAt: Date.now()
-                        });
-                    }
-                    showToast("🎉 Successfully signed in with Google!");
-                })
-                .catch((error) => { alert("Google Login Error: " + error.message); });
+            auth.signInWithRedirect(provider).catch((error) => {
+                alert("Google Login Error: " + error.message);
+            });
         }
 
         function loginWithFacebook() {
             if(!auth || !db) { alert("Firebase not initialized."); return; }
             const provider = new firebase.auth.FacebookAuthProvider();
-            auth.signInWithPopup(provider)
-                .then(async (result) => {
-                    const user = result.user;
-                    const userRef = db.collection("users").doc(user.uid);
-                    const doc = await userRef.get();
-                    if (!doc.exists) {
-                        await userRef.set({
-                            username: user.displayName ? user.displayName.replace(/\s+/g, '').toLowerCase() : user.email.split('@')[0],
-                            email: user.email || `${user.uid}@facebook.com`,
-                            balance: 0,
-                            createdAt: Date.now()
-                        });
-                    }
-                    showToast("🎉 Successfully signed in with Facebook!");
-                })
-                .catch((error) => { alert("Facebook Login Error: " + error.message); });
+            auth.signInWithRedirect(provider).catch((error) => {
+                alert("Facebook Login Error: " + error.message);
+            });
         }
 
         function openEmailAuthModal() {
