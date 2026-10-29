@@ -90,7 +90,7 @@
 </head>
 <body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-black pb-20">
 
-    <!-- CODASHOP-STYLE AUTHENTICATION MODAL (GOOGLE, FACEBOOK & EMAIL) -->
+    <!-- CODASHOP-STYLE AUTHENTICATION MODAL -->
     <div id="authWallModal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4 bg-black/95 backdrop-blur-3xl">
         <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-[0_0_60px_rgba(236,72,153,0.3)] border border-pink-500/40">
             <div class="text-center mb-6">
@@ -102,7 +102,12 @@
                 <h3 class="text-xl font-extrabold text-white mt-1">Join NAIJACP Now.</h3>
             </div>
 
-            <div class="space-y-3 mt-4">
+            <!-- Troubleshooting Notice for Social Logins -->
+            <div class="mb-4 p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[11px] text-center font-medium leading-relaxed">
+                <i class="fa-solid fa-triangle-exclamation mr-1"></i> <strong>Trouble with Google or Facebook?</strong> If social login gives you trouble, please sign in or create an account using <strong>Email &amp; Password</strong> below.
+            </div>
+
+            <div class="space-y-3 mt-2">
                 <!-- Google Login Button -->
                 <button type="button" onclick="loginWithGoogle()" class="w-full py-3.5 rounded-2xl bg-white hover:bg-slate-100 text-black font-extrabold text-xs flex items-center justify-center gap-3 transition cursor-pointer shadow-lg">
                     <i class="fa-brands fa-google text-red-500 text-base"></i> Continue with Google
@@ -118,15 +123,15 @@
                     <div class="flex-grow border-t border-slate-800"></div>
                 </div>
 
-                <!-- Email Sign Up / Login Button -->
+                <!-- Email Sign In / Login Button -->
                 <button type="button" onclick="openEmailAuthModal()" class="w-full py-3.5 rounded-2xl bg-slate-900 border border-slate-700 hover:border-pink-500 text-white font-extrabold text-xs flex items-center justify-center gap-2.5 transition cursor-pointer">
-                    <i class="fa-solid fa-envelope text-pink-400 text-base"></i> Sign in with Email &amp; Password
+                    <i class="fa-solid fa-envelope text-pink-400 text-base"></i> Sign in with Username &amp; Password
                 </button>
             </div>
 
             <div class="mt-6 text-center text-xs border-t border-slate-800/80 pt-4">
                 <span class="text-slate-400">New gamer here?</span> 
-                <button onclick="openEmailAuthModal()" class="text-pink-400 font-bold ml-1 cursor-pointer hover:underline">Create Free Account</button>
+                <button onclick="openEmailAuthModal(); toggleEmailAuthMode();" class="text-pink-400 font-bold ml-1 cursor-pointer hover:underline">Create Free Account</button>
             </div>
             <div class="mt-4 text-[10px] text-slate-500 text-center">
                 By signing up, you agree to our <a href="#" class="underline">Terms of Service</a> &amp; <a href="#" class="underline">Privacy Policy</a>.
@@ -134,23 +139,28 @@
         </div>
     </div>
 
-    <!-- EMAIL & PASSWORD AUTH SUB-MODAL -->
+    <!-- USERNAME & PASSWORD AUTH SUB-MODAL -->
     <div id="emailAuthModal" class="fixed inset-0 z-[210] hidden items-center justify-center p-4 bg-black/90 backdrop-blur-md">
         <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-2xl border border-pink-500/40">
             <button onclick="closeModal('emailAuthModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <h3 class="text-xl font-black text-white mb-1" id="emailAuthTitle">Sign In with Email</h3>
-            <p class="text-slate-400 text-xs mb-6" id="emailAuthSub">Enter your email and password to access your account.</p>
+            <h3 class="text-xl font-black text-white mb-1" id="emailAuthTitle">Sign In with Username</h3>
+            <p class="text-slate-400 text-xs mb-6" id="emailAuthSub">Enter your username and password to access your account.</p>
 
             <form onsubmit="handleEmailAuthSubmit(event)" class="space-y-4">
                 <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5" id="authIdentifierLabel">Username (or Email)</label>
+                    <input type="text" id="authIdentifierInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. gamer123" required>
+                </div>
+                <!-- Email field (Only required when creating a new account) -->
+                <div id="authEmailFieldContainer" class="hidden">
                     <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Email Address</label>
-                    <input type="email" id="authEmailInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. gamer@gmail.com" required>
+                    <input type="email" id="authEmailInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. gamer@gmail.com">
                 </div>
                 <div class="relative">
                     <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Password</label>
-                    <input type="password" id="authPasswordInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4.5 py-3 pr-12 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="••••••••" required>
+                    <input type="password" id="authPasswordInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4.5 py-3 pr-12 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="••••••••" required>
                     <button type="button" onclick="togglePasswordVisibility('authPasswordInput', this)" class="absolute right-3.5 top-9 text-slate-400 hover:text-white text-sm cursor-pointer">
                         <i class="fa-solid fa-eye"></i>
                     </button>
@@ -445,7 +455,7 @@
             <!-- Chat Messages Container -->
             <div id="aiChatMessages" class="flex-grow overflow-y-auto space-y-3 pr-1 text-xs mb-3">
                 <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-2xl text-slate-300 max-w-[85%] leading-relaxed">
-                    👋 Welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI assistant. Whether you want to login with Google, Facebook, or Email, fund your wallet, buy CODM CP or eFootball coins, talk to me! Wetin you wan run today?
+                    👋 Welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI assistant. Whether you want to login with Username, Google, Facebook, or Email, fund your wallet, buy CODM CP or eFootball coins, talk to me! Wetin you wan run today?
                 </div>
             </div>
 
@@ -600,7 +610,7 @@
         </div>
     </div>
 
-    <!-- MULTI-STEP CHECKOUT MODAL (WALLET-ONLY + PAYSTACK COMING SOON) -->
+    <!-- MULTI-STEP CHECKOUT MODAL -->
     <div id="checkoutModal" class="fixed inset-0 z-[60] items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden">
         <div class="glass-modal w-full max-w-lg rounded-3xl p-6 sm:p-8 relative shadow-2xl max-h-[95vh] overflow-y-auto">
             <button onclick="closeModal('checkoutModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">
@@ -650,7 +660,7 @@
                     </div>
                 </div>
 
-                <!-- STEP 3 (WALLET PAYMENT + PAYSTACK COMING SOON) -->
+                <!-- STEP 3 -->
                 <div id="checkoutStep3" class="space-y-4 hidden">
                     <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2 flex items-center justify-between">
                         <span>Step 3 of 3: Select Payment Method</span>
@@ -922,7 +932,6 @@
         let currentUser = null;
         let isRegisteringEmail = false;
         let depositTimerInterval = null;
-        let isAuthInitialized = false; // Fixes race condition loop
 
         const officialSiteUrl = "https://naijacpstore.github.io/naijacp/";
 
@@ -935,10 +944,9 @@
             window.addEventListener('hashchange', checkSecretAdminHash);
 
             if(auth) {
-                // Keep session persistent across redirects
                 await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(e => console.log(e));
 
-                // Handle mobile redirect login result first before checking auth state
+                // Handle Google / Facebook redirect result
                 try {
                     const result = await auth.getRedirectResult();
                     if (result && result.user) {
@@ -946,8 +954,9 @@
                         const userRef = db.collection("users").doc(user.uid);
                         const doc = await userRef.get();
                         if (!doc.exists) {
+                            const generatedUsername = user.displayName ? user.displayName.replace(/\s+/g, '').toLowerCase() : user.email.split('@')[0];
                             await userRef.set({
-                                username: user.displayName ? user.displayName.replace(/\s+/g, '').toLowerCase() : user.email.split('@')[0],
+                                username: generatedUsername,
                                 email: user.email || `${user.uid}@social.com`,
                                 balance: 0,
                                 createdAt: Date.now()
@@ -961,7 +970,6 @@
 
                 auth.onAuthStateChanged(async user => {
                     currentUser = user;
-                    isAuthInitialized = true;
                     const wall = document.getElementById('authWallModal');
                     
                     if(user) {
@@ -976,8 +984,6 @@
                         updateWalletUI();
                     }
                 });
-            } else {
-                isAuthInitialized = true;
             }
 
             document.addEventListener('click', (e) => {
@@ -1059,7 +1065,7 @@
             }
         }
 
-        // --- UNIVERSAL REDIRECT AUTH HANDLERS ---
+        // --- SOCIAL & EMAIL AUTH HANDLERS ---
         function loginWithGoogle() {
             if(!auth || !db) { alert("Firebase not initialized."); return; }
             const provider = new firebase.auth.GoogleAuthProvider();
@@ -1083,23 +1089,55 @@
 
         function toggleEmailAuthMode() {
             isRegisteringEmail = !isRegisteringEmail;
-            document.getElementById('emailAuthTitle').innerText = isRegisteringEmail ? "Create Free Account" : "Sign In with Email";
-            document.getElementById('emailAuthSub').innerText = isRegisteringEmail ? "Fill in your details to create a free account." : "Enter your email and password to access your account.";
-            document.getElementById('emailAuthSubmitBtn').innerText = isRegisteringEmail ? "Create Account 🚀" : "Sign In 🚀";
-            document.getElementById('emailAuthToggleLink').innerText = isRegisteringEmail ? "Already have an account? Sign In" : "Need an account? Create one here";
+            const titleEl = document.getElementById('emailAuthTitle');
+            const subEl = document.getElementById('emailAuthSub');
+            const submitBtn = document.getElementById('emailAuthSubmitBtn');
+            const toggleLink = document.getElementById('emailAuthToggleLink');
+            const emailContainer = document.getElementById('authEmailFieldContainer');
+            const identifierLabel = document.getElementById('authIdentifierLabel');
+            const identifierInput = document.getElementById('authIdentifierInput');
+
+            if (isRegisteringEmail) {
+                titleEl.innerText = "Create Free Account";
+                subEl.innerText = "Enter your email, username, and password to create your account.";
+                submitBtn.innerText = "Create Account 🚀";
+                toggleLink.innerText = "Already have an account? Sign In";
+                emailContainer.classList.remove('hidden');
+                document.getElementById('authEmailInput').required = true;
+                identifierLabel.innerText = "Username";
+                identifierInput.placeholder = "e.g. gamer123";
+            } else {
+                titleEl.innerText = "Sign In with Username";
+                subEl.innerText = "Enter your username and password to access your account.";
+                submitBtn.innerText = "Sign In 🚀";
+                toggleLink.innerText = "Need an account? Create one here";
+                emailContainer.classList.add('hidden');
+                document.getElementById('authEmailInput').required = false;
+                identifierLabel.innerText = "Username (or Email)";
+                identifierInput.placeholder = "e.g. gamer123 or email@gmail.com";
+            }
         }
 
         async function handleEmailAuthSubmit(e) {
             e.preventDefault();
-            const email = document.getElementById('authEmailInput').value.trim();
+            const identifier = document.getElementById('authIdentifierInput').value.trim();
             const password = document.getElementById('authPasswordInput').value.trim();
 
             if(!auth || !db) { alert("Firebase Auth not initialized."); return; }
 
             try {
                 if(isRegisteringEmail) {
+                    const email = document.getElementById('authEmailInput').value.trim();
+                    const username = identifier.toLowerCase();
+
+                    // Check if username is already taken
+                    const userCheck = await db.collection("users").where("username", "==", username).get();
+                    if(!userCheck.empty) {
+                        alert("Username is already taken. Please choose another username.");
+                        return;
+                    }
+
                     const res = await auth.createUserWithEmailAndPassword(email, password);
-                    const username = email.split('@')[0];
                     await db.collection("users").doc(res.user.uid).set({
                         username: username,
                         email: email,
@@ -1108,7 +1146,17 @@
                     });
                     showToast("🎉 Account created successfully!");
                 } else {
-                    await auth.signInWithEmailAndPassword(email, password);
+                    let emailToUse = identifier;
+                    // If logging in with username (no @), look up email in Firestore
+                    if(!identifier.includes('@')) {
+                        const querySnap = await db.collection("users").where("username", "==", identifier.toLowerCase()).get();
+                        if(querySnap.empty) {
+                            alert("Username not found. Please check your username or create an account.");
+                            return;
+                        }
+                        emailToUse = querySnap.docs[0].data().email;
+                    }
+                    await auth.signInWithEmailAndPassword(emailToUse, password);
                     showToast("Welcome back! 🚀");
                 }
                 closeModal('emailAuthModal');
@@ -1689,7 +1737,7 @@
             const q = query.toLowerCase();
 
             if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('how far') || q.includes('sup') || q.includes('gm')) {
-                return `👋 Welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI assistant. Whether you want to login with Google, Facebook, or Email, fund your wallet, buy CODM CP or eFootball coins, talk to me! Wetin you wan run today?`;
+                return `👋 Welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI assistant. Whether you want to login with Username, Google, Facebook, or Email, fund your wallet, buy CODM CP or eFootball coins, talk to me! Wetin you wan run today?`;
             }
             if (q.includes('wallet') || q.includes('balance') || q.includes('funds') || q.includes('add money')) {
                 return `💳 **Wallet System:** You can fund your wallet by clicking "+ Add Funds", transferring to Moremonee Bank (8099646374 - oluwabukunmi makanjuola) or Smartcash Bank (8080504236 - AKEEM SOLARIN), and uploading your receipt! Verified within 3 minutes.`;
@@ -1697,8 +1745,8 @@
             if (q.includes('bank') || q.includes('account') || q.includes('transfer')) {
                 return `🏦 **Official NaijaCP Bank Accounts:**<br><br>1️⃣ **Moremonee Bank:** <code>8099646374</code> (oluwabukunmi makanjuola)<br><br>2️⃣ **Smartcash PSB:** <code>8080504236</code> (AKEEM SOLARIN)`;
             }
-            if (q.includes('google') || q.includes('facebook') || q.includes('login') || q.includes('sign in')) {
-                return `🔐 **Social & Email Login:** You can log in instantly using Google, Facebook, or our Email & Password authentication popup!`;
+            if (q.includes('google') || q.includes('facebook') || q.includes('login') || q.includes('sign in') || q.includes('username')) {
+                return `🔐 **Login System:** You can sign in using your Username & Password, or via Google and Facebook. If social login gives you trouble, simply use Username & Password!`;
             }
             if (q.includes('paystack')) {
                 return `💳 **Paystack Gateway:** Automated Paystack card and bank transfer payments are currently coming soon! For now, please use your Wallet Balance.`;
@@ -1707,7 +1755,7 @@
                 return `🎮 **CODM Top-Up:** We have 80 CP, 420 CP, 880 CP and more available instantly. Pay with your wallet balance!`;
             }
 
-            return `🤖 Boss, I dey for you! You fit ask me about your wallet balance, Google/Facebook login, game packages, bank transfer details, or Paystack gateway. How I fit help you now?`;
+            return `🤖 Boss, I dey for you! You fit ask me about your wallet balance, username login, game packages, bank transfer details, or Paystack gateway. How I fit help you now?`;
         }
 
         function escapeHtml(text) {
@@ -1916,4 +1964,4 @@
         }
     </script>
 </body>
-</html
+</html>
