@@ -422,9 +422,9 @@
         <span>Customer Care 👥</span>
     </button>
 
-    <!-- 24/7 AI AGENT FLOATING BUTTON (RIGHT SIDE) -->
-    <button onclick="openAiChatModal()" class="fixed bottom-5 right-5 z-[980] bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white px-4.5 py-3 rounded-full flex items-center gap-2.5 shadow-[0_0_25px_rgba(236,72,153,0.6)] transition hover:scale-105 cursor-pointer font-bold text-xs">
-        <i class="fa-solid fa-robot text-base animate-bounce"></i>
+    <!-- 24/7 AI AGENT FLOATING BUTTON (RIGHT SIDE - MADE SMALLER) -->
+    <button onclick="openAiChatModal()" class="fixed bottom-5 right-5 z-[980] bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white px-3.5 py-2 rounded-full flex items-center gap-2 shadow-[0_0_20px_rgba(236,72,153,0.5)] transition hover:scale-105 cursor-pointer font-bold text-[11px]">
+        <i class="fa-solid fa-robot text-sm animate-bounce"></i>
         <span>AI Assistant 🤖</span>
     </button>
 
@@ -1359,7 +1359,6 @@
             }
             try {
                 await auth.sendPasswordResetEmail(emailToReset);
-                // INCLUDES SPAM, JUNK, AND PROMOTIONS NOTICE AS REQUESTED
                 showAuthAlert(`✅ Password reset link has been sent to ${emailToReset}. If you don't find the link in your inbox, please check your Spam, Junk, and Promotions folders!`, false);
             } catch(err) {
                 showAuthAlert("⚠️ " + err.message);
@@ -1387,11 +1386,14 @@
             openModal('customConfirmModal');
         }
 
+        // UPDATED REFERRAL LINK WITH ATTACHED PROMOTIONAL MESSAGE
         function copyReferralLink() {
             if(!currentUser) return;
             const refLink = `${officialSiteUrl}?ref=${currentUser.uid}`;
-            navigator.clipboard.writeText(refLink);
-            showToast("📋 Referral link copied to clipboard! Share to earn ₦200 bonus.");
+            const referralMessage = `🔥 Hey! Use my link to join NAIJACP.NG, top up your favorite games instantly, and get amazing wallet bonuses and free money rewards! 🚀\n\nClick here to get started: ${refLink}`;
+            
+            navigator.clipboard.writeText(referralMessage);
+            showToast("📋 Referral link & message copied! Share to earn ₦200 bonus.");
         }
 
         async function saveUserGameId() {
@@ -1689,19 +1691,18 @@
             }, 3500);
         }
 
+        // REDUCED FREQUENCY TO EVERY 8.5 SECONDS (7-10 SECONDS WINDOW)
         function startFakePurchases() {
             const names = ['Chinedu', 'Oluwaseun', 'Amina', 'Ngozi', 'Emeka', 'Fatima', 'Bolaji', 'Ibrahim', 'Kehinde', 'Uche', 'Adebayo', 'Chioma'];
             const prefixes = ['0803', '0810', '0902', '0706', '0814', '0913', '0703'];
             
             setInterval(() => {
-                if(Math.random() > 0.4) {
-                    const randomName = names[Math.floor(Math.random() * names.length)];
-                    const randomPhone = prefixes[Math.floor(Math.random() * prefixes.length)] + "***" + Math.floor(1000 + Math.random() * 9000);
-                    const randomProduct = products[Math.floor(Math.random() * products.length)];
-                    
-                    showToast(`<span class="text-pink-400 font-bold">${randomName} (${randomPhone})</span> just purchased <br><span class="font-bold">${randomProduct.title}</span>`);
-                }
-            }, 8000);
+                const randomName = names[Math.floor(Math.random() * names.length)];
+                const randomPhone = prefixes[Math.floor(Math.random() * prefixes.length)] + "***" + Math.floor(1000 + Math.random() * 9000);
+                const randomProduct = products[Math.floor(Math.random() * products.length)];
+                
+                showToast(`<span class="text-pink-400 font-bold">${randomName} (${randomPhone})</span> just purchased <br><span class="font-bold">${randomProduct.title}</span>`);
+            }, 8500);
         }
 
         function switchMainCategory(cat) {
