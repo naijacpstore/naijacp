@@ -59,16 +59,6 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
         }
 
-        @keyframes marquee {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); }
-        }
-        .animate-marquee {
-            display: flex;
-            width: 200%;
-            animation: marquee 24s linear infinite;
-        }
-
         @keyframes slideInUp {
             from { transform: translateY(120%) scale(0.9); opacity: 0; }
             to { transform: translateY(0) scale(1); opacity: 1; }
@@ -102,17 +92,14 @@
                 <h3 class="text-xl font-extrabold text-white mt-1">Join NAIJACP Now.</h3>
             </div>
 
-            <!-- Troubleshooting Notice for Social Logins -->
             <div class="mb-4 p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[11px] text-center font-medium leading-relaxed">
-                <i class="fa-solid fa-triangle-exclamation mr-1"></i> <strong>Trouble with Google or Facebook?</strong> If social login gives you trouble, please sign in or create an account using <strong>Email &amp; Password</strong> below.
+                <i class="fa-solid fa-triangle-exclamation mr-1"></i> <strong>Trouble with Google or Facebook?</strong> Please sign in or create an account using <strong>Email &amp; Password</strong> below.
             </div>
 
             <div class="space-y-3 mt-2">
-                <!-- Google Login Button -->
                 <button type="button" onclick="loginWithGoogle()" class="w-full py-3.5 rounded-2xl bg-white hover:bg-slate-100 text-black font-extrabold text-xs flex items-center justify-center gap-3 transition cursor-pointer shadow-lg">
                     <i class="fa-brands fa-google text-red-500 text-base"></i> Continue with Google
                 </button>
-                <!-- Facebook Login Button -->
                 <button type="button" onclick="loginWithFacebook()" class="w-full py-3.5 rounded-2xl bg-[#1877F2] hover:bg-[#166fe5] text-white font-extrabold text-xs flex items-center justify-center gap-3 transition cursor-pointer shadow-lg">
                     <i class="fa-brands fa-facebook text-base"></i> Continue with Facebook
                 </button>
@@ -123,7 +110,6 @@
                     <div class="flex-grow border-t border-slate-800"></div>
                 </div>
 
-                <!-- Email Sign In / Login Button -->
                 <button type="button" onclick="openEmailAuthModal()" class="w-full py-3.5 rounded-2xl bg-slate-900 border border-slate-700 hover:border-pink-500 text-white font-extrabold text-xs flex items-center justify-center gap-2.5 transition cursor-pointer">
                     <i class="fa-solid fa-envelope text-pink-400 text-base"></i> Sign in with Username &amp; Password
                 </button>
@@ -132,9 +118,6 @@
             <div class="mt-6 text-center text-xs border-t border-slate-800/80 pt-4">
                 <span class="text-slate-400">New gamer here?</span> 
                 <button onclick="openEmailAuthModal(); toggleEmailAuthMode();" class="text-pink-400 font-bold ml-1 cursor-pointer hover:underline">Create Free Account</button>
-            </div>
-            <div class="mt-4 text-[10px] text-slate-500 text-center">
-                By signing up, you agree to our <a href="#" class="underline">Terms of Service</a> &amp; <a href="#" class="underline">Privacy Policy</a>.
             </div>
         </div>
     </div>
@@ -153,7 +136,6 @@
                     <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5" id="authIdentifierLabel">Username (or Email)</label>
                     <input type="text" id="authIdentifierInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. gamer123" required>
                 </div>
-                <!-- Email field (Only required when creating a new account) -->
                 <div id="authEmailFieldContainer" class="hidden">
                     <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Email Address</label>
                     <input type="email" id="authEmailInput" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. gamer@gmail.com">
@@ -188,11 +170,11 @@
                 </span>
             </div>
 
-            <!-- Header Wallet & Region -->
             <div class="flex items-center gap-3.5">
-                <button onclick="openUserDashboard()" class="px-3.5 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500 hover:text-black font-extrabold text-xs transition cursor-pointer flex items-center gap-2 shadow-sm">
+                <button onclick="openUserDashboard()" class="px-3.5 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500 hover:text-black font-extrabold text-xs transition cursor-pointer flex items-center gap-2 shadow-sm relative">
                     <i class="fa-solid fa-wallet text-pink-400"></i> 
                     <span>₦<span id="headerWalletBalance">0</span></span>
+                    <span id="notificationBadge" class="hidden absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-ping"></span>
                 </button>
                 
                 <div class="hidden sm:flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800 text-xs font-bold text-slate-300">
@@ -228,14 +210,12 @@
     <!-- Main Container -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
 
-        <!-- MAIN CATEGORY NAVIGATION BUTTONS -->
         <div class="flex flex-wrap items-center gap-3 mb-8 justify-center sm:justify-start">
             <button class="btn-cat active-btn px-6 py-3 rounded-2xl text-xs font-extrabold uppercase tracking-wider transition bg-slate-900 text-slate-300 border border-slate-800 cursor-pointer" id="catBtn-games" onclick="switchMainCategory('games')">🎮 All Game Packages</button>
             <button class="btn-cat px-6 py-3 rounded-2xl text-xs font-extrabold uppercase tracking-wider transition bg-slate-900 text-slate-300 border border-slate-800 cursor-pointer" id="catBtn-gadgets" onclick="switchMainCategory('gadgets')">🎧 Gaming Gear &amp; Gadgets</button>
             <button class="btn-cat px-6 py-3 rounded-2xl text-xs font-extrabold uppercase tracking-wider transition bg-slate-900 text-slate-300 border border-slate-800 cursor-pointer" id="catBtn-giftcards" onclick="switchMainCategory('giftcards')">💳 Gift Cards &amp; Subs</button>
         </div>
 
-        <!-- GAME SUB-FILTER BUTTONS & INSTANT SEARCH BAR -->
         <div class="flex flex-col md:flex-row gap-4 mb-8 items-center justify-between bg-slate-900/60 p-4 rounded-3xl border border-slate-800 backdrop-blur-md">
             <div id="gameSubFilters" class="flex flex-wrap gap-2 w-full md:w-auto">
                 <button class="btn-subfilter active-btn px-3.5 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('all', this)">All Games</button>
@@ -248,23 +228,19 @@
                 <button class="btn-subfilter px-3.5 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('onestate', this)">OneState</button>
             </div>
 
-            <!-- Instant Search Input -->
             <div class="relative w-full md:w-72">
                 <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-500 text-xs"></i>
                 <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search packages (e.g. 80 CP, AirPods)..." class="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-10 pr-4 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500 transition">
             </div>
         </div>
 
-        <!-- PRODUCTS GRID -->
         <section id="catalogSection" class="mb-16">
             <div class="flex items-center gap-3 mb-6">
                 <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight border-l-4 border-pink-500 pl-4 uppercase" id="sectionHeading">
                     🔥 Featured Games &amp; Top-Ups
                 </h2>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6" id="productsGrid">
-                <!-- Populated dynamically -->
-            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6" id="productsGrid"></div>
         </section>
 
         <!-- ORDER STATUS & HISTORY CHECKER TOOL -->
@@ -428,11 +404,60 @@
     <!-- Toast Notifications Container -->
     <div id="liveToastContainer" class="fixed bottom-16 right-5 z-[999] flex flex-col gap-2 pointer-events-none w-full max-w-xs"></div>
 
-    <!-- 24/7 AI AGENT FLOATING BUTTON -->
-    <button onclick="openAiChatModal()" class="fixed bottom-5 left-5 z-[980] bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white px-4.5 py-3 rounded-full flex items-center gap-2.5 shadow-[0_0_25px_rgba(236,72,153,0.6)] transition hover:scale-105 cursor-pointer font-bold text-xs">
-        <i class="fa-solid fa-robot text-base animate-bounce"></i>
-        <span>24/7 AI Assistant 🤖</span>
+    <!-- 24/7 CUSTOMER CARE (REAL PEOPLE) FLOATING BUTTON (LEFT SIDE) -->
+    <button onclick="openCustomerSupportModal()" class="fixed bottom-5 left-5 z-[980] bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-4.5 py-3 rounded-full flex items-center gap-2.5 shadow-[0_0_25px_rgba(16,185,129,0.6)] transition hover:scale-105 cursor-pointer font-bold text-xs">
+        <i class="fa-solid fa-headset text-base animate-pulse"></i>
+        <span>Customer Care 👥</span>
     </button>
+
+    <!-- 24/7 AI AGENT FLOATING BUTTON (RIGHT SIDE) -->
+    <button onclick="openAiChatModal()" class="fixed bottom-5 right-5 z-[980] bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white px-4.5 py-3 rounded-full flex items-center gap-2.5 shadow-[0_0_25px_rgba(236,72,153,0.6)] transition hover:scale-105 cursor-pointer font-bold text-xs">
+        <i class="fa-solid fa-robot text-base animate-bounce"></i>
+        <span>AI Assistant 🤖</span>
+    </button>
+
+    <!-- REAL CUSTOMER CARE MODAL -->
+    <div id="customerSupportModal" class="fixed inset-0 z-[155] hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+        <div class="glass-modal w-full max-w-md rounded-3xl p-5 relative shadow-2xl flex flex-col h-[560px] border border-emerald-500/40">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center font-black">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-black text-white">Live Customer Care</h3>
+                        <span class="text-[10px] text-emerald-400 font-bold">● Talk to Real Human Agents</span>
+                    </div>
+                </div>
+                <button onclick="closeModal('customerSupportModal')" class="text-slate-400 hover:text-white w-7 h-7 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Notice Banner -->
+            <div class="bg-emerald-500/10 border border-emerald-500/30 p-2.5 rounded-xl text-[11px] text-emerald-300 mb-3 text-center">
+                💬 You are chatting directly with our support team. Drop your email & issue below!
+            </div>
+
+            <!-- Support Messages Container -->
+            <div id="supportChatMessages" class="flex-grow overflow-y-auto space-y-3 pr-1 text-xs mb-3">
+                <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-2xl text-slate-300 max-w-[85%] leading-relaxed">
+                    Hello! 👋 Welcome to NaijaCP Customer Care. Please enter your email and describe your issue below. Our admin team will reply to you here and in your profile notifications!
+                </div>
+            </div>
+
+            <!-- Support Input Form -->
+            <form onsubmit="handleSupportSubmit(event)" class="space-y-2 pt-2 border-t border-slate-800">
+                <input type="email" id="supportUserEmail" placeholder="Enter your email address..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-white text-xs focus:outline-none focus:border-emerald-500 transition" required>
+                <div class="flex gap-2">
+                    <input type="text" id="supportUserMessage" placeholder="Describe your issue or request..." class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-500 transition" required>
+                    <button type="submit" class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-black rounded-xl text-xs transition cursor-pointer">
+                        Send 🚀
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- 24/7 AI AGENT CHAT MODAL -->
     <div id="aiChatModal" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
@@ -452,14 +477,12 @@
                 </button>
             </div>
 
-            <!-- Chat Messages Container -->
             <div id="aiChatMessages" class="flex-grow overflow-y-auto space-y-3 pr-1 text-xs mb-3">
                 <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-2xl text-slate-300 max-w-[85%] leading-relaxed">
                     👋 Welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI assistant. Whether you want to login with Username, Google, Facebook, or Email, fund your wallet, buy CODM CP or eFootball coins, talk to me! Wetin you wan run today?
                 </div>
             </div>
 
-            <!-- Chat Input Form -->
             <form onsubmit="handleAiChatSubmit(event)" class="flex gap-2 pt-2 border-t border-slate-800">
                 <input type="text" id="aiChatInput" placeholder="Ask about login, top-ups, wallet balance, bank accounts..." class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500 transition" required>
                 <button type="submit" class="px-4 py-2.5 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-xl text-xs transition cursor-pointer">
@@ -482,12 +505,11 @@
                 </div>
                 <div>
                     <h3 class="text-xl font-black text-white" id="dashUserEmail">My Account Dashboard</h3>
-                    <p class="text-xs text-slate-400">View your wallet balance, add funds, and track your transactions.</p>
+                    <p class="text-xs text-slate-400">View your wallet balance, support replies, and track transactions.</p>
                 </div>
             </div>
 
             <div class="space-y-6">
-                <!-- User Stats & Wallet Box -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div class="bg-gradient-to-br from-pink-950/40 to-slate-950 p-4 rounded-2xl border border-pink-500/30 sm:col-span-2 flex items-center justify-between">
                         <div>
@@ -504,10 +526,19 @@
                     </div>
                 </div>
 
-                <!-- Personal Order History List -->
+                <!-- Support Messages & Notifications Section -->
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-3 flex items-center gap-2">
+                        <span>💬 Support Messages &amp; Admin Notifications</span>
+                    </h4>
+                    <div id="dashSupportMessagesList" class="space-y-3 max-h-48 overflow-y-auto pr-1">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
                 <div>
                     <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-3">📦 Your Personal Order &amp; Deposit History</h4>
-                    <div id="dashOrderHistoryList" class="space-y-3 max-h-64 overflow-y-auto pr-1">
+                    <div id="dashOrderHistoryList" class="space-y-3 max-h-48 overflow-y-auto pr-1">
                         <!-- Populated dynamically -->
                     </div>
                 </div>
@@ -540,7 +571,6 @@
                     <input type="number" id="depositAmount" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-emerald-500 transition" placeholder="e.g. 5000" min="500" required>
                 </div>
 
-                <!-- OFFICIAL BANK ACCOUNTS -->
                 <div class="bg-black border border-emerald-500/30 p-4 rounded-2xl space-y-3">
                     <h4 class="text-emerald-400 text-xs font-bold uppercase tracking-wider">🏦 Official Bank Accounts:</h4>
                     
@@ -622,8 +652,6 @@
             <p class="text-pink-400 text-2xl font-black mb-6" id="checkoutItemPrice">₦1,200</p>
 
             <form id="orderForm" onsubmit="submitOrder(event)" class="space-y-4">
-                
-                <!-- STEP 1 -->
                 <div id="checkoutStep1" class="space-y-4">
                     <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2">
                         Step 1 of 3: Enter Your Name
@@ -637,7 +665,6 @@
                     </button>
                 </div>
 
-                <!-- STEP 2 -->
                 <div id="checkoutStep2" class="space-y-4 hidden">
                     <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2">
                         Step 2 of 3: Account &amp; Contact Details
@@ -660,14 +687,12 @@
                     </div>
                 </div>
 
-                <!-- STEP 3 -->
                 <div id="checkoutStep3" class="space-y-4 hidden">
                     <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2 flex items-center justify-between">
                         <span>Step 3 of 3: Select Payment Method</span>
                         <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">Instant Wallet ⚡</span>
                     </div>
 
-                    <!-- WALLET PAY BOX -->
                     <div class="bg-gradient-to-br from-pink-950/50 to-slate-950 border border-pink-500/40 p-4 rounded-2xl space-y-3">
                         <div class="flex items-center justify-between">
                             <div>
@@ -684,7 +709,6 @@
                         </button>
                     </div>
 
-                    <!-- PAYSTACK COMING SOON BADGE -->
                     <div class="bg-slate-950 border border-slate-800 p-4 rounded-2xl flex items-center justify-between opacity-75">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold">
@@ -765,9 +789,10 @@
             </div>
 
             <div class="flex flex-wrap gap-2 mb-6">
-                <button onclick="switchAdminTab('orders')" id="adminTabBtn-orders" class="px-5 py-2.5 rounded-xl bg-pink-500 text-black font-bold text-xs transition cursor-pointer">📦 Orders Management</button>
+                <button onclick="switchAdminTab('orders')" id="adminTabBtn-orders" class="px-5 py-2.5 rounded-xl bg-pink-500 text-black font-bold text-xs transition cursor-pointer">📦 Orders</button>
                 <button onclick="switchAdminTab('deposits')" id="adminTabBtn-deposits" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">💳 Deposit Requests</button>
-                <button onclick="switchAdminTab('products')" id="adminTabBtn-products" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">⚙️ Cloud Packages &amp; Prices</button>
+                <button onclick="switchAdminTab('support')" id="adminTabBtn-support" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">💬 Customer Care</button>
+                <button onclick="switchAdminTab('products')" id="adminTabBtn-products" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">⚙️ Cloud Packages</button>
             </div>
 
             <div id="adminTab-orders" class="space-y-4">
@@ -776,13 +801,18 @@
             </div>
 
             <div id="adminTab-deposits" class="hidden space-y-4">
-                <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-3">Incoming Wallet Deposit Requests</h3>
+                <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-3">Incoming Wallet Deposit Requests (Approve or Decline)</h3>
                 <div id="adminDepositsList" class="space-y-3"></div>
+            </div>
+
+            <div id="adminTab-support" class="hidden space-y-4">
+                <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-3">💬 Customer Care Messages &amp; Support Tickets</h3>
+                <div id="adminSupportList" class="space-y-3"></div>
             </div>
 
             <div id="adminTab-products" class="hidden space-y-6">
                 <div class="glass-modal p-6 rounded-3xl border border-slate-800">
-                    <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">➕ Add New Package (Syncs Instantly to All Visitors)</h3>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">➕ Add New Package (Syncs Instantly)</h3>
                     <form onsubmit="addNewProductCloud(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-300 mb-1">Package Title</label>
@@ -801,7 +831,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 mb-1">Sub-Tag (for games)</label>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">Sub-Tag</label>
                             <select id="newProdSub" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs">
                                 <option value="codm">CODM</option>
                                 <option value="efootball">eFootball</option>
@@ -826,7 +856,7 @@
                 </div>
 
                 <div class="glass-modal p-6 rounded-3xl border border-slate-800">
-                    <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">📋 Live Cloud Catalog Items (Edit / Delete)</h3>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">📋 Live Cloud Catalog Items</h3>
                     <div id="adminProductsList" class="space-y-2 max-h-96 overflow-y-auto"></div>
                 </div>
             </div>
@@ -921,6 +951,7 @@
         let products = JSON.parse(localStorage.getItem('naijacp_products')) || defaultProducts;
         let orders = JSON.parse(localStorage.getItem('naijacp_orders')) || [];
         let deposits = JSON.parse(localStorage.getItem('naijacp_deposits')) || [];
+        let supportTickets = JSON.parse(localStorage.getItem('naijacp_support')) || [];
         let currentMainCat = 'games';
         let currentSubFilter = 'all';
         let searchQuery = '';
@@ -946,7 +977,6 @@
             if(auth) {
                 await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(e => console.log(e));
 
-                // Handle Google / Facebook redirect result
                 try {
                     const result = await auth.getRedirectResult();
                     if (result && result.user) {
@@ -1032,6 +1062,17 @@
                     renderAdminDeposits();
                 }
             });
+
+            db.collection("supportTickets").orderBy("timestamp", "desc").onSnapshot(snapshot => {
+                supportTickets = [];
+                snapshot.forEach(doc => {
+                    supportTickets.push({ firestoreId: doc.id, ...doc.data() });
+                });
+                if(document.getElementById('adminDashboardModal').classList.contains('flex')) {
+                    renderAdminSupport();
+                }
+                checkUnreadNotifications();
+            });
         }
 
         function loadUserDataFromCloud(uid) {
@@ -1053,6 +1094,19 @@
             if(checkoutBal) checkoutBal.innerText = userWalletBalance.toLocaleString();
         }
 
+        function checkUnreadNotifications() {
+            if(!currentUser) return;
+            const userEmail = currentUser.email.toLowerCase();
+            const myTickets = supportTickets.filter(t => t.email && t.email.toLowerCase() === userEmail);
+            const hasAdminReply = myTickets.some(t => t.adminReply && t.unread);
+            const badge = document.getElementById('notificationBadge');
+            if(hasAdminReply) {
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
         function togglePasswordVisibility(fieldId, btnEl) {
             const input = document.getElementById(fieldId);
             const icon = btnEl.querySelector('i');
@@ -1065,7 +1119,6 @@
             }
         }
 
-        // --- SOCIAL & EMAIL AUTH HANDLERS ---
         function loginWithGoogle() {
             if(!auth || !db) { alert("Firebase not initialized."); return; }
             const provider = new firebase.auth.GoogleAuthProvider();
@@ -1130,7 +1183,6 @@
                     const email = document.getElementById('authEmailInput').value.trim();
                     const username = identifier.toLowerCase();
 
-                    // Check if username is already taken
                     const userCheck = await db.collection("users").where("username", "==", username).get();
                     if(!userCheck.empty) {
                         alert("Username is already taken. Please choose another username.");
@@ -1147,7 +1199,6 @@
                     showToast("🎉 Account created successfully!");
                 } else {
                     let emailToUse = identifier;
-                    // If logging in with username (no @), look up email in Firestore
                     if(!identifier.includes('@')) {
                         const querySnap = await db.collection("users").where("username", "==", identifier.toLowerCase()).get();
                         if(querySnap.empty) {
@@ -1180,12 +1231,40 @@
             }
             document.getElementById('dashUserEmail').innerText = currentUser.email;
             const historyList = document.getElementById('dashOrderHistoryList');
+            const supportList = document.getElementById('dashSupportMessagesList');
             historyList.innerHTML = '';
+            supportList.innerHTML = '';
 
             const userOrders = orders.filter(o => o.userEmail === currentUser.email);
             const userDeposits = deposits.filter(d => d.userEmail === currentUser.email);
+            const myTickets = supportTickets.filter(t => t.email && t.email.toLowerCase() === currentUser.email.toLowerCase());
+
             document.getElementById('dashTotalOrders').innerText = userOrders.length;
             document.getElementById('modalWalletBalance').innerText = userWalletBalance.toLocaleString();
+
+            // Render Support Messages / Admin Replies
+            if(myTickets.length === 0) {
+                supportList.innerHTML = `<div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center text-slate-400 text-xs">No active customer care messages. Click Customer Care 👥 on the left to talk to us!</div>`;
+            } else {
+                myTickets.forEach(t => {
+                    supportList.innerHTML += `
+                        <div class="bg-slate-950 p-4 rounded-2xl border border-emerald-500/30 text-xs space-y-2">
+                            <div class="flex justify-between text-[10px] text-slate-500">
+                                <span>Ticket #${t.id}</span>
+                                <span>${t.date}</span>
+                            </div>
+                            <div class="text-slate-300"><strong>Your Issue:</strong> ${t.message}</div>
+                            ${t.adminReply ? `
+                                <div class="bg-emerald-500/10 border border-emerald-500/30 p-2.5 rounded-xl text-emerald-300">
+                                    <strong class="text-emerald-400 font-bold"><i class="fa-solid fa-headset mr-1"></i> Admin Reply:</strong> ${t.adminReply}
+                                </div>
+                            ` : `
+                                <div class="text-yellow-400 font-bold text-[11px]"><i class="fa-solid fa-clock"></i> Status: Waiting for admin reply...</div>
+                            `}
+                        </div>
+                    `;
+                });
+            }
 
             let combinedHistory = [...userOrders.map(o => ({type: 'order', ...o})), ...userDeposits.map(d => ({type: 'deposit', ...d}))];
             combinedHistory.sort((a, b) => b.timestamp - a.timestamp);
@@ -1213,14 +1292,18 @@
                             </div>
                         `;
                     } else {
+                        let statusColor = 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30';
+                        if(item.status === 'Approved') statusColor = 'bg-green-500/20 text-green-400 border border-green-500/30';
+                        if(item.status === 'Declined') statusColor = 'bg-red-500/20 text-red-400 border border-red-500/30';
+
                         historyList.innerHTML += `
                             <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center justify-between text-xs">
                                 <div>
                                     <span class="text-emerald-400 font-bold">💳 Wallet Deposit - ₦${item.amount?.toLocaleString()}</span>
-                                    <div class="text-slate-300 mt-0.5">Ref: #${item.id}</div>
+                                    <div class="text-slate-300 mt-0.5">Ref: #${item.id} ${item.status === 'Declined' ? '<br><span class="text-red-400 font-bold">Reason: Payment verification failed / Not received.</span>' : ''}</div>
                                     <div class="text-slate-500 text-[10px] mt-1">${item.date}</div>
                                 </div>
-                                <span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${item.status === 'Approved' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'}">
+                                <span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${statusColor}">
                                     ${item.status} ⚡
                                 </span>
                             </div>
@@ -1228,6 +1311,17 @@
                     }
                 });
             }
+
+            // Mark notifications as read
+            if(currentUser) {
+                myTickets.forEach(t => {
+                    if(t.unread && t.firestoreId && db) {
+                        db.collection("supportTickets").doc(t.firestoreId).update({ unread: false });
+                    }
+                });
+                document.getElementById('notificationBadge').classList.add('hidden');
+            }
+
             openModal('userDashboardModal');
         }
 
@@ -1475,7 +1569,7 @@
 
             const found = orders.find(o => (o.phone && o.phone.includes(query)) || (o.id && o.id.toString().includes(query)));
             if(!found) {
-                box.innerHTML = `<span class="text-yellow-400 font-bold">No active order found matching "${query}". Please check your details or chat with our 24/7 AI Support.</span>`;
+                box.innerHTML = `<span class="text-yellow-400 font-bold">No active order found matching "${query}". Please check your details or chat with our Customer Care.</span>`;
                 return;
             }
 
@@ -1488,6 +1582,112 @@
                     <div class="flex justify-between"><span class="text-slate-400">Date:</span> <span class="text-slate-300">${found.date}</span></div>
                 </div>
             `;
+        }
+
+        // --- REAL CUSTOMER CARE SUPPORT LOGIC ---
+        function openCustomerSupportModal() {
+            if(currentUser && document.getElementById('supportUserEmail')) {
+                document.getElementById('supportUserEmail').value = currentUser.email;
+            }
+            openModal('customerSupportModal');
+        }
+
+        function handleSupportSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('supportUserEmail').value.trim();
+            const message = document.getElementById('supportUserMessage').value.trim();
+
+            if(!email || !message) {
+                alert("Please fill in both email and issue.");
+                return;
+            }
+
+            const ticketId = Date.now().toString().slice(-6);
+            const ticketObj = {
+                id: ticketId,
+                email: email,
+                message: message,
+                adminReply: "",
+                unread: false,
+                date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                timestamp: Date.now()
+            };
+
+            if(db) {
+                db.collection("supportTickets").doc(ticketId).set(ticketObj);
+            } else {
+                supportTickets.unshift(ticketObj);
+                localStorage.setItem('naijacp_support', JSON.stringify(supportTickets));
+            }
+
+            const chatMessages = document.getElementById('supportChatMessages');
+            chatMessages.innerHTML += `
+                <div class="flex justify-end">
+                    <div class="bg-emerald-600 text-white p-3 rounded-2xl max-w-[85%] font-medium">
+                        ${escapeHtml(message)}
+                    </div>
+                </div>
+            `;
+            document.getElementById('supportUserMessage').value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            showToast("💬 Your message has been sent to our support team!");
+        }
+
+        // --- 24/7 AI AGENT ---
+        function openAiChatModal() {
+            openModal('aiChatModal');
+        }
+
+        function handleAiChatSubmit(e) {
+            e.preventDefault();
+            const inputField = document.getElementById('aiChatInput');
+            const message = inputField.value.trim();
+            if (!message) return;
+
+            const chatMessages = document.getElementById('aiChatMessages');
+            
+            chatMessages.innerHTML += `
+                <div class="flex justify-end">
+                    <div class="bg-pink-600 text-white p-3 rounded-2xl max-w-[85%] font-medium">
+                        ${escapeHtml(message)}
+                    </div>
+                </div>
+            `;
+            inputField.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            setTimeout(() => {
+                let reply = getSmartAiResponse(message);
+                chatMessages.innerHTML += `
+                    <div class="flex justify-start">
+                        <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-2xl text-slate-300 max-w-[85%] leading-relaxed">
+                            ${reply}
+                        </div>
+                    </div>
+                `;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 600);
+        }
+
+        function getSmartAiResponse(query) {
+            const q = query.toLowerCase();
+
+            if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('how far')) {
+                return `👋 Welcome to NaijaCP! 🇳🇬 I am your 24/7 AI assistant. If you need a real human, click the **Customer Care 👥** button on the bottom left!`;
+            }
+            if (q.includes('wallet') || q.includes('balance') || q.includes('funds') || q.includes('add money')) {
+                return `💳 **Wallet System:** Fund your wallet by clicking "+ Add Funds", transfer to Moremonee (8099646374) or Smartcash (8080504236), and upload your receipt! Verified within 3 minutes.`;
+            }
+            if (q.includes('bank') || q.includes('account') || q.includes('transfer')) {
+                return `🏦 **Official Bank Accounts:**<br><br>1️⃣ **Moremonee Bank:** <code>8099646374</code> (oluwabukunmi makanjuola)<br><br>2️⃣ **Smartcash PSB:** <code>8080504236</code> (AKEEM SOLARIN)`;
+            }
+
+            return `🤖 Boss, for human support and account issues, please use the **Customer Care 👥** button on the bottom left side of your screen to talk directly to our team!`;
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
         function proceedToDataShare() {
@@ -1626,9 +1826,7 @@
                 const telegramUrl = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(caption)}&parse_mode=Markdown`;
                 const img = new Image();
                 img.src = telegramUrl;
-            } catch (err) {
-                console.log("Telegram alert notice:", err);
-            }
+            } catch (err) {}
         }
 
         function saveOrderToCloud(order) {
@@ -1672,7 +1870,6 @@
             };
 
             saveOrderToCloud(newOrder);
-            
             closeModal('checkoutModal');
             openModal('processingModal');
             
@@ -1697,71 +1894,6 @@
             }, 1800);
         }
 
-        // --- 24/7 AI AGENT ---
-        function openAiChatModal() {
-            openModal('aiChatModal');
-        }
-
-        function handleAiChatSubmit(e) {
-            e.preventDefault();
-            const inputField = document.getElementById('aiChatInput');
-            const message = inputField.value.trim();
-            if (!message) return;
-
-            const chatMessages = document.getElementById('aiChatMessages');
-            
-            chatMessages.innerHTML += `
-                <div class="flex justify-end">
-                    <div class="bg-pink-600 text-white p-3 rounded-2xl max-w-[85%] font-medium">
-                        ${escapeHtml(message)}
-                    </div>
-                </div>
-            `;
-            inputField.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            setTimeout(() => {
-                let reply = getSmartAiResponse(message);
-                chatMessages.innerHTML += `
-                    <div class="flex justify-start">
-                        <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-2xl text-slate-300 max-w-[85%] leading-relaxed">
-                            ${reply}
-                        </div>
-                    </div>
-                `;
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 600);
-        }
-
-        function getSmartAiResponse(query) {
-            const q = query.toLowerCase();
-
-            if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('how far') || q.includes('sup') || q.includes('gm')) {
-                return `👋 Welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI assistant. Whether you want to login with Username, Google, Facebook, or Email, fund your wallet, buy CODM CP or eFootball coins, talk to me! Wetin you wan run today?`;
-            }
-            if (q.includes('wallet') || q.includes('balance') || q.includes('funds') || q.includes('add money')) {
-                return `💳 **Wallet System:** You can fund your wallet by clicking "+ Add Funds", transferring to Moremonee Bank (8099646374 - oluwabukunmi makanjuola) or Smartcash Bank (8080504236 - AKEEM SOLARIN), and uploading your receipt! Verified within 3 minutes.`;
-            }
-            if (q.includes('bank') || q.includes('account') || q.includes('transfer')) {
-                return `🏦 **Official NaijaCP Bank Accounts:**<br><br>1️⃣ **Moremonee Bank:** <code>8099646374</code> (oluwabukunmi makanjuola)<br><br>2️⃣ **Smartcash PSB:** <code>8080504236</code> (AKEEM SOLARIN)`;
-            }
-            if (q.includes('google') || q.includes('facebook') || q.includes('login') || q.includes('sign in') || q.includes('username')) {
-                return `🔐 **Login System:** You can sign in using your Username & Password, or via Google and Facebook. If social login gives you trouble, simply use Username & Password!`;
-            }
-            if (q.includes('paystack')) {
-                return `💳 **Paystack Gateway:** Automated Paystack card and bank transfer payments are currently coming soon! For now, please use your Wallet Balance.`;
-            }
-            if (q.includes('codm') || q.includes('cp')) {
-                return `🎮 **CODM Top-Up:** We have 80 CP, 420 CP, 880 CP and more available instantly. Pay with your wallet balance!`;
-            }
-
-            return `🤖 Boss, I dey for you! You fit ask me about your wallet balance, username login, game packages, bank transfer details, or Paystack gateway. How I fit help you now?`;
-        }
-
-        function escapeHtml(text) {
-            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        }
-
         // --- SECURE ADMIN DASHBOARD ---
         function handleAdminLogin(e) {
             e.preventDefault();
@@ -1773,6 +1905,7 @@
                 openModal('adminDashboardModal');
                 renderAdminOrders();
                 renderAdminDeposits();
+                renderAdminSupport();
                 renderAdminProducts();
                 showToast("Welcome back, boss! Secret admin access granted 🚀");
             } else {
@@ -1781,13 +1914,12 @@
         }
 
         function switchAdminTab(tab) {
-            document.getElementById('adminTab-orders').classList.add('hidden');
-            document.getElementById('adminTab-deposits').classList.add('hidden');
-            document.getElementById('adminTab-products').classList.add('hidden');
-
-            document.getElementById('adminTabBtn-orders').className = 'px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer';
-            document.getElementById('adminTabBtn-deposits').className = 'px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer';
-            document.getElementById('adminTabBtn-products').className = 'px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer';
+            ['orders', 'deposits', 'support', 'products'].forEach(t => {
+                const tabEl = document.getElementById(`adminTab-${t}`);
+                const btnEl = document.getElementById(`adminTabBtn-${t}`);
+                if(tabEl) tabEl.classList.add('hidden');
+                if(btnEl) btnEl.className = 'px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer';
+            });
 
             document.getElementById(`adminTab-${tab}`).classList.remove('hidden');
             document.getElementById(`adminTabBtn-${tab}`).className = 'px-5 py-2.5 rounded-xl bg-pink-500 text-black font-bold text-xs transition cursor-pointer';
@@ -1828,6 +1960,18 @@
                 return;
             }
             deposits.forEach(d => {
+                let actionBtns = '';
+                if(d.status === 'Approved') {
+                    actionBtns = '<span class="text-emerald-400 font-bold">Approved ✅</span>';
+                } else if(d.status === 'Declined') {
+                    actionBtns = '<span class="text-red-400 font-bold">Declined ❌</span>';
+                } else {
+                    actionBtns = `
+                        <button onclick="approveDeposit('${d.id}', '${d.userId}', ${d.amount})" class="px-3 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold rounded-xl transition cursor-pointer">Approve ⚡</button>
+                        <button onclick="declineDeposit('${d.id}')" class="px-3 py-2 bg-red-500 hover:bg-red-400 text-white font-extrabold rounded-xl transition cursor-pointer">Decline ❌</button>
+                    `;
+                }
+
                 list.innerHTML += `
                     <div class="glass-modal p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs">
                         <div class="space-y-1">
@@ -1836,8 +1980,8 @@
                             <div class="text-slate-500 text-[11px]">${d.date}</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button onclick="viewAdminReceipt('${d.receipt}')" class="px-3.5 py-2 bg-pink-500/20 hover:bg-pink-500 hover:text-black text-pink-400 rounded-xl font-bold transition cursor-pointer">View Receipt 🧾</button>
-                            ${d.status === 'Approved' ? '<span class="text-emerald-400 font-bold">Approved ✅</span>' : `<button onclick="approveDeposit('${d.id}', '${d.userId}', ${d.amount})" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold rounded-xl transition cursor-pointer">Approve & Credit Balance ⚡</button>`}
+                            <button onclick="viewAdminReceipt('${d.receipt}')" class="px-3 py-2 bg-pink-500/20 hover:bg-pink-500 hover:text-black text-pink-400 rounded-xl font-bold transition cursor-pointer">View Receipt 🧾</button>
+                            ${actionBtns}
                         </div>
                     </div>
                 `;
@@ -1864,6 +2008,89 @@
 
             showToast(`Successfully credited ₦${amount.toLocaleString()} to user wallet! ⚡`);
             renderAdminDeposits();
+        }
+
+        async function declineDeposit(depositId) {
+            if(!confirm("Are you sure you want to decline this deposit request?")) return;
+
+            if(db) {
+                await db.collection("deposits").doc(depositId).update({ status: 'Declined' });
+            } else {
+                const dep = deposits.find(d => d.id === depositId);
+                if(dep) dep.status = 'Declined';
+                localStorage.setItem('naijacp_deposits', JSON.stringify(deposits));
+            }
+
+            showToast("Deposit request declined. User has been notified.");
+            renderAdminDeposits();
+        }
+
+        function renderAdminSupport() {
+            const list = document.getElementById('adminSupportList');
+            list.innerHTML = '';
+            if(supportTickets.length === 0) {
+                list.innerHTML = '<p class="text-slate-400 text-xs">No customer care messages yet.</p>';
+                return;
+            }
+            supportTickets.forEach(t => {
+                list.innerHTML += `
+                    <div class="glass-modal p-4 rounded-2xl border border-slate-800 space-y-3 text-xs">
+                        <div class="flex justify-between text-slate-400 text-[11px]">
+                            <span>Ticket #${t.id} | Email: <strong class="text-white">${t.email}</strong></span>
+                            <span>${t.date}</span>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-xl text-slate-200">
+                            <strong>User Issue:</strong> ${t.message}
+                        </div>
+                        ${t.adminReply ? `
+                            <div class="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl text-emerald-300">
+                                <strong>Admin Reply Sent:</strong> ${t.adminReply}
+                            </div>
+                        ` : ''}
+                        <div class="flex gap-2">
+                            <input type="text" id="adminReplyInput_${t.id}" placeholder="Type reply to customer..." class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white text-xs">
+                            <button onclick="sendAdminReply('${t.id}', '${t.firestoreId || ''}')" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-xl text-xs transition cursor-pointer">
+                                Reply &amp; Notify 🚀
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        async function sendAdminReply(ticketId, firestoreId) {
+            const inputEl = document.getElementById(`adminReplyInput_${ticketId}`);
+            const replyText = inputEl.value.trim();
+            if(!replyText) {
+                alert("Please type a reply message.");
+                return;
+            }
+
+            if(db) {
+                // If firestoreId is missing, query by ticket id
+                let docId = firestoreId;
+                if(!docId) {
+                    const snap = await db.collection("supportTickets").where("id", "==", ticketId).get();
+                    if(!snap.empty) docId = snap.docs[0].id;
+                }
+                if(docId) {
+                    await db.collection("supportTickets").doc(docId).update({
+                        adminReply: replyText,
+                        unread: true
+                    });
+                }
+            } else {
+                const tick = supportTickets.find(t => t.id === ticketId);
+                if(tick) {
+                    tick.adminReply = replyText;
+                    tick.unread = true;
+                    localStorage.setItem('naijacp_support', JSON.stringify(supportTickets));
+                }
+            }
+
+            inputEl.value = '';
+            showToast("Reply sent to customer successfully! 🚀");
+            renderAdminSupport();
         }
 
         function viewAdminReceipt(receiptUrl) {
