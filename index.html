@@ -131,7 +131,7 @@
             <h3 class="text-xl font-black text-white mb-1" id="emailAuthTitle">Sign In with Username</h3>
             <p class="text-slate-400 text-xs mb-4" id="emailAuthSub">Enter your username and password to access your account.</p>
 
-            <!-- IN-SITE ERROR / SUCCESS MESSAGE BOX (REPLACES POPUP ALERTS) -->
+            <!-- IN-SITE ERROR / SUCCESS MESSAGE BOX -->
             <div id="authAlertBox" class="hidden mb-4 p-3 rounded-xl text-xs font-bold text-center"></div>
 
             <form onsubmit="handleEmailAuthSubmit(event)" class="space-y-4">
@@ -179,17 +179,20 @@
                 </span>
             </div>
 
-            <div class="flex items-center gap-3.5">
-                <button onclick="openUserDashboard()" class="px-3.5 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500 hover:text-black font-extrabold text-xs transition cursor-pointer flex items-center gap-2 shadow-sm relative">
-                    <i class="fa-solid fa-wallet text-pink-400"></i> 
+            <div class="flex items-center gap-2.5">
+                <!-- WALLET BUTTON (OPENS ADD FUNDS DIRECTLY) -->
+                <button onclick="openAddFundsModal()" class="px-3.5 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-black font-extrabold text-xs transition cursor-pointer flex items-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-wallet"></i> 
                     <span>₦<span id="headerWalletBalance">0</span></span>
-                    <span id="notificationBadge" class="hidden absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-ping"></span>
+                    <span class="text-[10px] bg-emerald-500/20 px-1.5 py-0.5 rounded font-bold">+Add</span>
                 </button>
-                
-                <div class="hidden sm:flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800 text-xs font-bold text-slate-300">
-                    <i class="fa-solid fa-earth-africa text-pink-500"></i>
-                    <span>NG / EN</span>
-                </div>
+
+                <!-- NOTIFICATIONS & PROFILE DASHBOARD BUTTON -->
+                <button onclick="openUserDashboard()" class="px-3.5 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500 hover:text-black font-extrabold text-xs transition cursor-pointer flex items-center gap-2 shadow-sm relative">
+                    <i class="fa-solid fa-bell text-pink-400"></i>
+                    <span class="hidden sm:inline">Dashboard</span>
+                    <span id="notificationBadge" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 rounded-full animate-ping"></span>
+                </button>
             </div>
         </div>
     </header>
@@ -534,7 +537,7 @@
 
                 <!-- OPTION 3: REFERRAL & AFFILIATE PROGRAM BOX -->
                 <div class="bg-gradient-to-r from-pink-950/60 to-slate-950 p-4 rounded-2xl border border-pink-500/40">
-                    <h4 class="text-xs font-bold text-pink-400 uppercase tracking-wider mb-2">🎁 Referral &amp; Affiliate Bonus (Earn ₦200 per invite)</h4>
+                    <h4 class="text-xs font-bold text-pink-400 uppercase tracking-wider mb-2">🎁 REFERRAL &amp; AFFILIATE BONUS (EARN ₦200 PER INVITE)</h4>
                     <p class="text-[11px] text-slate-300 mb-3">Share your referral link with friends. When they sign up and fund their wallet, you get ₦200 bonus credit instantly!</p>
                     <div class="flex gap-2">
                         <input type="text" id="referralLinkInput" readonly class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white text-xs select-all">
@@ -544,7 +547,7 @@
 
                 <!-- OPTION 3: SAVED GAME UIDS -->
                 <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
-                    <h4 class="text-xs font-bold text-white uppercase tracking-wider">⚡ Saved Game Player IDs (One-Click Checkout)</h4>
+                    <h4 class="text-xs font-bold text-white uppercase tracking-wider">⚡ SAVED GAME PLAYER IDS (ONE-CLICK CHECKOUT)</h4>
                     <div class="flex gap-2">
                         <input type="text" id="savedGameIdInput" placeholder="Enter your main Game UID (e.g. 68230192)" class="flex-grow bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-white text-xs">
                         <button onclick="saveUserGameId()" class="px-4 py-2 bg-pink-500 hover:bg-pink-400 text-black font-extrabold rounded-xl text-xs transition cursor-pointer">Save UID</button>
@@ -555,16 +558,17 @@
                 <!-- Support Messages & Notifications Section -->
                 <div>
                     <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-3">
-                        💬 Support Messages &amp; Admin Notifications
+                        💬 SUPPORT MESSAGES &amp; ADMIN NOTIFICATIONS
                     </h4>
                     <div id="dashSupportMessagesList" class="space-y-3 max-h-48 overflow-y-auto pr-1"></div>
                 </div>
 
                 <div>
-                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-3">📦 Your Personal Order &amp; Deposit History</h4>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-3">📦 YOUR PERSONAL ORDER &amp; DEPOSIT HISTORY</h4>
                     <div id="dashOrderHistoryList" class="space-y-3 max-h-48 overflow-y-auto pr-1"></div>
                 </div>
 
+                <!-- LOGOUT BUTTON PLACED CLEARLY INSIDE DASHBOARD -->
                 <div class="pt-4 border-t border-slate-800 flex justify-between items-center">
                     <button onclick="confirmLogoutModal()" class="px-5 py-2.5 bg-red-500/20 hover:bg-red-500 hover:text-white text-red-400 font-bold rounded-xl text-xs transition cursor-pointer">
                         Log Out of Account 🚪
@@ -577,7 +581,7 @@
         </div>
     </div>
 
-    <!-- CUSTOM IN-SITE CONFIRMATION MODAL (REPLACES BROWSER CONFIRM POPUPS) -->
+    <!-- CUSTOM IN-SITE CONFIRMATION MODAL -->
     <div id="customConfirmModal" class="fixed inset-0 z-[250] hidden items-center justify-center p-4 bg-black/90 backdrop-blur-md">
         <div class="glass-modal w-full max-w-sm rounded-3xl p-6 text-center shadow-2xl border border-pink-500/40">
             <div class="w-12 h-12 mx-auto rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-400 flex items-center justify-center text-xl mb-3">
@@ -813,7 +817,7 @@
         </div>
     </div>
 
-    <!-- ADMIN DASHBOARD MODAL WITH OPTION 5: ANALYTICS & CSV EXPORT -->
+    <!-- ADMIN DASHBOARD MODAL -->
     <div id="adminDashboardModal" class="fixed inset-0 z-[125] hidden flex-col bg-black/95 backdrop-blur-xl p-4 sm:p-8 overflow-y-auto">
         <div class="max-w-5xl mx-auto w-full">
             <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-800">
@@ -837,7 +841,7 @@
                 <button onclick="switchAdminTab('products')" id="adminTabBtn-products" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">⚙️ Cloud Packages</button>
             </div>
 
-            <!-- OPTION 5: ANALYTICS TAB -->
+            <!-- ANALYTICS TAB -->
             <div id="adminTab-analytics" class="space-y-6">
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div class="glass-modal p-5 rounded-2xl border border-pink-500/30">
@@ -1258,12 +1262,10 @@
             }
         }
 
-        // Strict Email Validation Helper (catches fake gibberish like "asdfghjkl@gmail.com")
         function isValidEmail(email) {
             const clean = email.trim().toLowerCase();
             const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!re.test(clean)) return false;
-            // Prevent obvious fake typing like test@gmail.com, aaaaa@gmail.com, etc. if desired, or basic syntax check
             const parts = clean.split('@');
             if (parts[0].length < 3 || ['asdf', 'qwerty', 'test', 'abc', '123'].includes(parts[0])) {
                 return false;
@@ -1284,7 +1286,6 @@
                     const email = document.getElementById('authEmailInput').value.trim();
                     const username = identifier.toLowerCase();
 
-                    // Check if email is valid and real-looking
                     if(!isValidEmail(email)) {
                         showAuthAlert("⚠️ Please enter a valid, registered email address (e.g. your actual email). Fake or gibberish emails ending in @gmail.com are not allowed.");
                         return;
@@ -1358,7 +1359,8 @@
             }
             try {
                 await auth.sendPasswordResetEmail(emailToReset);
-                showAuthAlert(`✅ Password reset link has been sent to ${emailToReset}. Check your inbox!`, false);
+                // INCLUDES SPAM, JUNK, AND PROMOTIONS NOTICE AS REQUESTED
+                showAuthAlert(`✅ Password reset link has been sent to ${emailToReset}. If you don't find the link in your inbox, please check your Spam, Junk, and Promotions folders!`, false);
             } catch(err) {
                 showAuthAlert("⚠️ " + err.message);
             }
@@ -1385,7 +1387,6 @@
             openModal('customConfirmModal');
         }
 
-        // OPTION 3: REFERRAL LINK & SAVED UIDS
         function copyReferralLink() {
             if(!currentUser) return;
             const refLink = `${officialSiteUrl}?ref=${currentUser.uid}`;
@@ -2125,7 +2126,6 @@
             }, 1800);
         }
 
-        // OPTION 3: TRANSACTION RECEIPT DOWNLOAD
         function downloadOrderReceipt() {
             if(!lastSuccessfulOrder) return;
             const receiptText = `=== NAIJACP.NG TRANSACTION RECEIPT ===\n` +
@@ -2146,7 +2146,6 @@
             showToast("📥 Receipt downloaded successfully!");
         }
 
-        // --- SECURE ADMIN DASHBOARD (LOCKED TO springdrecko7@gmail.com) ---
         function handleAdminLogin(e) {
             e.preventDefault();
             const u = document.getElementById('adminUser').value.trim();
@@ -2182,7 +2181,6 @@
             document.getElementById(`adminTabBtn-${tab}`).className = 'px-5 py-2.5 rounded-xl bg-pink-500 text-black font-bold text-xs transition cursor-pointer';
         }
 
-        // OPTION 5: ADMIN ANALYTICS & CSV EXPORT
         function renderAdminAnalytics() {
             let totalRev = 0;
             orders.forEach(o => {
