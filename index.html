@@ -90,7 +90,7 @@
 </head>
 <body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-black pb-24">
 
-    <!-- WEATHER / FESTIVE CANVAS FX (SNOW IN MORNING/AFTERNOON, FIREWORKS AT NIGHT) -->
+    <!-- WEATHER / FESTIVE CANVAS FX -->
     <canvas id="weatherCanvas"></canvas>
 
     <!-- AUTHENTICATION MODAL -->
@@ -179,26 +179,27 @@
     </div>
 
     <!-- Header Navbar -->
-    <header class="sticky top-0 z-40 bg-[#09070c]/95 backdrop-blur-xl border-b border-pink-950/40 px-4 sm:px-8 py-3.5 shadow-md">
+    <header class="sticky top-0 z-40 bg-[#09070c]/95 backdrop-blur-xl border-b border-pink-950/40 px-3 sm:px-8 py-3 shadow-md">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="switchMainCategory('games')">
-                <div class="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-pink-500/40 bg-slate-900 border border-pink-500/30 flex items-center justify-center">
-                    <i class="fa-solid fa-gem text-pink-500 text-xl"></i>
+            <div class="flex items-center gap-2 cursor-pointer" onclick="switchMainCategory('games')">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden shadow-lg shadow-pink-500/40 bg-slate-900 border border-pink-500/30 flex items-center justify-center">
+                    <i class="fa-solid fa-gem text-pink-500 text-lg sm:text-xl"></i>
                 </div>
-                <span class="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-1.5">
-                    NAIJACP<span class="text-pink-500">.NG</span> <span class="text-xs bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full border border-red-500/30">🎄 Holiday</span>
+                <span class="text-lg sm:text-2xl font-black tracking-tight text-white flex items-center gap-1">
+                    NAIJACP<span class="text-pink-500">.NG</span>
                 </span>
             </div>
 
-            <div class="flex items-center gap-2.5">
-                <button onclick="openAddFundsModal()" class="px-3.5 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-black font-extrabold text-xs transition cursor-pointer flex items-center gap-2 shadow-sm">
-                    <i class="fa-solid fa-wallet"></i> 
+            <!-- COMPACT HEADER BUTTONS (FIXED OVERLAP FOR MOBILE) -->
+            <div class="flex items-center gap-2">
+                <button onclick="openAddFundsModal()" class="px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-black font-extrabold text-[11px] sm:text-xs transition cursor-pointer flex items-center gap-1 shadow-sm">
+                    <i class="fa-solid fa-wallet text-xs"></i> 
                     <span>₦<span id="headerWalletBalance">0</span></span>
-                    <span class="text-[10px] bg-emerald-500/20 px-1.5 py-0.5 rounded font-bold">+Add</span>
+                    <span class="text-[9px] bg-emerald-500/20 px-1 py-0.5 rounded font-bold">+</span>
                 </button>
 
-                <button onclick="openUserDashboard()" class="px-3.5 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500 hover:text-black font-extrabold text-xs transition cursor-pointer flex items-center gap-2 shadow-sm relative">
-                    <i class="fa-solid fa-bell text-pink-400"></i>
+                <button onclick="openUserDashboard()" class="px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500 hover:text-black font-extrabold text-[11px] sm:text-xs transition cursor-pointer flex items-center gap-1.5 shadow-sm relative">
+                    <i class="fa-solid fa-bell text-pink-400 text-xs sm:text-sm"></i>
                     <span class="hidden sm:inline">Dashboard</span>
                     <span id="notificationBadge" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 rounded-full animate-ping"></span>
                 </button>
@@ -230,7 +231,6 @@
 
             <!-- DUAL HOLIDAY COUNTDOWN BOXES -->
             <div id="holidayCountdownContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-                <!-- Christmas Countdown -->
                 <div class="glass-modal p-5 rounded-3xl border border-red-500/40 shadow-[0_0_30px_rgba(239,68,68,0.2)]">
                     <div class="flex items-center justify-between mb-3">
                         <h3 class="text-sm font-black text-red-400 uppercase tracking-wider flex items-center gap-2">
@@ -249,7 +249,6 @@
                     </div>
                 </div>
 
-                <!-- New Year Countdown -->
                 <div class="glass-modal p-5 rounded-3xl border border-emerald-500/40 shadow-[0_0_30px_rgba(16,185,129,0.2)]">
                     <div class="flex items-center justify-between mb-3">
                         <h3 class="text-sm font-black text-emerald-400 uppercase tracking-wider flex items-center gap-2">
@@ -283,7 +282,7 @@
                     </div>
                     <h3 class="text-sm font-black text-white uppercase tracking-wider">🌟 Daily Gamer Quote Box</h3>
                 </div>
-                <span class="text-[10px] bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full font-bold border border-pink-500/30">Inspiration for Gamers</span>
+                <span class="text-[10px] bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full font-bold border border-pink-500/30">Live Cloud Synced</span>
             </div>
             
             <div id="dailyQuoteDisplay" class="py-4 px-2 text-center sm:text-left">
@@ -1211,7 +1210,6 @@
             const isNight = new Date().getHours() >= 18 || new Date().getHours() < 6;
 
             if (!isNight) {
-                // Snowflakes
                 for (let i = 0; i < 50; i++) {
                     particles.push({
                         x: Math.random() * canvas.width,
@@ -1222,7 +1220,6 @@
                     });
                 }
             } else {
-                // Firework sparks
                 for (let i = 0; i < 30; i++) {
                     particles.push({
                         x: Math.random() * canvas.width,
@@ -1239,7 +1236,6 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                 if (!isNight) {
-                    // Draw Snow
                     ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
                     particles.forEach(p => {
                         ctx.beginPath();
@@ -1250,7 +1246,6 @@
                         if (p.y > canvas.height) { p.y = 0; p.x = Math.random() * canvas.width; }
                     });
                 } else {
-                    // Draw Fireworks / Sparks
                     particles.forEach(p => {
                         ctx.fillStyle = p.color;
                         ctx.globalAlpha = p.alpha;
@@ -1273,13 +1268,11 @@
             animate();
         }
 
-        // DUAL HOLIDAY COUNTDOWN LOGIC
         function startHolidayCountdowns() {
             function update() {
                 const now = new Date();
                 const year = now.getFullYear();
 
-                // Christmas (Dec 25)
                 let xmas = new Date(year, 11, 25, 0, 0, 0);
                 if (now > xmas) xmas = new Date(year + 1, 11, 25, 0, 0, 0);
                 
@@ -1300,7 +1293,6 @@
                     document.getElementById('xmasStatusBadge').innerText = "Merry Christmas! 🎄";
                 }
 
-                // New Year (Jan 1)
                 let ny = new Date(year + 1, 0, 1, 0, 0, 0);
                 const diffNy = ny - now;
                 const nyDays = Math.floor(diffNy / (1000 * 60 * 60 * 24));
@@ -1466,17 +1458,13 @@
         function loginWithGoogle() {
             if(!auth || !db) { alert("Firebase not initialized."); return; }
             const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithRedirect(provider).catch((error) => {
-                showAuthAlert(error.message);
-            });
+            auth.signInWithRedirect(provider).catch((error) => { showAuthAlert(error.message); });
         }
 
         function loginWithFacebook() {
             if(!auth || !db) { alert("Firebase not initialized."); return; }
             const provider = new firebase.auth.FacebookAuthProvider();
-            auth.signInWithRedirect(provider).catch((error) => {
-                showAuthAlert(error.message);
-            });
+            auth.signInWithRedirect(provider).catch((error) => { showAuthAlert(error.message); });
         }
 
         function openEmailAuthModal() {
@@ -1548,7 +1536,7 @@
 
                     const userCheck = await db.collection("users").where("username", "==", username).get();
                     if(!userCheck.empty) {
-                        showAuthAlert("⚠️ Username is already taken. Please choose another username.");
+                        showAuthAlert("⚠️ Username is already taken.");
                         return;
                     }
 
@@ -1567,7 +1555,7 @@
                     if(!identifier.includes('@')) {
                         const querySnap = await db.collection("users").where("username", "==", identifier.toLowerCase()).get();
                         if(querySnap.empty) {
-                            showAuthAlert("⚠️ Username not found. Please check your username or create an account.");
+                            showAuthAlert("⚠️ Username not found.");
                             return;
                         }
                         emailToUse = querySnap.docs[0].data().email;
@@ -1587,35 +1575,23 @@
 
         async function handleForgotPassword() {
             const identifier = document.getElementById('authIdentifierInput').value.trim();
-            if(!identifier) {
-                showAuthAlert("⚠️ Please type your Username or Email in the box above first.");
-                return;
-            }
+            if(!identifier) { showAuthAlert("⚠️ Please type your Username or Email first."); return; }
             let emailToReset = identifier;
             if(!identifier.includes('@') && db) {
                 const querySnap = await db.collection("users").where("username", "==", identifier.toLowerCase()).get();
-                if(!querySnap.empty) {
-                    emailToReset = querySnap.docs[0].data().email;
-                } else {
-                    showAuthAlert("⚠️ Username not found.");
-                    return;
-                }
+                if(!querySnap.empty) emailToReset = querySnap.docs[0].data().email;
+                else { showAuthAlert("⚠️ Username not found."); return; }
             }
             try {
                 await auth.sendPasswordResetEmail(emailToReset);
                 showAuthAlert(`✅ Password reset link has been sent to ${emailToReset}.`, false);
-            } catch(err) {
-                showAuthAlert("⚠️ " + err.message);
-            }
+            } catch(err) { showAuthAlert("⚠️ " + err.message); }
         }
 
         function confirmLogoutModal() {
             closeModal('userDashboardModal');
             openCustomConfirm("Log Out", "Are you sure you want to log out of your account?", () => {
-                if(currentUser) {
-                    auth.signOut();
-                    showToast("Logged out successfully.");
-                }
+                if(currentUser) { auth.signOut(); showToast("Logged out successfully."); }
             });
         }
 
@@ -1623,10 +1599,7 @@
             document.getElementById('confirmTitle').innerText = title;
             document.getElementById('confirmDesc').innerText = desc;
             const yesBtn = document.getElementById('confirmYesBtn');
-            yesBtn.onclick = function() {
-                closeModal('customConfirmModal');
-                onConfirmCallback();
-            };
+            yesBtn.onclick = function() { closeModal('customConfirmModal'); onConfirmCallback(); };
             openModal('customConfirmModal');
         }
 
@@ -1643,9 +1616,7 @@
             if(!uidInput) { alert("Please enter a valid Player ID."); return; }
             if(!savedUserUids.includes(uidInput)) {
                 savedUserUids.push(uidInput);
-                if(db && currentUser) {
-                    await db.collection("users").doc(currentUser.uid).update({ savedUids: savedUserUids });
-                }
+                if(db && currentUser) await db.collection("users").doc(currentUser.uid).update({ savedUids: savedUserUids });
                 renderSavedUids();
                 document.getElementById('savedGameIdInput').value = '';
                 showToast("⚡ Game UID saved successfully!");
@@ -1671,9 +1642,7 @@
 
         async function deleteSavedUid(uid) {
             savedUserUids = savedUserUids.filter(id => id !== uid);
-            if(db && currentUser) {
-                await db.collection("users").doc(currentUser.uid).update({ savedUids: savedUserUids });
-            }
+            if(db && currentUser) await db.collection("users").doc(currentUser.uid).update({ savedUids: savedUserUids });
             renderSavedUids();
             showToast("UID removed.");
         }
@@ -1686,10 +1655,7 @@
         }
 
         function openUserDashboard() {
-            if(!currentUser) {
-                openModal('authWallModal');
-                return;
-            }
+            if(!currentUser) { openModal('authWallModal'); return; }
             document.getElementById('dashUserEmail').innerText = currentUser.email;
             document.getElementById('referralLinkInput').value = `https://naijacpstore.github.io/naijacp/?ref=${currentUser.uid}`;
             renderSavedUids();
@@ -1768,9 +1734,7 @@
 
             if(currentUser) {
                 myTickets.forEach(t => {
-                    if(t.unread && t.firestoreId && db) {
-                        db.collection("supportTickets").doc(t.firestoreId).update({ unread: false });
-                    }
+                    if(t.unread && t.firestoreId && db) db.collection("supportTickets").doc(t.firestoreId).update({ unread: false });
                 });
                 document.getElementById('notificationBadge').classList.add('hidden');
             }
@@ -1779,10 +1743,7 @@
         }
 
         function openAddFundsModal() {
-            if(!currentUser) {
-                openModal('authWallModal');
-                return;
-            }
+            if(!currentUser) { openModal('authWallModal'); return; }
             openModal('addFundsModal');
         }
 
@@ -1796,7 +1757,6 @@
             }
         }
 
-        // TELEGRAM NOTIFICATIONS FOR DEPOSIT REQUESTS
         function sendDepositToTelegram(deposit) {
             const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
             const chatId = "8682089527";
@@ -1813,7 +1773,6 @@
             } catch(e) {}
         }
 
-        // TELEGRAM NOTIFICATIONS FOR CUSTOMER SUPPORT
         function sendSupportToTelegram(ticket) {
             const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
             const chatId = "8682089527";
@@ -1845,9 +1804,8 @@
                 timestamp: Date.now()
             };
 
-            if(db) {
-                db.collection("deposits").doc(depositObj.id).set(depositObj);
-            } else {
+            if(db) db.collection("deposits").doc(depositObj.id).set(depositObj);
+            else {
                 deposits.unshift(depositObj);
                 localStorage.setItem('naijacp_deposits', JSON.stringify(deposits));
             }
@@ -1887,9 +1845,7 @@
         }
 
         function checkSecretAdminHash() {
-            if(window.location.hash === '#naijacp-admin-secure') {
-                openModal('adminLoginModal');
-            }
+            if(window.location.hash === '#naijacp-admin-secure') openModal('adminLoginModal');
         }
 
         function playClickSound() {
@@ -1960,7 +1916,6 @@
                 const randomName = names[Math.floor(Math.random() * names.length)];
                 const randomPhone = prefixes[Math.floor(Math.random() * prefixes.length)] + "***" + Math.floor(1000 + Math.random() * 9000);
                 const randomProduct = products[Math.floor(Math.random() * products.length)];
-                
                 showToast(`<span class="text-pink-400 font-bold">${randomName} (${randomPhone})</span> just purchased <br><span class="font-bold">${randomProduct.title}</span>`);
             }, 8500);
         }
@@ -2091,9 +2046,8 @@
                 timestamp: Date.now()
             };
 
-            if(db) {
-                db.collection("supportTickets").doc(ticketId).set(ticketObj);
-            } else {
+            if(db) db.collection("supportTickets").doc(ticketId).set(ticketObj);
+            else {
                 supportTickets.unshift(ticketObj);
                 localStorage.setItem('naijacp_support', JSON.stringify(supportTickets));
             }
@@ -2223,11 +2177,8 @@
             document.getElementById('checkoutItemPrice').innerText = `₦${Number(currentSelectedItem.price).toLocaleString()}`;
             document.getElementById('checkoutWalletBalance').innerText = userWalletBalance.toLocaleString();
             
-            if(savedUserUids.length > 0) {
-                document.getElementById('quickSelectUidBtn').classList.remove('hidden');
-            } else {
-                document.getElementById('quickSelectUidBtn').classList.add('hidden');
-            }
+            if(savedUserUids.length > 0) document.getElementById('quickSelectUidBtn').classList.remove('hidden');
+            else document.getElementById('quickSelectUidBtn').classList.add('hidden');
 
             const payBtn = document.getElementById('payWithWalletBtn');
             if(userWalletBalance < currentSelectedItem.price) {
@@ -2283,9 +2234,7 @@
             const phoneNum = document.getElementById('custPhone').value.trim() || "N/A";
 
             userWalletBalance -= currentSelectedItem.price;
-            if(db && currentUser) {
-                db.collection("users").doc(currentUser.uid).update({ balance: userWalletBalance });
-            }
+            if(db && currentUser) db.collection("users").doc(currentUser.uid).update({ balance: userWalletBalance });
             updateWalletUI();
 
             const newOrder = {
@@ -2303,9 +2252,8 @@
             };
 
             lastSuccessfulOrder = newOrder;
-            if(db) {
-                db.collection("orders").doc(newOrder.id).set(newOrder);
-            } else {
+            if(db) db.collection("orders").doc(newOrder.id).set(newOrder);
+            else {
                 orders.unshift(newOrder);
                 localStorage.setItem('naijacp_orders', JSON.stringify(orders));
             }
@@ -2427,6 +2375,7 @@
             list.innerHTML = '';
             if(orders.length === 0) { list.innerHTML = '<p class="text-slate-400 text-xs">No orders received yet.</p>'; return; }
             orders.forEach(o => {
+                const docId = o.firestoreId || o.id;
                 list.innerHTML += `
                     <div class="glass-modal p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs">
                         <div class="space-y-1">
@@ -2436,7 +2385,7 @@
                         </div>
                         <div class="flex items-center gap-3">
                             <button onclick="viewAdminReceipt('${o.receipt}')" class="px-3.5 py-2 bg-pink-500/20 hover:bg-pink-500 hover:text-black text-pink-400 rounded-xl font-bold transition cursor-pointer">View Receipt 🧾</button>
-                            <select onchange="updateOrderStatus('${o.id}', this.value)" class="bg-slate-950 border border-slate-800 text-white px-3 py-1.5 rounded-lg font-bold">
+                            <select onchange="updateOrderStatus('${docId}', this.value)" class="bg-slate-950 border border-slate-800 text-white px-3 py-1.5 rounded-lg font-bold">
                                 <option value="Pending Review" ${o.status==='Pending Review'?'selected':''}>Pending Review</option>
                                 <option value="Completed" ${o.status.includes('Completed')?'selected':''}>Completed ⚡</option>
                             </select>
@@ -2451,13 +2400,14 @@
             list.innerHTML = '';
             if(deposits.length === 0) { list.innerHTML = '<p class="text-slate-400 text-xs">No deposit requests yet.</p>'; return; }
             deposits.forEach(d => {
+                const docId = d.firestoreId || d.id;
                 let actionBtns = '';
                 if(d.status === 'Approved') actionBtns = '<span class="text-emerald-400 font-bold">Approved ✅</span>';
                 else if(d.status === 'Declined') actionBtns = '<span class="text-red-400 font-bold">Declined ❌</span>';
                 else {
                     actionBtns = `
-                        <button onclick="approveDeposit('${d.id}', '${d.userId}', ${d.amount})" class="px-3 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold rounded-xl transition cursor-pointer">Approve ⚡</button>
-                        <button onclick="declineDeposit('${d.id}')" class="px-3 py-2 bg-red-500 hover:bg-red-400 text-white font-extrabold rounded-xl transition cursor-pointer">Decline ❌</button>
+                        <button onclick="approveDeposit('${docId}', '${d.userId}', ${d.amount})" class="px-3 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold rounded-xl transition cursor-pointer">Approve ⚡</button>
+                        <button onclick="declineDeposit('${docId}')" class="px-3 py-2 bg-red-500 hover:bg-red-400 text-white font-extrabold rounded-xl transition cursor-pointer">Decline ❌</button>
                     `;
                 }
 
@@ -2469,7 +2419,7 @@
                             <div class="text-slate-500 text-[11px]">${d.date}</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button onclick="viewAdminReceipt('${d.receipt}')" class="px-3 py-2 bg-pink-500/20 text-pink-500 hover:text-black text-pink-400 rounded-xl font-bold transition cursor-pointer">View Receipt 🧾</button>
+                            <button onclick="viewAdminReceipt('${d.receipt}')" class="px-3 py-2 bg-pink-500/20 hover:bg-pink-500 hover:text-black text-pink-400 rounded-xl font-bold transition cursor-pointer">View Receipt 🧾</button>
                             ${actionBtns}
                         </div>
                     </div>
@@ -2487,7 +2437,7 @@
                     await userRef.update({ balance: (userDoc.data().balance || 0) + amount });
                 }
             } else {
-                const dep = deposits.find(d => d.id === depositId);
+                const dep = deposits.find(d => d.id === depositId || d.firestoreId === depositId);
                 if(dep) dep.status = 'Approved';
                 localStorage.setItem('naijacp_deposits', JSON.stringify(deposits));
             }
@@ -2501,7 +2451,7 @@
             if(db) {
                 await db.collection("deposits").doc(depositId).update({ status: 'Declined' });
             } else {
-                const dep = deposits.find(d => d.id === depositId);
+                const dep = deposits.find(d => d.id === depositId || d.firestoreId === depositId);
                 if(dep) dep.status = 'Declined';
                 localStorage.setItem('naijacp_deposits', JSON.stringify(deposits));
             }
@@ -2514,6 +2464,7 @@
             list.innerHTML = '';
             if(supportTickets.length === 0) { list.innerHTML = '<p class="text-slate-400 text-xs">No customer care messages yet.</p>'; return; }
             supportTickets.forEach(t => {
+                const docId = t.firestoreId || t.id;
                 list.innerHTML += `
                     <div class="glass-modal p-4 rounded-2xl border border-slate-800 space-y-3 text-xs">
                         <div class="flex justify-between text-slate-400 text-[11px]">
@@ -2524,27 +2475,22 @@
                         ${t.adminReply ? `<div class="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl text-emerald-300"><strong>Admin Reply Sent:</strong> ${t.adminReply}</div>` : ''}
                         <div class="flex gap-2">
                             <input type="text" id="adminReplyInput_${t.id}" placeholder="Type reply..." class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white text-xs">
-                            <button onclick="sendAdminReply('${t.id}', '${t.firestoreId || ''}')" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-xl text-xs transition cursor-pointer">Reply 🚀</button>
+                            <button onclick="sendAdminReply('${t.id}', '${docId}')" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-xl text-xs transition cursor-pointer">Reply 🚀</button>
                         </div>
                     </div>
                 `;
             });
         }
 
-        async function sendAdminReply(ticketId, firestoreId) {
+        async function sendAdminReply(ticketId, docId) {
             const inputEl = document.getElementById(`adminReplyInput_${ticketId}`);
             const replyText = inputEl.value.trim();
             if(!replyText) { alert("Please type a reply."); return; }
 
             if(db) {
-                let docId = firestoreId;
-                if(!docId) {
-                    const snap = await db.collection("supportTickets").where("id", "==", ticketId).get();
-                    if(!snap.empty) docId = snap.docs[0].id;
-                }
-                if(docId) await db.collection("supportTickets").doc(docId).update({ adminReply: replyText, unread: true });
+                await db.collection("supportTickets").doc(docId).update({ adminReply: replyText, unread: true });
             } else {
-                const tick = supportTickets.find(t => t.id === ticketId);
+                const tick = supportTickets.find(t => t.id === ticketId || t.firestoreId === docId);
                 if(tick) { tick.adminReply = replyText; tick.unread = true; localStorage.setItem('naijacp_support', JSON.stringify(supportTickets)); }
             }
             inputEl.value = '';
@@ -2555,14 +2501,16 @@
         function renderAdminQuotes() {
             const list = document.getElementById('adminQuotesList');
             list.innerHTML = '';
+            if(quotes.length === 0) { list.innerHTML = '<p class="text-slate-400 text-xs">No quotes found.</p>'; return; }
             quotes.forEach(q => {
+                const docId = q.firestoreId || q.id;
                 list.innerHTML += `
-                    <div class="flex items-center justify-between bg-slate-950 p-3.5 rounded-xl border border-slate-800 text-xs">
+                    <div class="flex items-center justify-between bg-slate-950 p-3.5 rounded-xl border border-slate-800 text-xs gap-3">
                         <div>
                             <span class="font-medium text-white italic">"${q.text}"</span>
                             <span class="text-pink-400 font-bold ml-2">— ${q.author}</span>
                         </div>
-                        <button onclick="deleteQuoteCloud('${q.id}')" class="px-2.5 py-1 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white rounded-lg font-bold transition cursor-pointer">Delete</button>
+                        <button onclick="deleteQuoteCloud('${docId}')" class="px-3 py-1.5 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white rounded-lg font-bold transition cursor-pointer shrink-0">Delete</button>
                     </div>
                 `;
             });
@@ -2570,13 +2518,14 @@
 
         function addNewQuoteCloud(e) {
             e.preventDefault();
+            const newId = Date.now().toString();
             const newQ = {
-                id: Date.now(),
+                id: newId,
                 text: document.getElementById('newQuoteText').value.trim(),
                 author: document.getElementById('newQuoteAuthor').value.trim()
             };
             if(db) {
-                db.collection("quotes").doc(newQ.id.toString()).set(newQ).then(() => { showToast("Quote added & synced! 🚀"); });
+                db.collection("quotes").doc(newId).set(newQ).then(() => { showToast("Quote added & synced live! 🚀"); });
             } else {
                 quotes.unshift(newQ);
                 renderAdminQuotes();
@@ -2585,14 +2534,15 @@
             e.target.reset();
         }
 
-        function deleteQuoteCloud(id) {
-            if(confirm("Delete this quote?")) {
+        function deleteQuoteCloud(docId) {
+            if(confirm("Are you sure you want to delete this quote?")) {
                 if(db) {
-                    db.collection("quotes").doc(id.toString()).delete().then(() => { showToast("Quote deleted."); });
+                    db.collection("quotes").doc(docId.toString()).delete().then(() => { showToast("Quote permanently deleted from cloud."); });
                 } else {
-                    quotes = quotes.filter(x => x.id != id);
+                    quotes = quotes.filter(x => x.id != docId && x.firestoreId != docId);
                     renderAdminQuotes();
                     rotateDailyQuote();
+                    showToast("Quote deleted.");
                 }
             }
         }
@@ -2604,13 +2554,13 @@
             } else { alert("No receipt found."); }
         }
 
-        function updateOrderStatus(id, status) {
-            const ord = orders.find(o => o.id === id);
+        function updateOrderStatus(docId, status) {
+            const ord = orders.find(o => o.firestoreId === docId || o.id === docId);
             if(ord) {
                 ord.status = status;
-                if(db && ord.firestoreId) db.collection("orders").doc(ord.firestoreId).update({ status: status });
+                if(db) db.collection("orders").doc(docId).update({ status: status });
                 localStorage.setItem('naijacp_orders', JSON.stringify(orders));
-                showToast(`Order #${id} updated`);
+                showToast(`Order status updated to ${status}`);
                 renderAdminAnalytics();
             }
         }
@@ -2619,6 +2569,7 @@
             const list = document.getElementById('adminProductsList');
             list.innerHTML = '';
             products.forEach(p => {
+                const docId = p.firestoreId || p.id;
                 list.innerHTML += `
                     <div class="flex items-center justify-between bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs">
                         <div class="flex items-center gap-3">
@@ -2626,8 +2577,8 @@
                             <div><span class="font-bold text-white">${p.title}</span><span class="text-pink-400 font-bold ml-2">₦${p.price.toLocaleString()}</span></div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <button onclick="editProductPriceCloud('${p.id}')" class="px-2.5 py-1 bg-pink-500/20 text-pink-300 hover:bg-pink-500 hover:text-black rounded-lg font-bold transition cursor-pointer">Edit</button>
-                            <button onclick="deleteProductCloud('${p.id}')" class="px-2.5 py-1 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white rounded-lg font-bold transition cursor-pointer">Delete</button>
+                            <button onclick="editProductPriceCloud('${docId}')" class="px-2.5 py-1 bg-pink-500/20 text-pink-300 hover:bg-pink-500 hover:text-black rounded-lg font-bold transition cursor-pointer">Edit</button>
+                            <button onclick="deleteProductCloud('${docId}')" class="px-2.5 py-1 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white rounded-lg font-bold transition cursor-pointer">Delete</button>
                         </div>
                     </div>
                 `;
@@ -2636,8 +2587,9 @@
 
         function addNewProductCloud(e) {
             e.preventDefault();
+            const newId = Date.now().toString();
             const newP = {
-                id: Date.now(),
+                id: newId,
                 title: document.getElementById('newProdTitle').value.trim(),
                 price: parseFloat(document.getElementById('newProdPrice').value),
                 category: document.getElementById('newProdCat').value,
@@ -2645,7 +2597,7 @@
                 icon: document.getElementById('newProdIcon').value.trim()
             };
             if(db) {
-                db.collection("products").doc(newP.id.toString()).set(newP).then(() => { showToast("Added & synced live! 🚀"); });
+                db.collection("products").doc(newId).set(newP).then(() => { showToast("Added & synced live! 🚀"); });
             } else {
                 products.unshift(newP);
                 renderCatalog();
@@ -2654,23 +2606,23 @@
             e.target.reset();
         }
 
-        function editProductPriceCloud(id) {
-            const p = products.find(x => x.id == id);
+        function editProductPriceCloud(docId) {
+            const p = products.find(x => x.firestoreId == docId || x.id == docId);
             if(!p) return;
             const newPrice = prompt(`Enter new price for ${p.title} (Current: ₦${p.price}):`, p.price);
             if(newPrice && !isNaN(newPrice)) {
                 p.price = parseFloat(newPrice);
-                if(db) db.collection("products").doc(id.toString()).update({ price: parseFloat(newPrice) });
+                if(db) db.collection("products").doc(docId.toString()).update({ price: parseFloat(newPrice) });
                 renderCatalog();
                 renderAdminProducts();
                 showToast("Price updated live! ⚡");
             }
         }
 
-        function deleteProductCloud(id) {
+        function deleteProductCloud(docId) {
             if(confirm("Delete this package?")) {
-                if(db) db.collection("products").doc(id.toString()).delete();
-                else { products = products.filter(x => x.id != id); renderCatalog(); renderAdminProducts(); }
+                if(db) db.collection("products").doc(docId.toString()).delete();
+                else { products = products.filter(x => x.id != docId && x.firestoreId != docId); renderCatalog(); renderAdminProducts(); }
                 showToast("Package deleted.");
             }
         }
