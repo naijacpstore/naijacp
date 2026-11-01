@@ -22,6 +22,7 @@
             background-color: #050507;
             color: #f3f4f6;
             overflow-x: hidden;
+            overscroll-behavior-y: none;
             -webkit-overflow-scrolling: touch;
         }
 
@@ -46,6 +47,7 @@
             background: rgba(12, 10, 16, 0.98);
             backdrop-filter: blur(24px);
             border: 1px solid rgba(236, 72, 153, 0.4);
+            overscroll-behavior: contain;
         }
 
         .pulse-dot {
@@ -98,10 +100,10 @@
         <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-[0_0_60px_rgba(236,72,153,0.3)] border border-pink-500/40">
             <div class="text-center mb-6">
                 <div class="flex items-center justify-center gap-2 mb-2">
-                    <i class="fa-solid fa-gem text-pink-500 text-2xl"></i>
+                    <i class="fa-solid fa-tree text-emerald-400 text-2xl"></i>
                     <h2 class="text-2xl font-black text-white tracking-tight">NAIJACP<span class="text-pink-500">.NG</span></h2>
                 </div>
-                <p class="text-slate-300 text-xs mt-2 font-medium">🎄 Holiday Season Special Deals 🎅</p>
+                <p class="text-emerald-300 text-xs mt-2 font-bold">🎄 Christmas &amp; New Year Holiday Edition 🎅</p>
                 <h3 class="text-xl font-extrabold text-white mt-1">Join NAIJACP Now.</h3>
             </div>
 
@@ -181,16 +183,16 @@
     <!-- Header Navbar -->
     <header class="sticky top-0 z-40 bg-[#09070c]/95 backdrop-blur-xl border-b border-pink-950/40 px-3 sm:px-8 py-3 shadow-md">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-2 cursor-pointer" onclick="switchMainCategory('games')">
-                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden shadow-lg shadow-pink-500/40 bg-slate-900 border border-pink-500/30 flex items-center justify-center">
-                    <i class="fa-solid fa-gem text-pink-500 text-lg sm:text-xl"></i>
+            <div class="flex items-center gap-2.5 cursor-pointer" onclick="switchMainCategory('games')">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden shadow-lg shadow-emerald-500/40 bg-slate-900 border border-emerald-500/40 flex items-center justify-center">
+                    <i class="fa-solid fa-tree text-emerald-400 text-base sm:text-lg"></i>
                 </div>
                 <span class="text-lg sm:text-2xl font-black tracking-tight text-white flex items-center gap-1">
                     NAIJACP<span class="text-pink-500">.NG</span>
                 </span>
             </div>
 
-            <!-- COMPACT HEADER BUTTONS (FIXED OVERLAP FOR MOBILE) -->
+            <!-- COMPACT HEADER BUTTONS -->
             <div class="flex items-center gap-2">
                 <button onclick="openAddFundsModal()" class="px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-black font-extrabold text-[11px] sm:text-xs transition cursor-pointer flex items-center gap-1 shadow-sm">
                     <i class="fa-solid fa-wallet text-xs"></i> 
@@ -208,15 +210,15 @@
     </header>
 
     <!-- Hero Banner & Holiday Countdowns -->
-    <div class="relative bg-gradient-to-r from-pink-950 via-black to-pink-950 border-b border-pink-500/20 py-10 px-4 sm:px-8">
+    <div class="relative bg-gradient-to-r from-pink-950 via-black to-emerald-950 border-b border-pink-500/20 py-10 px-4 sm:px-8">
         <div class="max-w-7xl mx-auto space-y-8">
             <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="text-center md:text-left space-y-3">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-400 text-xs font-extrabold uppercase">
-                        <span class="w-2 h-2 rounded-full bg-pink-500 pulse-dot"></span>
-                        <span id="liveUserCounter">6,854</span> Gamers Online • Festive Mode Active 🎄
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-extrabold uppercase">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></span>
+                        <span id="liveUserCounter">6,854</span> Gamers Online • 🎄 Christmas &amp; New Year Festive Mode
                     </div>
-                    <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">Epic Holiday Deals &amp; Top-Ups!</h1>
+                    <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">Epic Holiday Deals &amp; Top-Ups! 🎁</h1>
                     <p class="text-slate-300 text-xs sm:text-sm max-w-xl">Fastest game top-ups in Nigeria with instant automated delivery. Powered by NAIJACP.</p>
                 </div>
                 <div class="flex flex-wrap gap-3 justify-center">
@@ -273,16 +275,16 @@
     <!-- Main Container -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full space-y-12">
 
-        <!-- DAILY GAMER QUOTE BOX WITH WHATSAPP SHARING -->
+        <!-- DAILY GAMER QUOTE BOX WITH WHATSAPP SHARING (RESETS DAILY AT 12:00 AM) -->
         <section class="glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/40 relative shadow-xl">
             <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
                 <div class="flex items-center gap-2.5">
                     <div class="w-9 h-9 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-400 flex items-center justify-center font-black">
                         <i class="fa-solid fa-quote-left"></i>
                     </div>
-                    <h3 class="text-sm font-black text-white uppercase tracking-wider">🌟 Daily Gamer Quote Box</h3>
+                    <h3 class="text-sm font-black text-white uppercase tracking-wider">🌟 Daily Gamer Quote Box (Resets 12:00 AM Daily)</h3>
                 </div>
-                <span class="text-[10px] bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full font-bold border border-pink-500/30">Live Cloud Synced</span>
+                <span class="text-[10px] bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full font-bold border border-pink-500/30">Auto-Daily Refresh 🕒</span>
             </div>
             
             <div id="dailyQuoteDisplay" class="py-4 px-2 text-center sm:text-left">
@@ -493,7 +495,7 @@
     <!-- Toast Notifications Container -->
     <div id="liveToastContainer" class="fixed bottom-20 right-5 z-[999] flex flex-col gap-2 pointer-events-none w-full max-w-xs"></div>
 
-    <!-- FLOATING BUTTONS (CUSTOMER CARE & AI ASSISTANT) -->
+    <!-- FLOATING BUTTONS -->
     <button onclick="openCustomerSupportModal()" class="fixed bottom-5 left-5 z-[980] bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-4.5 py-3 rounded-full flex items-center gap-2.5 shadow-[0_0_25px_rgba(16,185,129,0.6)] transition hover:scale-105 cursor-pointer font-bold text-xs">
         <i class="fa-solid fa-headset text-base animate-pulse"></i>
         <span>Customer Care 👥</span>
@@ -945,7 +947,7 @@
             <!-- DAILY QUOTES ADMIN TAB -->
             <div id="adminTab-quotes" class="hidden space-y-6">
                 <div class="glass-modal p-6 rounded-3xl border border-slate-800">
-                    <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">➕ Add New Gamer Quote</h3>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">➕ Add New Gamer Quote (December / January Updates)</h3>
                     <form onsubmit="addNewQuoteCloud(event)" class="space-y-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-300 mb-1">Quote Text</label>
@@ -1105,10 +1107,28 @@
             { id: 46, title: "Steam $10 Gift Card", price: 16200, category: "giftcards", subTag: "general", icon: "https://files.catbox.moe/vmei3z.webp" }
         ];
 
+        // All new quotes added (Legendary, Grind/Hustle, Resilience/Comeback)
         let defaultQuotes = [
-            { id: 1, text: "Hard work beats talent when talent doesn't work hard. Keep grinding your rank, boss!", author: "NAIJACP Community" },
-            { id: 2, text: "Every master was once a disaster. Never stop leveling up your skills!", author: "Gamer Wisdom" },
-            { id: 3, text: "Success in gaming and in life is built on consistency and resilience. Keep pushing forward!", author: "NAIJACP Pro Tips" }
+            { id: 1, text: "It's dangerous to go alone! Take this.", author: "The Old Man (The Legend of Zelda)" },
+            { id: 2, text: "War. War never changes.", author: "Narrator (Fallout)" },
+            { id: 3, text: "Stand in the ashes of a dead world and ask the ghosts if honor matters. The silence is your answer.", author: "Prothean Javik (Mass Effect 3)" },
+            { id: 4, text: "The right man in the wrong place can make all the difference in the world.", author: "The G-Man (Half-Life 2)" },
+            { id: 5, text: "Stay a while and listen.", author: "Deckard Cain (Diablo II)" },
+            { id: 6, text: "Do a barrel roll!", author: "Peppy Hare (Star Fox 64)" },
+            { id: 7, text: "A hero need not speak. When he is gone, the world will speak for him.", author: "The Silent Spartan (Halo)" },
+            { id: 8, text: "Easy mode is now selectable.", author: "Bayonetta" },
+            { id: 9, text: "Hard work beats talent when talent doesn't work hard. Keep grinding your rank, boss!", author: "NAIJACP Community" },
+            { id: 10, text: "Every master was once a disaster. Never stop leveling up your skills!", author: "Gamer Wisdom" },
+            { id: 11, text: "Failure is just another level loaded before you beat the final boss.", author: "NAIJACP Pro Tips" },
+            { id: 12, text: "Your network connection might lag today, but your hustle should never do the same.", author: "Esports Proverb" },
+            { id: 13, text: "A diamond rank is just a piece of coal that handled the pressure exceptionally well.", author: "Lobby Legend" },
+            { id: 14, text: "Don't practice until you get it right. Practice until you never get it wrong.", author: "Tactical Coach" },
+            { id: 15, text: "Focus on the map, trust your muscle memory, and let your gameplay talk.", author: "Leaderboard Master" },
+            { id: 16, text: "It's not about how many times you get knocked down, it's about how fast your squad revives you.", author: "Battle Royale Squad Leader" },
+            { id: 17, text: "Even a 1% HP comeback is still a legendary win. Never give up!", author: "Cozy Gamer Guild" },
+            { id: 18, text: "Lag and bad teammates are just temporary boss fights. Keep pushing through!", author: "Veteran Controller" },
+            { id: 19, text: "Sometimes you have to punch through the wall to find the secret path.", author: "Retro Gamer Code" },
+            { id: 20, text: "Reset your stats, learn from your last misplay, and respawn stronger for the next match.", author: "Next-Gen Gamer" }
         ];
 
         let products = JSON.parse(localStorage.getItem('naijacp_products')) || defaultProducts;
@@ -1176,11 +1196,13 @@
                     if(user) {
                         wall.classList.add('hidden');
                         wall.classList.remove('flex');
+                        document.body.style.overflow = '';
                         loadUserDataFromCloud(user.uid);
                         renderCatalog();
                     } else {
                         wall.classList.remove('hidden');
                         wall.classList.add('flex');
+                        document.body.style.overflow = 'hidden';
                         userWalletBalance = 0;
                         savedUserUids = [];
                         updateWalletUI();
@@ -1195,7 +1217,7 @@
             });
         });
 
-        // WEATHER ENGINE (SNOW IN MORNING/AFTERNOON, FIREWORKS AT NIGHT)
+        // WEATHER ENGINE (SNOW / FIREWORKS)
         function initWeatherEngine() {
             const canvas = document.getElementById('weatherCanvas');
             const ctx = canvas.getContext('2d');
@@ -1315,9 +1337,16 @@
             setInterval(update, 1000);
         }
 
+        // DAILY QUOTE ROTATION (AUTOMATICALLY RESETS EVERY 12:00 AM)
         function rotateDailyQuote() {
             if(quotes.length === 0) return;
-            const q = quotes[Math.floor(Math.random() * quotes.length)];
+            const todayStr = new Date().toISOString().slice(0, 10); // e.g. "2026-11-01"
+            let hash = 0;
+            for (let i = 0; i < todayStr.length; i++) {
+                hash = todayStr.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const index = Math.abs(hash) % quotes.length;
+            const q = quotes[index];
             document.getElementById('quoteTextContent').innerText = `"${q.text}"`;
             document.getElementById('quoteAuthor').innerText = `— ${q.author}`;
         }
@@ -1325,7 +1354,11 @@
         function shareQuoteToWhatsApp() {
             const textEl = document.getElementById('quoteTextContent').innerText;
             const authorEl = document.getElementById('quoteAuthor').innerText;
-            const shareMsg = encodeURIComponent(`🌟 Daily Gamer Inspiration from NAIJACP.NG:\n\n${textEl} ${authorEl}\n\nJoin the platform and top up your favorite games here: ${officialSiteUrl}`);
+            const shareMsg = encodeURIComponent(`🌟 Daily Gamer Inspiration from NAIJACP.NG:
+
+${textEl} ${authorEl}
+
+Join the platform and top up your favorite games here: ${officialSiteUrl}`);
             window.open(`https://api.whatsapp.com/send?text=${shareMsg}`, '_blank');
             showToast("📲 Quote and link ready to share on WhatsApp!");
         }
@@ -1606,7 +1639,9 @@
         function copyReferralLink() {
             if(!currentUser) return;
             const refLink = `https://naijacpstore.github.io/naijacp/?ref=${currentUser.uid}`;
-            const referralMessage = `🔥 Hey! Use my link to join NAIJACP.NG, top up your favorite games instantly, and get amazing holiday wallet bonuses! 🚀\n\nClick here: ${refLink}`;
+            const referralMessage = `🔥 Hey! Use my link to join NAIJACP.NG, top up your favorite games instantly, and get amazing holiday wallet bonuses! 🚀
+
+Click here: ${refLink}`;
             navigator.clipboard.writeText(referralMessage);
             showToast("📋 Referral link & message copied! Share to earn ₦200 bonus.");
         }
@@ -1760,12 +1795,19 @@
         function sendDepositToTelegram(deposit) {
             const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
             const chatId = "8682089527";
-            const caption = `💳 *NEW NAIJACP DEPOSIT REQUEST* 💳\n\n` +
-                            `🆔 Ref: #${deposit.id}\n` +
-                            `💰 Amount: ₦${deposit.amount.toLocaleString()}\n` +
-                            `👤 Username: ${deposit.username}\n` +
-                            `📧 Email: ${deposit.userEmail}\n` +
-                            `📅 Date: ${deposit.date}\n` +
+            const caption = `💳 *NEW NAIJACP DEPOSIT REQUEST* 💳
+
+` +
+                            `🆔 Ref: #${deposit.id}
+` +
+                            `💰 Amount: ₦${deposit.amount.toLocaleString()}
+` +
+                            `👤 Username: ${deposit.username}
+` +
+                            `📧 Email: ${deposit.userEmail}
+` +
+                            `📅 Date: ${deposit.date}
+` +
                             `⚡ Status: Pending`;
             try {
                 const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(caption)}&parse_mode=Markdown`;
@@ -1776,10 +1818,15 @@
         function sendSupportToTelegram(ticket) {
             const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
             const chatId = "8682089527";
-            const caption = `💬 *NEW CUSTOMER CARE MESSAGE* 💬\n\n` +
-                            `🎫 Ticket ID: #${ticket.id}\n` +
-                            `📧 Email: ${ticket.email}\n` +
-                            `💬 Message: ${ticket.message}\n` +
+            const caption = `💬 *NEW CUSTOMER CARE MESSAGE* 💬
+
+` +
+                            `🎫 Ticket ID: #${ticket.id}
+` +
+                            `📧 Email: ${ticket.email}
+` +
+                            `💬 Message: ${ticket.message}
+` +
                             `📅 Date: ${ticket.date}`;
             try {
                 const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(caption)}&parse_mode=Markdown`;
@@ -1877,13 +1924,25 @@
             }, 4000);
         }
 
+        // MODAL MANAGEMENT WITH APP-LIKE SCROLL LOCK & EDGE CONTAINMENT
         function openModal(id) { 
             const el = document.getElementById(id);
-            if(el) { el.classList.remove('hidden'); el.classList.add('flex'); }
+            if(el) { 
+                el.classList.remove('hidden'); 
+                el.classList.add('flex'); 
+                document.body.style.overflow = 'hidden';
+            }
         }
         function closeModal(id) { 
             const el = document.getElementById(id);
-            if(el) { el.classList.add('hidden'); el.classList.remove('flex'); }
+            if(el) { 
+                el.classList.add('hidden'); 
+                el.classList.remove('flex'); 
+                const openModals = document.querySelectorAll('.fixed.flex:not(.hidden)');
+                if(openModals.length === 0) {
+                    document.body.style.overflow = '';
+                }
+            }
         }
 
         function scrollToSection(id) {
@@ -2209,15 +2268,25 @@
         function sendOrderToTelegram(order) {
             const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
             const chatId = "8682089527";
-            const caption = `🚨 *NEW NAIJACP ORDER* 🚨\n\n` +
-                            `🆔 Order ID: #${order.id}\n` +
-                            `📦 Package: ${order.product}\n` +
-                            `💰 Price: ₦${order.amount.toLocaleString()}\n` +
-                            `👤 Customer: ${order.customer}\n` +
-                            `🎮 Game ID: ${order.gameId}\n` +
-                            `📞 WhatsApp: ${order.phone}\n` +
-                            `📧 Email: ${order.userEmail}\n` +
-                            `📅 Date: ${order.date}\n` +
+            const caption = `🚨 *NEW NAIJACP ORDER* 🚨
+
+` +
+                            `🆔 Order ID: #${order.id}
+` +
+                            `📦 Package: ${order.product}
+` +
+                            `💰 Price: ₦${order.amount.toLocaleString()}
+` +
+                            `👤 Customer: ${order.customer}
+` +
+                            `🎮 Game ID: ${order.gameId}
+` +
+                            `📞 WhatsApp: ${order.phone}
+` +
+                            `📧 Email: ${order.userEmail}
+` +
+                            `📅 Date: ${order.date}
+` +
                             `⚡ Status: ${order.status}`;
             try {
                 const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(caption)}&parse_mode=Markdown`;
@@ -2284,14 +2353,22 @@
 
         function downloadOrderReceipt() {
             if(!lastSuccessfulOrder) return;
-            const receiptText = `=== NAIJACP.NG TRANSACTION RECEIPT ===\n` +
-                                `Order ID: #${lastSuccessfulOrder.id}\n` +
-                                `Date: ${lastSuccessfulOrder.date}\n` +
-                                `Customer: ${lastSuccessfulOrder.customer}\n` +
-                                `Game UID: ${lastSuccessfulOrder.gameId}\n` +
-                                `Package: ${lastSuccessfulOrder.product}\n` +
-                                `Amount Paid: ₦${lastSuccessfulOrder.amount.toLocaleString()}\n` +
-                                `Status: ${lastSuccessfulOrder.status}\n` +
+            const receiptText = `=== NAIJACP.NG TRANSACTION RECEIPT ===
+` +
+                                `Order ID: #${lastSuccessfulOrder.id}
+` +
+                                `Date: ${lastSuccessfulOrder.date}
+` +
+                                `Customer: ${lastSuccessfulOrder.customer}
+` +
+                                `Game UID: ${lastSuccessfulOrder.gameId}
+` +
+                                `Package: ${lastSuccessfulOrder.product}
+` +
+                                `Amount Paid: ₦${lastSuccessfulOrder.amount.toLocaleString()}
+` +
+                                `Status: ${lastSuccessfulOrder.status}
+` +
                                 `=====================================`;
             const blob = new Blob([receiptText], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
@@ -2349,14 +2426,14 @@
         function exportOrdersCSV() {
             if(orders.length === 0) { alert("No orders to export."); return; }
             let csv = "OrderID,Date,Customer,GameID,Phone,Email,Product,Amount,Status\n";
-            orders.forEach(o => { csv += `"${o.id}","${o.date}","${o.customer}","${o.gameId}","${o.phone}","${o.userEmail}","${o.product}",${o.amount},"${o.status}"\n`; });
+            orders.forEach(o => { csv += `\"${o.id}\",\"${o.date}\",\"${o.customer}\",\"${o.gameId}\",\"${o.phone}\",\"${o.userEmail}\",\"${o.product}\",${o.amount},\"${o.status}\"\n`; });
             downloadCSVFile(csv, "NaijaCP_Orders_Report.csv");
         }
 
         function exportDepositsCSV() {
             if(deposits.length === 0) { alert("No deposits to export."); return; }
             let csv = "DepositID,Date,Username,Email,Amount,Status\n";
-            deposits.forEach(d => { csv += `"${d.id}","${d.date}","${d.username}","${d.userEmail}",${d.amount},"${d.status}"\n`; });
+            deposits.forEach(d => { csv += `\"${d.id}\",\"${d.date}\",\"${d.username}\",\"${d.userEmail}\",${d.amount},\"${d.status}\"\n`; });
             downloadCSVFile(csv, "NaijaCP_Deposits_Report.csv");
         }
 
@@ -2525,7 +2602,7 @@
                 author: document.getElementById('newQuoteAuthor').value.trim()
             };
             if(db) {
-                db.collection("quotes").doc(newId).set(newQ).then(() => { showToast("Quote added & synced live! 🚀"); });
+                db.collection("quotes").doc(newId).set(newQ).then(() => { showToast("Quote added & synced live for December/January! 🚀"); });
             } else {
                 quotes.unshift(newQ);
                 renderAdminQuotes();
