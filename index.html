@@ -33,19 +33,19 @@
         .glass-card {
             background: rgba(18, 12, 22, 0.85);
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(236, 72, 153, 0.15);
+            border: 1px solid rgba(236, 72, 153, 0.2);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .glass-card:hover {
             transform: translateY(-4px);
-            border-color: rgba(236, 72, 153, 0.5);
-            box-shadow: 0 12px 40px -10px rgba(236, 72, 153, 0.35);
+            border-color: rgba(236, 72, 153, 0.6);
+            box-shadow: 0 12px 40px -10px rgba(236, 72, 153, 0.4);
         }
 
         .glass-modal {
             background: rgba(12, 10, 16, 0.98);
             backdrop-filter: blur(24px);
-            border: 1px solid rgba(236, 72, 153, 0.35);
+            border: 1px solid rgba(236, 72, 153, 0.4);
         }
 
         .pulse-dot {
@@ -76,9 +76,22 @@
             border-color: #ec4899 !important;
             box-shadow: 0 8px 20px -4px rgba(236, 72, 153, 0.5) !important;
         }
+
+        #weatherCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-black pb-20">
+<body class="min-h-screen flex flex-col selection:bg-pink-500 selection:text-black pb-24">
+
+    <!-- WEATHER / FESTIVE CANVAS FX (SNOW IN MORNING/AFTERNOON, FIREWORKS AT NIGHT) -->
+    <canvas id="weatherCanvas"></canvas>
 
     <!-- AUTHENTICATION MODAL -->
     <div id="authWallModal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4 bg-black/95 backdrop-blur-3xl">
@@ -88,7 +101,7 @@
                     <i class="fa-solid fa-gem text-pink-500 text-2xl"></i>
                     <h2 class="text-2xl font-black text-white tracking-tight">NAIJACP<span class="text-pink-500">.NG</span></h2>
                 </div>
-                <p class="text-slate-300 text-xs mt-2 font-medium">Faster top up, better deals.</p>
+                <p class="text-slate-300 text-xs mt-2 font-medium">🎄 Holiday Season Special Deals 🎅</p>
                 <h3 class="text-xl font-extrabold text-white mt-1">Join NAIJACP Now.</h3>
             </div>
 
@@ -122,7 +135,7 @@
         </div>
     </div>
 
-    <!-- USERNAME & PASSWORD AUTH SUB-MODAL WITH IN-SITE ERROR MESSAGING -->
+    <!-- USERNAME & PASSWORD AUTH SUB-MODAL -->
     <div id="emailAuthModal" class="fixed inset-0 z-[210] hidden items-center justify-center p-4 bg-black/90 backdrop-blur-md">
         <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-2xl border border-pink-500/40">
             <button onclick="closeModal('emailAuthModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">
@@ -131,7 +144,6 @@
             <h3 class="text-xl font-black text-white mb-1" id="emailAuthTitle">Sign In with Username</h3>
             <p class="text-slate-400 text-xs mb-4" id="emailAuthSub">Enter your username and password to access your account.</p>
 
-            <!-- IN-SITE ERROR / SUCCESS MESSAGE BOX -->
             <div id="authAlertBox" class="hidden mb-4 p-3 rounded-xl text-xs font-bold text-center"></div>
 
             <form onsubmit="handleEmailAuthSubmit(event)" class="space-y-4">
@@ -151,7 +163,6 @@
                     </button>
                 </div>
 
-                <!-- FORGOT PASSWORD LINK -->
                 <div class="text-right">
                     <button type="button" onclick="handleForgotPassword()" class="text-[11px] text-pink-400 hover:underline font-bold cursor-pointer">Forgot Password?</button>
                 </div>
@@ -168,26 +179,24 @@
     </div>
 
     <!-- Header Navbar -->
-    <header class="sticky top-0 z-40 bg-[#09070c]/95 backdrop-blur-xl border-b border-pink-950/40 px-4 sm:px-8 py-3.5">
+    <header class="sticky top-0 z-40 bg-[#09070c]/95 backdrop-blur-xl border-b border-pink-950/40 px-4 sm:px-8 py-3.5 shadow-md">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3 cursor-pointer" onclick="switchMainCategory('games')">
                 <div class="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-pink-500/40 bg-slate-900 border border-pink-500/30 flex items-center justify-center">
                     <i class="fa-solid fa-gem text-pink-500 text-xl"></i>
                 </div>
                 <span class="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-1.5">
-                    NAIJACP<span class="text-pink-500">.NG</span>
+                    NAIJACP<span class="text-pink-500">.NG</span> <span class="text-xs bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full border border-red-500/30">🎄 Holiday</span>
                 </span>
             </div>
 
             <div class="flex items-center gap-2.5">
-                <!-- WALLET BUTTON (OPENS ADD FUNDS DIRECTLY) -->
                 <button onclick="openAddFundsModal()" class="px-3.5 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-black font-extrabold text-xs transition cursor-pointer flex items-center gap-2 shadow-sm">
                     <i class="fa-solid fa-wallet"></i> 
                     <span>₦<span id="headerWalletBalance">0</span></span>
                     <span class="text-[10px] bg-emerald-500/20 px-1.5 py-0.5 rounded font-bold">+Add</span>
                 </button>
 
-                <!-- NOTIFICATIONS & PROFILE DASHBOARD BUTTON -->
                 <button onclick="openUserDashboard()" class="px-3.5 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500 hover:text-black font-extrabold text-xs transition cursor-pointer flex items-center gap-2 shadow-sm relative">
                     <i class="fa-solid fa-bell text-pink-400"></i>
                     <span class="hidden sm:inline">Dashboard</span>
@@ -197,85 +206,154 @@
         </div>
     </header>
 
-    <!-- Hero Banner -->
-    <div class="relative bg-gradient-to-r from-pink-950 via-black to-pink-950 border-b border-pink-500/20 py-8 px-4 sm:px-8">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="text-center md:text-left space-y-2">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-400 text-xs font-extrabold uppercase">
-                    <span class="w-2 h-2 rounded-full bg-pink-500 pulse-dot"></span>
-                    <span id="liveUserCounter">6,854</span> Gamers Online
+    <!-- Hero Banner & Holiday Countdowns -->
+    <div class="relative bg-gradient-to-r from-pink-950 via-black to-pink-950 border-b border-pink-500/20 py-10 px-4 sm:px-8">
+        <div class="max-w-7xl mx-auto space-y-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="text-center md:text-left space-y-3">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-400 text-xs font-extrabold uppercase">
+                        <span class="w-2 h-2 rounded-full bg-pink-500 pulse-dot"></span>
+                        <span id="liveUserCounter">6,854</span> Gamers Online • Festive Mode Active 🎄
+                    </div>
+                    <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">Epic Holiday Deals &amp; Top-Ups!</h1>
+                    <p class="text-slate-300 text-xs sm:text-sm max-w-xl">Fastest game top-ups in Nigeria with instant automated delivery. Powered by NAIJACP.</p>
                 </div>
-                <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">Stock Up FC Points &amp; Top Games Today!</h1>
-                <p class="text-slate-400 text-xs sm:text-sm max-w-xl">Fast, safe, and secure game top-ups in Nigeria. Powered by NAIJACP.</p>
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <button onclick="openAddFundsModal()" class="px-6 py-4 bg-emerald-500 hover:bg-emerald-400 text-black font-black rounded-2xl text-xs shadow-lg transition flex items-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-wallet"></i> 💳 + ADD FUNDS TO WALLET
+                    </button>
+                    <button onclick="scrollToSection('sensitivity')" class="px-6 py-4 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-2xl text-xs shadow-lg transition flex items-center gap-2 cursor-pointer">
+                        <i class="fa-solid fa-crosshair"></i> 🔥 FREE FIRE SENSI
+                    </button>
+                </div>
             </div>
-            <div class="flex flex-wrap gap-3">
-                <button onclick="openAddFundsModal()" class="px-6 py-3.5 bg-emerald-500 hover:bg-emerald-400 text-black font-black rounded-2xl text-xs shadow-lg transition flex items-center gap-2 cursor-pointer">
-                    <i class="fa-solid fa-wallet"></i> 💳 + ADD FUNDS TO WALLET
-                </button>
-                <button onclick="scrollToSection('sensitivity')" class="px-6 py-3.5 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-2xl text-xs shadow-lg transition flex items-center gap-2 cursor-pointer">
-                    <i class="fa-solid fa-crosshair"></i> 🔥 FREE FIRE SENSI
-                </button>
+
+            <!-- DUAL HOLIDAY COUNTDOWN BOXES -->
+            <div id="holidayCountdownContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                <!-- Christmas Countdown -->
+                <div class="glass-modal p-5 rounded-3xl border border-red-500/40 shadow-[0_0_30px_rgba(239,68,68,0.2)]">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-black text-red-400 uppercase tracking-wider flex items-center gap-2">
+                            <span>🎄</span> Christmas Day Countdown
+                        </h3>
+                        <span id="xmasStatusBadge" class="text-[10px] bg-red-500/20 text-red-300 px-2.5 py-0.5 rounded-full font-bold border border-red-500/30">Active</span>
+                    </div>
+                    <div id="xmasCountdownGrid" class="grid grid-cols-4 gap-2 text-center">
+                        <div class="bg-slate-950 p-2.5 rounded-2xl border border-slate-800"><span id="xmasDays" class="text-xl font-black text-white block">00</span><span class="text-[9px] text-slate-400 uppercase font-bold">Days</span></div>
+                        <div class="bg-slate-950 p-2.5 rounded-2xl border border-slate-800"><span id="xmasHours" class="text-xl font-black text-white block">00</span><span class="text-[9px] text-slate-400 uppercase font-bold">Hours</span></div>
+                        <div class="bg-slate-950 p-2.5 rounded-2xl border border-slate-800"><span id="xmasMins" class="text-xl font-black text-white block">00</span><span class="text-[9px] text-slate-400 uppercase font-bold">Mins</span></div>
+                        <div class="bg-slate-950 p-2.5 rounded-2xl border border-slate-800"><span id="xmasSecs" class="text-xl font-black text-pink-400 block">00</span><span class="text-[9px] text-slate-400 uppercase font-bold">Secs</span></div>
+                    </div>
+                    <div id="xmasCelebrationMessage" class="hidden text-center p-3 mt-2 bg-red-500/20 border border-red-500/40 rounded-2xl text-xs text-red-200 font-bold leading-relaxed">
+                        🎅 Merry Christmas to all our esteemed gamers! May your ranks soar, your headshots be precise, and your wallet overflowing with blessings! 🎁✝️
+                    </div>
+                </div>
+
+                <!-- New Year Countdown -->
+                <div class="glass-modal p-5 rounded-3xl border border-emerald-500/40 shadow-[0_0_30px_rgba(16,185,129,0.2)]">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-black text-emerald-400 uppercase tracking-wider flex items-center gap-2">
+                            <span>🎆</span> New Year Countdown
+                        </h3>
+                        <span id="nyStatusBadge" class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full font-bold border border-emerald-500/30">Active</span>
+                    </div>
+                    <div id="nyCountdownGrid" class="grid grid-cols-4 gap-2 text-center">
+                        <div class="bg-slate-950 p-2.5 rounded-2xl border border-slate-800"><span id="nyDays" class="text-xl font-black text-white block">00</span><span class="text-[9px] text-slate-400 uppercase font-bold">Days</span></div>
+                        <div class="bg-slate-950 p-2.5 rounded-2xl border border-slate-800"><span id="nyHours" class="text-xl font-black text-white block">00</span><span class="text-[9px] text-slate-400 uppercase font-bold">Hours</span></div>
+                        <div class="bg-slate-950 p-2.5 rounded-2xl border border-slate-800"><span id="nyMins" class="text-xl font-black text-white block">00</span><span class="text-[9px] text-slate-400 uppercase font-bold">Mins</span></div>
+                        <div class="bg-slate-950 p-2.5 rounded-2xl border border-slate-800"><span id="nySecs" class="text-xl font-black text-emerald-400 block">00</span><span class="text-[9px] text-slate-400 uppercase font-bold">Secs</span></div>
+                    </div>
+                    <div id="nyCelebrationMessage" class="hidden text-center p-3 mt-2 bg-emerald-500/20 border border-emerald-500/40 rounded-2xl text-xs text-emerald-200 font-bold leading-relaxed">
+                        🎉 Happy New Year! Wishing you massive success in life and in gaming. Greater victories, higher ranks, and endless joy await you! 🥂✨
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Main Container -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full space-y-12">
 
-        <div class="flex flex-wrap items-center gap-3 mb-8 justify-center sm:justify-start">
-            <button class="btn-cat active-btn px-6 py-3 rounded-2xl text-xs font-extrabold uppercase tracking-wider transition bg-slate-900 text-slate-300 border border-slate-800 cursor-pointer" id="catBtn-games" onclick="switchMainCategory('games')">🎮 All Game Packages</button>
-            <button class="btn-cat px-6 py-3 rounded-2xl text-xs font-extrabold uppercase tracking-wider transition bg-slate-900 text-slate-300 border border-slate-800 cursor-pointer" id="catBtn-gadgets" onclick="switchMainCategory('gadgets')">🎧 Gaming Gear &amp; Gadgets</button>
-            <button class="btn-cat px-6 py-3 rounded-2xl text-xs font-extrabold uppercase tracking-wider transition bg-slate-900 text-slate-300 border border-slate-800 cursor-pointer" id="catBtn-giftcards" onclick="switchMainCategory('giftcards')">💳 Gift Cards &amp; Subs</button>
-        </div>
+        <!-- DAILY GAMER QUOTE BOX WITH WHATSAPP SHARING -->
+        <section class="glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/40 relative shadow-xl">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-400 flex items-center justify-center font-black">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+                    <h3 class="text-sm font-black text-white uppercase tracking-wider">🌟 Daily Gamer Quote Box</h3>
+                </div>
+                <span class="text-[10px] bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full font-bold border border-pink-500/30">Inspiration for Gamers</span>
+            </div>
+            
+            <div id="dailyQuoteDisplay" class="py-4 px-2 text-center sm:text-left">
+                <p id="quoteTextContent" class="text-base sm:text-lg font-bold text-slate-200 italic mb-4 leading-relaxed">
+                    "Hard work beats talent when talent doesn't work hard. Keep grinding your rank, boss!"
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-slate-800/80">
+                    <span id="quoteAuthor" class="text-xs text-pink-400 font-extrabold">— NAIJACP Community</span>
+                    <button onclick="shareQuoteToWhatsApp()" class="px-5 py-2.5 rounded-xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-xs transition flex items-center gap-2 shadow-lg cursor-pointer">
+                        <i class="fa-brands fa-whatsapp text-base"></i> Share Quote to Friends 📲
+                    </button>
+                </div>
+            </div>
+        </section>
 
-        <div class="flex flex-col md:flex-row gap-4 mb-8 items-center justify-between bg-slate-900/60 p-4 rounded-3xl border border-slate-800 backdrop-blur-md">
-            <div id="gameSubFilters" class="flex flex-wrap gap-2 w-full md:w-auto">
-                <button class="btn-subfilter active-btn px-3.5 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('all', this)">All Games</button>
-                <button class="btn-subfilter px-3.5 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('codm', this)">CODM</button>
-                <button class="btn-subfilter px-3.5 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('efootball', this)">eFootball</button>
-                <button class="btn-subfilter px-3.5 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('freefire', this)">Free Fire</button>
-                <button class="btn-subfilter px-3.5 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('bloodstrike', this)">Blood Strike</button>
-                <button class="btn-subfilter px-3.5 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('tiktok', this)">TikTok</button>
-                <button class="btn-subfilter px-3.5 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('dls', this)">DLS</button>
-                <button class="btn-subfilter px-3.5 py-2 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('onestate', this)">OneState</button>
+        <!-- CATEGORY SELECTORS & SEARCH -->
+        <div class="space-y-6">
+            <div class="flex flex-wrap items-center gap-3 justify-center sm:justify-start">
+                <button class="btn-cat active-btn px-6 py-3.5 rounded-2xl text-xs font-extrabold uppercase tracking-wider transition bg-slate-900 text-slate-300 border border-slate-800 cursor-pointer" id="catBtn-games" onclick="switchMainCategory('games')">🎮 All Game Packages</button>
+                <button class="btn-cat px-6 py-3.5 rounded-2xl text-xs font-extrabold uppercase tracking-wider transition bg-slate-900 text-slate-300 border border-slate-800 cursor-pointer" id="catBtn-gadgets" onclick="switchMainCategory('gadgets')">🎧 Gaming Gear &amp; Gadgets</button>
+                <button class="btn-cat px-6 py-3.5 rounded-2xl text-xs font-extrabold uppercase tracking-wider transition bg-slate-900 text-slate-300 border border-slate-800 cursor-pointer" id="catBtn-giftcards" onclick="switchMainCategory('giftcards')">💳 Gift Cards &amp; Subs</button>
             </div>
 
-            <div class="relative w-full md:w-72">
-                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-500 text-xs"></i>
-                <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search packages (e.g. 80 CP, AirPods)..." class="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-10 pr-4 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500 transition">
+            <div class="flex flex-col md:flex-row gap-4 items-center justify-between bg-slate-900/60 p-4 rounded-3xl border border-slate-800 backdrop-blur-md shadow-lg">
+                <div id="gameSubFilters" class="flex flex-wrap gap-2 w-full md:w-auto">
+                    <button class="btn-subfilter active-btn px-3.5 py-2.5 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('all', this)">All Games</button>
+                    <button class="btn-subfilter px-3.5 py-2.5 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('codm', this)">CODM</button>
+                    <button class="btn-subfilter px-3.5 py-2.5 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('efootball', this)">eFootball</button>
+                    <button class="btn-subfilter px-3.5 py-2.5 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('freefire', this)">Free Fire</button>
+                    <button class="btn-subfilter px-3.5 py-2.5 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('bloodstrike', this)">Blood Strike</button>
+                    <button class="btn-subfilter px-3.5 py-2.5 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('tiktok', this)">TikTok</button>
+                    <button class="btn-subfilter px-3.5 py-2.5 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('dls', this)">DLS</button>
+                    <button class="btn-subfilter px-3.5 py-2.5 rounded-xl text-xs font-bold transition bg-slate-950 text-slate-400 border border-slate-800 cursor-pointer" onclick="filterByGame('onestate', this)">OneState</button>
+                </div>
+
+                <div class="relative w-full md:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-500 text-xs"></i>
+                    <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search packages (e.g. 80 CP, AirPods)..." class="w-full bg-slate-950 border border-slate-800 rounded-2xl pl-11 pr-4 py-3 text-white text-xs focus:outline-none focus:border-pink-500 transition">
+                </div>
             </div>
         </div>
 
-        <section id="catalogSection" class="mb-16">
+        <section id="catalogSection" class="pt-4">
             <div class="flex items-center gap-3 mb-6">
                 <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight border-l-4 border-pink-500 pl-4 uppercase" id="sectionHeading">
                     🔥 Featured Games &amp; Top-Ups
                 </h2>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6" id="productsGrid"></div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6" id="productsGrid"></div>
         </section>
 
         <!-- ORDER STATUS & HISTORY CHECKER TOOL -->
-        <section class="py-10 mb-16 border-t border-b border-pink-500/20">
-            <div class="max-w-xl mx-auto glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/30 text-center shadow-xl">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-bold mb-3">
-                    <i class="fa-solid fa-magnifying-glass-chart"></i> Track Your Transaction
-                </div>
-                <h3 class="text-xl font-black text-white mb-2">Check Order Status</h3>
-                <p class="text-slate-400 text-xs mb-6">Enter your WhatsApp phone number or Order ID to verify processing status.</p>
-                
-                <div class="flex gap-2">
-                    <input type="text" id="trackQuery" placeholder="e.g. 08012345678" class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-pink-500 transition">
-                    <button onclick="checkOrderStatus()" class="px-5 py-3 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-xl text-xs transition cursor-pointer shadow-md">
-                        Check 🔍
-                    </button>
-                </div>
-                <div id="trackResultBox" class="hidden mt-4 p-4 rounded-xl bg-slate-950 border border-slate-800 text-left text-xs"></div>
+        <section class="py-12 px-6 glass-modal rounded-3xl border border-pink-500/30 max-w-2xl mx-auto shadow-2xl text-center">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-bold mb-3">
+                <i class="fa-solid fa-magnifying-glass-chart"></i> Track Your Transaction
             </div>
+            <h3 class="text-2xl font-black text-white mb-2">Check Order Status</h3>
+            <p class="text-slate-400 text-xs mb-6">Enter your WhatsApp phone number or Order ID to verify instant processing status.</p>
+            
+            <div class="flex gap-2.5">
+                <input type="text" id="trackQuery" placeholder="e.g. 08012345678" class="flex-grow bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3.5 text-white text-xs focus:outline-none focus:border-pink-500 transition">
+                <button onclick="checkOrderStatus()" class="px-6 py-3.5 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-2xl text-xs transition cursor-pointer shadow-md">
+                    Check 🔍
+                </button>
+            </div>
+            <div id="trackResultBox" class="hidden mt-4 p-4 rounded-2xl bg-slate-950 border border-slate-800 text-left text-xs"></div>
         </section>
 
         <!-- FREE 2GB DATA PACK TOOL -->
-        <section id="dataPackTool" class="py-12 border-t border-pink-500/20 scroll-mt-24 mb-12">
+        <section id="dataPackTool" class="py-12 border-t border-pink-500/20 scroll-mt-24">
             <div class="text-center mb-8">
                 <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-green-500/20 border border-green-500/40 text-green-400 text-xs font-extrabold uppercase mb-3">
                     <i class="fa-solid fa-wifi"></i> 100% Free Promo
@@ -288,7 +366,7 @@
                 <div id="dataFormArea" class="space-y-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Select SIM Network</label>
-                        <select id="simNetwork" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition">
+                        <select id="simNetwork" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-pink-500 transition">
                             <option value="MTN">MTN Nigeria</option>
                             <option value="AIRTEL">Airtel Nigeria</option>
                             <option value="GLO">Glo Mobile</option>
@@ -297,7 +375,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Mobile Phone Number</label>
-                        <input type="tel" id="dataPhoneNumber" placeholder="e.g. 08012345678" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition">
+                        <input type="tel" id="dataPhoneNumber" placeholder="e.g. 08012345678" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-pink-500 transition">
                     </div>
                     <button type="button" onclick="proceedToDataShare()" class="w-full py-4 rounded-2xl bg-green-500 hover:bg-green-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-green-500/20 cursor-pointer">
                         Proceed to Share Requirement 🚀
@@ -357,11 +435,11 @@
                     <form id="sensiForm" onsubmit="generateSensi(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Exact Phone Brand &amp; Model</label>
-                            <input type="text" id="phoneModel" placeholder="e.g. Tecno Spark 10, iPhone 11" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" required>
+                            <input type="text" id="phoneModel" placeholder="e.g. Tecno Spark 10, iPhone 11" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-pink-500 transition" required>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">RAM Size</label>
-                            <select id="ramSize" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" required>
+                            <select id="ramSize" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-pink-500 transition" required>
                                 <option value="2">2 GB RAM</option>
                                 <option value="3">3 GB RAM</option>
                                 <option value="4" selected>4 GB RAM</option>
@@ -377,27 +455,27 @@
                     </form>
 
                     <div id="sensiResults" class="hidden mt-6 pt-6 border-t border-slate-800 grid grid-cols-2 md:grid-cols-3 gap-3">
-                        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+                        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
                             <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">General</span>
                             <span class="text-xl font-black text-green-400" id="valGen">195</span>
                         </div>
-                        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+                        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
                             <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Red Dot</span>
                             <span class="text-xl font-black text-green-400" id="valRed">185</span>
                         </div>
-                        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+                        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
                             <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">2X Scope</span>
                             <span class="text-xl font-black text-green-400" id="val2x">175</span>
                         </div>
-                        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+                        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
                             <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">4X Scope</span>
                             <span class="text-xl font-black text-green-400" id="val4x">160</span>
                         </div>
-                        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+                        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
                             <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Fire Button Size</span>
                             <span class="text-xl font-black text-pink-400" id="valFireBtn">48%</span>
                         </div>
-                        <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-center">
+                        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
                             <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Android DPI</span>
                             <span class="text-sm font-black text-cyan-400" id="valDpi">540</span>
                         </div>
@@ -408,22 +486,21 @@
     </div>
 
     <!-- SECRET FOOTER TRIGGER -->
-    <footer class="border-t border-slate-800 bg-[#040306] py-8 text-slate-500 text-xs text-center mt-auto select-none">
-        <p onclick="handleSecretFooterClick()">© 2026 NaijaCP Marketplace. All Rights Reserved.</p>
-        <p class="mt-2 text-[11px]">🛡️ Secure Centralized Gaming &amp; Digital Top-Up Infrastructure</p>
+    <footer class="border-t border-slate-800 bg-[#040306] py-10 text-slate-500 text-xs text-center mt-auto select-none space-y-2">
+        <p onclick="handleSecretFooterClick()" class="cursor-pointer">© 2026 NaijaCP Marketplace. All Rights Reserved. 🎄</p>
+        <p class="text-[11px]">🛡️ Secure Centralized Gaming &amp; Digital Top-Up Infrastructure (Holiday Edition)</p>
     </footer>
 
     <!-- Toast Notifications Container -->
-    <div id="liveToastContainer" class="fixed bottom-16 right-5 z-[999] flex flex-col gap-2 pointer-events-none w-full max-w-xs"></div>
+    <div id="liveToastContainer" class="fixed bottom-20 right-5 z-[999] flex flex-col gap-2 pointer-events-none w-full max-w-xs"></div>
 
-    <!-- 24/7 CUSTOMER CARE (REAL PEOPLE) FLOATING BUTTON (LEFT SIDE) -->
+    <!-- FLOATING BUTTONS (CUSTOMER CARE & AI ASSISTANT) -->
     <button onclick="openCustomerSupportModal()" class="fixed bottom-5 left-5 z-[980] bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-4.5 py-3 rounded-full flex items-center gap-2.5 shadow-[0_0_25px_rgba(16,185,129,0.6)] transition hover:scale-105 cursor-pointer font-bold text-xs">
         <i class="fa-solid fa-headset text-base animate-pulse"></i>
         <span>Customer Care 👥</span>
     </button>
 
-    <!-- 24/7 AI AGENT FLOATING BUTTON (RIGHT SIDE - MADE SMALLER) -->
-    <button onclick="openAiChatModal()" class="fixed bottom-5 right-5 z-[980] bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white px-3.5 py-2 rounded-full flex items-center gap-2 shadow-[0_0_20px_rgba(236,72,153,0.5)] transition hover:scale-105 cursor-pointer font-bold text-[11px]">
+    <button onclick="openAiChatModal()" class="fixed bottom-5 right-5 z-[980] bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white px-3.5 py-2.5 rounded-full flex items-center gap-2 shadow-[0_0_20px_rgba(236,72,153,0.5)] transition hover:scale-105 cursor-pointer font-bold text-[11px]">
         <i class="fa-solid fa-robot text-sm animate-bounce"></i>
         <span>AI Assistant 🤖</span>
     </button>
@@ -457,7 +534,7 @@
             </div>
 
             <form onsubmit="handleSupportSubmit(event)" class="space-y-2 pt-2 border-t border-slate-800">
-                <input type="email" id="supportUserEmail" placeholder="Enter your email address..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-white text-xs focus:outline-none focus:border-emerald-500 transition" required>
+                <input type="email" id="supportUserEmail" placeholder="Enter your email address..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-500 transition" required>
                 <div class="flex gap-2">
                     <input type="text" id="supportUserMessage" placeholder="Describe your issue or request..." class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-emerald-500 transition" required>
                     <button type="submit" class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-black rounded-xl text-xs transition cursor-pointer">
@@ -468,7 +545,7 @@
         </div>
     </div>
 
-    <!-- 24/7 AI AGENT CHAT MODAL -->
+    <!-- AI AGENT CHAT MODAL -->
     <div id="aiChatModal" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
         <div class="glass-modal w-full max-w-md rounded-3xl p-5 relative shadow-2xl flex flex-col h-[520px]">
             <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-3">
@@ -488,12 +565,12 @@
 
             <div id="aiChatMessages" class="flex-grow overflow-y-auto space-y-3 pr-1 text-xs mb-3">
                 <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-2xl text-slate-300 max-w-[85%] leading-relaxed">
-                    👋 Welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI assistant. Whether you want to login with Username, Google, Facebook, or Email, fund your wallet, buy CODM CP or eFootball coins, talk to me! Wetin you wan run today?
+                    👋 Welcome to NaijaCP! 🇳🇬 I am your sharp 24/7 AI assistant. Ask me anything about holiday top-ups, wallet funding, or game packages!
                 </div>
             </div>
 
             <form onsubmit="handleAiChatSubmit(event)" class="flex gap-2 pt-2 border-t border-slate-800">
-                <input type="text" id="aiChatInput" placeholder="Ask about login, top-ups, wallet balance, bank accounts..." class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500 transition" required>
+                <input type="text" id="aiChatInput" placeholder="Ask about login, top-ups, wallet balance..." class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-pink-500 transition" required>
                 <button type="submit" class="px-4 py-2.5 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-xl text-xs transition cursor-pointer">
                     Send 🚀
                 </button>
@@ -503,12 +580,12 @@
 
     <!-- USER ACCOUNT & WALLET DASHBOARD MODAL -->
     <div id="userDashboardModal" class="fixed inset-0 z-[140] hidden items-center justify-center p-4 bg-black/90 backdrop-blur-md">
-        <div class="glass-modal w-full max-w-2xl rounded-3xl p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div class="glass-modal w-full max-w-2xl rounded-3xl p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto space-y-6">
             <button onclick="closeModal('userDashboardModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">
                 <i class="fa-solid fa-xmark"></i>
             </button>
             
-            <div class="flex items-center gap-3.5 mb-6 pb-4 border-b border-slate-800">
+            <div class="flex items-center gap-3.5 pb-4 border-b border-slate-800">
                 <div class="w-12 h-12 rounded-2xl bg-pink-500/20 border border-pink-500/40 text-pink-400 flex items-center justify-center text-xl font-black">
                     <i class="fa-solid fa-wallet"></i>
                 </div>
@@ -535,7 +612,7 @@
                     </div>
                 </div>
 
-                <!-- OPTION 3: REFERRAL & AFFILIATE PROGRAM BOX -->
+                <!-- REFERRAL PROGRAM BOX -->
                 <div class="bg-gradient-to-r from-pink-950/60 to-slate-950 p-4 rounded-2xl border border-pink-500/40">
                     <h4 class="text-xs font-bold text-pink-400 uppercase tracking-wider mb-2">🎁 REFERRAL &amp; AFFILIATE BONUS (EARN ₦200 PER INVITE)</h4>
                     <p class="text-[11px] text-slate-300 mb-3">Share your referral link with friends. When they sign up and fund their wallet, you get ₦200 bonus credit instantly!</p>
@@ -545,7 +622,7 @@
                     </div>
                 </div>
 
-                <!-- OPTION 3: SAVED GAME UIDS -->
+                <!-- SAVED GAME UIDS -->
                 <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
                     <h4 class="text-xs font-bold text-white uppercase tracking-wider">⚡ SAVED GAME PLAYER IDS (ONE-CLICK CHECKOUT)</h4>
                     <div class="flex gap-2">
@@ -555,7 +632,6 @@
                     <div id="savedGameIdsList" class="flex flex-wrap gap-2 pt-1 text-xs"></div>
                 </div>
 
-                <!-- Support Messages & Notifications Section -->
                 <div>
                     <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-3">
                         💬 SUPPORT MESSAGES &amp; ADMIN NOTIFICATIONS
@@ -568,7 +644,6 @@
                     <div id="dashOrderHistoryList" class="space-y-3 max-h-48 overflow-y-auto pr-1"></div>
                 </div>
 
-                <!-- LOGOUT BUTTON PLACED CLEARLY INSIDE DASHBOARD -->
                 <div class="pt-4 border-t border-slate-800 flex justify-between items-center">
                     <button onclick="confirmLogoutModal()" class="px-5 py-2.5 bg-red-500/20 hover:bg-red-500 hover:text-white text-red-400 font-bold rounded-xl text-xs transition cursor-pointer">
                         Log Out of Account 🚪
@@ -581,7 +656,7 @@
         </div>
     </div>
 
-    <!-- CUSTOM IN-SITE CONFIRMATION MODAL -->
+    <!-- CUSTOM CONFIRMATION MODAL -->
     <div id="customConfirmModal" class="fixed inset-0 z-[250] hidden items-center justify-center p-4 bg-black/90 backdrop-blur-md">
         <div class="glass-modal w-full max-w-sm rounded-3xl p-6 text-center shadow-2xl border border-pink-500/40">
             <div class="w-12 h-12 mx-auto rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-400 flex items-center justify-center text-xl mb-3">
@@ -598,7 +673,7 @@
 
     <!-- ADD FUNDS / DEPOSIT MODAL -->
     <div id="addFundsModal" class="fixed inset-0 z-[150] hidden items-center justify-center p-4 bg-black/90 backdrop-blur-md">
-        <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-2xl max-h-[95vh] overflow-y-auto">
+        <div class="glass-modal w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-2xl max-h-[95vh] overflow-y-auto space-y-4">
             <button onclick="closeModal('addFundsModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">
                 <i class="fa-solid fa-xmark"></i>
             </button>
@@ -609,7 +684,7 @@
             <form onsubmit="submitDepositRequest(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Amount to Add (₦)</label>
-                    <input type="number" id="depositAmount" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-emerald-500 transition" placeholder="e.g. 5000" min="500" required>
+                    <input type="number" id="depositAmount" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-emerald-500 transition" placeholder="e.g. 5000" min="500" required>
                 </div>
 
                 <div class="bg-black border border-emerald-500/30 p-4 rounded-2xl space-y-3">
@@ -681,7 +756,7 @@
         </div>
     </div>
 
-    <!-- MULTI-STEP CHECKOUT MODAL -->
+    <!-- CHECKOUT MODAL -->
     <div id="checkoutModal" class="fixed inset-0 z-[60] items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden">
         <div class="glass-modal w-full max-w-lg rounded-3xl p-6 sm:p-8 relative shadow-2xl max-h-[95vh] overflow-y-auto">
             <button onclick="closeModal('checkoutModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">
@@ -699,7 +774,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Your Full Name / Gamer Tag</label>
-                        <input type="text" id="custName" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. John Doe" required>
+                        <input type="text" id="custName" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. John Doe" required>
                     </div>
                     <button type="button" onclick="nextCheckoutStep(2)" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer">
                         Next: Player ID ➔
@@ -709,15 +784,15 @@
                 <div id="checkoutStep2" class="space-y-4 hidden">
                     <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2 flex items-center justify-between">
                         <span>Step 2 of 3: Account Details</span>
-                        <span id="quickSelectUidBtn" class="hidden text-[10px] bg-pink-500/20 text-pink-400 px-2 py-0.5 rounded font-bold cursor-pointer hover:bg-pink-500 hover:text-black transition" onclick="useSavedUidForCheckout()">⚡ Use Saved UID</span>
+                        <span id="quickSelectUidBtn" class="hidden text-[10px] bg-pink-500/20 text-pink-400 px-2.5 py-1 rounded font-bold cursor-pointer hover:bg-pink-500 hover:text-black transition" onclick="useSavedUidForCheckout()">⚡ Use Saved UID</span>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">Player ID / Account ID</label>
-                        <input type="text" id="custGameId" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. 6823019283" required>
+                        <input type="text" id="custGameId" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. 6823019283" required>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5">WhatsApp Phone Number</label>
-                        <input type="tel" id="custPhone" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. 08012345678" required>
+                        <input type="tel" id="custPhone" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-pink-500 transition" placeholder="e.g. 08012345678" required>
                     </div>
                     <div class="flex gap-2">
                         <button type="button" onclick="prevCheckoutStep(1)" class="w-1/3 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition cursor-pointer">
@@ -732,7 +807,7 @@
                 <div id="checkoutStep3" class="space-y-4 hidden">
                     <div class="p-3 rounded-xl bg-pink-500/10 border border-pink-500/30 text-xs font-bold text-pink-400 mb-2 flex items-center justify-between">
                         <span>Step 3 of 3: Select Payment Method</span>
-                        <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">Instant Wallet ⚡</span>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded font-bold">Instant Wallet ⚡</span>
                     </div>
 
                     <div class="bg-gradient-to-br from-pink-950/50 to-slate-950 border border-pink-500/40 p-4 rounded-2xl space-y-3">
@@ -741,28 +816,13 @@
                                 <span class="text-[10px] text-slate-400 uppercase font-extrabold tracking-wider">Your Wallet Balance</span>
                                 <div class="text-xl font-black text-white mt-0.5">₦<span id="checkoutWalletBalance">0</span></div>
                             </div>
-                            <button type="button" onclick="closeModal('checkoutModal'); openAddFundsModal();" class="px-3 py-2 bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black rounded-xl font-extrabold text-xs transition cursor-pointer flex items-center gap-1 border border-emerald-500/30">
+                            <button type="button" onclick="closeModal('checkoutModal'); openAddFundsModal();" class="px-3.5 py-2 bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black rounded-xl font-extrabold text-xs transition cursor-pointer flex items-center gap-1 border border-emerald-500/30">
                                 <i class="fa-solid fa-plus"></i> Add Funds
                             </button>
                         </div>
                         
                         <button type="submit" id="payWithWalletBtn" class="w-full py-4 rounded-xl bg-pink-500 hover:bg-pink-400 text-black font-black text-sm shadow-lg shadow-pink-500/20 transition cursor-pointer flex items-center justify-center gap-2">
                             <i class="fa-solid fa-wallet"></i> Pay Instantly with Wallet Balance ⚡
-                        </button>
-                    </div>
-
-                    <div class="bg-slate-950 border border-slate-800 p-4 rounded-2xl flex items-center justify-between opacity-75">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold">
-                                <i class="fa-solid fa-credit-card"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-white">Paystack Card / Bank Transfer</h4>
-                                <span class="text-[10px] text-pink-400 font-extrabold">🚀 Coming Soon</span>
-                            </div>
-                        </div>
-                        <button type="button" onclick="showToast('Paystack automated gateway is coming soon! Please use Wallet Balance.')" class="px-3 py-1.5 bg-slate-800 text-slate-400 rounded-lg text-xs font-bold cursor-pointer">
-                            Notify
                         </button>
                     </div>
 
@@ -819,8 +879,8 @@
 
     <!-- ADMIN DASHBOARD MODAL -->
     <div id="adminDashboardModal" class="fixed inset-0 z-[125] hidden flex-col bg-black/95 backdrop-blur-xl p-4 sm:p-8 overflow-y-auto">
-        <div class="max-w-5xl mx-auto w-full">
-            <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-800">
+        <div class="max-w-5xl mx-auto w-full space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-800">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-pink-500/20 border border-pink-500 text-pink-400 flex items-center justify-center font-black">N</div>
                     <div>
@@ -833,12 +893,13 @@
                 </button>
             </div>
 
-            <div class="flex flex-wrap gap-2 mb-6">
-                <button onclick="switchAdminTab('analytics')" id="adminTabBtn-analytics" class="px-5 py-2.5 rounded-xl bg-pink-500 text-black font-bold text-xs transition cursor-pointer">📊 Analytics &amp; Reports</button>
-                <button onclick="switchAdminTab('orders')" id="adminTabBtn-orders" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">📦 Orders</button>
-                <button onclick="switchAdminTab('deposits')" id="adminTabBtn-deposits" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">💳 Deposits</button>
-                <button onclick="switchAdminTab('support')" id="adminTabBtn-support" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">💬 Customer Care</button>
-                <button onclick="switchAdminTab('products')" id="adminTabBtn-products" class="px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">⚙️ Cloud Packages</button>
+            <div class="flex flex-wrap gap-2">
+                <button onclick="switchAdminTab('analytics')" id="adminTabBtn-analytics" class="px-4 py-2.5 rounded-xl bg-pink-500 text-black font-bold text-xs transition cursor-pointer">📊 Analytics</button>
+                <button onclick="switchAdminTab('orders')" id="adminTabBtn-orders" class="px-4 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">📦 Orders</button>
+                <button onclick="switchAdminTab('deposits')" id="adminTabBtn-deposits" class="px-4 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">💳 Deposits</button>
+                <button onclick="switchAdminTab('support')" id="adminTabBtn-support" class="px-4 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">💬 Support</button>
+                <button onclick="switchAdminTab('quotes')" id="adminTabBtn-quotes" class="px-4 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">🌟 Quotes</button>
+                <button onclick="switchAdminTab('products')" id="adminTabBtn-products" class="px-4 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer">⚙️ Packages</button>
             </div>
 
             <!-- ANALYTICS TAB -->
@@ -860,7 +921,6 @@
 
                 <div class="glass-modal p-6 rounded-3xl border border-slate-800 space-y-4">
                     <h3 class="text-sm font-bold text-white uppercase tracking-wider">📥 Export Data (CSV Spreadsheet)</h3>
-                    <p class="text-xs text-slate-400">Download complete transaction records for easy bookkeeping and accounting.</p>
                     <div class="flex flex-wrap gap-3">
                         <button onclick="exportOrdersCSV()" class="px-5 py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-black rounded-xl text-xs transition cursor-pointer">Download Orders CSV 📊</button>
                         <button onclick="exportDepositsCSV()" class="px-5 py-3 bg-pink-500 hover:bg-pink-400 text-black font-black rounded-xl text-xs transition cursor-pointer">Download Deposits CSV 📊</button>
@@ -874,13 +934,38 @@
             </div>
 
             <div id="adminTab-deposits" class="hidden space-y-4">
-                <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-3">Incoming Wallet Deposit Requests (Approve or Decline)</h3>
+                <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-3">Incoming Wallet Deposit Requests</h3>
                 <div id="adminDepositsList" class="space-y-3"></div>
             </div>
 
             <div id="adminTab-support" class="hidden space-y-4">
                 <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-3">💬 Customer Care Messages &amp; Support Tickets</h3>
                 <div id="adminSupportList" class="space-y-3"></div>
+            </div>
+
+            <!-- DAILY QUOTES ADMIN TAB -->
+            <div id="adminTab-quotes" class="hidden space-y-6">
+                <div class="glass-modal p-6 rounded-3xl border border-slate-800">
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">➕ Add New Gamer Quote</h3>
+                    <form onsubmit="addNewQuoteCloud(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">Quote Text</label>
+                            <textarea id="newQuoteText" rows="2" placeholder="e.g. Winners never quit, and quitters never win!" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs" required></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1">Author / Source</label>
+                            <input type="text" id="newQuoteAuthor" placeholder="e.g. NAIJACP Community" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white text-xs" required>
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-pink-500 hover:bg-pink-400 text-black font-black text-xs rounded-xl shadow-lg transition cursor-pointer">
+                            Publish Quote to Site 🚀
+                        </button>
+                    </form>
+                </div>
+
+                <div class="glass-modal p-6 rounded-3xl border border-slate-800">
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">📋 Active Quotes List</h3>
+                    <div id="adminQuotesList" class="space-y-2 max-h-96 overflow-y-auto"></div>
+                </div>
             </div>
 
             <div id="adminTab-products" class="hidden space-y-6">
@@ -950,7 +1035,7 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT & FIREBASE CLOUD SYNC & AUTH LOGIC -->
+    <!-- JAVASCRIPT & CLOUD SYNC LOGIC -->
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyDTdutOr9kvrs1AuVm5CB7uu130NdSICPA",
@@ -1021,10 +1106,18 @@
             { id: 46, title: "Steam $10 Gift Card", price: 16200, category: "giftcards", subTag: "general", icon: "https://files.catbox.moe/vmei3z.webp" }
         ];
 
+        let defaultQuotes = [
+            { id: 1, text: "Hard work beats talent when talent doesn't work hard. Keep grinding your rank, boss!", author: "NAIJACP Community" },
+            { id: 2, text: "Every master was once a disaster. Never stop leveling up your skills!", author: "Gamer Wisdom" },
+            { id: 3, text: "Success in gaming and in life is built on consistency and resilience. Keep pushing forward!", author: "NAIJACP Pro Tips" }
+        ];
+
         let products = JSON.parse(localStorage.getItem('naijacp_products')) || defaultProducts;
+        let quotes = JSON.parse(localStorage.getItem('naijacp_quotes')) || defaultQuotes;
         let orders = JSON.parse(localStorage.getItem('naijacp_orders')) || [];
         let deposits = JSON.parse(localStorage.getItem('naijacp_deposits')) || [];
         let supportTickets = JSON.parse(localStorage.getItem('naijacp_support')) || [];
+
         let currentMainCat = 'games';
         let currentSubFilter = 'all';
         let searchQuery = '';
@@ -1039,13 +1132,16 @@
         let depositTimerInterval = null;
         let lastSuccessfulOrder = null;
 
-        const officialSiteUrl = "https://naijacpstore.github.io/naijacp/";
+        const officialSiteUrl = "https://naijacpstore.github.io/naijacp/?ref=vpboSKoAz8MV0lwIt71KlKhgfHW2";
 
         document.addEventListener("DOMContentLoaded", async () => {
             initCloudSync();
             startLiveUsers();
             startFakePurchases();
             checkSecretAdminHash();
+            startHolidayCountdowns();
+            initWeatherEngine();
+            rotateDailyQuote();
 
             window.addEventListener('hashchange', checkSecretAdminHash);
 
@@ -1100,6 +1196,148 @@
             });
         });
 
+        // WEATHER ENGINE (SNOW IN MORNING/AFTERNOON, FIREWORKS AT NIGHT)
+        function initWeatherEngine() {
+            const canvas = document.getElementById('weatherCanvas');
+            const ctx = canvas.getContext('2d');
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            let particles = [];
+            const isNight = new Date().getHours() >= 18 || new Date().getHours() < 6;
+
+            if (!isNight) {
+                // Snowflakes
+                for (let i = 0; i < 50; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        radius: Math.random() * 3 + 1,
+                        speed: Math.random() * 1.5 + 0.5,
+                        wind: Math.random() * 0.5 - 0.25
+                    });
+                }
+            } else {
+                // Firework sparks
+                for (let i = 0; i < 30; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: canvas.height + Math.random() * 100,
+                        vx: (Math.random() - 0.5) * 2,
+                        vy: -(Math.random() * 3 + 2),
+                        alpha: Math.random(),
+                        color: ['#ec4899', '#3b82f6', '#10b981', '#f59e0b'][Math.floor(Math.random() * 4)]
+                    });
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (!isNight) {
+                    // Draw Snow
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                    particles.forEach(p => {
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                        ctx.fill();
+                        p.y += p.speed;
+                        p.x += p.wind;
+                        if (p.y > canvas.height) { p.y = 0; p.x = Math.random() * canvas.width; }
+                    });
+                } else {
+                    // Draw Fireworks / Sparks
+                    particles.forEach(p => {
+                        ctx.fillStyle = p.color;
+                        ctx.globalAlpha = p.alpha;
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.globalAlpha = 1.0;
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.alpha -= 0.01;
+                        if (p.alpha <= 0) {
+                            p.x = Math.random() * canvas.width;
+                            p.y = canvas.height;
+                            p.alpha = Math.random();
+                        }
+                    });
+                }
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        // DUAL HOLIDAY COUNTDOWN LOGIC
+        function startHolidayCountdowns() {
+            function update() {
+                const now = new Date();
+                const year = now.getFullYear();
+
+                // Christmas (Dec 25)
+                let xmas = new Date(year, 11, 25, 0, 0, 0);
+                if (now > xmas) xmas = new Date(year + 1, 11, 25, 0, 0, 0);
+                
+                const diffXmas = xmas - now;
+                const xDays = Math.floor(diffXmas / (1000 * 60 * 60 * 24));
+                const xHours = Math.floor((diffXmas / (1000 * 60 * 60)) % 24);
+                const xMins = Math.floor((diffXmas / 1000 / 60) % 60);
+                const xSecs = Math.floor((diffXmas / 1000) % 60);
+
+                document.getElementById('xmasDays').innerText = String(xDays).padStart(2, '0');
+                document.getElementById('xmasHours').innerText = String(xHours).padStart(2, '0');
+                document.getElementById('xmasMins').innerText = String(xMins).padStart(2, '0');
+                document.getElementById('xmasSecs').innerText = String(xSecs).padStart(2, '0');
+
+                if (now.getMonth() === 11 && now.getDate() === 25) {
+                    document.getElementById('xmasCountdownGrid').classList.add('hidden');
+                    document.getElementById('xmasCelebrationMessage').classList.remove('hidden');
+                    document.getElementById('xmasStatusBadge').innerText = "Merry Christmas! 🎄";
+                }
+
+                // New Year (Jan 1)
+                let ny = new Date(year + 1, 0, 1, 0, 0, 0);
+                const diffNy = ny - now;
+                const nyDays = Math.floor(diffNy / (1000 * 60 * 60 * 24));
+                const nyHours = Math.floor((diffNy / (1000 * 60 * 60)) % 24);
+                const nyMins = Math.floor((diffNy / 1000 / 60) % 60);
+                const nySecs = Math.floor((diffNy / 1000) % 60);
+
+                document.getElementById('nyDays').innerText = String(nyDays).padStart(2, '0');
+                document.getElementById('nyHours').innerText = String(nyHours).padStart(2, '0');
+                document.getElementById('nyMins').innerText = String(nyMins).padStart(2, '0');
+                document.getElementById('nySecs').innerText = String(nySecs).padStart(2, '0');
+
+                if (now.getMonth() === 0 && now.getDate() === 1) {
+                    document.getElementById('nyCountdownGrid').classList.add('hidden');
+                    document.getElementById('nyCelebrationMessage').classList.remove('hidden');
+                    document.getElementById('nyStatusBadge').innerText = "Happy New Year! 🎉";
+                }
+            }
+            update();
+            setInterval(update, 1000);
+        }
+
+        function rotateDailyQuote() {
+            if(quotes.length === 0) return;
+            const q = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('quoteTextContent').innerText = `"${q.text}"`;
+            document.getElementById('quoteAuthor').innerText = `— ${q.author}`;
+        }
+
+        function shareQuoteToWhatsApp() {
+            const textEl = document.getElementById('quoteTextContent').innerText;
+            const authorEl = document.getElementById('quoteAuthor').innerText;
+            const shareMsg = encodeURIComponent(`🌟 Daily Gamer Inspiration from NAIJACP.NG:\n\n${textEl} ${authorEl}\n\nJoin the platform and top up your favorite games here: ${officialSiteUrl}`);
+            window.open(`https://api.whatsapp.com/send?text=${shareMsg}`, '_blank');
+            showToast("📲 Quote and link ready to share on WhatsApp!");
+        }
+
         function initCloudSync() {
             if(!db) return;
             
@@ -1116,6 +1354,23 @@
                 } else {
                     defaultProducts.forEach(p => {
                         db.collection("products").doc(p.id.toString()).set(p);
+                    });
+                }
+            });
+
+            db.collection("quotes").onSnapshot(snapshot => {
+                if(!snapshot.empty) {
+                    quotes = [];
+                    snapshot.forEach(doc => {
+                        quotes.push({ firestoreId: doc.id, ...doc.data() });
+                    });
+                    rotateDailyQuote();
+                    if(document.getElementById('adminDashboardModal').classList.contains('flex')) {
+                        renderAdminQuotes();
+                    }
+                } else {
+                    defaultQuotes.forEach(q => {
+                        db.collection("quotes").doc(q.id.toString()).set(q);
                     });
                 }
             });
@@ -1287,7 +1542,7 @@
                     const username = identifier.toLowerCase();
 
                     if(!isValidEmail(email)) {
-                        showAuthAlert("⚠️ Please enter a valid, registered email address (e.g. your actual email). Fake or gibberish emails ending in @gmail.com are not allowed.");
+                        showAuthAlert("⚠️ Please enter a valid, registered email address.");
                         return;
                     }
 
@@ -1316,11 +1571,6 @@
                             return;
                         }
                         emailToUse = querySnap.docs[0].data().email;
-                    } else {
-                        if(!isValidEmail(identifier)) {
-                            showAuthAlert("⚠️ Please enter a valid email address.");
-                            return;
-                        }
                     }
                     await auth.signInWithEmailAndPassword(emailToUse, password);
                     showToast("Welcome back! 🚀");
@@ -1329,9 +1579,7 @@
             } catch(err) {
                 let msg = err.message;
                 if(msg.includes('invalid-credential') || msg.includes('wrong-password') || msg.includes('user-not-found')) {
-                    msg = "⚠️ Incorrect username/email or password. Please check your details.";
-                } else if(msg.includes('email-already-in-use')) {
-                    msg = "⚠️ This email is already registered. Please sign in instead.";
+                    msg = "⚠️ Incorrect username/email or password.";
                 }
                 showAuthAlert(msg);
             }
@@ -1340,7 +1588,7 @@
         async function handleForgotPassword() {
             const identifier = document.getElementById('authIdentifierInput').value.trim();
             if(!identifier) {
-                showAuthAlert("⚠️ Please type your Username or Email in the box above first, then click Forgot Password.");
+                showAuthAlert("⚠️ Please type your Username or Email in the box above first.");
                 return;
             }
             let emailToReset = identifier;
@@ -1349,17 +1597,13 @@
                 if(!querySnap.empty) {
                     emailToReset = querySnap.docs[0].data().email;
                 } else {
-                    showAuthAlert("⚠️ Username not found in database for password reset.");
+                    showAuthAlert("⚠️ Username not found.");
                     return;
                 }
             }
-            if(!isValidEmail(emailToReset)) {
-                showAuthAlert("⚠️ Please enter a valid email address for password reset.");
-                return;
-            }
             try {
                 await auth.sendPasswordResetEmail(emailToReset);
-                showAuthAlert(`✅ Password reset link has been sent to ${emailToReset}. If you don't find the link in your inbox, please check your Spam, Junk, and Promotions folders!`, false);
+                showAuthAlert(`✅ Password reset link has been sent to ${emailToReset}.`, false);
             } catch(err) {
                 showAuthAlert("⚠️ " + err.message);
             }
@@ -1386,12 +1630,10 @@
             openModal('customConfirmModal');
         }
 
-        // UPDATED REFERRAL LINK WITH ATTACHED PROMOTIONAL MESSAGE
         function copyReferralLink() {
             if(!currentUser) return;
-            const refLink = `${officialSiteUrl}?ref=${currentUser.uid}`;
-            const referralMessage = `🔥 Hey! Use my link to join NAIJACP.NG, top up your favorite games instantly, and get amazing wallet bonuses and free money rewards! 🚀\n\nClick here to get started: ${refLink}`;
-            
+            const refLink = `https://naijacpstore.github.io/naijacp/?ref=${currentUser.uid}`;
+            const referralMessage = `🔥 Hey! Use my link to join NAIJACP.NG, top up your favorite games instantly, and get amazing holiday wallet bonuses! 🚀\n\nClick here: ${refLink}`;
             navigator.clipboard.writeText(referralMessage);
             showToast("📋 Referral link & message copied! Share to earn ₦200 bonus.");
         }
@@ -1419,7 +1661,7 @@
             }
             savedUserUids.forEach(uid => {
                 container.innerHTML += `
-                    <span class="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl text-white font-mono font-bold text-xs">
+                    <span class="inline-flex items-center gap-2 bg-slate-950 border border-slate-800 px-3 py-1.5 rounded-xl text-white font-mono font-bold text-xs">
                         🎮 ${uid}
                         <button onclick="deleteSavedUid('${uid}')" class="text-red-400 hover:text-red-300 ml-1 cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
                     </span>
@@ -1440,8 +1682,6 @@
             if(savedUserUids.length > 0) {
                 document.getElementById('custGameId').value = savedUserUids[0];
                 showToast("⚡ Applied saved UID: " + savedUserUids[0]);
-            } else {
-                alert("No saved UIDs found in your profile.");
             }
         }
 
@@ -1451,7 +1691,7 @@
                 return;
             }
             document.getElementById('dashUserEmail').innerText = currentUser.email;
-            document.getElementById('referralLinkInput').value = `${officialSiteUrl}?ref=${currentUser.uid}`;
+            document.getElementById('referralLinkInput').value = `https://naijacpstore.github.io/naijacp/?ref=${currentUser.uid}`;
             renderSavedUids();
 
             const historyList = document.getElementById('dashOrderHistoryList');
@@ -1493,12 +1733,7 @@
             combinedHistory.sort((a, b) => b.timestamp - a.timestamp);
 
             if(combinedHistory.length === 0) {
-                historyList.innerHTML = `
-                    <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 text-center text-slate-400 text-xs">
-                        <i class="fa-solid fa-box-open text-2xl text-slate-600 mb-2"></i>
-                        <p>No activity yet. Top up your wallet or place an order!</p>
-                    </div>
-                `;
+                historyList.innerHTML = `<div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 text-center text-slate-400 text-xs">No activity yet. Top up your wallet or place an order!</div>`;
             } else {
                 combinedHistory.forEach(item => {
                     if(item.type === 'order') {
@@ -1509,9 +1744,7 @@
                                     <div class="text-slate-300 mt-0.5">Game ID: <strong>${item.gameId}</strong> | ₦${item.amount?.toLocaleString()}</div>
                                     <div class="text-slate-500 text-[10px] mt-1">${item.date}</div>
                                 </div>
-                                <span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${item.status.includes('Completed') ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'}">
-                                    ${item.status} ⚡
-                                </span>
+                                <span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${item.status.includes('Completed') ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'}">${item.status} ⚡</span>
                             </div>
                         `;
                     } else {
@@ -1523,12 +1756,10 @@
                             <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center justify-between text-xs">
                                 <div>
                                     <span class="text-emerald-400 font-bold">💳 Wallet Deposit - ₦${item.amount?.toLocaleString()}</span>
-                                    <div class="text-slate-300 mt-0.5">Ref: #${item.id} ${item.status === 'Declined' ? '<br><span class="text-red-400 font-bold">Reason: Payment verification failed / Not received.</span>' : ''}</div>
+                                    <div class="text-slate-300 mt-0.5">Ref: #${item.id}</div>
                                     <div class="text-slate-500 text-[10px] mt-1">${item.date}</div>
                                 </div>
-                                <span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${statusColor}">
-                                    ${item.status} ⚡
-                                </span>
+                                <span class="px-2.5 py-1 rounded-full font-bold text-[10px] ${statusColor}">${item.status} ⚡</span>
                             </div>
                         `;
                     }
@@ -1565,13 +1796,42 @@
             }
         }
 
+        // TELEGRAM NOTIFICATIONS FOR DEPOSIT REQUESTS
+        function sendDepositToTelegram(deposit) {
+            const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
+            const chatId = "8682089527";
+            const caption = `💳 *NEW NAIJACP DEPOSIT REQUEST* 💳\n\n` +
+                            `🆔 Ref: #${deposit.id}\n` +
+                            `💰 Amount: ₦${deposit.amount.toLocaleString()}\n` +
+                            `👤 Username: ${deposit.username}\n` +
+                            `📧 Email: ${deposit.userEmail}\n` +
+                            `📅 Date: ${deposit.date}\n` +
+                            `⚡ Status: Pending`;
+            try {
+                const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(caption)}&parse_mode=Markdown`;
+                new Image().src = url;
+            } catch(e) {}
+        }
+
+        // TELEGRAM NOTIFICATIONS FOR CUSTOMER SUPPORT
+        function sendSupportToTelegram(ticket) {
+            const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
+            const chatId = "8682089527";
+            const caption = `💬 *NEW CUSTOMER CARE MESSAGE* 💬\n\n` +
+                            `🎫 Ticket ID: #${ticket.id}\n` +
+                            `📧 Email: ${ticket.email}\n` +
+                            `💬 Message: ${ticket.message}\n` +
+                            `📅 Date: ${ticket.date}`;
+            try {
+                const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(caption)}&parse_mode=Markdown`;
+                new Image().src = url;
+            } catch(e) {}
+        }
+
         function submitDepositRequest(e) {
             e.preventDefault();
             const amount = parseFloat(document.getElementById('depositAmount').value);
-            if(isNaN(amount) || amount <= 0) {
-                alert("Please enter a valid amount.");
-                return;
-            }
+            if(isNaN(amount) || amount <= 0) { alert("Please enter a valid amount."); return; }
 
             const depositObj = {
                 id: Date.now().toString().slice(-6),
@@ -1592,10 +1852,11 @@
                 localStorage.setItem('naijacp_deposits', JSON.stringify(deposits));
             }
 
+            sendDepositToTelegram(depositObj);
             closeModal('addFundsModal');
             openModal('depositTimerModal');
             startDepositCountdown(180);
-            showToast("💳 Deposit request submitted! Verification in progress.");
+            showToast("💳 Deposit request submitted! Telegram alert dispatched.");
         }
 
         function startDepositCountdown(durationSeconds) {
@@ -1691,7 +1952,6 @@
             }, 3500);
         }
 
-        // REDUCED FREQUENCY TO EVERY 8.5 SECONDS (7-10 SECONDS WINDOW)
         function startFakePurchases() {
             const names = ['Chinedu', 'Oluwaseun', 'Amina', 'Ngozi', 'Emeka', 'Fatima', 'Bolaji', 'Ibrahim', 'Kehinde', 'Uche', 'Adebayo', 'Chioma'];
             const prefixes = ['0803', '0810', '0902', '0706', '0814', '0913', '0703'];
@@ -1761,16 +2021,16 @@
 
             filtered.forEach(p => {
                 grid.innerHTML += `
-                    <div class="glass-card p-4 rounded-3xl flex flex-col justify-between text-center group cursor-pointer border border-slate-800 hover:border-pink-500 transition duration-300">
+                    <div class="glass-card p-5 rounded-3xl flex flex-col justify-between text-center group cursor-pointer border border-slate-800 hover:border-pink-500 transition duration-300 shadow-xl">
                         <div class="relative">
-                            <span class="absolute -top-2 -right-2 text-[9px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full font-bold border border-green-500/30">⚡ Instant</span>
+                            <span class="absolute -top-2 -right-2 text-[9px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full font-bold border border-green-500/35">⚡ Instant</span>
                             <div class="w-16 h-16 mx-auto bg-slate-900/80 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-slate-800 group-hover:scale-110 transition duration-300 overflow-hidden shadow-inner">
                                 <img src="${p.icon}" class="w-full h-full object-cover rounded-2xl" onerror="this.src='https://files.catbox.moe/w4tgaw.jpeg'">
                             </div>
                         </div>
                         <h3 class="font-bold text-sm text-white mb-2 leading-tight">${p.title}</h3>
                         <div class="text-pink-400 font-black text-lg mb-4">₦${Number(p.price).toLocaleString()}</div>
-                        <button class="w-full py-2.5 rounded-xl bg-pink-500/10 text-pink-300 font-extrabold text-xs border border-pink-500/30 group-hover:bg-pink-500 group-hover:text-black transition cursor-pointer" onclick="openCheckout('${p.id}')">
+                        <button class="w-full py-3 rounded-xl bg-pink-500/10 text-pink-300 font-extrabold text-xs border border-pink-500/30 group-hover:bg-pink-500 group-hover:text-black transition cursor-pointer" onclick="openCheckout('${p.id}')">
                             Buy Now
                         </button>
                     </div>
@@ -1790,7 +2050,7 @@
 
             const found = orders.find(o => (o.phone && o.phone.includes(query)) || (o.id && o.id.toString().includes(query)));
             if(!found) {
-                box.innerHTML = `<span class="text-yellow-400 font-bold">No active order found matching "${query}". Please check your details or chat with our Customer Care.</span>`;
+                box.innerHTML = `<span class="text-yellow-400 font-bold">No active order found matching "${query}".</span>`;
                 return;
             }
 
@@ -1817,15 +2077,8 @@
             const email = document.getElementById('supportUserEmail').value.trim();
             const message = document.getElementById('supportUserMessage').value.trim();
 
-            if(!email || !message) {
-                alert("Please fill in both email and issue.");
-                return;
-            }
-
-            if(!isValidEmail(email)) {
-                alert("Please enter a valid registered email address.");
-                return;
-            }
+            if(!email || !message) { alert("Please fill in both email and issue."); return; }
+            if(!isValidEmail(email)) { alert("Please enter a valid registered email address."); return; }
 
             const ticketId = Date.now().toString().slice(-6);
             const ticketObj = {
@@ -1845,6 +2098,8 @@
                 localStorage.setItem('naijacp_support', JSON.stringify(supportTickets));
             }
 
+            sendSupportToTelegram(ticketObj);
+
             const chatMessages = document.getElementById('supportChatMessages');
             chatMessages.innerHTML += `
                 <div class="flex justify-end">
@@ -1856,12 +2111,10 @@
             document.getElementById('supportUserMessage').value = '';
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            showToast("💬 Your message has been sent to our support team!");
+            showToast("💬 Message sent to support & Telegram alert dispatched!");
         }
 
-        function openAiChatModal() {
-            openModal('aiChatModal');
-        }
+        function openAiChatModal() { openModal('aiChatModal'); }
 
         function handleAiChatSubmit(e) {
             e.preventDefault();
@@ -1870,7 +2123,6 @@
             if (!message) return;
 
             const chatMessages = document.getElementById('aiChatMessages');
-            
             chatMessages.innerHTML += `
                 <div class="flex justify-end">
                     <div class="bg-pink-600 text-white p-3 rounded-2xl max-w-[85%] font-medium">
@@ -1882,7 +2134,7 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
             setTimeout(() => {
-                let reply = getSmartAiResponse(message);
+                let reply = `🤖 Boss, for instant human support and holiday deposit verifications, please use the **Customer Care 👥** button on the bottom left!`;
                 chatMessages.innerHTML += `
                     <div class="flex justify-start">
                         <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-2xl text-slate-300 max-w-[85%] leading-relaxed">
@@ -1894,32 +2146,13 @@
             }, 600);
         }
 
-        function getSmartAiResponse(query) {
-            const q = query.toLowerCase();
-
-            if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('how far')) {
-                return `👋 Welcome to NaijaCP! 🇳🇬 I am your 24/7 AI assistant. If you need a real human, click the **Customer Care 👥** button on the bottom left!`;
-            }
-            if (q.includes('wallet') || q.includes('balance') || q.includes('funds') || q.includes('add money')) {
-                return `💳 **Wallet System:** Fund your wallet by clicking "+ Add Funds", transfer to Moremonee (8099646374) or Smartcash (8080504236), and upload your receipt! Verified within 3 minutes.`;
-            }
-            if (q.includes('bank') || q.includes('account') || q.includes('transfer')) {
-                return `🏦 **Official Bank Accounts:**<br><br>1️⃣ **Moremonee Bank:** <code>8099646374</code> (oluwabukunmi makanjuola)<br><br>2️⃣ **Smartcash PSB:** <code>8080504236</code> (AKEEM SOLARIN)`;
-            }
-
-            return `🤖 Boss, for human support and account issues, please use the **Customer Care 👥** button on the bottom left side of your screen to talk directly to our team!`;
-        }
-
         function escapeHtml(text) {
             return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
         function proceedToDataShare() {
             const phone = document.getElementById('dataPhoneNumber').value.trim();
-            if(!phone) {
-                alert("Please enter your mobile phone number first!");
-                return;
-            }
+            if(!phone) { alert("Please enter your mobile phone number first!"); return; }
             document.getElementById('dataFormArea').classList.add('hidden');
             document.getElementById('dataShareArea').classList.remove('hidden');
         }
@@ -1933,14 +2166,14 @@
             document.getElementById('dataProgressBar').style.width = `${progress}%`;
             document.getElementById('dataSharesLeft').innerText = remaining;
 
-            const text = encodeURIComponent(`📶 Claim Free 2GB Data Pack & Cheap Game Top-Ups at NAIJACP.NG! Check it out: ${officialSiteUrl}`);
+            const text = encodeURIComponent(`📶 Claim Free 2GB Data Pack & Cheap Holiday Game Top-Ups at NAIJACP.NG! Check it out: ${officialSiteUrl}`);
             window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
 
             if(dataShareCount >= 10) {
                 const btn = document.getElementById('dataShareBtn');
                 btn.innerHTML = `<i class="fa-solid fa-gift text-xl"></i> Claim Free 2GB Now 🎁`;
                 btn.onclick = function() { location.reload(); };
-                showToast("🎉 Data pack requirements completed! Click Claim to restart.");
+                showToast("🎉 Data pack requirements completed! Click Claim.");
             }
         }
 
@@ -1953,7 +2186,7 @@
             document.getElementById('progressBar').style.width = `${progress}%`;
             document.getElementById('sharesLeft').innerText = remaining;
 
-            const text = encodeURIComponent(`🔥 Get Free Fire Headshot Sensi & Game Top-Ups at NAIJACP.NG! Check it out: ${officialSiteUrl}`);
+            const text = encodeURIComponent(`🔥 Get Free Fire Headshot Sensi & Holiday Top-Ups at NAIJACP.NG! Check it out: ${officialSiteUrl}`);
             window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
 
             if(sensiShareCount >= 5) {
@@ -1967,28 +2200,16 @@
         function generateSensi(e) {
             e.preventDefault();
             const phoneInput = document.getElementById('phoneModel').value.trim().toLowerCase();
-            
             let hash = 0;
-            for (let i = 0; i < phoneInput.length; i++) {
-                hash = phoneInput.charCodeAt(i) + ((hash << 5) - hash);
-            }
+            for (let i = 0; i < phoneInput.length; i++) { hash = phoneInput.charCodeAt(i) + ((hash << 5) - hash); }
             hash = Math.abs(hash);
 
-            let baseGen = 180 + (hash % 20);
-            let baseRed = 175 + ((hash >> 2) % 20);
-            let base2x = 165 + ((hash >> 3) % 25);
-            let base4x = 155 + ((hash >> 4) % 30);
-            let fireBtn = 42 + (hash % 15);
-            
-            let isIphone = phoneInput.includes('iphone');
-            let dpiVal = isIphone ? "N/A (iOS Restricted)" : (520 + (hash % 120));
-
-            document.getElementById('valGen').innerText = baseGen;
-            document.getElementById('valRed').innerText = baseRed;
-            document.getElementById('val2x').innerText = base2x;
-            document.getElementById('val4x').innerText = base4x;
-            document.getElementById('valFireBtn').innerText = fireBtn + "%";
-            document.getElementById('valDpi').innerText = dpiVal;
+            document.getElementById('valGen').innerText = 180 + (hash % 20);
+            document.getElementById('valRed').innerText = 175 + ((hash >> 2) % 20);
+            document.getElementById('val2x').innerText = 165 + ((hash >> 3) % 25);
+            document.getElementById('val4x').innerText = 155 + ((hash >> 4) % 30);
+            document.getElementById('valFireBtn').innerText = (42 + (hash % 15)) + "%";
+            document.getElementById('valDpi').innerText = phoneInput.includes('iphone') ? "N/A" : (520 + (hash % 120));
 
             document.getElementById('sensiResults').classList.remove('hidden');
             showToast("🎯 Headshot Sensi generated successfully!");
@@ -2027,53 +2248,35 @@
             document.getElementById('checkoutStep1').classList.add('hidden');
             document.getElementById('checkoutStep2').classList.add('hidden');
             document.getElementById('checkoutStep3').classList.add('hidden');
-            
             if(step === 1) document.getElementById('checkoutStep1').classList.remove('hidden');
             if(step === 2) document.getElementById('checkoutStep2').classList.remove('hidden');
             if(step === 3) document.getElementById('checkoutStep3').classList.remove('hidden');
         }
 
-        function prevCheckoutStep(step) {
-            nextCheckoutStep(step);
-        }
+        function prevCheckoutStep(step) { nextCheckoutStep(step); }
 
         function sendOrderToTelegram(order) {
             const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
             const chatId = "8682089527";
-            
             const caption = `🚨 *NEW NAIJACP ORDER* 🚨\n\n` +
                             `🆔 Order ID: #${order.id}\n` +
-                            `📦 Package Bought: ${order.product}\n` +
+                            `📦 Package: ${order.product}\n` +
                             `💰 Price: ₦${order.amount.toLocaleString()}\n` +
-                            `👤 Customer Name: ${order.customer}\n` +
-                            `🎮 Game ID (UID): ${order.gameId}\n` +
+                            `👤 Customer: ${order.customer}\n` +
+                            `🎮 Game ID: ${order.gameId}\n` +
                             `📞 WhatsApp: ${order.phone}\n` +
-                            `📧 User Email: ${order.userEmail}\n` +
+                            `📧 Email: ${order.userEmail}\n` +
                             `📅 Date: ${order.date}\n` +
                             `⚡ Status: ${order.status}`;
-
             try {
-                const telegramUrl = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(caption)}&parse_mode=Markdown`;
-                const img = new Image();
-                img.src = telegramUrl;
+                const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(caption)}&parse_mode=Markdown`;
+                new Image().src = url;
             } catch (err) {}
-        }
-
-        function saveOrderToCloud(order) {
-            if(db) {
-                db.collection("orders").doc(order.id).set(order);
-            } else {
-                orders.unshift(order);
-                localStorage.setItem('naijacp_orders', JSON.stringify(orders));
-            }
         }
 
         function submitOrder(e) {
             e.preventDefault();
-            
-            if (!currentSelectedItem) {
-                currentSelectedItem = products[0];
-            }
+            if (!currentSelectedItem) currentSelectedItem = products[0];
 
             const customerName = document.getElementById('custName').value.trim() || "Valued Gamer";
             const gameId = document.getElementById('custGameId').value.trim() || "N/A";
@@ -2100,12 +2303,18 @@
             };
 
             lastSuccessfulOrder = newOrder;
-            saveOrderToCloud(newOrder);
+            if(db) {
+                db.collection("orders").doc(newOrder.id).set(newOrder);
+            } else {
+                orders.unshift(newOrder);
+                localStorage.setItem('naijacp_orders', JSON.stringify(orders));
+            }
+
             closeModal('checkoutModal');
             openModal('processingModal');
             
             document.getElementById('processingTitle').innerText = "Wallet Payment Successful! ⚡";
-            document.getElementById('processingDesc').innerText = "Your wallet payment was successful! Your package is being fulfilled instantly by our dispatch system (1–3 minutes).";
+            document.getElementById('processingDesc').innerText = "Your wallet payment was successful! Your package is being fulfilled instantly.";
             document.getElementById('processingSpinner').classList.remove('hidden');
             document.getElementById('processingSuccessIcon').classList.add('hidden');
             document.getElementById('closeProcessingBtn').classList.add('hidden');
@@ -2117,12 +2326,10 @@
                 document.getElementById('processingSpinner').classList.add('hidden');
                 document.getElementById('processingSuccessIcon').classList.remove('hidden');
                 document.getElementById('processingSuccessIcon').classList.add('flex');
-                
                 document.getElementById('processingTitle').innerText = "Order Successfully Placed! 🚀";
                 document.getElementById('processingDesc').innerText = "Your order has been queued for instant fulfillment. Thank you for choosing NaijaCP!";
                 document.getElementById('closeProcessingBtn').classList.remove('hidden');
                 document.getElementById('downloadReceiptBtn').classList.remove('hidden');
-
                 document.getElementById('orderForm').reset();
             }, 1800);
         }
@@ -2160,10 +2367,11 @@
                     renderAdminOrders();
                     renderAdminDeposits();
                     renderAdminSupport();
+                    renderAdminQuotes();
                     renderAdminProducts();
                     showToast("Welcome back, boss springdrecko7! Admin access granted 🚀");
                 } else {
-                    alert("⚠️ Access Denied: You must be signed in with the authorized admin Gmail (springdrecko7@gmail.com) to access this portal.");
+                    alert("⚠️ Access Denied: You must be signed in with the authorized admin Gmail (springdrecko7@gmail.com).");
                 }
             } else {
                 alert("Invalid master credentials!");
@@ -2171,43 +2379,36 @@
         }
 
         function switchAdminTab(tab) {
-            ['analytics', 'orders', 'deposits', 'support', 'products'].forEach(t => {
+            ['analytics', 'orders', 'deposits', 'support', 'quotes', 'products'].forEach(t => {
                 const tabEl = document.getElementById(`adminTab-${t}`);
                 const btnEl = document.getElementById(`adminTabBtn-${t}`);
                 if(tabEl) tabEl.classList.add('hidden');
-                if(btnEl) btnEl.className = 'px-5 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer';
+                if(btnEl) btnEl.className = 'px-4 py-2.5 rounded-xl bg-slate-900 text-slate-300 font-bold text-xs border border-slate-800 transition cursor-pointer';
             });
 
             document.getElementById(`adminTab-${tab}`).classList.remove('hidden');
-            document.getElementById(`adminTabBtn-${tab}`).className = 'px-5 py-2.5 rounded-xl bg-pink-500 text-black font-bold text-xs transition cursor-pointer';
+            document.getElementById(`adminTabBtn-${tab}`).className = 'px-4 py-2.5 rounded-xl bg-pink-500 text-black font-bold text-xs transition cursor-pointer';
         }
 
         function renderAdminAnalytics() {
             let totalRev = 0;
-            orders.forEach(o => {
-                if(o.amount) totalRev += o.amount;
-            });
+            orders.forEach(o => { if(o.amount) totalRev += o.amount; });
             document.getElementById('adminTotalRevenue').innerText = totalRev.toLocaleString();
             document.getElementById('adminTotalOrdersCount').innerText = orders.length;
-            const pendingDep = deposits.filter(d => d.status === 'Pending').length;
-            document.getElementById('adminPendingDepositsCount').innerText = pendingDep;
+            document.getElementById('adminPendingDepositsCount').innerText = deposits.filter(d => d.status === 'Pending').length;
         }
 
         function exportOrdersCSV() {
             if(orders.length === 0) { alert("No orders to export."); return; }
             let csv = "OrderID,Date,Customer,GameID,Phone,Email,Product,Amount,Status\n";
-            orders.forEach(o => {
-                csv += `"${o.id}","${o.date}","${o.customer}","${o.gameId}","${o.phone}","${o.userEmail}","${o.product}",${o.amount},"${o.status}"\n`;
-            });
+            orders.forEach(o => { csv += `"${o.id}","${o.date}","${o.customer}","${o.gameId}","${o.phone}","${o.userEmail}","${o.product}",${o.amount},"${o.status}"\n`; });
             downloadCSVFile(csv, "NaijaCP_Orders_Report.csv");
         }
 
         function exportDepositsCSV() {
             if(deposits.length === 0) { alert("No deposits to export."); return; }
             let csv = "DepositID,Date,Username,Email,Amount,Status\n";
-            deposits.forEach(d => {
-                csv += `"${d.id}","${d.date}","${d.username}","${d.userEmail}",${d.amount},"${d.status}"\n`;
-            });
+            deposits.forEach(d => { csv += `"${d.id}","${d.date}","${d.username}","${d.userEmail}",${d.amount},"${d.status}"\n`; });
             downloadCSVFile(csv, "NaijaCP_Deposits_Report.csv");
         }
 
@@ -2224,10 +2425,7 @@
         function renderAdminOrders() {
             const list = document.getElementById('adminOrdersList');
             list.innerHTML = '';
-            if(orders.length === 0) {
-                list.innerHTML = '<p class="text-slate-400 text-xs">No orders received yet.</p>';
-                return;
-            }
+            if(orders.length === 0) { list.innerHTML = '<p class="text-slate-400 text-xs">No orders received yet.</p>'; return; }
             orders.forEach(o => {
                 list.innerHTML += `
                     <div class="glass-modal p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs">
@@ -2251,17 +2449,12 @@
         function renderAdminDeposits() {
             const list = document.getElementById('adminDepositsList');
             list.innerHTML = '';
-            if(deposits.length === 0) {
-                list.innerHTML = '<p class="text-slate-400 text-xs">No deposit requests yet.</p>';
-                return;
-            }
+            if(deposits.length === 0) { list.innerHTML = '<p class="text-slate-400 text-xs">No deposit requests yet.</p>'; return; }
             deposits.forEach(d => {
                 let actionBtns = '';
-                if(d.status === 'Approved') {
-                    actionBtns = '<span class="text-emerald-400 font-bold">Approved ✅</span>';
-                } else if(d.status === 'Declined') {
-                    actionBtns = '<span class="text-red-400 font-bold">Declined ❌</span>';
-                } else {
+                if(d.status === 'Approved') actionBtns = '<span class="text-emerald-400 font-bold">Approved ✅</span>';
+                else if(d.status === 'Declined') actionBtns = '<span class="text-red-400 font-bold">Declined ❌</span>';
+                else {
                     actionBtns = `
                         <button onclick="approveDeposit('${d.id}', '${d.userId}', ${d.amount})" class="px-3 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold rounded-xl transition cursor-pointer">Approve ⚡</button>
                         <button onclick="declineDeposit('${d.id}')" class="px-3 py-2 bg-red-500 hover:bg-red-400 text-white font-extrabold rounded-xl transition cursor-pointer">Decline ❌</button>
@@ -2276,7 +2469,7 @@
                             <div class="text-slate-500 text-[11px]">${d.date}</div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button onclick="viewAdminReceipt('${d.receipt}')" class="px-3 py-2 bg-pink-500/20 hover:bg-pink-500 hover:text-black text-pink-400 rounded-xl font-bold transition cursor-pointer">View Receipt 🧾</button>
+                            <button onclick="viewAdminReceipt('${d.receipt}')" class="px-3 py-2 bg-pink-500/20 text-pink-500 hover:text-black text-pink-400 rounded-xl font-bold transition cursor-pointer">View Receipt 🧾</button>
                             ${actionBtns}
                         </div>
                     </div>
@@ -2286,30 +2479,25 @@
 
         async function approveDeposit(depositId, userId, amount) {
             if(!confirm(`Approve ₦${amount.toLocaleString()} and credit user wallet?`)) return;
-
             if(db) {
                 await db.collection("deposits").doc(depositId).update({ status: 'Approved' });
-
                 const userRef = db.collection("users").doc(userId);
                 const userDoc = await userRef.get();
                 if(userDoc.exists) {
-                    const currentBal = userDoc.data().balance || 0;
-                    await userRef.update({ balance: currentBal + amount });
+                    await userRef.update({ balance: (userDoc.data().balance || 0) + amount });
                 }
             } else {
                 const dep = deposits.find(d => d.id === depositId);
                 if(dep) dep.status = 'Approved';
                 localStorage.setItem('naijacp_deposits', JSON.stringify(deposits));
             }
-
-            showToast(`Successfully credited ₦${amount.toLocaleString()} to user wallet! ⚡`);
+            showToast(`Successfully credited ₦${amount.toLocaleString()}! ⚡`);
             renderAdminDeposits();
             renderAdminAnalytics();
         }
 
         async function declineDeposit(depositId) {
-            if(!confirm("Are you sure you want to decline this deposit request?")) return;
-
+            if(!confirm("Decline this deposit request?")) return;
             if(db) {
                 await db.collection("deposits").doc(depositId).update({ status: 'Declined' });
             } else {
@@ -2317,18 +2505,14 @@
                 if(dep) dep.status = 'Declined';
                 localStorage.setItem('naijacp_deposits', JSON.stringify(deposits));
             }
-
-            showToast("Deposit request declined. User has been notified.");
+            showToast("Deposit request declined.");
             renderAdminDeposits();
         }
 
         function renderAdminSupport() {
             const list = document.getElementById('adminSupportList');
             list.innerHTML = '';
-            if(supportTickets.length === 0) {
-                list.innerHTML = '<p class="text-slate-400 text-xs">No customer care messages yet.</p>';
-                return;
-            }
+            if(supportTickets.length === 0) { list.innerHTML = '<p class="text-slate-400 text-xs">No customer care messages yet.</p>'; return; }
             supportTickets.forEach(t => {
                 list.innerHTML += `
                     <div class="glass-modal p-4 rounded-2xl border border-slate-800 space-y-3 text-xs">
@@ -2336,19 +2520,11 @@
                             <span>Ticket #${t.id} | Email: <strong class="text-white">${t.email}</strong></span>
                             <span>${t.date}</span>
                         </div>
-                        <div class="bg-slate-950 p-3 rounded-xl text-slate-200">
-                            <strong>User Issue:</strong> ${t.message}
-                        </div>
-                        ${t.adminReply ? `
-                            <div class="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl text-emerald-300">
-                                <strong>Admin Reply Sent:</strong> ${t.adminReply}
-                            </div>
-                        ` : ''}
+                        <div class="bg-slate-950 p-3 rounded-xl text-slate-200"><strong>User Issue:</strong> ${t.message}</div>
+                        ${t.adminReply ? `<div class="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl text-emerald-300"><strong>Admin Reply Sent:</strong> ${t.adminReply}</div>` : ''}
                         <div class="flex gap-2">
-                            <input type="text" id="adminReplyInput_${t.id}" placeholder="Type reply to customer..." class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white text-xs">
-                            <button onclick="sendAdminReply('${t.id}', '${t.firestoreId || ''}')" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-xl text-xs transition cursor-pointer">
-                                Reply &amp; Notify 🚀
-                            </button>
+                            <input type="text" id="adminReplyInput_${t.id}" placeholder="Type reply..." class="flex-grow bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white text-xs">
+                            <button onclick="sendAdminReply('${t.id}', '${t.firestoreId || ''}')" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-xl text-xs transition cursor-pointer">Reply 🚀</button>
                         </div>
                     </div>
                 `;
@@ -2358,10 +2534,7 @@
         async function sendAdminReply(ticketId, firestoreId) {
             const inputEl = document.getElementById(`adminReplyInput_${ticketId}`);
             const replyText = inputEl.value.trim();
-            if(!replyText) {
-                alert("Please type a reply message.");
-                return;
-            }
+            if(!replyText) { alert("Please type a reply."); return; }
 
             if(db) {
                 let docId = firestoreId;
@@ -2369,44 +2542,75 @@
                     const snap = await db.collection("supportTickets").where("id", "==", ticketId).get();
                     if(!snap.empty) docId = snap.docs[0].id;
                 }
-                if(docId) {
-                    await db.collection("supportTickets").doc(docId).update({
-                        adminReply: replyText,
-                        unread: true
-                    });
-                }
+                if(docId) await db.collection("supportTickets").doc(docId).update({ adminReply: replyText, unread: true });
             } else {
                 const tick = supportTickets.find(t => t.id === ticketId);
-                if(tick) {
-                    tick.adminReply = replyText;
-                    tick.unread = true;
-                    localStorage.setItem('naijacp_support', JSON.stringify(supportTickets));
-                }
+                if(tick) { tick.adminReply = replyText; tick.unread = true; localStorage.setItem('naijacp_support', JSON.stringify(supportTickets)); }
             }
-
             inputEl.value = '';
             showToast("Reply sent to customer successfully! 🚀");
             renderAdminSupport();
+        }
+
+        function renderAdminQuotes() {
+            const list = document.getElementById('adminQuotesList');
+            list.innerHTML = '';
+            quotes.forEach(q => {
+                list.innerHTML += `
+                    <div class="flex items-center justify-between bg-slate-950 p-3.5 rounded-xl border border-slate-800 text-xs">
+                        <div>
+                            <span class="font-medium text-white italic">"${q.text}"</span>
+                            <span class="text-pink-400 font-bold ml-2">— ${q.author}</span>
+                        </div>
+                        <button onclick="deleteQuoteCloud('${q.id}')" class="px-2.5 py-1 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white rounded-lg font-bold transition cursor-pointer">Delete</button>
+                    </div>
+                `;
+            });
+        }
+
+        function addNewQuoteCloud(e) {
+            e.preventDefault();
+            const newQ = {
+                id: Date.now(),
+                text: document.getElementById('newQuoteText').value.trim(),
+                author: document.getElementById('newQuoteAuthor').value.trim()
+            };
+            if(db) {
+                db.collection("quotes").doc(newQ.id.toString()).set(newQ).then(() => { showToast("Quote added & synced! 🚀"); });
+            } else {
+                quotes.unshift(newQ);
+                renderAdminQuotes();
+                rotateDailyQuote();
+            }
+            e.target.reset();
+        }
+
+        function deleteQuoteCloud(id) {
+            if(confirm("Delete this quote?")) {
+                if(db) {
+                    db.collection("quotes").doc(id.toString()).delete().then(() => { showToast("Quote deleted."); });
+                } else {
+                    quotes = quotes.filter(x => x.id != id);
+                    renderAdminQuotes();
+                    rotateDailyQuote();
+                }
+            }
         }
 
         function viewAdminReceipt(receiptUrl) {
             if(receiptUrl) {
                 document.getElementById('adminReceiptImg').src = receiptUrl;
                 openModal('receiptViewerModal');
-            } else {
-                alert("No receipt found.");
-            }
+            } else { alert("No receipt found."); }
         }
 
         function updateOrderStatus(id, status) {
             const ord = orders.find(o => o.id === id);
             if(ord) {
                 ord.status = status;
-                if(db && ord.firestoreId) {
-                    db.collection("orders").doc(ord.firestoreId).update({ status: status });
-                }
+                if(db && ord.firestoreId) db.collection("orders").doc(ord.firestoreId).update({ status: status });
                 localStorage.setItem('naijacp_orders', JSON.stringify(orders));
-                showToast(`Order #${id} status updated to ${status}`);
+                showToast(`Order #${id} updated`);
                 renderAdminAnalytics();
             }
         }
@@ -2419,13 +2623,10 @@
                     <div class="flex items-center justify-between bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs">
                         <div class="flex items-center gap-3">
                             <img src="${p.icon}" class="w-8 h-8 rounded-lg object-cover">
-                            <div>
-                                <span class="font-bold text-white">${p.title}</span>
-                                <span class="text-pink-400 font-bold ml-2">₦${p.price.toLocaleString()}</span>
-                            </div>
+                            <div><span class="font-bold text-white">${p.title}</span><span class="text-pink-400 font-bold ml-2">₦${p.price.toLocaleString()}</span></div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <button onclick="editProductPriceCloud('${p.id}')" class="px-2.5 py-1 bg-pink-500/20 text-pink-300 hover:bg-pink-500 hover:text-black rounded-lg font-bold transition cursor-pointer">Edit Price</button>
+                            <button onclick="editProductPriceCloud('${p.id}')" class="px-2.5 py-1 bg-pink-500/20 text-pink-300 hover:bg-pink-500 hover:text-black rounded-lg font-bold transition cursor-pointer">Edit</button>
                             <button onclick="deleteProductCloud('${p.id}')" class="px-2.5 py-1 bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white rounded-lg font-bold transition cursor-pointer">Delete</button>
                         </div>
                     </div>
@@ -2443,11 +2644,8 @@
                 subTag: document.getElementById('newProdSub').value,
                 icon: document.getElementById('newProdIcon').value.trim()
             };
-
             if(db) {
-                db.collection("products").doc(newP.id.toString()).set(newP).then(() => {
-                    showToast("Added & synced live to cloud! 🚀");
-                });
+                db.collection("products").doc(newP.id.toString()).set(newP).then(() => { showToast("Added & synced live! 🚀"); });
             } else {
                 products.unshift(newP);
                 renderCatalog();
@@ -2462,28 +2660,18 @@
             const newPrice = prompt(`Enter new price for ${p.title} (Current: ₦${p.price}):`, p.price);
             if(newPrice && !isNaN(newPrice)) {
                 p.price = parseFloat(newPrice);
-                if(db) {
-                    db.collection("products").doc(id.toString()).update({ price: parseFloat(newPrice) }).then(() => {
-                        showToast(`Price updated live on cloud for ${p.title}! ⚡`);
-                    });
-                } else {
-                    renderCatalog();
-                    renderAdminProducts();
-                }
+                if(db) db.collection("products").doc(id.toString()).update({ price: parseFloat(newPrice) });
+                renderCatalog();
+                renderAdminProducts();
+                showToast("Price updated live! ⚡");
             }
         }
 
         function deleteProductCloud(id) {
-            if(confirm("Are you sure you want to delete this package?")) {
-                if(db) {
-                    db.collection("products").doc(id.toString()).delete().then(() => {
-                        showToast("Package deleted from cloud.");
-                    });
-                } else {
-                    products = products.filter(x => x.id != id);
-                    renderCatalog();
-                    renderAdminProducts();
-                }
+            if(confirm("Delete this package?")) {
+                if(db) db.collection("products").doc(id.toString()).delete();
+                else { products = products.filter(x => x.id != id); renderCatalog(); renderAdminProducts(); }
+                showToast("Package deleted.");
             }
         }
     </script>
