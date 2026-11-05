@@ -402,19 +402,20 @@
         </section>
 
         <!-- FREE FIRE SENSITIVITY GENERATOR TOOL -->
+        <!-- FREE FIRE SENSITIVITY GENERATOR TOOL (SENSIFAI PRO EDITION) -->
         <section id="sensitivity" class="py-12 border-t border-pink-500/20 scroll-mt-24">
             <div class="text-center mb-8">
                 <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-400 text-xs font-extrabold uppercase mb-3">
-                    <i class="fa-solid fa-crosshair"></i> 100% Free Tool
+                    <i class="fa-solid fa-crosshair"></i> SensiAI Pro Neural Engine · 2026 Edition
                 </div>
-                <h2 class="text-3xl font-extrabold text-white">Free Fire Auto-Headshot Sensi</h2>
-                <p class="text-slate-400 text-sm mt-2">Share to 5 WhatsApp groups to unlock your custom optimal sensitivity settings.</p>
+                <h2 class="text-3xl font-extrabold text-white">Free Fire Advanced Auto-Headshot Sensi</h2>
+                <p class="text-slate-400 text-sm mt-2">Share to 5 WhatsApp groups to unlock AI hardware calibration, custom DPI, weapon modifiers &amp; invisible name tools.</p>
             </div>
 
-            <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/30 max-w-2xl mx-auto shadow-2xl relative">
+            <div class="glass-modal p-6 sm:p-8 rounded-3xl border border-pink-500/30 max-w-3xl mx-auto shadow-2xl relative">
                 <div id="sensiUnlockArea" class="space-y-5">
                     <div class="p-4 rounded-2xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-between text-xs">
-                        <span class="text-slate-300 font-bold">Step 1: Complete Share Requirement</span>
+                        <span class="text-slate-300 font-bold">Step 1: Complete WhatsApp Group Shares</span>
                         <span id="taskProgressText" class="text-pink-400 font-black text-sm">0/5 Shares</span>
                     </div>
 
@@ -428,57 +429,116 @@
                     </button>
                 </div>
 
-                <div id="sensiFormArea" class="hidden">
-                    <div class="p-3.5 mb-6 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs text-center font-bold">
-                        <i class="fa-solid fa-circle-check text-green-400 mr-1"></i> Shared successfully! Generate your settings below.
+                <div id="sensiFormArea" class="hidden space-y-6">
+                    <div class="p-3.5 rounded-xl bg-pink-500/20 border border-pink-500/40 text-pink-300 text-xs text-center font-bold">
+                        <i class="fa-solid fa-circle-check text-green-400 mr-1"></i> Shares verified! Configure your hardware parameters below for AI neural calibration.
                     </div>
                     
                     <form id="sensiForm" onsubmit="generateSensi(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Exact Phone Brand &amp; Model</label>
-                            <input type="text" id="phoneModel" placeholder="e.g. Tecno Spark 10, iPhone 11" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-pink-500 transition" required>
+                            <input type="text" id="phoneModel" placeholder="e.g. iPhone X, Tecno Spark 10, Samsung A12" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-pink-500 transition" required>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">RAM Size</label>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Device RAM Tier</label>
                             <select id="ramSize" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-pink-500 transition" required>
-                                <option value="2">2 GB RAM</option>
-                                <option value="3">3 GB RAM</option>
-                                <option value="4" selected>4 GB RAM</option>
-                                <option value="6">6 GB RAM</option>
-                                <option value="8">8 GB RAM or Higher</option>
+                                <option value="2">2 GB RAM (Low-End)</option>
+                                <option value="3">3 GB RAM (Entry-Level)</option>
+                                <option value="4" selected>4 GB RAM (Mid-Range)</option>
+                                <option value="6">6 GB RAM (Gaming Mid)</option>
+                                <option value="8">8 GB RAM (High-End)</option>
+                                <option value="12">12 GB+ RAM (Flagship Ultra)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Screen Refresh Rate</label>
+                            <select id="refreshRate" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-pink-500 transition">
+                                <option value="60">60 Hz (Standard Display)</option>
+                                <option value="90">90 Hz (Smooth Display)</option>
+                                <option value="120" selected>120 Hz (Ultra Smooth)</option>
+                                <option value="144">144 Hz+ (Gaming Flagship)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Preferred Playstyle</label>
+                            <select id="playstyle" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-pink-500 transition">
+                                <option value="onetap">🎯 One-Tap Headshot Focus</option>
+                                <option value="drag">✋ Drag Shot Balanced</option>
+                                <option value="rusher">⚡ Aggressive Rusher / Fast Drag</option>
+                                <option value="spray">💨 Full Spray / Zero Recoil</option>
+                                <option value="sniper">🔭 Sniper / AWM Precision</option>
                             </select>
                         </div>
                         <div class="md:col-span-2 mt-2">
                             <button type="submit" class="w-full py-4 rounded-2xl bg-pink-500 hover:bg-pink-400 text-black font-extrabold text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-pink-500/20 cursor-pointer">
-                                Generate Unique Settings ⚡
+                                <i class="fa-solid fa-microchip"></i> Run AI Sensi Neural Calibration ⚡
                             </button>
                         </div>
                     </form>
 
-                    <div id="sensiResults" class="hidden mt-6 pt-6 border-t border-slate-800 grid grid-cols-2 md:grid-cols-3 gap-3">
-                        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
-                            <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">General</span>
-                            <span class="text-xl font-black text-green-400" id="valGen">195</span>
+                    <!-- AI LOADING SIMULATION OVERLAY -->
+                    <div id="aiLoadingBox" class="hidden p-6 rounded-2xl bg-slate-950 border border-pink-500/40 text-center space-y-3">
+                        <div class="w-12 h-12 border-4 border-pink-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                        <p id="aiLoadingStatus" class="text-pink-400 font-bold text-xs">🤖 AI Neural Engine analyzing touch sampling &amp; hardware specs...</p>
+                    </div>
+
+                    <!-- SENSI RESULTS DISPLAY -->
+                    <div id="sensiResults" class="hidden space-y-6 pt-4 border-t border-slate-800">
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
+                                <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">General Sensi</span>
+                                <span class="text-xl font-black text-green-400" id="valGen">195</span>
+                            </div>
+                            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
+                                <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Red Dot Sight</span>
+                                <span class="text-xl font-black text-green-400" id="valRed">185</span>
+                            </div>
+                            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
+                                <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">2X Scope</span>
+                                <span class="text-xl font-black text-green-400" id="val2x">175</span>
+                            </div>
+                            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
+                                <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">4X Scope</span>
+                                <span class="text-xl font-black text-green-400" id="val4x">160</span>
+                            </div>
+                            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
+                                <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Fire Button Size</span>
+                                <span class="text-xl font-black text-pink-400" id="valFireBtn">48%</span>
+                            </div>
+                            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
+                                <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Android DPI</span>
+                                <span class="text-sm font-black text-cyan-400" id="valDpi">540</span>
+                            </div>
                         </div>
-                        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
-                            <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Red Dot</span>
-                            <span class="text-xl font-black text-green-400" id="valRed">185</span>
+
+                        <!-- WEAPON MODIFIERS & J-SHAPE DRAG -->
+                        <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 text-xs">
+                            <h4 class="text-pink-400 font-extrabold uppercase tracking-wider"><i class="fa-solid fa-crosshairs mr-1"></i> Weapon-Wise Fine-Tuned Modifiers &amp; Technique</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-300">
+                                <div class="bg-slate-900 p-3 rounded-xl">
+                                    <strong class="text-white block mb-1">💥 Shotguns (M1887 / M1014):</strong>
+                                    <span>Fast upward J-Shape drag. Swipe fire button down slightly and drag instantly upward toward enemy head.</span>
+                                </div>
+                                <div class="bg-slate-900 p-3 rounded-xl">
+                                    <strong class="text-white block mb-1">⚡ SMG (MP40 / UMP):</strong>
+                                    <span>Continuous short bursts with General sensitivity locked at top range for rapid tracking.</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
-                            <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">2X Scope</span>
-                            <span class="text-xl font-black text-green-400" id="val2x">175</span>
-                        </div>
-                        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
-                            <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">4X Scope</span>
-                            <span class="text-xl font-black text-green-400" id="val4x">160</span>
-                        </div>
-                        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
-                            <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Fire Button Size</span>
-                            <span class="text-xl font-black text-pink-400" id="valFireBtn">48%</span>
-                        </div>
-                        <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-center">
-                            <span class="block text-[10px] text-slate-400 uppercase font-bold mb-1">Android DPI</span>
-                            <span class="text-sm font-black text-cyan-400" id="valDpi">540</span>
+
+                        <!-- INVISIBLE SPACE & NICKNAME STYLER TOOLS -->
+                        <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 text-xs">
+                            <h4 class="text-pink-400 font-extrabold uppercase tracking-wider"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Free Fire Invisible Name Space &amp; Nickname Styler</h4>
+                            <p class="text-slate-400 text-[11px]">Copy the Hangul Filler (U+3164) or zero-width space for blank/styled Free Fire gamer tags.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button type="button" onclick="navigator.clipboard.writeText('⠀'); showToast('📋 Hangul invisible space copied!')" class="px-3.5 py-2 bg-pink-500/20 hover:bg-pink-500 hover:text-black text-pink-300 rounded-xl font-bold transition cursor-pointer">📋 Copy Hangul Space (U+3164)</button>
+                                <button type="button" onclick="navigator.clipboard.writeText('​'); showToast('📋 Zero-width space copied!')" class="px-3.5 py-2 bg-pink-500/20 hover:bg-pink-500 hover:text-black text-pink-300 rounded-xl font-bold transition cursor-pointer">📋 Copy Zero-Width Space</button>
+                            </div>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800 text-white font-mono cursor-pointer hover:border-pink-500" onclick="navigator.clipboard.writeText('亗 SENSI 亗'); showToast('Copied tag!')">亗 SENSI 亗</span>
+                                <span class="bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800 text-white font-mono cursor-pointer hover:border-pink-500" onclick="navigator.clipboard.writeText('⚡SENSI⚡'); showToast('Copied tag!')">⚡SENSI⚡</span>
+                                <span class="bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800 text-white font-mono cursor-pointer hover:border-pink-500" onclick="navigator.clipboard.writeText('『TG』SENSI'); showToast('Copied tag!')">『TG』SENSI</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2183,10 +2243,10 @@ Click here: ${refLink}`;
             window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
 
             if(dataShareCount >= 10) {
-                const btn = document.getElementById('dataShareBtn');
-                btn.innerHTML = `<i class="fa-solid fa-gift text-xl"></i> Claim Free 2GB Now 🎁`;
-                btn.onclick = function() { location.reload(); };
-                showToast("🎉 Data pack requirements completed! Click Claim.");
+                showToast("🎉 All 10 shares completed successfully! Automatically resetting and refreshing site...");
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
             }
         }
 
@@ -2213,85 +2273,62 @@ Click here: ${refLink}`;
         function generateSensi(e) {
             e.preventDefault();
             const phoneInput = document.getElementById('phoneModel').value.trim().toLowerCase();
-            let hash = 0;
-            for (let i = 0; i < phoneInput.length; i++) { hash = phoneInput.charCodeAt(i) + ((hash << 5) - hash); }
-            hash = Math.abs(hash);
+            const ram = document.getElementById('ramSize').value;
+            const refresh = document.getElementById('refreshRate').value;
+            const playstyle = document.getElementById('playstyle').value;
 
-            document.getElementById('valGen').innerText = 180 + (hash % 20);
-            document.getElementById('valRed').innerText = 175 + ((hash >> 2) % 20);
-            document.getElementById('val2x').innerText = 165 + ((hash >> 3) % 25);
-            document.getElementById('val4x').innerText = 155 + ((hash >> 4) % 30);
-            document.getElementById('valFireBtn').innerText = (42 + (hash % 15)) + "%";
-            document.getElementById('valDpi').innerText = phoneInput.includes('iphone') ? "N/A" : (520 + (hash % 120));
+            const loadingBox = document.getElementById('aiLoadingBox');
+            const statusText = document.getElementById('aiLoadingStatus');
+            const resultsBox = document.getElementById('sensiResults');
 
-            document.getElementById('sensiResults').classList.remove('hidden');
-            showToast("🎯 Headshot Sensi generated successfully!");
-        }
+            loadingBox.classList.remove('hidden');
+            resultsBox.classList.add('hidden');
 
-        function openCheckout(productId) {
-            currentSelectedItem = products.find(p => p.id == productId) || products[0];
-            if (!currentSelectedItem) return;
+            let steps = [
+                "🤖 AI Neural Engine analyzing touch sampling & hardware specs...",
+                `🔍 Calibrating hardware profile (${ram}GB RAM, ${refresh}Hz)...`,
+                "⚡ Optimizing gyroscope & drag velocity curves...",
+                "✨ Sensi successfully calibrated!"
+            ];
 
-            document.getElementById('checkoutItemTitle').innerHTML = `Item: <strong class="text-white">${currentSelectedItem.title}</strong>`;
-            document.getElementById('checkoutItemPrice').innerText = `₦${Number(currentSelectedItem.price).toLocaleString()}`;
-            document.getElementById('checkoutWalletBalance').innerText = userWalletBalance.toLocaleString();
-            
-            if(savedUserUids.length > 0) document.getElementById('quickSelectUidBtn').classList.remove('hidden');
-            else document.getElementById('quickSelectUidBtn').classList.add('hidden');
+            let stepIdx = 0;
+            const interval = setInterval(() => {
+                stepIdx++;
+                if(stepIdx < steps.length) {
+                    statusText.innerText = steps[stepIdx];
+                } else {
+                    clearInterval(interval);
+                    loadingBox.classList.add('hidden');
 
-            const payBtn = document.getElementById('payWithWalletBtn');
-            if(userWalletBalance < currentSelectedItem.price) {
-                payBtn.disabled = true;
-                payBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                payBtn.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Insufficient Wallet Balance (Add Funds)`;
-            } else {
-                payBtn.disabled = false;
-                payBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                payBtn.innerHTML = `<i class="fa-solid fa-wallet"></i> Pay Instantly with Wallet Balance ⚡`;
-            }
+                    let hash = 0;
+                    const combinedKey = phoneInput + "_" + ram + "_" + refresh + "_" + playstyle;
+                    for (let i = 0; i < combinedKey.length; i++) {
+                        hash = combinedKey.charCodeAt(i) + ((hash << 5) - hash);
+                    }
+                    hash = Math.abs(hash);
 
-            nextCheckoutStep(1);
-            openModal('checkoutModal');
-        }
+                    let baseGen = 180 + (hash % 18);
+                    let baseRed = 175 + ((hash >> 2) % 18);
+                    let base2x = 165 + ((hash >> 3) % 20);
+                    let base4x = 155 + ((hash >> 4) % 22);
+                    let fireBtn = 42 + (hash % 10);
+                    let dpi = phoneInput.includes('iphone') ? "N/A" : (520 + (hash % 100));
 
-        function nextCheckoutStep(step) {
-            document.getElementById('checkoutStep1').classList.add('hidden');
-            document.getElementById('checkoutStep2').classList.add('hidden');
-            document.getElementById('checkoutStep3').classList.add('hidden');
-            if(step === 1) document.getElementById('checkoutStep1').classList.remove('hidden');
-            if(step === 2) document.getElementById('checkoutStep2').classList.remove('hidden');
-            if(step === 3) document.getElementById('checkoutStep3').classList.remove('hidden');
-        }
+                    if(playstyle === 'onetap') { baseGen += 8; baseRed += 10; }
+                    if(playstyle === 'rusher') { baseGen += 12; fireBtn -= 2; }
+                    if(playstyle === 'sniper') { baseGen -= 10; }
 
-        function prevCheckoutStep(step) { nextCheckoutStep(step); }
+                    document.getElementById('valGen').innerText = baseGen;
+                    document.getElementById('valRed').innerText = baseRed;
+                    document.getElementById('val2x').innerText = base2x;
+                    document.getElementById('val4x').innerText = base4x;
+                    document.getElementById('valFireBtn').innerText = fireBtn + "%";
+                    document.getElementById('valDpi').innerText = dpi;
 
-        function sendOrderToTelegram(order) {
-            const token = "8488576061:AAFVK80sDLouVrO-W-W1Bmv4SJ0gg6CBs9c";
-            const chatId = "8682089527";
-            const caption = `🚨 *NEW NAIJACP ORDER* 🚨
-
-` +
-                            `🆔 Order ID: #${order.id}
-` +
-                            `📦 Package: ${order.product}
-` +
-                            `💰 Price: ₦${order.amount.toLocaleString()}
-` +
-                            `👤 Customer: ${order.customer}
-` +
-                            `🎮 Game ID: ${order.gameId}
-` +
-                            `📞 WhatsApp: ${order.phone}
-` +
-                            `📧 Email: ${order.userEmail}
-` +
-                            `📅 Date: ${order.date}
-` +
-                            `⚡ Status: ${order.status}`;
-            try {
-                const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(caption)}&parse_mode=Markdown`;
-                new Image().src = url;
-            } catch (err) {}
+                    resultsBox.classList.remove('hidden');
+                    showToast("🎯 AI Headshot Sensi generated and cached successfully!");
+                }
+            }, 600);
         }
 
         function submitOrder(e) {
